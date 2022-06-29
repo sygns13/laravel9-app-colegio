@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ShowPosts;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    /* Route::get('/dashboard', ShowPosts::class)->name('dashboard'); */
+
+    //Pasar parametros
+    /* Route::get('prueba/{name}',ShowPosts::class); */
 });

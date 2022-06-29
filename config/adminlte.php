@@ -258,6 +258,40 @@ return [
             'icon_color'  => 'white',
         ],
 
+        [
+            'text'        => 'Tablas Base',
+            'icon'        => 'fas fa-fw fa-server',
+            'icon_color'  => 'white',
+            'submenu' => [
+                [
+                    'text' => 'Datos de la IE',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Gestión de Turnos',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Gestión de Secciones',
+                    'url'  => 'admin/secciones',
+                ],
+
+            ]
+        ],
+
+        [
+            'text'        => 'Matrícula',
+            'icon'        => 'fas fa-fw fa-folder',
+            'icon_color'  => 'white',
+            'submenu' => [
+                [
+                    'text' => 'Año Escolar',
+                    'url'  => '#',
+                ],
+
+            ]
+        ],
+
         /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
@@ -367,6 +401,26 @@ return [
     */
 
     'plugins' => [
+        'Vuejs' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/vue.js',
+                ],
+            ],
+        ],
+        'Axios' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/axios.min.js',
+                ],
+            ],
+        ],
         'Datatables' => [
             'active' => true,
             'files' => [
@@ -484,5 +538,5 @@ return [
     |
     */
 
-    'livewire' => true,
+    'livewire' => false,
 ];

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\SeccionesController;
 
 
 /* Route::get('admin', function () {
@@ -16,5 +17,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
+
     Route::get('/', [HomeController::class, 'index'])->name('admin');
+    Route::get('/secciones', [SeccionesController::class, 'index1'])->name('secciones');
+
+    Route::resource('/resecciones', SeccionesController::class);
+
 });
