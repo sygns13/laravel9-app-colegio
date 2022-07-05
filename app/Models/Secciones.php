@@ -30,18 +30,22 @@ class Secciones extends Model
         $niveles = Niveles::where('borrado','0')
                         ->where('activo','1')
                         ->where('institucion_educativa_id', $data->id)
+                        ->orderBy('id')
                         ->get();
 
         foreach ($niveles as $key => $value) {
             $grados = Grado::where('borrado','0')
                             ->where('activo','1')
                             ->where('nivele_id', $value->id)
+                            ->orderBy('orden')
                             ->get();
 
             foreach ($grados as $keyG => $valueG) {
                 $seccions = Secciones::where('borrado','0')
                                     ->where('activo','1')
                                     ->where('grado_id', $valueG->id)
+                                    ->orderBy('sigla')
+                                    ->orderBy('nombre')
                                     ->get();
 
                 $valueG->seccions = $seccions;
