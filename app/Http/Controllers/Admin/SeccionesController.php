@@ -63,8 +63,8 @@ class SeccionesController extends Controller
         $input1  = array('nombre' => $nombre);
         $reglas1 = array('nombre' => 'required');
 
-        $input2  = array('nombre' => $nombre);
-        $reglas2 = array('nombre' => 'required');
+        $input2  = array('sigla' => $sigla);
+        $reglas2 = array('sigla' => 'required');
 
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
@@ -146,8 +146,8 @@ class SeccionesController extends Controller
         $input1  = array('nombre' => $nombre);
         $reglas1 = array('nombre' => 'required');
 
-        $input2  = array('nombre' => $nombre);
-        $reglas2 = array('nombre' => 'required');
+        $input2  = array('sigla' => $sigla);
+        $reglas2 = array('sigla' => 'required');
 
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);

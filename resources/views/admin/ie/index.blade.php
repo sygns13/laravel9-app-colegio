@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Secciones')
+@section('title', 'Datos de la IE')
 
 {{-- @section('plugins.Sweetalert2', true) --}}
 
@@ -9,8 +9,8 @@
 @stop
 
 @section('content')
-    @include('admin.seccion.main')
-    @include('admin.seccion.form')
+    @include('admin.ie.main')
+    {{-- @include('admin.ie.form') --}}
 @stop
 
 @section('css')
@@ -18,5 +18,5 @@
 @stop
 
 @section('js')
-<script src="{{ asset('js/core/admin/seccion.js')}}"  type="text/javascript"></script>
+<script src="{{ asset('js/core/admin/ie.js')}}"  type="text/javascript"></script>
 @stop

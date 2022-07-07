@@ -265,15 +265,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'Datos de la IE',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Gestión de Turnos',
-                    'url'  => '#',
+                    'url'  => 'admin/ie',
                 ],
                 [
                     'text' => 'Gestión de Secciones',
                     'url'  => 'admin/secciones',
+                ],
+                [
+                    'text' => 'Gestión de Cursos',
+                    'url'  => 'admin/cursos',
                 ],
 
             ]
@@ -401,6 +401,16 @@ return [
     */
 
     'plugins' => [
+        'Helpersjs' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/core/helpers.js',
+                ],
+            ],
+        ],
         'Vuejs' => [
             'active' => true,
             'files' => [
