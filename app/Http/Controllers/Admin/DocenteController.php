@@ -340,6 +340,9 @@ class DocenteController extends Controller
         $input10  = array('activo' => $activo);
         $reglas10 = array('activo' => 'required');
 
+        $input11  = array('email' => $email);
+        $reglas11 = array('email' => 'email');
+
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
@@ -350,6 +353,7 @@ class DocenteController extends Controller
         $validator8 = Validator::make($input8, $reglas8);
         $validator9 = Validator::make($input9, $reglas9);
         $validator10 = Validator::make($input10, $reglas10);
+        $validator11 = Validator::make($input11, $reglas11);
 
         if ($validator1->fails())
         {
@@ -442,6 +446,14 @@ class DocenteController extends Controller
             $result='0';
             $msj='Debe ingresar si el usuario del docente está activo o no';
             $selector='cbucbuactivo';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if ($validator11->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar un Email válido';
+            $selector='txtemail';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }

@@ -41,35 +41,35 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                                 <tr>
-                                    <th style="font-size: 13px; width: 4%">#</th>
-                                    <th style="font-size: 13px; width: 8%">Documento de Identidad</th>
-                                    <th style="font-size: 13px; width: 12%">Nombres y Apellidos</th>
-                                    <th style="font-size: 13px; width: 8%">Código de Plaza</th>
-                                    <th style="font-size: 13px; width: 10%">Especialidad</th>
-                                    <th style="font-size: 13px; width: 5%">Genero</th>
-                                    <th style="font-size: 13px; width: 6%">Teléfono</th>
-                                    <th style="font-size: 13px; width: 12%">Dirección</th>
-                                    <th style="font-size: 13px; width: 8%">Username</th>
-                                    <th style="font-size: 13px; width: 12%">Email</th>
-                                    <th style="font-size: 13px; width: 5%">Estado</th>
-                                    <th style="font-size: 13px; width: 10%">Gestión</th>
+                                    <th class="titles-table" style="width: 4%">#</th>
+                                    <th class="titles-table" style="width: 8%">Documento de Identidad</th>
+                                    <th class="titles-table" style="width: 13%">Nombres y Apellidos</th>
+                                    <th class="titles-table" style="width: 8%">Código de Plaza</th>
+                                    <th class="titles-table" style="width: 10%">Especialidad</th>
+                                    <th class="titles-table" style="width: 5%">Genero</th>
+                                    <th class="titles-table" style="width: 6%">Teléfono</th>
+                                    <th class="titles-table" style="width: 12%">Dirección</th>
+                                    <th class="titles-table" style="width: 6%">Username</th>
+                                    <th class="titles-table" style="width: 13%">Email</th>
+                                    <th class="titles-table" style="width: 5%">Estado</th>
+                                    <th class="titles-table" style="width: 10%">Gestión</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(registro, indexS) in registros">
-                                    <td style="font-size: 12px; padding: 5px;">@{{indexS+pagination.from}}.</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.tipo_documentos_sigla}}: @{{registro.num_documento}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.nombre}} @{{registro.apellidos}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.codigo_plaza}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.especialidad}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.genero}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.telefono}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.direccion}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.users_name}}</td>
-                                    <td style="font-size: 12px; padding: 5px;">@{{registro.users_email}}</td>
-                                    <td style="font-size: 12px; padding: 5px; text-align: center;">
-                                        <small style="font-size: 12px;" class="badge badge-success" v-if="registro.activo=='1'">Activo</small>
-                                        <small style="font-size: 12px;" class="badge badge-warning" v-if="registro.activo=='0'">Inactivo</small>
+                                    <td class="rows-table">@{{indexS+pagination.from}}.</td>
+                                    <td class="rows-table">@{{registro.tipo_documentos_sigla}}: @{{registro.num_documento}}</td>
+                                    <td class="rows-table">@{{registro.nombre}} @{{registro.apellidos}}</td>
+                                    <td class="rows-table">@{{registro.codigo_plaza}}</td>
+                                    <td class="rows-table">@{{registro.especialidad}}</td>
+                                    <td class="rows-table">@{{registro.genero}}</td>
+                                    <td class="rows-table">@{{registro.telefono}}</td>
+                                    <td class="rows-table">@{{registro.direccion}}</td>
+                                    <td class="rows-table">@{{registro.users_name}}</td>
+                                    <td class="rows-table">@{{registro.users_email}}</td>
+                                    <td class="rows-table" style="text-align: center;">
+                                        <small style="font-size: 13px;" class="badge badge-success" v-if="registro.activo=='1'">Activo</small>
+                                        <small style="font-size: 13px;" class="badge badge-warning" v-if="registro.activo=='0'">Inactivo</small>
                                       </td>
                                     <td>
                                         <center>
@@ -91,7 +91,7 @@
                         </table>
 
                         <div style="padding: 15px;">
-                            <div><h5>Registros por Página: @{{ pagination.per_page }}</h5></div>
+                            <div><h6>Registros por Página: @{{ pagination.per_page }}</h6></div>
                             <nav aria-label="Page navigation example">
                               <ul class="pagination">
                                <li class="page-item" v-if="pagination.current_page>1">
@@ -122,7 +122,7 @@
                            </li>
                            </ul>
                            </nav>
-                           <div><h5>Registros Totales: @{{ pagination.total }}</h5></div>
+                           <div><h6>Registros Totales: @{{ pagination.total }}</h6></div>
                            </div>
                     </div>
                     <div v-else>

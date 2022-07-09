@@ -57,6 +57,13 @@ createApp({
             divprincipal: false,
 
             labelBtnSave: 'Registrar',
+
+            tipoDocSelect: {
+                'id': '',
+                'nombre': 'Documento',
+                'sigla': '',
+                'digitos': '0',
+            }
         }
     },
     created: function() {
@@ -172,6 +179,15 @@ createApp({
         },
     },
     methods: {
+
+        changeTipoDoc: function() {
+            this.tipoDocumentos.forEach((element) => {
+                if(element.id == this.fillobject.tipo_documento_id){
+                    this.tipoDocSelect = element;
+                }
+            });
+            this.fillobject.num_documento = '';
+        },
         getDatos: function(page) {
             var busca = this.buscar;
             var url = 'redocentes?page=' + page + '&busca=' + busca;
@@ -207,7 +223,7 @@ createApp({
             this.divFormulario=true;
 
             this.$nextTick(() => {
-                $('#txtnum_documento').focus();
+                $('#cbutipo_documento_id').focus();
             });
         },
         cerrarForm: function () {
@@ -233,9 +249,15 @@ createApp({
                 'activo': '1',
                 'modifPsw': '0',
             };
+            this.tipoDocSelect = {
+                'id': '',
+                'nombre': 'Documento',
+                'sigla': '',
+                'digitos': '0',
+            };
 
             this.$nextTick(() => {
-                $('#txtnum_documento').focus();
+                $('#cbutipo_documento_id').focus();
             });
         },
         procesar: function() {
@@ -316,7 +338,7 @@ createApp({
             this.divFormulario=true;
 
             this.$nextTick(() => {
-                $('#txtnum_documento').focus();
+                $('#cbutipo_documento_id').focus();
             });
 
         },

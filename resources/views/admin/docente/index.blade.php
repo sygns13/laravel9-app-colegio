@@ -14,6 +14,14 @@
 
 @section('css')
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    <style type="text/css">   
+    .titles-table{
+        text-align: center;font-size: 13px;
+    }
+    .rows-table{
+        font-size: 13px; padding: 5px;
+    }
+    </style>
 @stop
 
 @section('js')
