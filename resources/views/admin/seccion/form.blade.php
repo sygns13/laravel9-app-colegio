@@ -17,9 +17,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="txtno,bre" class="col-sm-2 col-form-label">Nombre</label>
+                    <label for="txtnombre" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="txtno,bre" placeholder="Nombre" v-model="fillobject.nombre" maxlength="10">
+                      <input type="text" class="form-control" id="txtnombre" placeholder="Nombre" v-model="fillobject.nombre" maxlength="10">
                     </div>
                   </div>
                 </div>

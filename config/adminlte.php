@@ -278,6 +278,11 @@ return [
 
             ]
         ],
+        [
+            'text' => 'Docentes',
+            'url'  => 'admin/docentes',
+            'icon' => 'fas fa-fw fa-user-secret',
+        ],
 
         [
             'text'        => 'Matrícula',

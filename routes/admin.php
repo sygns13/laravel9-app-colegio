@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SeccionesController;
 use App\Http\Controllers\Admin\InstitucionEducativaController;
 use App\Http\Controllers\Admin\CursoController;
 use App\Http\Controllers\Admin\CompetenciaController;
+use App\Http\Controllers\Admin\DocenteController;
 
 
 /* Route::get('admin', function () {
@@ -25,10 +26,13 @@ Route::middleware([
     Route::get('/ie', [InstitucionEducativaController::class, 'index1'])->name('ie');
     Route::get('/secciones', [SeccionesController::class, 'index1'])->name('secciones');
     Route::get('/cursos', [CursoController::class, 'index1'])->name('cursos');
+    Route::get('/docentes', [DocenteController::class, 'index1'])->name('docentes');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
     Route::resource('/recursos', CursoController::class);
-    Route::resource('/recompetencias', CompetenciaController::class);
+    Route::resource('/redocentes', DocenteController::class);
+
+    Route::get('redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
 
 });

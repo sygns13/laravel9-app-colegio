@@ -4,6 +4,8 @@
             <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">Formulario de Actualización de Datos de la Institución Educativa</h3>
+                  <a style="float: right; padding: all; color: black;" type="button" class="btn btn-default btn-sm" href="{{URL::to('admin')}}"><i class="fa fa-reply-all" aria-hidden="true"></i> 
+                    Volver</a>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
