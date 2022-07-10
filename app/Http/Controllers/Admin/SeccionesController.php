@@ -8,6 +8,9 @@ use Validator;
 use Auth;
 
 use App\Models\Secciones;
+use App\Models\CicloSeccion;
+use App\Models\CicloGrado;
+use App\Models\CicloEscolar;
 
 use stdClass;
 
@@ -97,6 +100,31 @@ class SeccionesController extends Controller
 
         $registro->save();
 
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+
+            $gradoActivo = CicloGrado::GetGradoByCicloAndGrado($cicloActivo->id, $grado_id);
+
+            $registro_seccion = new CicloSeccion;
+            $registro_seccion->seccion_id=$registro->id;
+            $registro_seccion->nombre=$registro->nombre;
+            $registro_seccion->sigla=$registro->sigla;
+            $registro_seccion->ciclo_grados_id=$gradoActivo->id;
+            $registro_seccion->turno='0';
+            $registro_seccion->activo='1';
+            $registro_seccion->borrado='0';
+            $registro_seccion->ciclo_escolar_id=$cicloActivo->id;
+
+            $registro_seccion->save();
+
+
+
+            //$seccion = CicloSeccion::GetSeccionByCicloAndSeccion($cicloActivo->id, $registro->id);
+        }
+
+
 
 
         $msj='La Sección se ha registrado con éxito';
@@ -177,6 +205,18 @@ class SeccionesController extends Controller
 
         $registro->save();
 
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+            $registro_seccion = CicloSeccion::GetSeccionByCicloAndSeccion($cicloActivo->id, $registro->id);
+
+            $registro_seccion->nombre=$registro->nombre;
+            $registro_seccion->sigla=$registro->sigla;
+
+            $registro_seccion->save();
+        }
+
 
 
         $msj='La Sección se ha modificado con éxito';
@@ -200,6 +240,14 @@ class SeccionesController extends Controller
         $registro->save();
         
         //$registro->delete();
+
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+            $seccion = CicloSeccion::GetSeccionByCicloAndSeccion($cicloActivo->id, $registro->id);
+            $seccion->delete();
+        }
 
         $msj='La Sección fue eliminada exitosamente';
 

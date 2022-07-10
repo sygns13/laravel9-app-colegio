@@ -285,6 +285,18 @@ return [
         ],
 
         [
+            'text'        => 'Gestión Académica',
+            'icon'        => 'fas fa-fw fa-graduation-cap',
+            'icon_color'  => 'white',
+            'submenu' => [
+                [
+                    'text' => 'Gestión del Año Escolar',
+                    'url'  => 'admin/ciclo',
+                ],
+
+            ]
+        ],
+        [
             'text'        => 'Matrícula',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',

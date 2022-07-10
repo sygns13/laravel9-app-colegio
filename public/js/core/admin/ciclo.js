@@ -5,9 +5,9 @@ const {
 createApp({
     data() {
         return {
-            tituloHeader: "Gestión de Docentes",
-            subtituloHeader: "Docentes",
-            subtitulo2Header: "",
+            tituloHeader: "Gestión del Año Escolar",
+            subtituloHeader: "Gestión Académica",
+            subtitulo2Header: "Gestión del Año Escolar",
 
             subtitle2Header: false,
 
@@ -15,26 +15,16 @@ createApp({
             mailPerfil: '{{ Auth::user()->email }}',
 
             registros: [],
-            tipoDocumentos: [],
             errors: [],
 
             fillobject: {
                 'type':'C',
                 'id': '',
-                'tipo_documento_id': '0',
-                'num_documento': '',
-                'apellidos': '',
-                'nombre': '',
-                'especialidad': '',
-                'genero': 'M',
-                'telefono': '',
-                'direccion': '',
-                'codigo_plaza': '',
-                'name': '',
-                'email': '',
-                'password': '',
+                'year': '',
+                'fecha_ini_clases': '',
+                'fecha_fin_clases': '',
                 'activo': '1',
-                'modifPsw': '0',
+                'activo_matricula': '0',
             },
 
             pagination: {
@@ -58,17 +48,12 @@ createApp({
 
             labelBtnSave: 'Registrar',
 
-            tipoDocSelect: {
-                'id': '',
-                'nombre': 'Documento',
-                'sigla': '',
-                'digitos': '0',
-            }
+            yearIni: '',
+
         }
     },
     created: function() {
         this.getDatos(this.thispage);
-        console.log("created");
     },
     mounted: function() {
         console.log("mounted");
@@ -99,6 +84,24 @@ createApp({
                 from++;
             }
             return pagesArray;
+        },
+        registrosFilters: function() {
+            return this.registros.map(function(registro) {
+
+                if (registro.fecha_ini_clases != null && registro.fecha_ini_clases.length == 10) {
+                    registro.fecha_ini = registro.fecha_ini_clases.slice(-2) + '/' + registro.fecha_ini_clases.slice(-5, -3) + '/' + registro.fecha_ini_clases.slice(0, 4);
+                } else {
+                    registro.fecha_ini = '';
+                }
+
+                if (registro.fecha_fin_clases != null && registro.fecha_fin_clases.length == 10) {
+                    registro.fecha_fin = registro.fecha_fin_clases.slice(-2) + '/' + registro.fecha_fin_clases.slice(-5, -3) + '/' + registro.fecha_fin_clases.slice(0, 4);
+                } else {
+                    registro.fecha_fin = '';
+                }
+
+                return registro;
+            });
         }
     },
     filters: {
@@ -110,15 +113,7 @@ createApp({
 
             return value;
         },
-        pasfechaVista: function(date) {
-            if (date != null && date.length == 10) {
-                date = date.slice(-2) + '/' + date.slice(-5, -3) + '/' + date.slice(0, 4);
-            } else {
-                return '';
-            }
-
-            return date;
-        },
+        
         leftpad: function(n, length) {
             var n = n.toString();
             while (n.length < length)
@@ -180,23 +175,27 @@ createApp({
     },
     methods: {
 
-        changeTipoDoc: function() {
-            this.tipoDocumentos.forEach((element) => {
-                if(element.id == this.fillobject.tipo_documento_id){
-                    this.tipoDocSelect = element;
-                }
-            });
-            this.fillobject.num_documento = '';
+        pasfechaVista: function(date) {
+            if (date != null && date.length == 10) {
+                date = date.slice(-2) + '/' + date.slice(-5, -3) + '/' + date.slice(0, 4);
+            } else {
+                return '';
+            }
+
+            return date;
         },
+
         getDatos: function(page) {
             var busca = this.buscar;
-            var url = 'redocentes?page=' + page + '&busca=' + busca;
+            var url = 'reciclo?page=' + page + '&busca=' + busca;
 
             axios.get(url).then(response => {
 
                 this.registros= response.data.registros.data;
                 this.pagination= response.data.pagination;
-                this.tipoDocumentos= response.data.tipoDocumentos;
+                this.yearIni= response.data.year;
+
+                this.fillobject.year = this.yearIni;
 
                 //this.mostrarPalenIni=true;
 
@@ -221,7 +220,8 @@ createApp({
             this.divFormulario=true;
 
             this.$nextTick(() => {
-                $('#cbutipo_documento_id').focus();
+                $('#txtyear').focus();
+                console.log(this.fillobject);
             });
         },
         cerrarForm: function () {
@@ -232,30 +232,14 @@ createApp({
             this.fillobject = {
                 'type':'C',
                 'id': '',
-                'tipo_documento_id': '0',
-                'num_documento': '',
-                'apellidos': '',
-                'nombre': '',
-                'especialidad': '',
-                'genero': 'M',
-                'telefono': '',
-                'direccion': '',
-                'codigo_plaza': '',
-                'name': '',
-                'email': '',
-                'password': '',
+                'year': this.yearIni,
+                'fecha_ini_clases': '',
+                'fecha_fin_clases': '',
                 'activo': '1',
-                'modifPsw': '0',
+                'activo_matricula': '0',
             };
-            this.tipoDocSelect = {
-                'id': '',
-                'nombre': 'Documento',
-                'sigla': '',
-                'digitos': '0',
-            };
-
             this.$nextTick(() => {
-                $('#cbutipo_documento_id').focus();
+                $('#txtyear').focus();
             });
         },
         procesar: function() {
@@ -269,7 +253,7 @@ createApp({
         confirmRegistrar:function () {
             swal.fire({
                 title: '¿Estás seguro?',
-                text: "Desea Confirmar el Registro del Docente",
+                text: "Desea Confirmar el Registro del Año Escolar",
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -278,14 +262,13 @@ createApp({
             }).then((result) => {
 
                 if (result.value) {
-                    console.log("aqui llega");
                     this.create();
                 }
 
             }).catch(swal.noop);
         },
         create:function () {
-            var url='redocentes';
+            var url='reciclo';
             $("#btnGuardar").attr('disabled', true);
             $("#btnClose").attr('disabled', true);
             this.divloaderNuevo=true;
@@ -316,34 +299,26 @@ createApp({
 
             this.cancelForm();
             this.fillobject.id=dato.id;
-            this.fillobject.tipo_documento_id=dato.tipo_documento_id;
-            this.fillobject.num_documento=dato.num_documento;
-            this.fillobject.apellidos=dato.apellidos;
+            this.fillobject.year=dato.year;
             this.fillobject.nombre=dato.nombre;
-            this.fillobject.especialidad=dato.especialidad;
-            this.fillobject.genero=dato.genero;
-            this.fillobject.telefono=dato.telefono;
-            this.fillobject.direccion=dato.direccion;
-            this.fillobject.codigo_plaza=dato.codigo_plaza;
-            this.fillobject.name=dato.users_name;
-            this.fillobject.email=dato.users_email;
-            this.fillobject.activo=dato.users_activo;
-            this.fillobject.modifPsw= 0;
-            this.fillobject.password= '';
+            this.fillobject.fecha_ini_clases=dato.fecha_ini_clases;
+            this.fillobject.fecha_fin_clases=dato.fecha_fin_clases;
+            this.fillobject.activo=dato.activo;
+            this.fillobject.activo_matricula=dato.activo_matricula;
             this.labelBtnSave = 'Modificar';
             this.fillobject.type = 'U';
 
             this.divFormulario=true;
 
             this.$nextTick(() => {
-                $('#cbutipo_documento_id').focus();
+                $('#txtyear').focus();
             });
 
         },
         confirmActualizar:function () {
             swal.fire({
                 title: '¿Estás seguro?',
-                text: "Desea Confirmar la Modificación del Docente",
+                text: "Desea Confirmar la Modificación del Año Escolar",
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -360,7 +335,7 @@ createApp({
         },
         update: function () {
 
-            var url="redocentes/"+this.fillobject.id;
+            var url="reciclo/"+this.fillobject.id;
             $("#btnGuardar").attr("disabled");
             $("#btnClose").attr("disabled");
             this.divloaderEdit=true;
@@ -392,7 +367,7 @@ createApp({
         borrar:function (dato) {
             swal.fire({
                 title: '¿Estás seguro?',
-                text: "Desea Eliminar el registro del Docente",
+                text: "Desea Eliminar el registro del Año Escolar",
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -407,7 +382,7 @@ createApp({
             }).catch(swal.noop);
         },
         delete:function (dato) {
-            var url = 'redocentes/'+dato.id;
+            var url = 'reciclo/'+dato.id;
             axios.delete(url).then(response=>{//eliminamos
 
                 if(response.data.result=='1'){
@@ -420,10 +395,10 @@ createApp({
             });
         },
 
-        baja:function (dato) {
+        cerrarMatricula:function (dato) {
             swal.fire({
                 title: '¿Estás seguro?',
-                text: "Desea dar de baja al Docente",
+                text: "Desea cerrar el proceso de matrícula",
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -432,15 +407,15 @@ createApp({
             }).then((result) => {
   
               if (result.value) {
-                this.altabajadocente(dato.id,0);
+                this.desactivarMatricula(dato.id);
               }
   
           }).catch(swal.noop);
         },
-        alta:function (dato) {
+        abrirMatricula:function (dato) {
             swal.fire({
                 title: '¿Estás seguro?',
-                text: "Desea activar al Docente",
+                text: "Desea activar el proceso de matrícula",
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -449,13 +424,56 @@ createApp({
             }).then((result) => {
   
               if (result.value) {
-                this.altabajadocente(dato.id,1);
+                this.activarMatricula(dato.id);
               }
           }).catch(swal.noop);
         },
 
-        altabajadocente:function (id, estado) {
-            var url = 'redocentes/altabajadocente/'+id+'/'+estado;
+        activarMatricula:function (id) {
+            var url = 'reciclo/activarMatricula/'+id;
+            axios.get(url).then(response=>{//get
+                if(response.data.result=='1'){
+                    this.getDatos(this.thispage);//listamos
+                    toastr.success(response.data.msj);//mostramos mensaje
+                }else{
+                    // $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            });
+        },
+
+        desactivarMatricula:function (id) {
+            var url = 'reciclo/desactivarMatricula/'+id;
+            axios.get(url).then(response=>{//get
+                if(response.data.result=='1'){
+                    this.getDatos(this.thispage);//listamos
+                    toastr.success(response.data.msj);//mostramos mensaje
+                }else{
+                    // $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            });
+        },
+
+        cerrarCiclo:function (dato) {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Finalizar y Cerrar el Año Escolar?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+  
+              if (result.value) {
+                this.cerrarCicloEscolar(dato.id);
+              }
+          }).catch(swal.noop);
+        },
+
+        cerrarCicloEscolar:function (id) {
+            var url = 'reciclo/cerrarCicloEscolar/'+id;
             axios.get(url).then(response=>{//get
                 if(response.data.result=='1'){
                     this.getDatos(this.thispage);//listamos

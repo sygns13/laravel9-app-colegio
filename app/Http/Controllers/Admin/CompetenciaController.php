@@ -9,6 +9,9 @@ use Auth;
 
 use App\Models\Curso;
 use App\Models\Competencia;
+use App\Models\CicloEscolar;
+use App\Models\CicloCurso;
+use App\Models\CicloCompetencia;
 
 use stdClass;
 
@@ -78,6 +81,26 @@ class CompetenciaController extends Controller
 
         $registro->save();
 
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+
+            $cursoActivo = CicloCurso::GetCursoByCicloAndCurso($cicloActivo->id, $cursos_id);
+
+            $registro_competencia = new CicloCompetencia;
+            $registro_competencia->ciclo_cursos_id = $cursoActivo->id;
+            $registro_competencia->nombre = $registro->nombre;
+            $registro_competencia->orden = $registro->orden;
+            $registro_competencia->competencia_id = $registro->id;
+            $registro_competencia->activo='1';
+            $registro_competencia->borrado='0';
+            $registro_competencia->ciclo_escolar_id=$cicloActivo->id;
+
+            $registro_competencia->save();
+
+        }
+
 
 
         $msj='La Competencia se ha registrado con éxito';
@@ -129,6 +152,18 @@ class CompetenciaController extends Controller
 
         $registro->save();
 
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+            $registro_competencia = CicloCompetencia::GetCompetenciaByCicloAndCompetencia($cicloActivo->id, $registro->id);
+
+            $registro_competencia->nombre=$registro->nombre;
+            $registro_competencia->orden=$registro->orden;
+
+            $registro_competencia->save();
+        }
+
 
 
         $msj='La Competencia se ha modificado con éxito';
@@ -144,6 +179,14 @@ class CompetenciaController extends Controller
         $registro = Competencia::findOrFail($id);
         $registro->borrado = '1';
         $registro->save();
+
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+            $registro_competencia = CicloCompetencia::GetCompetenciaByCicloAndCompetencia($cicloActivo->id, $registro->id);
+            $registro_competencia->delete();
+        }
         
         //$registro->delete();
 

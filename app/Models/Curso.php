@@ -66,4 +66,28 @@ class Curso extends Model
 
         return $data;
     }
+
+    public static function GetCursosByGrado($grado_id){
+
+        $cursos = Curso::where('borrado','0')
+                        ->where('activo','1')
+                        ->where('grado_id', $grado_id)
+                        ->orderBy('orden')
+                        ->orderBy('nombre')
+                        ->get();
+
+        foreach ($cursos as $keyC => $valueC) {
+            $competencias = Competencia::where('borrado','0')
+                            ->where('activo','1')
+                            ->where('cursos_id', $valueC->id)
+                            ->orderBy('orden')
+                            ->orderBy('nombre')
+                            ->get();
+
+            $valueC->competencias = $competencias;
+        }
+
+        return $cursos;
+
+    }
 }

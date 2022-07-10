@@ -9,6 +9,10 @@ use Auth;
 
 use App\Models\Curso;
 use App\Models\Grado;
+use App\Models\CicloEscolar;
+use App\Models\CicloCurso;
+use App\Models\CicloGrado;
+
 
 use stdClass;
 
@@ -76,6 +80,27 @@ class CursoController extends Controller
 
         $registro->save();
 
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+
+            $gradoActivo = CicloGrado::GetGradoByCicloAndGrado($cicloActivo->id, $grado_id);
+
+            $registro_cursos = new CicloCurso;
+            $registro_cursos->ciclo_grado_id = $gradoActivo->id;
+            $registro_cursos->nombre = $registro->nombre;
+            $registro_cursos->orden = $registro->orden;
+            $registro_cursos->curso_id = $registro->id;
+            $registro_cursos->opcion = "0";
+            $registro_cursos->activo='1';
+            $registro_cursos->borrado='0';
+            $registro_cursos->ciclo_escolar_id=$cicloActivo->id;
+
+            $registro_cursos->save();
+
+        }
+
 
 
         $msj='El Curso se ha registrado con éxito';
@@ -127,6 +152,18 @@ class CursoController extends Controller
 
         $registro->save();
 
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+            $registro_curso = CicloCurso::GetCursoByCicloAndCurso($cicloActivo->id, $registro->id);
+
+            $registro_curso->nombre=$registro->nombre;
+            $registro_curso->orden=$registro->orden;
+
+            $registro_curso->save();
+        }
+
 
 
         $msj='El Curso se ha modificado con éxito';
@@ -144,6 +181,14 @@ class CursoController extends Controller
         $registro->save();
         
         //$registro->delete();
+
+        //Data Transaccional
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        if($cicloActivo != null){
+            $registro_curso = CicloCurso::GetCursoByCicloAndCurso($cicloActivo->id, $registro->id);
+            $registro_curso->delete();
+        }
 
         $msj='El Curso fue eliminado exitosamente';
 
