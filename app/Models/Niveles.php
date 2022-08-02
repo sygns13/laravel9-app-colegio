@@ -11,6 +11,7 @@ class Niveles extends Model
 
     protected $table = 'niveles';
     protected $fillable = ['nombre',
+                            'siglas',
                             'institucion_educativa_id',
                             'turno_id',
                             'activo',

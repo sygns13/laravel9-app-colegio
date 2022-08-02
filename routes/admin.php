@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\CursoController;
 use App\Http\Controllers\Admin\CompetenciaController;
 use App\Http\Controllers\Admin\DocenteController;
 use App\Http\Controllers\Admin\CicloEscolarController;
+use App\Http\Controllers\Admin\HorarioController;
+use App\Http\Controllers\Admin\HoraController;
 
 
 /* Route::get('admin', function () {
@@ -29,12 +31,17 @@ Route::middleware([
     Route::get('/cursos', [CursoController::class, 'index1'])->name('cursos');
     Route::get('/docentes', [DocenteController::class, 'index1'])->name('docentes');
     Route::get('/ciclo', [CicloEscolarController::class, 'index1'])->name('ciclo');
+    Route::get('/horario', [HorarioController::class, 'index1'])->name('horario');
+    Route::get('/horas', [HoraController::class, 'index1'])->name('hora');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
     Route::resource('/recursos', CursoController::class);
+    Route::resource('/recompetencias', CompetenciaController::class);
     Route::resource('/redocentes', DocenteController::class);
     Route::resource('/reciclo', CicloEscolarController::class);
+    Route::resource('/rehorario', HorarioController::class);
+    Route::resource('/rehora', HoraController::class);
 
     Route::get('redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
     Route::get('reciclo/activarMatricula/{id}',[CicloEscolarController::class, 'activarMatricula'])->name('activarMatricula');

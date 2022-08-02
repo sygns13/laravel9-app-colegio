@@ -522,7 +522,7 @@ createApp({
         },
         updateC: function () {
 
-            var url="recompetencias/"+this.fillobject.id;
+            var url="recompetencias/"+this.fillobject2.id;
             $("#btnGuardarC").attr("disabled");
             $("#btnCloseC").attr("disabled");
             this.divloaderEdit=true;
@@ -583,5 +583,8 @@ createApp({
                 }
             });
         },
+        cerrarComeptencia:function () {
+            this.verCompetencias = false;
+        }
     }
 }).mount('#app')

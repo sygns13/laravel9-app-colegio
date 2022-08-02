@@ -275,6 +275,10 @@ return [
                     'text' => 'Gestión de Cursos',
                     'url'  => 'admin/cursos',
                 ],
+                [
+                    'text' => 'Gestión de Horas',
+                    'url'  => 'admin/horas',
+                ],
 
             ]
         ],
@@ -292,6 +296,10 @@ return [
                 [
                     'text' => 'Gestión del Año Escolar',
                     'url'  => 'admin/ciclo',
+                ],
+                [
+                    'text' => 'Gestión de Horarios',
+                    'url'  => 'admin/horario',
                 ],
 
             ]

@@ -211,7 +211,7 @@ class CicloEscolarController extends Controller
                     $registro_seccion->nombre=$seccion->nombre;
                     $registro_seccion->sigla=$seccion->sigla;
                     $registro_seccion->ciclo_grados_id=$registro_grado->id;
-                    $registro_seccion->turno='0';
+                    $registro_seccion->turno_id='0';
                     $registro_seccion->activo='1';
                     $registro_seccion->borrado='0';
                     $registro_seccion->ciclo_escolar_id=$registro->id;

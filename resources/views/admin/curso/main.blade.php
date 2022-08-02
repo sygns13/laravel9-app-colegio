@@ -8,7 +8,7 @@
                             <h3 class="card-title">Niveles:</h3>
                         </li>
                         <li class="nav-item" v-for="(nivel, index) in registros.niveles">
-                            <a data-toggle="pill" role="tab" aria-selected="true"
+                            <a data-toggle="pill" role="tab" aria-selected="true" @click="cerrarComeptencia()"
                                 v-bind="{ id: 'custom-tabs-two-' + nivel.siglas+'-tab', 'class': index == 0 ? 'nav-link active' : 'nav-link', 'href': '#custom-tabs-two-' + nivel.siglas, 'aria-controls': 'custom-tabs-two-' + nivel.siglas }">@{{ nivel.nombre }}</a>
                         </li>
                     </ul>
@@ -27,7 +27,7 @@
                                         <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist"
                                             aria-orientation="vertical">
                                             <template v-for="(grado, indexG) in nivel.grados">
-                                                <a data-toggle="pill" role="tab" aria-selected="true"
+                                                <a data-toggle="pill" role="tab" aria-selected="true" @click="cerrarComeptencia()"
                                                     v-bind="{ 'class': indexG == 0 ? 'nav-link active' : 'nav-link', 'id': 'vert-tabs-gra' + nivel.siglas + grado.orden + '-tab', 'href': '#vert-tabs-gra' + nivel.siglas + grado.orden, 'aria-controls': 'vert-tabs-gra' + nivel.siglas + grado.orden }">@{{ grado.nombre }}</a>
                                             </template>
                                         </div>

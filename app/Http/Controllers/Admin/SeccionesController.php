@@ -112,7 +112,7 @@ class SeccionesController extends Controller
             $registro_seccion->nombre=$registro->nombre;
             $registro_seccion->sigla=$registro->sigla;
             $registro_seccion->ciclo_grados_id=$gradoActivo->id;
-            $registro_seccion->turno='0';
+            $registro_seccion->turno_id='0';
             $registro_seccion->activo='1';
             $registro_seccion->borrado='0';
             $registro_seccion->ciclo_escolar_id=$cicloActivo->id;

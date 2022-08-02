@@ -14,7 +14,7 @@ class CicloSeccion extends Model
                             'sigla',
                             'seccion_id',
                             'ciclo_grados_id',
-                            'turno',
+                            'turno_id',
                             'activo',
                             'borrado',
                             'ciclo_escolar_id',
