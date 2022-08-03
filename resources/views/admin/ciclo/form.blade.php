@@ -39,6 +39,16 @@
                   <input type="date" class="form-control" id="txtfecha_fin_clases" placeholder="dd/mm/yyyy" v-model="fillobject.fecha_fin_clases">
                 </div>
               </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cbuopcion">Sistema de Calificación <spam style="color:red;">*</spam></label>
+                  <select class="form-control" style="width: 100%;" v-model="fillobject.opcion" id="cbuopcion">
+                    <option value="1">Trimestral</option>
+                    <option value="2">Bimestral</option>
+                  </select>
+                </div>
+              </div>
             </div>
             <!-- /.card-body -->
           </div>

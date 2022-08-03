@@ -25,6 +25,7 @@ createApp({
                 'fecha_fin_clases': '',
                 'activo': '1',
                 'activo_matricula': '0',
+                'opcion': '1',
             },
 
             pagination: {
@@ -237,6 +238,7 @@ createApp({
                 'fecha_fin_clases': '',
                 'activo': '1',
                 'activo_matricula': '0',
+                'opcion': '1',
             };
             this.$nextTick(() => {
                 $('#txtyear').focus();
@@ -305,6 +307,7 @@ createApp({
             this.fillobject.fecha_fin_clases=dato.fecha_fin_clases;
             this.fillobject.activo=dato.activo;
             this.fillobject.activo_matricula=dato.activo_matricula;
+            this.fillobject.opcion=dato.opcion;
             this.labelBtnSave = 'Modificar';
             this.fillobject.type = 'U';
 

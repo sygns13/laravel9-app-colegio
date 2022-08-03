@@ -18,6 +18,7 @@ class CicloEscolar extends Model
                             'activo',
                             'activo_matricula',
                             'borrado',
+                            'opcion',
                         ];
 	protected $guarded = ['id'];
 

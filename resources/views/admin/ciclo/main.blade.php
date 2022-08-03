@@ -41,12 +41,13 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                                 <tr>
-                                    <th class="titles-table" style="width: 5%">#</th>
-                                    <th class="titles-table" style="width: 10%">Año</th>
-                                    <th class="titles-table" style="width: 12%">Nombre</th>
+                                    <th class="titles-table" style="width: 4%">#</th>
+                                    <th class="titles-table" style="width: 5%">Año</th>
+                                    <th class="titles-table" style="width: 10%">Nombre</th>
+                                    <th class="titles-table" style="width: 11%">Sistema de Calificación</th>
                                     <th class="titles-table" style="width: 9%">Fecha de Inicio</th>
                                     <th class="titles-table" style="width: 9%">Fecha de Finalización</th>
-                                    <th class="titles-table" style="width: 10%">Estado</th>
+                                    <th class="titles-table" style="width: 7%">Estado</th>
                                     <th class="titles-table" style="width: 10%">Estado de Matrícula</th>
                                     <th class="titles-table" style="width: 10%">Gestión Matrícula</th>
                                     <th class="titles-table" style="width: 10%">Cerrar Año Escolar</th>
@@ -58,6 +59,14 @@
                                     <td class="rows-table">@{{indexS+pagination.from}}.</td>
                                     <td class="rows-table">@{{registro.year}}</td>
                                     <td class="rows-table">@{{registro.nombre}}</td>
+                                    <td class="rows-table">
+                                      <template v-if ="registro.opcion == '1'">
+                                        Trimestral
+                                      </template>
+                                      <template v-if ="registro.opcion == '2'">
+                                        Bimestral
+                                      </template>
+                                    </td>
                                     <td class="rows-table">@{{registro.fecha_ini}}</td>
                                     <td class="rows-table">@{{registro.fecha_fin}}</td>
                                     <td class="rows-table" style="text-align: center;">
@@ -74,7 +83,7 @@
                                         data-placement="top" data-toggle="tooltip" title="Cerrar Matrícula" style="margin-right: 5px;"/>
 
                                         <x-adminlte-button v-if="registro.activo_matricula=='0'" @click="abrirMatricula(registro)" id="btnAbrirMat" class="bg-gradient btn-sm" type="button" label="Abrir Mat" theme="primary" icon="fas fa-check-circle"
-                                        data-placement="top" data-toggle="tooltip" title="Cerrar Matrícula" style="margin-right: 5px;"/>
+                                        data-placement="top" data-toggle="tooltip" title="Abrir Matrícula" style="margin-right: 5px;"/>
                                       </center>
                                     </td>
                                     <td>

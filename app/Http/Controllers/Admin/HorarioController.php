@@ -141,6 +141,7 @@ class HorarioController extends Controller
                 $horario = Horario::where('ciclo_escolar_id', $cicloActivo->id)
                                     ->where('ciclo_seccion_id', $seccionSeleccionada)
                                     ->where('hora_id', $hora->id)
+                                    ->where('turno_id', $turnoSeleccionado)
                                     ->where('dia_semana', 1)
                                     ->first();
                 if($horario){
@@ -159,6 +160,7 @@ class HorarioController extends Controller
                     $horario->ciclo_escolar_id = $cicloActivo->id;
                     $horario->ciclo_seccion_id = $seccionSeleccionada;
                     $horario->hora_id = $hora->id;
+                    $horario->turno_id = $turnoSeleccionado;
 
                     $horario->save();
                 }  
@@ -171,6 +173,7 @@ class HorarioController extends Controller
                 $horario = Horario::where('ciclo_escolar_id', $cicloActivo->id)
                                     ->where('ciclo_seccion_id', $seccionSeleccionada)
                                     ->where('hora_id', $hora->id)
+                                    ->where('turno_id', $turnoSeleccionado)
                                     ->where('dia_semana', 2)
                                     ->first();
                 if($horario){
@@ -189,6 +192,7 @@ class HorarioController extends Controller
                     $horario->ciclo_escolar_id = $cicloActivo->id;
                     $horario->ciclo_seccion_id = $seccionSeleccionada;
                     $horario->hora_id = $hora->id;
+                    $horario->turno_id = $turnoSeleccionado;
                     
                     $horario->save();
                 }  
@@ -201,6 +205,7 @@ class HorarioController extends Controller
                 $horario = Horario::where('ciclo_escolar_id', $cicloActivo->id)
                                     ->where('ciclo_seccion_id', $seccionSeleccionada)
                                     ->where('hora_id', $hora->id)
+                                    ->where('turno_id', $turnoSeleccionado)
                                     ->where('dia_semana', 3)
                                     ->first();
                 if($horario){
@@ -219,6 +224,7 @@ class HorarioController extends Controller
                     $horario->ciclo_escolar_id = $cicloActivo->id;
                     $horario->ciclo_seccion_id = $seccionSeleccionada;
                     $horario->hora_id = $hora->id;
+                    $horario->turno_id = $turnoSeleccionado;
                     
                     $horario->save();
                 }  
@@ -231,6 +237,7 @@ class HorarioController extends Controller
                 $horario = Horario::where('ciclo_escolar_id', $cicloActivo->id)
                                     ->where('ciclo_seccion_id', $seccionSeleccionada)
                                     ->where('hora_id', $hora->id)
+                                    ->where('turno_id', $turnoSeleccionado)
                                     ->where('dia_semana', 4)
                                     ->first();
                 if($horario){
@@ -249,6 +256,7 @@ class HorarioController extends Controller
                     $horario->ciclo_escolar_id = $cicloActivo->id;
                     $horario->ciclo_seccion_id = $seccionSeleccionada;
                     $horario->hora_id = $hora->id;
+                    $horario->turno_id = $turnoSeleccionado;
                     
                     $horario->save();
                 }  
@@ -261,6 +269,7 @@ class HorarioController extends Controller
                 $horario = Horario::where('ciclo_escolar_id', $cicloActivo->id)
                                     ->where('ciclo_seccion_id', $seccionSeleccionada)
                                     ->where('hora_id', $hora->id)
+                                    ->where('turno_id', $turnoSeleccionado)
                                     ->where('dia_semana', 5)
                                     ->first();
                 if($horario){
@@ -279,6 +288,7 @@ class HorarioController extends Controller
                     $horario->ciclo_escolar_id = $cicloActivo->id;
                     $horario->ciclo_seccion_id = $seccionSeleccionada;
                     $horario->hora_id = $hora->id;
+                    $horario->turno_id = $turnoSeleccionado;
                     
                     $horario->save();
                 }  
@@ -292,6 +302,12 @@ class HorarioController extends Controller
                 }
             }
         }
+
+        //Limpiar Horario de otros turnos
+        $horariosDelete = Horario::where('ciclo_escolar_id', $cicloActivo->id)
+                                    ->where('ciclo_seccion_id', $seccionSeleccionada)
+                                    ->where('turno_id', '!=' , $turnoSeleccionado)
+                                    ->delete();
 
 
         $msj='El Horario se ha registrado con éxito';

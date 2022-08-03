@@ -74,6 +74,7 @@ class CicloEscolarController extends Controller
         $nombre=$request->nombre;
         $fecha_ini_clases=$request->fecha_ini_clases;
         $fecha_fin_clases=$request->fecha_fin_clases;
+        $opcion=$request->opcion;
 
         $result='1';
         $msj='';
@@ -95,12 +96,16 @@ class CicloEscolarController extends Controller
         $input5  = array('year' => $year);
         $reglas5 = array('year' => 'unique:ciclo_escolars,year'.',1,borrado');
 
+        $input6  = array('opcion' => $opcion);
+        $reglas6 = array('opcion' => 'required');
+
 
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
         $validator4 = Validator::make($input4, $reglas4);
         $validator5 = Validator::make($input5, $reglas5);
+        $validator6 = Validator::make($input6, $reglas6);
 
 
         if ($validator1->fails() || intval($year) < 2000)
@@ -148,6 +153,15 @@ class CicloEscolarController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
+        if ($validator6->fails())
+        {
+            $result='0';
+            $msj='Debe de seleccionar la Opción de Calificación de Notas';
+            $selector='cbuopcion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
         $cicloActivo = CicloEscolar::GetCicloActivo();
 
         if($cicloActivo != null){
@@ -168,6 +182,7 @@ class CicloEscolarController extends Controller
         $registro->nombre=$nombre;
         $registro->fecha_ini_clases=$fecha_ini_clases;
         $registro->fecha_fin_clases=$fecha_fin_clases;
+        $registro->opcion=$opcion;
         $registro->activo='1';
         $registro->activo_matricula='0';
         $registro->borrado='0';
@@ -227,7 +242,7 @@ class CicloEscolarController extends Controller
                     $registro_cursos->nombre = $curso->nombre;
                     $registro_cursos->orden = $curso->orden;
                     $registro_cursos->curso_id = $curso->id;
-                    $registro_cursos->opcion = "0";
+                    $registro_cursos->opcion = $registro->opcion;
                     $registro_cursos->activo='1';
                     $registro_cursos->borrado='0';
                     $registro_cursos->ciclo_escolar_id=$registro->id;
@@ -296,6 +311,7 @@ class CicloEscolarController extends Controller
         $nombre=$request->nombre;
         $fecha_ini_clases=$request->fecha_ini_clases;
         $fecha_fin_clases=$request->fecha_fin_clases;
+        $opcion=$request->opcion;
 
         $result='1';
         $msj='';
@@ -317,12 +333,16 @@ class CicloEscolarController extends Controller
         $input5  = array('year' => $year);
         $reglas5 = array('year' => 'unique:ciclo_escolars,year,'.$id.',id,borrado,0');
 
+        $input6  = array('opcion' => $opcion);
+        $reglas6 = array('opcion' => 'required');
+
 
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
         $validator4 = Validator::make($input4, $reglas4);
         $validator5 = Validator::make($input5, $reglas5);
+        $validator6 = Validator::make($input6, $reglas6);
 
 
         if ($validator1->fails() || intval($year) < 2000)
@@ -370,6 +390,15 @@ class CicloEscolarController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
+        if ($validator6->fails())
+        {
+            $result='0';
+            $msj='Debe de seleccionar la Opción de Calificación de Notas';
+            $selector='cbuopcion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
 
         $registro = CicloEscolar::findOrFail($id);
 
@@ -377,8 +406,16 @@ class CicloEscolarController extends Controller
         $registro->nombre=$nombre;
         $registro->fecha_ini_clases=$fecha_ini_clases;
         $registro->fecha_fin_clases=$fecha_fin_clases;
+        $registro->opcion=$opcion;
 
         $registro->save();
+
+        $cursos = CicloCurso::where('ciclo_escolar_id',$id)->get();
+
+        foreach ($cursos as $curso) {
+            $curso->opcion = $opcion;
+            $curso->save();
+        }
 
         $msj='Año Escolar modificado correctamente';
 

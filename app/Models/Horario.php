@@ -27,6 +27,7 @@ class Horario extends Model
                             'ciclo_escolar_id',
                             'ciclo_seccion_id',
                             'hora_id',
+                            'turno_id',
                         ];
 	protected $guarded = ['id'];
 

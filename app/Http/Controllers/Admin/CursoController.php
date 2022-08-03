@@ -92,7 +92,7 @@ class CursoController extends Controller
             $registro_cursos->nombre = $registro->nombre;
             $registro_cursos->orden = $registro->orden;
             $registro_cursos->curso_id = $registro->id;
-            $registro_cursos->opcion = "0";
+            $registro_cursos->opcion = $cicloActivo->opcion;
             $registro_cursos->activo='1';
             $registro_cursos->borrado='0';
             $registro_cursos->ciclo_escolar_id=$cicloActivo->id;

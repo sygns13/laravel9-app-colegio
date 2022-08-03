@@ -39,7 +39,7 @@ createApp({
             thispage: '1',
             divprincipal: false,
 
-            labelBtnSave: 'Registrar',
+            labelBtnSave: 'Registrar Horario',
 
             seccionSeleccionada: 0,
 
@@ -188,7 +188,17 @@ createApp({
         },
 
         cambioSeccion: function() {
-            this.generarHorario();
+
+            this.registros.niveles.forEach(nivel => {
+                nivel.grados.forEach(grado => {
+                    grado.seccions.forEach(seccion => {
+                        if(seccion.id==this.seccionSeleccionada){
+                            this.turnoSeleccionado = seccion.turno_id;
+                            this.cambioTurno();
+                        }
+                    });
+                });
+            });   
         },
 
         cambioTurno: function() {
@@ -275,6 +285,7 @@ createApp({
 
         cerrarHorario: function() {
             this.seccionSeleccionada = 0;
+            this.turnoSeleccionado = 0;
             this.generarHorario();
         },
         procesar: function() {
