@@ -6,7 +6,7 @@ createApp({
     data() {
         return {
             tituloHeader: "Gestión de Horarios",
-            subtituloHeader: "Tablas Base",
+            subtituloHeader: "Gestión Académica",
             subtitulo2Header: "Gestión de Horarios",
 
             subtitle2Header: true,

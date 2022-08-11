@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\DocenteController;
 use App\Http\Controllers\Admin\CicloEscolarController;
 use App\Http\Controllers\Admin\HorarioController;
 use App\Http\Controllers\Admin\HoraController;
+use App\Http\Controllers\Admin\MatriculaController;
+use App\Http\Controllers\Admin\AlumnoController;
 
 
 /* Route::get('admin', function () {
@@ -32,7 +34,8 @@ Route::middleware([
     Route::get('/docentes', [DocenteController::class, 'index1'])->name('docentes');
     Route::get('/ciclo', [CicloEscolarController::class, 'index1'])->name('ciclo');
     Route::get('/horario', [HorarioController::class, 'index1'])->name('horario');
-    Route::get('/horas', [HoraController::class, 'index1'])->name('hora');
+    Route::get('/horas', [HoraController::class, 'index1'])->name('horas');
+    Route::get('/matriculas', [MatriculaController::class, 'index1'])->name('matriculas');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
@@ -42,10 +45,14 @@ Route::middleware([
     Route::resource('/reciclo', CicloEscolarController::class);
     Route::resource('/rehorario', HorarioController::class);
     Route::resource('/rehora', HoraController::class);
+    Route::resource('/rematricula', MatriculaController::class);
+    Route::resource('/remalumno', AlumnoController::class);
 
     Route::get('redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
     Route::get('reciclo/activarMatricula/{id}',[CicloEscolarController::class, 'activarMatricula'])->name('activarMatricula');
     Route::get('reciclo/desactivarMatricula/{id}',[CicloEscolarController::class, 'desactivarMatricula'])->name('desactivarMatricula');
     Route::get('reciclo/cerrarCicloEscolar/{id}',[CicloEscolarController::class, 'cerrarCicloEscolar'])->name('cerrarCicloEscolar');
+
+    Route::get('realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
 
 });

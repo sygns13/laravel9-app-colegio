@@ -6,10 +6,10 @@ createApp({
     data() {
         return {
             tituloHeader: "Gestión de Horas",
-            subtituloHeader: "Horas",
-            subtitulo2Header: "",
+            subtituloHeader: "Tablas Base",
+            subtitulo2Header: "Gestión de Horas",
 
-            subtitle2Header: false,
+            subtitle2Header: true,
 
             userPerfil: '{{ Auth::user()->name }}',
             mailPerfil: '{{ Auth::user()->email }}',

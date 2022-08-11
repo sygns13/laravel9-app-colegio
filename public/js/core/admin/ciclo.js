@@ -9,7 +9,7 @@ createApp({
             subtituloHeader: "Gestión Académica",
             subtitulo2Header: "Gestión del Año Escolar",
 
-            subtitle2Header: false,
+            subtitle2Header: true,
 
             userPerfil: '{{ Auth::user()->name }}',
             mailPerfil: '{{ Auth::user()->email }}',

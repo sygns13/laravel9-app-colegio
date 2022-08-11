@@ -16,7 +16,7 @@ class CicloCompetencia extends Model
                             'ciclo_cursos_id',
                             'activo',
                             'borrado',
-                            'ciclo_escolar_id',
+                            'ciclo_escolar_id'
                         ];
 	protected $guarded = ['id'];
 

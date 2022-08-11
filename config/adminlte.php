@@ -301,6 +301,10 @@ return [
                     'text' => 'Gestión de Horarios',
                     'url'  => 'admin/horario',
                 ],
+                [
+                    'text' => 'Matrículas',
+                    'url'  => 'admin/matriculas',
+                ],
 
             ]
         ],
@@ -541,6 +545,22 @@ return [
                 ],
             ],
         ],
+        'Stepper' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/bs-stepper/css/bs-stepper.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bs-stepper/js/bs-stepper.min.js',
+                ],
+            ],
+        ],
+        
     ],
 
     /*

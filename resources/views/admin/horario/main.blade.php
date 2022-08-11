@@ -31,7 +31,7 @@
                 <form>
                     <div class="card-body">
 
-                        <h3>Año Académico: {{$cicloActivo->nombre}}</h3>
+                        <h3>Año Escolar: {{$cicloActivo->nombre}}</h3>
 
                         <div class="card card-primary card-tabs">
                             <div class="card-header p-0 pt-1">
