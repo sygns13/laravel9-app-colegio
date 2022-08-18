@@ -15,6 +15,7 @@ use App\Models\Estado;
 use App\Models\Departamento;
 use App\Models\Provincia;
 use App\Models\Distrito;
+use App\Models\User;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
@@ -159,62 +160,62 @@ class AlumnoController extends Controller
         $alu_provincia_id = isset($alumno["provincia_id"]) ? $alumno["provincia_id"] : null;
         $alu_distrito_id = isset($alumno["distrito_id"]) ? $alumno["distrito_id"] : null;
 
-        $madre_apellido_materno = isset($alumno["apellido_materno"]) ? $alumno["apellido_materno"] : null;    
-        $madre_apellido_paterno = isset($alumno["apellido_paterno"]) ? $alumno["apellido_paterno"] : null;    
-        $madre_nombres = isset($alumno["nombres"]) ? $alumno["nombres"] : null;    
-        $madre_vive = isset($alumno["vive"]) ? $alumno["vive"] : null;    
-        $madre_fecha_nacimiento = isset($alumno["fecha_nacimiento"]) ? $alumno["fecha_nacimiento"] : null;    
-        $madre_grado_instruccion = isset($alumno["grado_instruccion"]) ? $alumno["grado_instruccion"] : null;    
-        $madre_ocupacion = isset($alumno["ocupacion"]) ? $alumno["ocupacion"] : null;    
-        $madre_vive_con_estudiante = isset($alumno["vive_con_estudiante"]) ? $alumno["vive_con_estudiante"] : null;    
-        $madre_religion = isset($alumno["religion"]) ? $alumno["religion"] : null;    
-        $madre_tipo_apoderado = isset($alumno["tipo_apoderado"]) ? $alumno["tipo_apoderado"] : null;    
-        $madre_tipo_documento_id = isset($alumno["tipo_documento_id"]) ? $alumno["tipo_documento_id"] : null;    
-        $madre_alumno_id = isset($alumno["alumno_id"]) ? $alumno["alumno_id"] : null;    
-        $madre_num_documento = isset($alumno["num_documento"]) ? $alumno["num_documento"] : null;    
-        $madre_telefono = isset($alumno["telefono"]) ? $alumno["telefono"] : null;    
-        $madre_direccion = isset($alumno["direccion"]) ? $alumno["direccion"] : null;    
-        $madre_correo = isset($alumno["correo"]) ? $alumno["correo"] : null;    
-        $madre_tipo_apoderado_id = isset($alumno["tipo_apoderado_id"]) ? $alumno["tipo_apoderado_id"] : null;    
-        $madre_principal = isset($alumno["principal"]) ? $alumno["principal"] : null;       
+        $madre_apellido_materno = isset($apoderadoMadre["apellido_materno"]) ? $apoderadoMadre["apellido_materno"] : null;    
+        $madre_apellido_paterno = isset($apoderadoMadre["apellido_paterno"]) ? $apoderadoMadre["apellido_paterno"] : null;    
+        $madre_nombres = isset($apoderadoMadre["nombres"]) ? $apoderadoMadre["nombres"] : null;    
+        $madre_vive = isset($apoderadoMadre["vive"]) ? $apoderadoMadre["vive"] : null;    
+        $madre_fecha_nacimiento = isset($apoderadoMadre["fecha_nacimiento"]) ? $apoderadoMadre["fecha_nacimiento"] : null;    
+        $madre_grado_instruccion = isset($apoderadoMadre["grado_instruccion"]) ? $apoderadoMadre["grado_instruccion"] : null;    
+        $madre_ocupacion = isset($apoderadoMadre["ocupacion"]) ? $apoderadoMadre["ocupacion"] : null;    
+        $madre_vive_con_estudiante = isset($apoderadoMadre["vive_con_estudiante"]) ? $apoderadoMadre["vive_con_estudiante"] : null;    
+        $madre_religion = isset($apoderadoMadre["religion"]) ? $apoderadoMadre["religion"] : null;    
+        $madre_tipo_apoderado = isset($apoderadoMadre["tipo_apoderado"]) ? $apoderadoMadre["tipo_apoderado"] : null;    
+        $madre_tipo_documento_id = isset($apoderadoMadre["tipo_documento_id"]) ? $apoderadoMadre["tipo_documento_id"] : null;    
+        $madre_alumno_id = isset($apoderadoMadre["alumno_id"]) ? $apoderadoMadre["alumno_id"] : null;    
+        $madre_num_documento = isset($apoderadoMadre["num_documento"]) ? $apoderadoMadre["num_documento"] : null;    
+        $madre_telefono = isset($apoderadoMadre["telefono"]) ? $apoderadoMadre["telefono"] : null;    
+        $madre_direccion = isset($apoderadoMadre["direccion"]) ? $apoderadoMadre["direccion"] : null;    
+        $madre_correo = isset($apoderadoMadre["correo"]) ? $apoderadoMadre["correo"] : null;    
+        $madre_tipo_apoderado_id = isset($apoderadoMadre["tipo_apoderado_id"]) ? $apoderadoMadre["tipo_apoderado_id"] : null;    
+        $madre_principal = isset($apoderadoMadre["principal"]) ? $apoderadoMadre["principal"] : null;       
 
-        $padre_apellido_materno = isset($alumno["apellido_materno"]) ? $alumno["apellido_materno"] : null;    
-        $padre_apellido_paterno = isset($alumno["apellido_paterno"]) ? $alumno["apellido_paterno"] : null;    
-        $padre_nombres = isset($alumno["nombres"]) ? $alumno["nombres"] : null;    
-        $padre_vive = isset($alumno["vive"]) ? $alumno["vive"] : null;    
-        $padre_fecha_nacimiento = isset($alumno["fecha_nacimiento"]) ? $alumno["fecha_nacimiento"] : null;    
-        $padre_grado_instruccion = isset($alumno["grado_instruccion"]) ? $alumno["grado_instruccion"] : null;    
-        $padre_ocupacion = isset($alumno["ocupacion"]) ? $alumno["ocupacion"] : null;    
-        $padre_vive_con_estudiante = isset($alumno["vive_con_estudiante"]) ? $alumno["vive_con_estudiante"] : null;    
-        $padre_religion = isset($alumno["religion"]) ? $alumno["religion"] : null;    
-        $padre_tipo_apoderado = isset($alumno["tipo_apoderado"]) ? $alumno["tipo_apoderado"] : null;    
-        $padre_tipo_documento_id = isset($alumno["tipo_documento_id"]) ? $alumno["tipo_documento_id"] : null;    
-        $padre_alumno_id = isset($alumno["alumno_id"]) ? $alumno["alumno_id"] : null;    
-        $padre_num_documento = isset($alumno["num_documento"]) ? $alumno["num_documento"] : null;    
-        $padre_telefono = isset($alumno["telefono"]) ? $alumno["telefono"] : null;    
-        $padre_direccion = isset($alumno["direccion"]) ? $alumno["direccion"] : null;    
-        $padre_correo = isset($alumno["correo"]) ? $alumno["correo"] : null;    
-        $padre_tipo_apoderado_id = isset($alumno["tipo_apoderado_id"]) ? $alumno["tipo_apoderado_id"] : null;    
-        $padre_principal = isset($alumno["principal"]) ? $alumno["principal"] : null;    
+        $padre_apellido_materno = isset($apoderadoPadre["apellido_materno"]) ? $apoderadoPadre["apellido_materno"] : null;    
+        $padre_apellido_paterno = isset($apoderadoPadre["apellido_paterno"]) ? $apoderadoPadre["apellido_paterno"] : null;    
+        $padre_nombres = isset($apoderadoPadre["nombres"]) ? $apoderadoPadre["nombres"] : null;    
+        $padre_vive = isset($apoderadoPadre["vive"]) ? $apoderadoPadre["vive"] : null;    
+        $padre_fecha_nacimiento = isset($apoderadoPadre["fecha_nacimiento"]) ? $apoderadoPadre["fecha_nacimiento"] : null;    
+        $padre_grado_instruccion = isset($apoderadoPadre["grado_instruccion"]) ? $apoderadoPadre["grado_instruccion"] : null;    
+        $padre_ocupacion = isset($apoderadoPadre["ocupacion"]) ? $apoderadoPadre["ocupacion"] : null;    
+        $padre_vive_con_estudiante = isset($apoderadoPadre["vive_con_estudiante"]) ? $apoderadoPadre["vive_con_estudiante"] : null;    
+        $padre_religion = isset($apoderadoPadre["religion"]) ? $apoderadoPadre["religion"] : null;    
+        $padre_tipo_apoderado = isset($apoderadoPadre["tipo_apoderado"]) ? $apoderadoPadre["tipo_apoderado"] : null;    
+        $padre_tipo_documento_id = isset($apoderadoPadre["tipo_documento_id"]) ? $apoderadoPadre["tipo_documento_id"] : null;    
+        $padre_alumno_id = isset($apoderadoPadre["alumno_id"]) ? $apoderadoPadre["alumno_id"] : null;    
+        $padre_num_documento = isset($apoderadoPadre["num_documento"]) ? $apoderadoPadre["num_documento"] : null;    
+        $padre_telefono = isset($apoderadoPadre["telefono"]) ? $apoderadoPadre["telefono"] : null;    
+        $padre_direccion = isset($apoderadoPadre["direccion"]) ? $apoderadoPadre["direccion"] : null;    
+        $padre_correo = isset($apoderadoPadre["correo"]) ? $apoderadoPadre["correo"] : null;    
+        $padre_tipo_apoderado_id = isset($apoderadoPadre["tipo_apoderado_id"]) ? $apoderadoPadre["tipo_apoderado_id"] : null;    
+        $padre_principal = isset($apoderadoPadre["principal"]) ? $apoderadoPadre["principal"] : null;    
 
-        $otro_apellido_materno = isset($alumno["apellido_materno"]) ? $alumno["apellido_materno"] : null;    
-        $otro_apellido_paterno = isset($alumno["apellido_paterno"]) ? $alumno["apellido_paterno"] : null;    
-        $otro_nombres = isset($alumno["nombres"]) ? $alumno["nombres"] : null;    
-        $otro_vive = isset($alumno["vive"]) ? $alumno["vive"] : null;    
-        $otro_fecha_nacimiento = isset($alumno["fecha_nacimiento"]) ? $alumno["fecha_nacimiento"] : null;    
-        $otro_grado_instruccion = isset($alumno["grado_instruccion"]) ? $alumno["grado_instruccion"] : null;    
-        $otro_ocupacion = isset($alumno["ocupacion"]) ? $alumno["ocupacion"] : null;    
-        $otro_vive_con_estudiante = isset($alumno["vive_con_estudiante"]) ? $alumno["vive_con_estudiante"] : null;    
-        $otro_religion = isset($alumno["religion"]) ? $alumno["religion"] : null;    
-        $otro_tipo_apoderado = isset($alumno["tipo_apoderado"]) ? $alumno["tipo_apoderado"] : null;    
-        $otro_tipo_documento_id = isset($alumno["tipo_documento_id"]) ? $alumno["tipo_documento_id"] : null;    
-        $otro_alumno_id = isset($alumno["alumno_id"]) ? $alumno["alumno_id"] : null;    
-        $otro_num_documento = isset($alumno["num_documento"]) ? $alumno["num_documento"] : null;    
-        $otro_telefono = isset($alumno["telefono"]) ? $alumno["telefono"] : null;    
-        $otro_direccion = isset($alumno["direccion"]) ? $alumno["direccion"] : null;    
-        $otro_correo = isset($alumno["correo"]) ? $alumno["correo"] : null;    
-        $otro_tipo_apoderado_id = isset($alumno["tipo_apoderado_id"]) ? $alumno["tipo_apoderado_id"] : null;    
-        $otro_principal = isset($alumno["principal"]) ? $alumno["principal"] : null;    
+        $otro_apellido_materno = isset($apoderadoOtro["apellido_materno"]) ? $apoderadoOtro["apellido_materno"] : null;    
+        $otro_apellido_paterno = isset($apoderadoOtro["apellido_paterno"]) ? $apoderadoOtro["apellido_paterno"] : null;    
+        $otro_nombres = isset($apoderadoOtro["nombres"]) ? $apoderadoOtro["nombres"] : null;    
+        $otro_vive = isset($apoderadoOtro["vive"]) ? $apoderadoOtro["vive"] : null;    
+        $otro_fecha_nacimiento = isset($apoderadoOtro["fecha_nacimiento"]) ? $apoderadoOtro["fecha_nacimiento"] : null;    
+        $otro_grado_instruccion = isset($apoderadoOtro["grado_instruccion"]) ? $apoderadoOtro["grado_instruccion"] : null;    
+        $otro_ocupacion = isset($apoderadoOtro["ocupacion"]) ? $apoderadoOtro["ocupacion"] : null;    
+        $otro_vive_con_estudiante = isset($apoderadoOtro["vive_con_estudiante"]) ? $apoderadoOtro["vive_con_estudiante"] : null;    
+        $otro_religion = isset($apoderadoOtro["religion"]) ? $apoderadoOtro["religion"] : null;    
+        $otro_tipo_apoderado = isset($apoderadoOtro["tipo_apoderado"]) ? $apoderadoOtro["tipo_apoderado"] : null;    
+        $otro_tipo_documento_id = isset($apoderadoOtro["tipo_documento_id"]) ? $apoderadoOtro["tipo_documento_id"] : null;    
+        $otro_alumno_id = isset($apoderadoOtro["alumno_id"]) ? $apoderadoOtro["alumno_id"] : null;    
+        $otro_num_documento = isset($apoderadoOtro["num_documento"]) ? $apoderadoOtro["num_documento"] : null;    
+        $otro_telefono = isset($apoderadoOtro["telefono"]) ? $apoderadoOtro["telefono"] : null;    
+        $otro_direccion = isset($apoderadoOtro["direccion"]) ? $apoderadoOtro["direccion"] : null;    
+        $otro_correo = isset($apoderadoOtro["correo"]) ? $apoderadoOtro["correo"] : null;    
+        $otro_tipo_apoderado_id = isset($apoderadoOtro["tipo_apoderado_id"]) ? $apoderadoOtro["tipo_apoderado_id"] : null;    
+        $otro_principal = isset($apoderadoOtro["principal"]) ? $apoderadoOtro["principal"] : null;    
 
         //Validaciones alumno
         $input1  = array('alu_tipo_documento_id' => $alu_tipo_documento_id);
@@ -355,7 +356,7 @@ class AlumnoController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
-        if ($validator7->fails() || intval($alu_genero) == 0)
+        if ($validator7->fails())
         {
             $result='0';
             $msj='Debe ingresar el género del Alumno';

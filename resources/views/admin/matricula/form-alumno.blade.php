@@ -637,21 +637,21 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtgrado_instruccionP">Grado de Instrucción</label>
-                            <input type="text" class="form-control" id="txtgrado_instruccionP" placeholder="Dirección" v-model="apoderadoPadre.grado_instruccion" maxlength="100">
+                            <input type="text" class="form-control" id="txtgrado_instruccionP" placeholder="Grado" v-model="apoderadoPadre.grado_instruccion" maxlength="100">
                           </div>
                         </div>
 
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtocupacioP">Ocupación</label>
-                            <input type="text" class="form-control" id="txtocupacioP" placeholder="Dirección" v-model="apoderadoPadre.ocupacion" maxlength="100">
+                            <input type="text" class="form-control" id="txtocupacioP" placeholder="Ocupación" v-model="apoderadoPadre.ocupacion" maxlength="100">
                           </div>
                         </div>
 
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtreligionP">Religión</label>
-                            <input type="text" class="form-control" id="txtreligionP" placeholder="Dirección" v-model="apoderadoPadre.religion" maxlength="100">
+                            <input type="text" class="form-control" id="txtreligionP" placeholder="Religión" v-model="apoderadoPadre.religion" maxlength="100">
                           </div>
                         </div>
                       </div>
@@ -774,21 +774,21 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtgrado_instruccionO">Grado de Instrucción</label>
-                            <input type="text" class="form-control" id="txtgrado_instruccionO" placeholder="Dirección" v-model="apoderadoOtro.grado_instruccion" maxlength="100">
+                            <input type="text" class="form-control" id="txtgrado_instruccionO" placeholder="Grado" v-model="apoderadoOtro.grado_instruccion" maxlength="100">
                           </div>
                         </div>
 
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtocupacioO">Ocupación</label>
-                            <input type="text" class="form-control" id="txtocupacioO" placeholder="Dirección" v-model="apoderadoOtro.ocupacion" maxlength="100">
+                            <input type="text" class="form-control" id="txtocupacioO" placeholder="Ocupación" v-model="apoderadoOtro.ocupacion" maxlength="100">
                           </div>
                         </div>
 
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtreligionO">Religión</label>
-                            <input type="text" class="form-control" id="txtreligionO" placeholder="Dirección" v-model="apoderadoOtro.religion" maxlength="100">
+                            <input type="text" class="form-control" id="txtreligionO" placeholder="Religión" v-model="apoderadoOtro.religion" maxlength="100">
                           </div>
                         </div>
                       </div>

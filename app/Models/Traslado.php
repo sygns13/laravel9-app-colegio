@@ -14,7 +14,7 @@ class Traslado extends Model
                             'motivo',
                             'codigo_modular',
                             'ie_nombre',
-                            'alumnos_id',
+                            'alumno_id',
                             'activo',
                             'borrado'
                         ];

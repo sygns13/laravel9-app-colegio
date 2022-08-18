@@ -14,7 +14,7 @@ class RegistroSalud extends Model
                             'enfermedad',
                             'vacuna',
                             'tipo',
-                            'alumnos_id',
+                            'alumno_id',
                             'activo',
                             'borrado'
                         ];
