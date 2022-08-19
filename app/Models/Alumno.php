@@ -74,6 +74,7 @@ class Alumno extends Model
         $data = Alumno::where('tipo_documento_id', $tipo_documento_id)
                     ->where('num_documento', $num_documento)
                     ->first();
+                    
 
         if($data){
             $tipoDocumento = TipoDocumento::find($data->tipo_documento_id);
@@ -124,6 +125,8 @@ class Alumno extends Model
                                 ->orderByDesc('id')
                                 ->get();
             $data->domicilios = $domicilios;
+
+            $data->fullNombre = $data->apellido_paterno . ' ' . $data->apellido_materno . ' ' . $data->nombres;
         }
         
 

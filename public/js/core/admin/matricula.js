@@ -39,8 +39,10 @@ createApp({
             thispage: '1',
             divprincipal: false,
 
-            labelBtnSaveAlumno: 'Registrar',
+            labelBtnSaveAlumno: 'Registrar Nuevo',
             labelBtnSave: 'Registrar Matrícula',
+
+            labelFooterAlumno: 'Nuevo Alumno',
 
             seccionSeleccionada: 0,
 
@@ -49,7 +51,7 @@ createApp({
             alumno:{
                 'type':'C',
                 'id' : '',
-                'tipo_documento_id' : '1',
+                'tipo_documento_id' : 1,
                 'num_documento' : '',
                 'apellido_paterno' : '',
                 'apellido_materno' : '',
@@ -100,6 +102,7 @@ createApp({
                 'departamento_id': 2,
                 'provincia_id': 8,
                 'distrito_id': 86,
+                'fullNombre': '',
             },
 
             apoderadoMadre: {
@@ -207,8 +210,11 @@ createApp({
             horas:[],
 
             divFormularioAlumno: false,
+            divFormularioCabecera: false,
 
             stepper: null,
+
+            alumnoBD_BK : {},
         }
     },
     created: function() {
@@ -306,10 +312,26 @@ createApp({
             axios.get(url).then(response => {
                 if(response.data.result=='1'){
 
+
                     if(response.data.resultFound){
                         this.alumno = response.data.alumno;
+                        this.alumnoBD_BK = response.data.alumno;
                         this.errors=[];
                         toastr.success(response.data.msj);
+                        this.divFormularioCabecera = true;
+
+                        this.alumno.apoderados.forEach(apoderado => {
+                            if(apoderado.tipo_apoderado_id == 1){
+                                this.apoderadoMadre = Object.assign({}, apoderado);
+                            }
+                            if(apoderado.tipo_apoderado_id == 2){
+                                this.apoderadoPadre = Object.assign({}, apoderado);
+                            }
+                            if(apoderado.tipo_apoderado_id == 3){
+                                this.apoderadoOtro = Object.assign({}, apoderado);
+                            }
+                        });
+
                     }else{
                         //toastr.info("Alumno no encontrado en el sistema, ¿Desea registrarlo?");
                         this.confirmRegistrar();
@@ -350,6 +372,7 @@ createApp({
             this.$nextTick(() => {
                 $('#txtapellido_paterno').focus();
                 this.stepper = new Stepper(document.querySelector('.bs-stepper'));
+                console.log(this.apoderadoMadre);
             });
         },
         cerrarFormAlumno: function () {
@@ -357,6 +380,9 @@ createApp({
             this.cancelFormAlumno();
         },
         cancelFormAlumno: function () {
+
+            this.labelBtnSaveAlumno = 'Registrar Nuevo';
+            this.labelFooterAlumno = 'Nuevo Alumno';
             this.alumno = {
                 'type':'C',
                 'id' : '',
@@ -411,6 +437,7 @@ createApp({
                 'departamento_id': 2,
                 'provincia_id': 8,
                 'distrito_id': 86,
+                'fullNombre':'',
             };
 
             this.apoderadoMadre = {
@@ -493,6 +520,8 @@ createApp({
 
                 $("#checkboxPadreVive").prop("checked", true);
                 $("#checkboxPadreViveAlumno").prop("checked", true);
+
+                $('#txtnum_documento').focus();
             });
         },
 
@@ -539,7 +568,12 @@ createApp({
         },
 
         procesarAlumno: function() {
-            this.confirmRegistrarAlumno();
+            if(this.alumno.type == 'C'){
+                this.confirmRegistrarAlumno();
+            }
+            if(this.alumno.type == 'U'){
+                this.confirmActualizarAlumno();
+            }
         },
 
         confirmRegistrarAlumno:function () {
@@ -575,7 +609,7 @@ createApp({
                 if(response.data.result=='1'){
                     this.buscarAlumno(this.thispage);
                     this.errors=[];
-                    //this.cerrarForm();
+                    this.cerrarFormAlumno();
                     toastr.success(response.data.msj);
                 }else{
                     $('#'+response.data.selector).focus();
@@ -588,6 +622,186 @@ createApp({
                 $("#btnCerrarL").removeAttr("disabled");
             })
         },
+        confirmActualizarAlumno:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Confirmar la Modificación del Alumno?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    console.log("aqui llega");
+                    this.updateAlumno();
+                }
+
+            }).catch(swal.noop);
+        },
+        cancelAlumno:function () {
+            this.divFormularioCabecera = false;
+            this.cerrarFormAlumno();
+        },
+        editAlumno:function () {
+            this.labelBtnSaveAlumno = 'Editar';
+            this.labelFooterAlumno = 'Modificar Alumno';
+
+            this.labelBtnSave = 'Editar';
+            this.alumno.type = 'U';
+
+            this.divFormularioAlumno=true;
+
+            this.$nextTick(() => {
+                $('#txtapellido_paterno').focus();
+                this.stepper = new Stepper(document.querySelector('.bs-stepper'));
+                this.renderChecksAlumno();
+                
+                
+            });
+        },
+        updateAlumno:function () {
+            var url='remalumno/'+this.alumno.id;
+            $("#btnSave").attr('disabled', true);
+            $("#btnCerrarL").attr('disabled', true);
+            this.divloaderNuevo=true;
+
+            axios.put(url, {alumno: this.alumno, apoderadoMadre: this.apoderadoMadre, apoderadoPadre: this.apoderadoPadre , apoderadoOtro: this.apoderadoOtro}).then(response=>{
+
+                $("#btnSave").removeAttr("disabled");
+                $("#btnCerrarL").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.buscarAlumno(this.thispage);
+                    this.errors=[];
+                    this.cerrarFormAlumnoEdit();
+                    toastr.success(response.data.msj);
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnSave").removeAttr("disabled");
+                $("#btnCerrarL").removeAttr("disabled");
+            })
+        },
+        cerrarFormAlumnoEdit:function () {
+            this.divFormularioAlumno=false;
+            this.alumno = Object.assign({}, this.alumnoBD_BK);
+
+            this.alumnoBD_BK.apoderados.forEach(apoderado => {
+                if(apoderado.tipo_apoderado_id == 1){
+                    this.apoderadoMadre = Object.assign({}, apoderado);
+                }
+                if(apoderado.tipo_apoderado_id == 2){
+                    this.apoderadoPadre = Object.assign({}, apoderado);
+                }
+                if(apoderado.tipo_apoderado_id == 3){
+                    this.apoderadoOtro = Object.assign({}, apoderado);
+                }
+            });
+        },
+        renderChecksAlumno:function () {
+
+            //Checks Discapacidades
+            if(this.alumno.DI == 1){
+                $("#checkboxDI").prop("checked", true);
+            } else {
+                $("#checkboxDI").prop("checked", false);
+            }
+
+            if(this.alumno.DA == 1){
+                $("#checkboxDA").prop("checked", true);
+            } else {
+                $("#checkboxDA").prop("checked", false);
+            }
+
+            if(this.alumno.DV == 1){
+                $("#checkboxDV").prop("checked", true);
+            } else {
+                $("#checkboxDV").prop("checked", false);
+            }
+
+            if(this.alumno.DM == 1){
+                $("#checkboxDM").prop("checked", true);
+            } else {
+                $("#checkboxDM").prop("checked", false);
+            }
+
+            if(this.alumno.SC == 1){
+                $("#checkboxSC").prop("checked", true);
+            } else {
+                $("#checkboxSC").prop("checked", false);
+            }
+
+            if(this.alumno.OT == 1){
+                $("#checkboxOT").prop("checked", true);
+            } else {
+                $("#checkboxOT").prop("checked", false);
+            }
+
+
+            //Checks Apoderados
+            if(this.apoderadoMadre.vive == 1){
+                $("#checkboxMadreVive").prop("checked", true);
+            } else {
+                $("#checkboxMadreVive").prop("checked", false);
+            }
+
+            if(this.apoderadoMadre.vive_con_estudiante == 1){
+                $("#checkboxMadreViveAlumno").prop("checked", true);
+            } else {
+                $("#checkboxMadreViveAlumno").prop("checked", false);
+            }
+
+            if(this.apoderadoMadre.principal == 1){
+                $("#checkboxMadreApodPrincipal").prop("checked", true);
+            } else {
+                $("#checkboxMadreApodPrincipal").prop("checked", false);
+            }
+
+            if(this.apoderadoPadre.vive == 1){
+                $("#checkboxPadreVive").prop("checked", true);
+            } else {
+                $("#checkboxPadreVive").prop("checked", false);
+            }
+
+            if(this.apoderadoPadre.vive_con_estudiante == 1){
+                $("#checkboxPadreViveAlumno").prop("checked", true);
+            } else {
+                $("#checkboxPadreViveAlumno").prop("checked", false);
+            }
+
+            if(this.apoderadoPadre.principal == 1){
+                $("#checkboxPadreApodPrincipal").prop("checked", true);
+            } else {
+                $("#checkboxPadreApodPrincipal").prop("checked", false);
+            }
+
+            if(this.apoderadoOtro.vive == 1){
+                $("#checkboxOtroVive").prop("checked", true);
+            } else {
+                $("#checkboxOtroVive").prop("checked", false);
+            }
+
+            if(this.apoderadoOtro.vive_con_estudiante == 1){
+                $("#checkboxOtroViveAlumno").prop("checked", true);
+            } else {
+                $("#checkboxOtroViveAlumno").prop("checked", false);
+            }
+
+            if(this.apoderadoOtro.principal == 1){
+                $("#checkboxOtroApodPrincipal").prop("checked", true);
+            } else {
+                $("#checkboxOtroApodPrincipal").prop("checked", false);
+            }
+
+        },
+
 
 
 

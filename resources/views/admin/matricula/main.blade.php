@@ -49,9 +49,11 @@
                     <div class="card-body">
 
                         <h3>Año Escolar: {{$cicloActivo->nombre}}</h3>
-                        <h4 v-if="!divFormularioAlumno">Realize la búsqueda del Alumno para Matricular:</h4><br>
 
-                        <div class="row" v-if="!divFormularioAlumno">
+                        {{-- Formulario para buscar al alumno --}}
+                        <h4 v-if="!divFormularioAlumno && !divFormularioCabecera">Realize la búsqueda del Alumno para Matricular:</h4><br>
+
+                        <div class="row" v-if="!divFormularioAlumno && !divFormularioCabecera">
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="cbutipo_documento_id">Tipo de Documento de Identidad <spam style="color:red;">*</spam></label>
@@ -72,10 +74,47 @@
                             </div>
                         </div>
 
-                        <div class="card-footer" v-if="!divFormularioAlumno">
+                        <div class="card-footer" v-if="!divFormularioAlumno && !divFormularioCabecera">
                             <button style="margin-right:5px;" id="btnBuscar" type="button" class="btn btn-primary" @click="buscarAlumno()"><span class="fas fa-search"></span> Buscar Alumno</button>
-                            
-                          </div>
+                        </div>
+
+
+                        {{-- Formulario para registrar la cabecera de la matrícula --}}
+                        <h4 v-if="!divFormularioAlumno && divFormularioCabecera">Realizar la Matrícula del Alumno:</h4><br>
+
+                        <div class="row" v-if="!divFormularioAlumno && divFormularioCabecera">
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="cbutipo_documento_id">Tipo de Documento de Identidad <spam style="color:red;">*</spam></label>
+                                <select class="form-control" style="width: 100%;" v-model="alumno.tipo_documento_id" id="cbutipo_documento_id"  disabled>
+                                  <option value="0" disabled>Seleccione ...</option>
+                                  <template v-for="(tipoDoc, index) in tipoDocumentos">
+                                    <option v-bind:value="tipoDoc.id">@{{tipoDoc.nombre}}</option>
+                                  </template>
+                                </select>
+                              </div>
+                            </div>
+              
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="txtnum_documento">Número de @{{tipoDocSelect.sigla}} <spam style="color:red;">*</spam></label>
+                                <input type="text" class="form-control" id="txtnum_documento" placeholder="Documento de Identidad" v-model="alumno.num_documento" v-bind:maxlength="tipoDocSelect.digitos" readonly>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="txtapellido_paterno">Alumno (a):<spam style="color:red;">*</spam></label>
+                                  <input type="text" class="form-control" id="txtapellido_paterno" placeholder="Alumno" v-model="alumno.fullNombre" readonly>
+                                </div>
+                              </div>
+                        </div>
+
+                        <div class="card-footer" v-if="!divFormularioAlumno && divFormularioCabecera">
+                            <button style="margin-right:5px;" id="btnIniMat" type="button" class="btn btn-primary" @click="matriAlumno()"><span class="fas fa-chalkboard-teacher"></span> Iniciar Matrícula</button>
+                            <button style="margin-right:5px;" id="btnEditMat" type="button" class="btn btn-warning" @click="editAlumno()"><span class="fas fa-edit"></span> Editar Datos Personales</button>
+                            <button style="margin-right:5px;" id="btnCancelMat" type="button" class="btn btn-danger" @click="cancelAlumno()"><span class="fas fa-times"></span> Cancelar</button>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </form>

@@ -3,7 +3,11 @@
     <div class="col-md-12">
       <div class="card card-info">
         <div class="card-header">
-          <h3 class="card-title">@{{labelBtnSaveAlumno}} Nuevo Alumno</h3>
+          <h3 class="card-title">@{{labelBtnSaveAlumno}} Alumno
+          <template v-if="alumno.type == 'U'">
+            @{{alumno.fullNombre}}
+          </template>
+          </h3>
         </div>
         <div class="card-body p-0">
           <div class="bs-stepper">
@@ -138,7 +142,8 @@
 
                 <button class="btn btn-primary" @click="siguienteNuevoAlumno()">Siguiente <span class="fas fa-angle-right right"></span></button>
 
-                <button id="btnCerrar" type="button" class="btn btn-default" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'C'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'U'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumnoEdit()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
               </div>
 
 
@@ -212,7 +217,8 @@
                 <button class="btn btn-primary" @click="atrasNuevoAlumno()" style="margin-right: 10px;"><span class="fas fa-angle-left right"></span> Atras</button>
                 <button class="btn btn-primary" @click="siguienteNuevoAlumno()">Siguiente <span class="fas fa-angle-right right"></span></button>
                 {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
-                <button id="btnCerrar" type="button" class="btn btn-default" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'C'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'U'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumnoEdit()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
               </div>
 
               <div id="nacimiento-part" class="content" role="tabpanel" aria-labelledby="nacimiento-part-trigger">
@@ -293,7 +299,8 @@
                 <button class="btn btn-primary" @click="atrasNuevoAlumno()" style="margin-right: 10px;"><span class="fas fa-angle-left right"></span> Atras</button>
                 <button class="btn btn-primary" @click="siguienteNuevoAlumno()">Siguiente <span class="fas fa-angle-right right"></span></button>
 
-                <button id="btnCerrar" type="button" class="btn btn-default" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'C'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'U'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumnoEdit()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
 
               </div>
 
@@ -357,42 +364,42 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" v-model="alumno.DI" value="1">
+                      <input class="form-check-input" type="checkbox" v-model="alumno.DI" value="1" id="checkboxDI">
                       <label class="form-check-label">Discapacidad Intelectual</label>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" v-model="alumno.DA" value="1">
+                      <input class="form-check-input" type="checkbox" v-model="alumno.DA" value="1" id="checkboxDA">
                       <label class="form-check-label">Discapacidad Auditiva</label>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" v-model="alumno.DV" value="1">
+                      <input class="form-check-input" type="checkbox" v-model="alumno.DV" value="1" id="checkboxDV">
                       <label class="form-check-label">Discapacidad Visual</label>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" v-model="alumno.DM" value="1">
+                      <input class="form-check-input" type="checkbox" v-model="alumno.DM" value="1" id="checkboxDM">
                       <label class="form-check-label">Discapacidad Motora</label>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" v-model="alumno.SC" value="1">
+                      <input class="form-check-input" type="checkbox" v-model="alumno.SC" value="1" id="checkboxSC">
                       <label class="form-check-label">Sordoceguera</label>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" v-model="alumno.OT" value="1">
+                      <input class="form-check-input" type="checkbox" v-model="alumno.OT" value="1" id="checkboxOT">
                       <label class="form-check-label">Otros</label>
                     </div>
                   </div>
@@ -405,7 +412,8 @@
                 <button class="btn btn-primary" @click="atrasNuevoAlumno()" style="margin-right: 10px;"><span class="fas fa-angle-left right"></span> Atras</button>
                 <button class="btn btn-primary" @click="siguienteNuevoAlumno()">Siguiente <span class="fas fa-angle-right right"></span></button>
 
-                <button id="btnCerrar" type="button" class="btn btn-default" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'C'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'U'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumnoEdit()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
               </div>
 
               <div id="apoderado-part" class="content" role="tabpanel" aria-labelledby="apoderado-part-trigger">
@@ -530,21 +538,21 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" v-model="apoderadoMadre.vive" value="1" checked="true" id="checkboxMadreVive">
+                            <input class="form-check-input" type="checkbox" v-model="apoderadoMadre.vive" value="1" id="checkboxMadreVive">
                             <label class="form-check-label">Vive</label>
                           </div>
                         </div>
       
                         <div class="col-md-12" v-if="apoderadoMadre.vive == '1'">
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" v-model="apoderadoMadre.vive_con_estudiante" value="1" checked="true" id="checkboxMadreViveAlumno">
+                            <input class="form-check-input" type="checkbox" v-model="apoderadoMadre.vive_con_estudiante" value="1" id="checkboxMadreViveAlumno">
                             <label class="form-check-label">Vive con el Alumno</label>
                           </div>
                         </div>
       
                         <div class="col-md-12" v-if="apoderadoMadre.vive == '1'">
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" v-model="apoderadoMadre.principal" value="1" checked="true" id="checkboxMadreApodPrincipal"
+                            <input class="form-check-input" type="checkbox" v-model="apoderadoMadre.principal" value="1" id="checkboxMadreApodPrincipal"
                             @change="selectApoPrincipalMadre()">
                             <label class="form-check-label">Es el apoderado Principal</label>
                           </div>
@@ -659,14 +667,14 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" v-model="apoderadoPadre.vive" value="1" checked="true" id="checkboxPadreVive">
+                            <input class="form-check-input" type="checkbox" v-model="apoderadoPadre.vive" value="1" id="checkboxPadreVive">
                             <label class="form-check-label">Vive</label>
                           </div>
                         </div>
       
                         <div class="col-md-12" v-if="apoderadoPadre.vive == '1'">
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" v-model="apoderadoPadre.vive_con_estudiante" value="1" checked="true" id="checkboxPadreViveAlumno">
+                            <input class="form-check-input" type="checkbox" v-model="apoderadoPadre.vive_con_estudiante" value="1" id="checkboxPadreViveAlumno">
                             <label class="form-check-label">Vive con el Alumno</label>
                           </div>
                         </div>
@@ -719,14 +727,14 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtapellido_paternoO">Apellido Paterno<spam style="color:red;">*</spam></label>
-                            <input type="text" class="form-control" id="txtapellido_paternoO" placeholder="Apellido Oaterno" v-model="apoderadoOtro.apellido_paterno" maxlength="100">
+                            <input type="text" class="form-control" id="txtapellido_paternoO" placeholder="Apellido Paterno" v-model="apoderadoOtro.apellido_paterno" maxlength="100">
                           </div>
                         </div>
             
                         <div class="col-md-4">
                           <div class="form-group">
                             <label for="txtapellido_maternoO">Apellido Materno<spam style="color:red;">*</spam></label>
-                            <input type="text" class="form-control" id="txtapellido_maternoO" placeholder="Apellido Oaterno" v-model="apoderadoOtro.apellido_materno" maxlength="100">
+                            <input type="text" class="form-control" id="txtapellido_maternoO" placeholder="Apellido Materno" v-model="apoderadoOtro.apellido_materno" maxlength="100">
                           </div>
                         </div>
             
@@ -833,7 +841,8 @@
                 <button class="btn btn-primary" @click="atrasNuevoAlumno()" style="margin-right: 10px;"><span class="fas fa-angle-left right"></span> Atras</button>
                 <button class="btn btn-primary" @click="siguienteNuevoAlumno()">Siguiente <span class="fas fa-angle-right right"></span></button>
 
-                <button id="btnCerrar" type="button" class="btn btn-default" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'C'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'U'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumnoEdit()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
 
               </div>
 
@@ -872,7 +881,8 @@
 
                 <button style="margin-right:5px;" id="btnSave" type="button" class="btn btn-success" @click="procesarAlumno()"><span class="fas fa-save"></span> @{{labelBtnSaveAlumno}}</button>
 
-                <button id="btnCerrarL" type="button" class="btn btn-default" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'C'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumno()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
+                <button v-if="alumno.type == 'U'" id="btnCerrarL" type="button" class="btn btn-danger" @click="cerrarFormAlumnoEdit()" style="float:right;"><span class="fas fa-power-off"></span> Cerrar</button>
               </div>
 
 
@@ -881,7 +891,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-          Visit <a href="https://github.com/Johann-S/bs-stepper/#how-to-use-it">bs-stepper documentation</a> for more examples and lugar about the plugin.
+          <h5><b><i>@{{labelFooterAlumno}}</i></b></h5>
         </div>
       </div>
       <!-- /.card -->
