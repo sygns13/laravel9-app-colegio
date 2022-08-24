@@ -103,6 +103,11 @@ createApp({
                 'provincia_id': 8,
                 'distrito_id': 86,
                 'fullNombre': '',
+                'anio_ingreso': null,
+                'codigo_modular': null,
+                'numero_matricula': null,
+                'flag': null,
+                'estado_grado': 0,
             },
 
             apoderadoMadre: {
@@ -211,10 +216,64 @@ createApp({
 
             divFormularioAlumno: false,
             divFormularioCabecera: false,
+            divFormularioMatricula: false,
 
             stepper: null,
 
             alumnoBD_BK : {},
+
+            //Matriculas
+            matricula: {
+                'type':'C',
+                'id': 0,
+                'alumno_id': 0,
+                'ciclo_escolar_id': 0,
+                'fecha': '',
+                'estado': 0,
+                'es_traslado': 0,
+                'tiene_discapacidad': 0,
+                'DI' : 0,
+                'DA' : 0,
+                'DV' : 0,
+                'DM' : 0,
+                'SC' : 0,
+                'OT' : 0,
+                'vive_madre' : 1,
+                'vive_padre' : 1,
+                'responsable_matricula_nombres' : '',
+                'cargo_responsable' : '',
+                'ciclo_seccion_id' : 0,
+                'trabaja' : 0,
+                'activo': 1,
+            },
+            secciones:[],
+
+            //
+            traslado: {
+                'id': '',
+                'fecha': '',
+                'motivo': '',
+                'codigo_modular': '',
+                'ie_nombre': '',
+                'alumno_id': '',
+                'activo': '',
+                'borrado': '',
+                'created_at': '',
+                'updated_at': '',
+                'res_traslado': '',
+                'resolucion_traslado': '',
+                'matricula_id': '',
+            },
+
+            
+            archivo : null,
+            uploadReady: true,
+
+            oldFile:'',
+            file:'',
+
+            labelBtnMatricula: 'Registrar Matrícula',
+            divSectionMatricula: false,
         }
     },
     created: function() {
@@ -438,6 +497,11 @@ createApp({
                 'provincia_id': 8,
                 'distrito_id': 86,
                 'fullNombre':'',
+                'anio_ingreso': null,
+                'codigo_modular': null,
+                'numero_matricula': null,
+                'flag': null,
+                'estado_grado': 0,
             };
 
             this.apoderadoMadre = {
@@ -801,6 +865,207 @@ createApp({
             }
 
         },
+        matriAlumno:function () {
+            var url = 'rematricula/getCicloSeccion/'+this.alumno.grado_actual;
+
+            axios.get(url).then(response => {
+                this.secciones= response.data;
+                this.matricula.ciclo_seccion_id = 0;
+                this.divFormularioMatricula = true;
+                this.limpiarFormMatricula();
+
+                this.labelBtnMatricula = 'Registrar Matrícula';
+            })
+
+        },
+        getArchivo(event){
+            //Asignamos la imagen a  nuestra data
+
+            if (!event.target.files.length)
+            {
+              this.archivo=null;
+            }
+            else{
+            this.archivo = event.target.files[0];
+            }
+        },
+        limpiarFormMatricula:function () {
+
+            this.matricula = {
+                'type':'C',
+                'id': 0,
+                'alumno_id': this.alumno.id,
+                'ciclo_escolar_id': 0,
+                'fecha': '',
+                'estado': 0,
+                'es_traslado': 0,
+                'tiene_discapacidad': 0,
+                'DI' : 0,
+                'DA' : 0,
+                'DV' : 0,
+                'DM' : 0,
+                'SC' : 0,
+                'OT' : 0,
+                'vive_madre' : 1,
+                'vive_padre' : 1,
+                'responsable_matricula_nombres' : '',
+                'cargo_responsable' : '',
+                'ciclo_seccion_id' : 0,
+                'trabaja' : 0,
+                'activo': 1,
+            };
+
+            this.traslado = {
+                'id': '',
+                'fecha': '',
+                'motivo': '',
+                'codigo_modular': '',
+                'ie_nombre': '',
+                'alumno_id': '',
+                'activo': '',
+                'borrado': '',
+                'created_at': '',
+                'updated_at': '',
+                'res_traslado': '',
+                'resolucion_traslado': '',
+                'matricula_id': '',
+            };
+
+            this.archivo=null;
+            this.uploadReady = false
+            this.$nextTick(() => {
+                this.uploadReady = true;
+                $('#cbuciclo_seccion_id').focus();
+            })
+
+        },
+
+        atrasMatricula:function () {
+            this.divFormularioMatricula = false;
+        },
+
+        procesarMatricula:function () {
+            if(this.matricula.type == 'C'){
+                this.confirmRegistrarMatricula();
+            }
+            if(this.matricula.type == 'U'){
+                this.confirmActualizarMatricula();
+            }
+        },
+
+        confirmRegistrarMatricula:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Confirmar el Registro de la Matrícula del Alumno?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    console.log("aqui llega");
+                    this.createMatricula();
+                }
+
+            }).catch(swal.noop);
+        },
+
+        createMatricula:function () {
+            var url='rematricula';
+            $("#btnSaveMatricula").attr('disabled', true);
+            $("#btnAtrasMatricula").attr('disabled', true);
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('alumno_id', this.alumno.id);
+            data.append('matricula', JSON.stringify(this.matricula));
+            data.append('traslado', JSON.stringify(this.traslado));
+            data.append('archivo', this.archivo);
+
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+            axios.post(url,data,config).then(response=>{
+
+                $("#btnSaveMatricula").removeAttr("disabled");
+                $("#btnAtrasMatricula").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.cerrarFormMatricula();
+                    this.buscarMatricula();
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                    Swal.fire(
+                        'Matriculado',
+                        response.data.msj,
+                        'success'
+                      )
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnSaveMatricula").removeAttr("disabled");
+                $("#btnAtrasMatricula").removeAttr("disabled");
+            })
+        },
+        buscarMatricula: function() {
+            
+            if(this.alumno.id == null || this.alumno.id == 0){
+                toastr.error('Vuelva a buscar el alumno');
+                return;
+            }
+            var url = 'rematricula/getmatriculaactiva/' + this.alumno.id;
+
+            axios.get(url).then(response => {
+                if(response.data.result=='1'){
+                    
+                    this.matricula = response.data.matricula;
+                    
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                    this.divSectionMatricula = true;
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            })
+        },
+        cerrarFormMatricula:function () {
+            this.divFormularioMatricula = false;
+        },
+        cerrarMatricula:function () {
+            this.cerrarFormMatricula();
+            this.limpiarFormMatricula();
+            this.cancelAlumno();
+            this.alumno.num_documento = '';
+        },
+
+        imprimirMatricula:function () {
+            console.log("imprimirMatricula");
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

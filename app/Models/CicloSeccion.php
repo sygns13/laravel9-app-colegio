@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Grado;
+use App\Models\CicloGrado;
+
 class CicloSeccion extends Model
 {
     use HasFactory;
@@ -26,6 +29,23 @@ class CicloSeccion extends Model
         $data = CicloSeccion::where('ciclo_escolar_id', $ciclo_id)
                     ->where('seccion_id', $seccion_id)
                     ->first();
+
+        return $data;
+    }
+
+    public static function GetSeccionsByCicloAndGradoMaster($ciclo_id, $gradoMaster_id){
+
+        $cicloGrado = CicloGrado::GetGradoByCicloAndGrado($ciclo_id, $gradoMaster_id);
+
+        if(!$cicloGrado){
+            return [];
+        }
+
+        $data = CicloSeccion::where('ciclo_escolar_id', $ciclo_id)
+                    ->where('ciclo_grados_id', $cicloGrado->id)
+                    ->where('activo', 1)
+                    ->where('borrado', 0)
+                    ->get();
 
         return $data;
     }

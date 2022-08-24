@@ -19,7 +19,8 @@ class Domicilio extends Model
                             'telefono',
                             'alumno_id',
                             'activo',
-                            'borrado'
+                            'borrado',
+                            'matricula_id',
                         ];
 	protected $guarded = ['id'];
 }

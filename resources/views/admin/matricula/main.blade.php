@@ -80,7 +80,8 @@
 
 
                         {{-- Formulario para registrar la cabecera de la matrícula --}}
-                        <h4 v-if="!divFormularioAlumno && divFormularioCabecera">Realizar la Matrícula del Alumno:</h4><br>
+                        <h4 v-if="!divFormularioAlumno && divFormularioCabecera && !divSectionMatricula">Realizar la Matrícula del Alumno:</h4><br>
+                        <h4 v-if="!divFormularioAlumno && divFormularioCabecera && divSectionMatricula">Alumno Matriculado:</h4><br>
 
                         <div class="row" v-if="!divFormularioAlumno && divFormularioCabecera">
                             <div class="col-md-4">
@@ -108,13 +109,44 @@
                                   <input type="text" class="form-control" id="txtapellido_paterno" placeholder="Alumno" v-model="alumno.fullNombre" readonly>
                                 </div>
                               </div>
+
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="cbunivel_actualRead">Nivel <spam style="color:red;">*</spam></label>
+                                  <select class="form-control" style="width: 100%;" v-model="alumno.nivel_actual" id="cbunivel_actual" disabled>
+                                    <option value="0" disabled>Seleccione ...</option>
+                                    @foreach ($niveles as $dato)
+                                    <option value="{{$dato->id}}" selected>{{$dato->nombre}}</option> 
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+            
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="cbugrado_actualRead">Grado <spam style="color:red;">*</spam></label>
+                                  <select class="form-control" style="width: 100%;" v-model="alumno.grado_actual" id="cbugrado_actualRead" disabled>
+                                    <option value="0" disabled>Seleccione ...</option>
+                                    @foreach ($grados as $dato)
+                                    <option value="{{$dato->id}}" v-if="alumno.nivel_actual == '{{$dato->nivele_id}}'">{{$dato->nombre}}</option> 
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
                         </div>
 
-                        <div class="card-footer" v-if="!divFormularioAlumno && divFormularioCabecera">
+                        <div class="card-footer" v-if="!divFormularioAlumno && divFormularioCabecera && !divFormularioMatricula && !divSectionMatricula">
                             <button style="margin-right:5px;" id="btnIniMat" type="button" class="btn btn-primary" @click="matriAlumno()"><span class="fas fa-chalkboard-teacher"></span> Iniciar Matrícula</button>
                             <button style="margin-right:5px;" id="btnEditMat" type="button" class="btn btn-warning" @click="editAlumno()"><span class="fas fa-edit"></span> Editar Datos Personales</button>
                             <button style="margin-right:5px;" id="btnCancelMat" type="button" class="btn btn-danger" @click="cancelAlumno()"><span class="fas fa-times"></span> Cancelar</button>
                         </div>
+
+                        
+                        @include('admin.matricula.form-matricula')
+                        @include('admin.matricula.section-matricula')
+
+
+
                     </div>
                     <!-- /.card-body -->
                 </form>

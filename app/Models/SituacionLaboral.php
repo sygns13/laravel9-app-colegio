@@ -16,7 +16,8 @@ class SituacionLaboral extends Model
                             'horas_semanales',
                             'alumno_id',
                             'activo',
-                            'borrado'
+                            'borrado',
+                            'matricula_id',
                         ];
 	protected $guarded = ['id'];
 }

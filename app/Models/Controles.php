@@ -17,7 +17,8 @@ class Controles extends Model
                             'fecha',
                             'alumno_id',
                             'activo',
-                            'borrado'
+                            'borrado',
+                            'matricula_id',
                         ];
 	protected $guarded = ['id'];
 }

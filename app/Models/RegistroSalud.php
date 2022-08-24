@@ -16,7 +16,8 @@ class RegistroSalud extends Model
                             'tipo',
                             'alumno_id',
                             'activo',
-                            'borrado'
+                            'borrado',
+                            'matricula_id',
                         ];
 	protected $guarded = ['id'];
 }

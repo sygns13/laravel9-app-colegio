@@ -16,7 +16,10 @@ class Traslado extends Model
                             'ie_nombre',
                             'alumno_id',
                             'activo',
-                            'borrado'
+                            'borrado',
+                            'res_traslado', 
+                            'resolucion_traslado', 
+                            'matricula_id',
                         ];
 	protected $guarded = ['id'];
 }

@@ -67,6 +67,10 @@ class Alumno extends Model
                             'departamento_id',
                             'provincia_id',
                             'distrito_id',
+                            'anio_ingreso',
+                            'codigo_modular',
+                            'numero_matricula',
+                            'flag',
                         ];
 	protected $guarded = ['id'];
 
