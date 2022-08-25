@@ -54,6 +54,15 @@
         padding: 0px!important;
         font-weight: normal;
     }
+    .celdaFondoGrisBold5{
+        text-align:left; 
+        font-size: 8px; 
+        border: 1px solid black; 
+        background-color: #dddddd;
+        padding: 0px!important;
+        font-weight: normal;
+        
+    }
     .celdaFondoGrisBold4L{
         text-align:left; 
         font-size: 9px; 
@@ -96,6 +105,20 @@
         border: 1px solid black; 
         padding: 0px!important;
     }
+    .celdaNormal5{
+        text-align:left; 
+        font-size: 8px; 
+        border: 1px solid black; 
+        padding: 0px!important;
+        height: 10.4px
+    }
+    .celdaNormal6{
+        text-align:left; 
+        font-size: 7px; 
+        border: 1px solid black; 
+        padding: 0px!important;
+        height: 9px;
+    }
 
     .vertical{
         /* writing-mode: vertical-lr; */
@@ -122,6 +145,8 @@
 
 </head>
 <body>
+
+    {{-- Pagina 1 --}}
     <div class="box" style="width: 27.5cm;">
         <table class="table" style="margin-bottom: 0px; width:100%">
             <tr>
@@ -1018,9 +1043,6 @@
             </tr>
           </table>
 
-
-
-
     </div>
 
 
@@ -1034,6 +1056,1029 @@
 
 
 
+    <div style="page-break-after:always;"></div>
+
+
+    {{-- Pagina 2 --}}
+
+    <div class="box" style="width: 27.5cm;">
+
+        <table class="table" style="margin-bottom: 0px; width:100%; margin-top:0cm;">
+            <tr>
+                <td colspan="2" class="titles">2. Datos de la Escolaridad del Estudiante</td>
+            </tr>
+            <tr>
+                <td class="titles" style="width: 14%">2.1 Matrícula</td>
+                <td class="titles" style="width: 84%"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:99%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2">Datos - Años</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Nombre de la Institución Educativa</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Código Modular</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Departamento</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Provincia</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Distrito</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L" style="font-size:8px;">Instancia de Gestión Educativa Descentralizada</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Nivel</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Modalidad (1)</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Programa (Sólo EBA) (2)</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Ciclo (Sólo EBA) (3)</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Forma (4)</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Grado</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Sección</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Turno (5)</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Situación final (6)</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Año Lectivo</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Recuperación Pedagógica</td>
+                        </tr>
+                       
+                    </table>
+                </td>
+
+                <td style="vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5">289</td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;">0</td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;">5</td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;">9</td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;">4</td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;">8</td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;">3</td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;">8</td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                    <td class="celdaNormal5" style="min-width: 14.28571%;"></td>
+                                </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">UCAYALI</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">CORONEL PORTILLO</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">MANANTAY</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5" style="font-size: 8px;"><div style="height:21px; overflow:hidden;">UGEL CORONEL PORTILLA</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">INICIAL - JARDÍN</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5">EBR</td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5" style="height: 10.4px;"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5" style="height: 10.4px;"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">ESCOLARIZADO</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">GRUPO 4 AÑOS</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">D</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">MAÑANA</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                    </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                       <td class="celdaNormal5" style="width: 20%;">A</td>
+                                        <td class="celdaNormal5" style="width: 20%;">RR</td>
+                                        <td class="celdaNormal5" style="width: 20%;">D</td>
+                                        <td class="celdaNormal5" style="width: 20%;">R</td>
+                                        <td class="celdaNormal5" style="width: 20%;">P</td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                    <tr>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                        <td class="celdaNormal5" style="min-width: 20%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                      
+                       
+                    </table>
+                </td>
+            </tr>
+          </table>
 
 
 
@@ -1045,26 +2090,1336 @@
 
 
 
-{{-- 
-    <h1>{{ $title }}</h1>
-    <p>{{ $date }}</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.</p>
-  
-    <table class="table table-bordered">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-        </tr>
-        @foreach($users as $user)
-        <tr>
-            <td>{{ $user->id }}</td>
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-        </tr>
-        @endforeach
-    </table>
-  
-</body>
-</html> --}}
+
+
+
+
+
+
+
+
+
+
+
+          <table class="table" style="margin-bottom: 0px; width:100%; margin-top:0cm;">
+            <tr>
+                <td class="titles">2.2 Traslados</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td colspan="3" class="celdaFondoGrisBold3c">Fecha</td>
+                            <td class="celdaFondoGrisBold3c">Motivo del traslado</td>
+                            <td colspan="8" class="celdaFondoGrisBold3c">Institucion Educativa de Destino</td>
+                            <td class="celdaFondoGrisBold3c">Vº Bº de Traslados</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4">Día</td>
+                            <td class="celdaFondoGrisBold4">Mes</td>
+                            <td class="celdaFondoGrisBold4">Año</td>
+                            <td class="celdaFondoGrisBold4">Descripción</td>
+                            <td colspan="7"class="celdaFondoGrisBold4">Código Modular</td>
+                            <td class="celdaFondoGrisBold4">Nombre</td>
+                            <td class="celdaFondoGrisBold4" style="font-size:6px;">Firma y Post firma del Director de la I. E. que autoriza el traslado</td>
+
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 32%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 32%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 32%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 32%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 32%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 32%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 4%"></td>
+                            <td class="celdaNormal6" style="width: 32%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 2%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                            <td class="celdaNormal6" style="width: 21%"></td>
+                        </tr>
+
+                       
+                    </table>
+                </td>
+            </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <table class="table" style="margin-bottom: 0px; width:100%; margin-top:0cm;">
+            <tr>
+                <td colspan="2" class="titles">3. Responsable de la Matrícula en la Institución Educativa y Fecha</td>
+            </tr>
+            <tr>
+                <td class="titles" style="width: 14%"></td>
+                <td class="titles" style="width: 84%"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; width: 14%; ">
+                    <table class="table" style="margin-bottom: 0px; width:99%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2">Datos - Años</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L" style="height: 23.07px;">Fecha</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Apellidos y Nombres</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Cargo</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td style="vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5">13</td>
+                                    <td class="celdaNormal5">03</td>
+                                    <td class="celdaNormal5">2013</td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                           
+                        </tr>
+
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;"></div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;"></div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <table class="table" style="margin-bottom: 0px; width:100%; margin-top:0cm;">
+            <tr>
+                <td colspan="2" class="titles">4. Datos del Apoderado</td>
+            </tr>
+            <tr>
+                <td class="titles" style="width: 14%"></td>
+                <td class="titles" style="width: 84%"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; width: 14%; ">
+                    <table class="table" style="margin-bottom: 0px; width:99%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2">Datos - Años</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Apellido Paterno</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Apellido Materno</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Nombres</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Parentesco con el Estudiante</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L" style="height: 23.07px;">Fecha de Nacimiento</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Grado de Instrucc.</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Ocupación</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Domicilio</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Teléfono</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td style="vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">TANANTA</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">ZAMANES</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">ALI CANDI</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;">MADRE</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5">13</td>
+                                    <td class="celdaNormal5">03</td>
+                                    <td class="celdaNormal5">2013</td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Día</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 30%;">Mes</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 40%;">Año</td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                    <td class="celdaNormal5"></td>
+                                </tr>
+                                </table>
+                            </td>
+                           
+                        </tr>
+
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden; font-size:4px;">SECUNDARIA INCOMPLETA</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;"></div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden; font-size:4px;">3 DE DICIEMBREMZ. 8</div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                        <tr>
+                            <td class="celdaNormal5"><div style="height:9.4px; overflow:hidden;"></div></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                            <td class="celdaNormal5"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <table class="table" style="margin-bottom: 0px; width:100%; margin-top:0.1cm;">
+            <tr>
+                <td colspan="2" class="titles">5. Supervivencia de los Padres</td>
+            </tr>
+            <tr>
+                <td class="titles" style="width: 14%"></td>
+                <td class="titles" style="width: 84%"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; width: 14%; ">
+                    <table class="table" style="margin-bottom: 0px; width:99%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2">Vive</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Padre</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold4L">Madre</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td style="vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                            <td class="celdaFondoGrisBold2" style="width: 6.6666666%">20___</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;">X</td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                            <td style="padding: 0px;">
+                                <table class="table" style="margin-bottom: 0px; width:100%;">
+                                <tr>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">Si</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                    <td class="celdaFondoGrisBold4L" style="width: 25%;">No</td>
+                                    <td class="celdaNormal5" style="width: 25%;"></td>
+                                </tr>
+                                </table>
+                            </td> 
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+          </table>
+
+
+
+
+
+
+
+          <table class="table" style="margin-bottom: 0px; width:100%; margin-top:0.1cm;">
+            <tr>
+                <td style="width: 35%; font-size:8px; font-weight:normal; vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td style="vertical-align: top"><b>[1] Modalidad :</b></td>
+                            <td>(EBR)Edu.Básica Regular, (EBR-AD)Edu.Básica Regular A Distancia. <br>
+                                (EBA)Edu.Básica Alternativa, (EBE)Educación Básica Especial
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top"><b>[2] Programa (de E.B.A.) :</b></td>
+                            <td>PA, Programa de Alfabetización (PA) <br>
+                                (PBJ)PEBAJA.Prog.de Educ.Bás.Alter. de Jóvenes y Adultos
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 30%; font-size:8px; font-weight:normal; vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td style="vertical-align: top"><b>[3] Ciclo :</b></td>
+                            <td>Para el caso de EBA:(IN) Inicial, (INT) Intermedio, (AV) Avanzado
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top"><b>[4] Forma :</b></td>
+                            <td>(Esc) Escolarizado, (NoEsc) No Escolarizado <br>
+                                Para el caso EBA: (P) Presencial, (SP) Semi Presencial, (AD) A distancia
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 35%; font-size:8px; font-weight:normal; vertical-align: top;">
+                    <table class="table" style="margin-bottom: 0px; width:100%;">
+                        <tr>
+                            <td style="vertical-align: top"><b>[5] Turno :</b></td>
+                            <td>(M) Mañana, (T) Tarde, (N) Noche
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top"><b>[6] Situación Final  :</b></td>
+                            <td>(Marcar "X" donde corresponda) (A) Aprobado, <br>
+                                (RR) Requiere Recuperación, (D) Desaprobado, ( R ) Retirado <br>
+                                Para el caso de EBA: (RR) Requiere Recuperación, (P) Promovido
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+          </table>
+
+    </div>
+
