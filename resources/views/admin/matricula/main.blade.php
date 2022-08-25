@@ -76,6 +76,7 @@
 
                         <div class="card-footer" v-if="!divFormularioAlumno && !divFormularioCabecera">
                             <button style="margin-right:5px;" id="btnBuscar" type="button" class="btn btn-primary" @click="buscarAlumno()"><span class="fas fa-search"></span> Buscar Alumno</button>
+                            <button id="btnCerrarL" type="button" class="btn btn-success" @click="imprimirMatricula()" style="float:right;"><span class="fas fa-power-off"></span> Test impresion</button>
                         </div>
 
 

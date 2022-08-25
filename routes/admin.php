@@ -55,6 +55,9 @@ Route::middleware([
     Route::get('rematricula/getCicloSeccion/{gradoMaster_id}',[MatriculaController::class, 'getCicloSeccion'])->name('getCicloSeccion');
     Route::get('rematricula/getmatriculaactiva/{alumno_id}',[MatriculaController::class, 'getMatriculaActiva'])->name('getMatriculaActiva');
 
+    Route::get('generate-pdf', [MatriculaController::class, 'generatePDF']);
+    Route::get('ver-pdf', [MatriculaController::class, 'verPDF']);
+
     Route::get('realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
 
 });

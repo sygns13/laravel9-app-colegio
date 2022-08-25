@@ -1048,6 +1048,27 @@ createApp({
 
         imprimirMatricula:function () {
             console.log("imprimirMatricula");
+
+            url = 'generate-pdf';
+            window.open(url, '_blank').focus();
+
+            /* var url = 'generate-pdf';
+
+            axios.get(url).then(response => {
+
+                
+                if(response.data.result=='1'){
+                    
+                    this.matricula = response.data.matricula;
+                    
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                    this.divSectionMatricula = true;
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }) */
         },
 
 

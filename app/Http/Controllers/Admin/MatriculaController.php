@@ -28,6 +28,7 @@ use App\Models\InstitucionEducativa;
 use stdClass;
 use DB;
 use Storage;
+use PDF;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -463,6 +464,45 @@ class MatriculaController extends Controller
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         
+    }
+
+    public function generatePDF()
+    {
+
+        $users = User::get();
+  
+        $data = [
+            'title' => 'Welcome to ItSolutionStuff.com',
+            'date' => date('m/d/Y'),
+            'users' => $users
+        ]; 
+            
+        $pdf = PDF::loadView('myPDF', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('itsolutionstuff.pdf');
+    }
+
+    public function verPDF()
+    {
+
+        $users = User::get();
+  
+        $data = [
+            'title' => 'Welcome to ItSolutionStuff.com',
+            'date' => date('m/d/Y'),
+            'users' => $users
+        ]; 
+
+        $title = 'Welcome to ItSolutionStuff.com';
+        $date = date('m/d/Y');
+        
+            
+        /* $pdf = PDF::loadView('myPDF', $data);
+        $pdf->setPaper('A4', 'landscape'); */
+     
+        return view('myPDF',compact('users','title','date'));
     }
 
     /**
