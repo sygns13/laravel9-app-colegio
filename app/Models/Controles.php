@@ -12,12 +12,15 @@ class Controles extends Model
     protected $table = 'controles';
     protected $fillable = ['tipo_control',
                             'nombre_control',
-                            'valor',
+                            'peso',
+                            'talla',
                             'resultado',
                             'fecha',
                             'alumno_id',
                             'activo',
                             'borrado',
+                            'tipo',
+                            'resultado',
                             'matricula_id',
                         ];
 	protected $guarded = ['id'];

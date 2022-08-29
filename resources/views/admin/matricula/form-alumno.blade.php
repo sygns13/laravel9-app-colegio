@@ -229,7 +229,8 @@
                       <label for="cbunacimiento">Nacimiento <spam style="color:red;">*</spam></label>
                       <select class="form-control" style="width: 100%;" v-model="alumno.nacimiento" id="cbunacimiento">
                         <option value="0">Normal</option>
-                        <option value="1">Con complicaciones</option>
+                        <option value="1">Cesárea</option>
+                        <option value="2">Con complicaciones</option>
                       </select>
                     </div>
                   </div>

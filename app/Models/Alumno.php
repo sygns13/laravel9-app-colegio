@@ -13,6 +13,13 @@ use App\Models\SituacionLaboral;
 use App\Models\RegistroSalud;
 use App\Models\Controles;
 use App\Models\Domicilio;
+use App\Models\Matricula;
+use App\Models\CicloEscolar;
+use App\Models\CicloSeccion;
+use App\Models\CicloGrado;
+use App\Models\CicloNivel;
+use App\Models\Turno;
+use App\Models\ApoderadoMatricula;
 
 class Alumno extends Model
 {
@@ -129,6 +136,133 @@ class Alumno extends Model
                                 ->orderByDesc('id')
                                 ->get();
             $data->domicilios = $domicilios;
+
+            $data->fullNombre = $data->apellido_paterno . ' ' . $data->apellido_materno . ' ' . $data->nombres;
+        }
+        
+
+        return $data;
+    }
+
+    public static function GetById($alumno_id){
+        $data = Alumno::findOrFail($alumno_id);
+                    
+
+        if($data){
+            $tipoDocumento = TipoDocumento::find($data->tipo_documento_id);
+            $data->tipoDocumento = $tipoDocumento;
+
+            $apoderados = Apoderado::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->get();
+
+                                foreach ($apoderados as $key => $apoderado) {
+                                    $tipoApoderado = Tipoapoderado::find($apoderado->tipo_apoderado_id);
+                                    $apoderado->tipoApoderado = $tipoApoderado;
+                                }
+            $data->apoderados = $apoderados;
+
+            $traslados = Traslado::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->orderBy('id')
+                                ->get();
+            $data->traslados = $traslados;
+
+            $situacionLaborales = SituacionLaboral::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->orderBy('id')
+                                ->get();
+            $data->situacionLaborales = $situacionLaborales;
+
+            $registroSaludEnfermedads = RegistroSalud::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->where('tipo', 1)
+                                ->orderBy('id')
+                                ->get();
+            $data->registroSaludEnfermedads = $registroSaludEnfermedads;
+
+            $registroSaludVacunas = RegistroSalud::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->where('tipo', 2)
+                                ->orderBy('id')
+                                ->get();
+            $data->registroSaludVacunas = $registroSaludVacunas;
+
+            $registroSaludAlergias = RegistroSalud::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->where('tipo', 3)
+                                ->orderBy('id')
+                                ->get();
+            $data->registroSaludAlergias = $registroSaludAlergias;
+
+            $registroSaludExperienciasT = RegistroSalud::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->where('tipo', 4)
+                                ->orderBy('id')
+                                ->get();
+            $data->registroSaludExperienciasT = $registroSaludExperienciasT;
+
+            $controlesPesoTalla = Controles::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->where('tipo_control', 1)
+                                ->orderBy('id')
+                                ->get();
+            $data->controlesPesoTalla = $controlesPesoTalla;
+
+            $controlesOtros = Controles::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->where('tipo_control', 2)
+                                ->orderBy('id')
+                                ->get();
+            $data->controlesOtros = $controlesOtros;
+
+            $domicilios = Domicilio::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->orderBy('id')
+                                ->get();
+            $data->domicilios = $domicilios;
+
+            $matriculas = Matricula::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->orderBy('id')
+                                ->get();
+
+                                foreach ($matriculas as $keyC => $matricula) {
+                                    $ciclo = CicloEscolar::find($matricula->ciclo_escolar_id);
+                                    $matricula->ciclo = $ciclo;
+
+                                    $cicloSeccion = CicloSeccion::find($matricula->ciclo_seccion_id);
+                                    $matricula->cicloSeccion = $cicloSeccion;
+
+                                    $turno = Turno::find($cicloSeccion->turno_id);
+                                    $matricula->turno = $turno;
+
+                                    $cicloGrado = CicloGrado::find($cicloSeccion->ciclo_grados_id);
+                                    $matricula->cicloGrado = $cicloGrado;
+
+                                    $cicloNivel = CicloNivel::find($cicloGrado->ciclo_niveles_id);
+                                    $matricula->cicloNivel = $cicloNivel;
+
+                                    $apoderadoMatricula = ApoderadoMatricula::where('alumno_id', $data->id)
+                                                                            ->where('matricula_id', $matricula->id)
+                                                                            ->where('activo', 1)
+                                                                            ->where('borrado', 0)
+                                                                            ->first();
+                                    $matricula->apoderadoMatricula = $apoderadoMatricula;
+                                }
+
+            $data->matriculas = $matriculas;
 
             $data->fullNombre = $data->apellido_paterno . ' ' . $data->apellido_materno . ' ' . $data->nombres;
         }

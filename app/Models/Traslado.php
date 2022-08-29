@@ -20,6 +20,7 @@ class Traslado extends Model
                             'res_traslado', 
                             'resolucion_traslado', 
                             'matricula_id',
+                            'tipo',
                         ];
 	protected $guarded = ['id'];
 }

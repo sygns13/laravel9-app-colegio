@@ -38,6 +38,7 @@ class Matricula extends Model
                             'DM',
                             'SC',
                             'OT',
+                            'sigla_situacion_final',
                         ];
 	protected $guarded = ['id'];
 

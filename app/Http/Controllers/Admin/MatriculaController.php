@@ -22,6 +22,7 @@ use App\Models\Alumno;
 use App\Models\Apoderado;
 use App\Models\Traslado;
 use App\Models\Domicilio;
+use App\Models\ApoderadoMatricula;
 
 use App\Models\InstitucionEducativa;
 
@@ -440,6 +441,7 @@ class MatriculaController extends Controller
                 $registroB->res_traslado = $traslado_res_traslado;
                 $registroB->resolucion_traslado = $archivo;
                 $registroB->matricula_id = $registro->id;
+                $registroB->tipo ='1';
 
                 $registroB->save();
             }
@@ -456,8 +458,33 @@ class MatriculaController extends Controller
             $registroC->alumno_id = $alumno->id;
             $registroC->activo = '1';
             $registroC->borrado = '0';
+            $registroC->matricula_id = $registro->id;
             
             $registroC->save();
+
+            //Registro de Apoderado Principal de Matricula
+            foreach ($apoderados as $apoderado) {
+                if($apoderado->principal == "1"){
+
+                    $registroD = new ApoderadoMatricula;
+
+                    $registroD->alumno_id = $alumno->id;
+                    $registroD->matricula_id = $registro->id;
+                    $registroD->apellido_paterno = $apoderado->apellido_materno;
+                    $registroD->apellido_materno = $apoderado->apellido_paterno;
+                    $registroD->nombres = $apoderado->nombres;
+                    $registroD->parentesco = $apoderado->tipo_apoderado;
+                    $registroD->fecha_nac = $apoderado->fecha_nacimiento;
+                    $registroD->instruccion = $apoderado->grado_instruccion;
+                    $registroD->ocupacion = $apoderado->ocupacion;
+                    $registroD->direccion = $apoderado->direccion;
+                    $registroD->telefono = $apoderado->telefono;
+                    $registroD->activo = '1';
+                    $registroD->borrado = '0';
+
+                    $registroD->save();
+                }
+            }
 
             $msj='Matrícula del Alumno(a) Registrada con Éxito';
         }

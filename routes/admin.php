@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\HorarioController;
 use App\Http\Controllers\Admin\HoraController;
 use App\Http\Controllers\Admin\MatriculaController;
 use App\Http\Controllers\Admin\AlumnoController;
+use App\Http\Controllers\Admin\ReportPDFController;
 
 
 /* Route::get('admin', function () {
@@ -56,8 +57,14 @@ Route::middleware([
     Route::get('rematricula/getmatriculaactiva/{alumno_id}',[MatriculaController::class, 'getMatriculaActiva'])->name('getMatriculaActiva');
 
     Route::get('generate-pdf', [MatriculaController::class, 'generatePDF']);
-    Route::get('ver-pdf', [MatriculaController::class, 'verPDF']);
+    Route::get('ver-pdf/{alumno_id}', [ReportPDFController::class, 'verFichaMatricula']);
 
     Route::get('realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
+
+
+
+
+    //Reportes PDF
+    Route::get('reportepdf/ficha-matricula/{alumno_id}',[ReportPDFController::class, 'impFichaMatricula'])->name('impFichaMatricula');
 
 });

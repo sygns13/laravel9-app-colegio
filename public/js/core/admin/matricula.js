@@ -1049,7 +1049,8 @@ createApp({
         imprimirMatricula:function () {
             console.log("imprimirMatricula");
 
-            url = 'generate-pdf';
+            url = 'reportepdf/ficha-matricula/1';
+            console.log(url);
             window.open(url, '_blank').focus();
 
             /* var url = 'generate-pdf';

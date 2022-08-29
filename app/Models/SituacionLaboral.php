@@ -18,6 +18,8 @@ class SituacionLaboral extends Model
                             'activo',
                             'borrado',
                             'matricula_id',
+                            'tipo',
+                            'desc_tipo',
                         ];
 	protected $guarded = ['id'];
 }
