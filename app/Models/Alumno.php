@@ -78,6 +78,7 @@ class Alumno extends Model
                             'codigo_modular',
                             'numero_matricula',
                             'flag',
+                            'old_estado_grado',
                         ];
 	protected $guarded = ['id'];
 

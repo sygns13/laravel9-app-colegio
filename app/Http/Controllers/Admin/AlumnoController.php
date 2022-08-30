@@ -17,6 +17,12 @@ use App\Models\Provincia;
 use App\Models\Distrito;
 use App\Models\User;
 
+use App\Models\Matricula;
+use App\Models\ApoderadoMatricula;
+
+use App\Models\Domicilio;
+use App\Models\Traslado;
+
 use stdClass;
 use Illuminate\Support\Facades\Hash;
 
@@ -883,6 +889,7 @@ class AlumnoController extends Controller
         $registro->estado_grado= '0';
         $registro->activo='1';
         $registro->borrado='0';
+        $registro->old_estado_grado='0';
 
         $registro->save();
 
@@ -1879,6 +1886,91 @@ class AlumnoController extends Controller
         $registroD->borrado='0';
 
         $registroD->save();
+
+        //Update tablas de matrícula si el alumno está matriculado en un ciclo vigente
+        if(intval($registro->estado_grado) == 1){
+
+            $matricula_id = $request->matricula_id;
+
+            $vive_madre = 0;
+            $vive_padre = 0;
+
+            $apoderados = Apoderado::where('alumno_id',$registro->id)
+                            ->where('activo',1)
+                            ->where('borrado',0)
+                            ->get();
+
+            foreach ($apoderados as $apoderado) {
+                if($apoderado->tipo_apoderado_id == 1){
+                    $vive_madre = $apoderado->vive;
+                }
+                if($apoderado->tipo_apoderado_id == 2){
+                    $vive_padre = $apoderado->vive;
+                }
+            }
+
+            $tiene_discapacidad = 0;
+
+            if(intval($registro->DI) == 1 ||
+                intval($registro->DA) == 1 ||
+                intval($registro->DV) == 1 ||
+                intval($registro->DM) == 1 ||
+                intval($registro->SC) == 1 ||
+                intval($registro->OT) == 1 )
+                {
+                    $tiene_discapacidad = 1;
+                }
+
+            $registroE = Matricula::find($matricula_id);
+            
+            $registroE->tiene_discapacidad = $tiene_discapacidad;
+            $registroE->vive_madre = $vive_madre;
+            $registroE->vive_padre = $vive_padre;
+            $registroE->DI = $registro->DI;
+            $registroE->DA = $registro->DA;
+            $registroE->DV = $registro->DV;
+            $registroE->DM = $registro->DM;
+            $registroE->SC = $registro->SC;
+            $registroE->OT = $registro->OT;
+
+            $registroE->save();
+
+            $registroF = Domicilio::where('matricula_id', $matricula_id)->where('activo', '1')->where('borrado', '0')->first();
+
+            if($registroF != null){
+
+                $registroF->direccion = $registro->direccion;
+                $registroF->lugar = $registro->lugar;
+                $registroF->departamento = $registro->departamento;
+                $registroF->provincia = $registro->provincia;
+                $registroF->distrito = $registro->distrito;
+                $registroF->telefono = $registro->telefono;
+
+                $registroF->save();
+            }
+
+            //Update del Apoderado Principal de Matricula
+            foreach ($apoderados as $apoderado) {
+                if($apoderado->principal == "1"){
+
+                    $registroG = ApoderadoMatricula::where('matricula_id', $matricula_id)->where('activo', '1')->where('borrado', '0')->first();
+
+                    $registroG->apellido_paterno = $apoderado->apellido_materno;
+                    $registroG->apellido_materno = $apoderado->apellido_paterno;
+                    $registroG->nombres = $apoderado->nombres;
+                    $registroG->parentesco = $apoderado->tipo_apoderado;
+                    $registroG->fecha_nac = $apoderado->fecha_nacimiento;
+                    $registroG->instruccion = $apoderado->grado_instruccion;
+                    $registroG->ocupacion = $apoderado->ocupacion;
+                    $registroG->direccion = $apoderado->direccion;
+                    $registroG->telefono = $apoderado->telefono;
+
+                    $registroG->save();
+                }
+            }
+
+            
+        }
 
 
         $msj='Alumno Modificado con Éxito';

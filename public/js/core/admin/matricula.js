@@ -274,6 +274,8 @@ createApp({
 
             labelBtnMatricula: 'Registrar Matrícula',
             divSectionMatricula: false,
+
+            divFormularioGestionAlumno: false,
         }
     },
     created: function() {
@@ -390,6 +392,11 @@ createApp({
                                 this.apoderadoOtro = Object.assign({}, apoderado);
                             }
                         });
+
+                        if(this.alumno.estado_grado == "1"){
+                            this.datosMatriculaSecciones();
+                            this.buscarMatricula();
+                        }
 
                     }else{
                         //toastr.info("Alumno no encontrado en el sistema, ¿Desea registrarlo?");
@@ -878,6 +885,13 @@ createApp({
             })
 
         },
+        datosMatriculaSecciones:function () {
+            var url = 'rematricula/getCicloSeccion/'+this.alumno.grado_actual;
+
+            axios.get(url).then(response => {
+                this.secciones= response.data;
+            })
+        },
         getArchivo(event){
             //Asignamos la imagen a  nuestra data
 
@@ -972,6 +986,25 @@ createApp({
             }).catch(swal.noop);
         },
 
+        confirmActualizarMatricula:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Confirmar la modificación de la Matrícula del Alumno?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    console.log("aqui llega");
+                    this.updateMatricula();
+                }
+
+            }).catch(swal.noop);
+        },
+
         createMatricula:function () {
             var url='rematricula';
             $("#btnSaveMatricula").attr('disabled', true);
@@ -1026,6 +1059,11 @@ createApp({
                 if(response.data.result=='1'){
                     
                     this.matricula = response.data.matricula;
+                    //console.log(this.matricula);
+
+                    if(this.matricula.es_traslado == '1'){
+                        this.traslado = response.data.traslado;
+                    }
                     
                     this.errors=[];
                     //toastr.success(response.data.msj);
@@ -1047,168 +1085,245 @@ createApp({
         },
 
         imprimirMatricula:function () {
-            console.log("imprimirMatricula");
-
-            url = 'reportepdf/ficha-matricula/1';
+            //console.log("imprimirMatricula");
+            url = 'reportepdf/ficha-matricula/'+this.alumno.id;
             console.log(url);
             window.open(url, '_blank').focus();
+        },
 
-            /* var url = 'generate-pdf';
+        editAlumnoGestion:function () {
+            this.labelBtnSaveAlumno = 'Editar';
+            this.labelFooterAlumno = 'Modificar Alumno';
 
-            axios.get(url).then(response => {
+            this.labelBtnSave = 'Editar';
+            this.alumno.type = 'U';
 
-                
+            this.divFormularioGestionAlumno=true;
+
+            this.$nextTick(() => {
+                $('#txtapellido_paterno').focus();
+                this.stepper = new Stepper(document.querySelector('.bs-stepper'));
+                this.renderChecksAlumno();
+            });
+        },
+        cerrarFormAlumnoGestion: function () {
+            this.divFormularioGestionAlumno=false;
+            this.cancelFormAlumno();
+        },
+        cerrarFormAlumnoEditGestion:function () {
+            this.divFormularioGestionAlumno=false;
+            this.alumno = Object.assign({}, this.alumnoBD_BK);
+
+            this.alumnoBD_BK.apoderados.forEach(apoderado => {
+                if(apoderado.tipo_apoderado_id == 1){
+                    this.apoderadoMadre = Object.assign({}, apoderado);
+                }
+                if(apoderado.tipo_apoderado_id == 2){
+                    this.apoderadoPadre = Object.assign({}, apoderado);
+                }
+                if(apoderado.tipo_apoderado_id == 3){
+                    this.apoderadoOtro = Object.assign({}, apoderado);
+                }
+            });
+        },
+        procesarAlumnoGestion: function() {
+            /* if(this.alumno.type == 'C'){
+                this.confirmRegistrarAlumnoGestion();
+            } */
+            if(this.alumno.type == 'U'){
+                this.confirmActualizarAlumnoGestion();
+            }
+        },
+        confirmActualizarAlumnoGestion:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Confirmar la Modificación del Alumno?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    console.log("aqui llega");
+                    this.updateAlumnoGestion();
+                }
+
+            }).catch(swal.noop);
+        },
+        updateAlumnoGestion:function () {
+            var url='remalumno/'+this.alumno.id;
+            $("#btnSave").attr('disabled', true);
+            $("#btnCerrarL").attr('disabled', true);
+            this.divloaderNuevo=true;
+
+            axios.put(url, {alumno: this.alumno, apoderadoMadre: this.apoderadoMadre, apoderadoPadre: this.apoderadoPadre , apoderadoOtro: this.apoderadoOtro, matricula_id: this.matricula.id}).then(response=>{
+
+                $("#btnSave").removeAttr("disabled");
+                $("#btnCerrarL").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
                 if(response.data.result=='1'){
-                    
-                    this.matricula = response.data.matricula;
-                    
+                    this.buscarAlumno(this.thispage);
                     this.errors=[];
-                    //toastr.success(response.data.msj);
-                    this.divSectionMatricula = true;
+                    this.cerrarFormAlumnoEditGestion();
+                    toastr.success(response.data.msj);
                 }else{
                     $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
                 }
-            }) */
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnSave").removeAttr("disabled");
+                $("#btnCerrarL").removeAttr("disabled");
+            })
         },
+        editarMatricula:function () {
 
+            var url = 'rematricula/getCicloSeccion/'+this.alumno.grado_actual;
 
+            axios.get(url).then(response => {
+                this.secciones= response.data;
+                this.divFormularioMatricula = true;
+                this.labelBtnMatricula = 'Editar Matrícula';
+                this.matricula.type = "U";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        cambioSeccion: function() {
-
-            this.registros.niveles.forEach(nivel => {
-                nivel.grados.forEach(grado => {
-                    grado.seccions.forEach(seccion => {
-                        if(seccion.id==this.seccionSeleccionada){
-                            this.turnoSeleccionado = seccion.turno_id;
-                            this.cambioTurno();
-                        }
-                    });
+                this.$nextTick(() => {
+                    $('#txtresponsable_matricula_nombres').focus();
                 });
-            });   
+            })
+            
         },
 
-        cambioTurno: function() {
-            this.generarHorario();
+        updateMatricula:function () {
+            var url='rematricula/'+this.matricula.id;
+            $("#btnSaveMatricula").attr('disabled', true);
+            $("#btnAtrasMatricula").attr('disabled', true);
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('alumno_id', this.alumno.id);
+            data.append('matricula', JSON.stringify(this.matricula));
+            data.append('traslado', JSON.stringify(this.traslado));
+            data.append('archivo', this.archivo);
+
+            data.append('_method', 'PUT');
+
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+            axios.post(url,data,config).then(response=>{
+
+                $("#btnSaveMatricula").removeAttr("disabled");
+                $("#btnAtrasMatricula").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.cerrarFormMatricula();
+                    this.buscarMatricula();
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                    Swal.fire(
+                        'Exito',
+                        response.data.msj,
+                        'success'
+                      )
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnSaveMatricula").removeAttr("disabled");
+                $("#btnAtrasMatricula").removeAttr("disabled");
+            })
         },
+        anularMatricula:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "Desea Eliminar la Matrícula del Alumno",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
 
-        generarHorario: function() {
+                if (result.value) {
+                    this.delete();
+                }
 
-            this.horario = {
-                'lunes': [],
-                'martes': [],
-                'miercoles': [],
-                'jueves': [],
-                'viernes': [],
-            };
+            }).catch(swal.noop);
+        },
+        delete:function () {
+            var url = 'rematricula/'+this.matricula.id;
+            axios.delete(url).then(response=>{//eliminamos
 
-            this.turnos.forEach(turno => {
-                this.horas.forEach(hora => {
-                    if(turno.id==hora.turno_id && turno.id==this.turnoSeleccionado){
-
-                        let isDataLu = false;
-                        let isDataMa = false;
-                        let isDataMi = false;
-                        let isDataJu = false;
-                        let isDataVi = false;
-
-                        this.registros.niveles.forEach(nivel => {
-                            nivel.grados.forEach(grado => {
-                                grado.seccions.forEach(seccion => {
-                                    if(seccion.id==this.seccionSeleccionada){
-                                        seccion.horarios.forEach(horario => {
-                                            if(hora.id == horario.hora_id){
-                                                if(horario.dia_semana==1){
-                                                    isDataLu = true;
-                                                    this.horario.lunes[hora.id] = horario.ciclo_curso_id;
-                                                }
-                                                if(horario.dia_semana==2){
-                                                    isDataMa = true;
-                                                    this.horario.martes[hora.id] = horario.ciclo_curso_id;
-                                                }
-                                                if(horario.dia_semana==3){
-                                                    isDataMi = true;
-                                                    this.horario.miercoles[hora.id] = horario.ciclo_curso_id;
-                                                }
-                                                if(horario.dia_semana==4){
-                                                    isDataJu = true;
-                                                    this.horario.jueves[hora.id] = horario.ciclo_curso_id;
-                                                }
-                                                if(horario.dia_semana==5){
-                                                    isDataVi = true;
-                                                    this.horario.viernes[hora.id] = horario.ciclo_curso_id;
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-                            });
-                        });
-
-                        if(!isDataLu){
-                            this.horario.lunes[hora.id] = 0;
-                        }
-                        if(!isDataMa){
-                            this.horario.martes[hora.id] = 0;
-                        }
-                        if(!isDataMi){
-                            this.horario.miercoles[hora.id] = 0;
-                        }
-                        if(!isDataJu){
-                            this.horario.jueves[hora.id] = 0;
-                        }
-                        if(!isDataVi){
-                            this.horario.viernes[hora.id] = 0;
-                        }
-                    }
-                });
+                if(response.data.result=='1'){
+                    this.buscarAlumno2();
+                    this.divSectionMatricula = false;
+                    //toastr.success(response.data.msj);//mostramos mensaje
+                    Swal.fire(
+                        'Matricula Anulada',
+                        response.data.msj,
+                        'success'
+                      )
+                }else{
+                    // $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
             });
         },
-        changePage: function(page) {
-            this.pagination.current_page = page;
-            this.getDatos(page);
-            this.thispage = page;
+
+        buscarAlumno2: function() {
+            
+            if(this.alumno.num_documento.trim() == ''){
+                toastr.error('Ingrese un número de documento');
+                return;
+            }
+            var url = 'realumnobuscar/buscar/' + this.alumno.tipo_documento_id + '/' + this.alumno.num_documento;
+
+            axios.get(url).then(response => {
+                if(response.data.result=='1'){
+
+
+                    if(response.data.resultFound){
+                        this.alumno = response.data.alumno;
+                        this.alumnoBD_BK = response.data.alumno;
+                        this.errors=[];
+                        //toastr.success(response.data.msj);
+                        this.divFormularioCabecera = true;
+
+                        this.alumno.apoderados.forEach(apoderado => {
+                            if(apoderado.tipo_apoderado_id == 1){
+                                this.apoderadoMadre = Object.assign({}, apoderado);
+                            }
+                            if(apoderado.tipo_apoderado_id == 2){
+                                this.apoderadoPadre = Object.assign({}, apoderado);
+                            }
+                            if(apoderado.tipo_apoderado_id == 3){
+                                this.apoderadoOtro = Object.assign({}, apoderado);
+                            }
+                        });
+
+                        if(this.alumno.estado_grado == "1"){
+                            this.datosMatriculaSecciones();
+                            this.buscarMatricula();
+                        }
+
+                    }else{
+                        //toastr.info("Alumno no encontrado en el sistema, ¿Desea registrarlo?");
+                        this.confirmRegistrar();
+                    }
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            })
         },
-
-        cerrarHorario: function() {
-            this.seccionSeleccionada = 0;
-            this.turnoSeleccionado = 0;
-            this.generarHorario();
-        },
-        
-       
-
-
-
 
 
       

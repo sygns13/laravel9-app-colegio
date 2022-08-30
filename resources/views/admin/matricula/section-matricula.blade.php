@@ -1,4 +1,4 @@
-<div v-if="!divFormularioAlumno && divFormularioCabecera && divSectionMatricula">
+<div v-if="!divFormularioAlumno && divFormularioCabecera && divSectionMatricula && !divFormularioMatricula && !divFormularioGestionAlumno">
     <br>
     <h5>Datos de Matrícula Realizada:</h5>
     <br>
@@ -80,6 +80,9 @@
       
       <div class="card-footer">
         <button id="btnSaveMatricula"  type="button" class="btn btn-success" @click="imprimirMatricula()" style="margin-right:5px;"><span class="fas fa-save"></span> Imprimir Ficha de Matrícula</button>
+        <button id="btnEditMat" type="button" class="btn btn-warning" @click="editarMatricula()" style="margin-right: 10px;"><span class="fas fa-edit"></span> Editar Matrícula</button>
+        <button id="btnAnularMat" type="button" class="btn btn-danger" @click="anularMatricula()" style="margin-right: 10px;"><span class="fas fa-trash"></span> Anular Matrícula</button>
+        <button id="btnEditAlu" type="button" class="btn btn-warning" @click="editAlumnoGestion()" style="margin-right: 10px;"><span class="fas fa-edit"></span> Editar Datos Personales</button>
         <button id="btnAtrasMatricula" type="button" class="btn btn-danger" @click="cerrarMatricula()" style="margin-right: 10px;"><span class="fas fa-times"></span> Cerrar</button>
       </div>
 

@@ -11,6 +11,7 @@
 @section('content')
     @include('admin.matricula.main')
     @include('admin.matricula.form-alumno')
+    @include('admin.matricula.form-gestion-alumno')
 @stop
 
 @section('css')

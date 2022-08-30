@@ -33,7 +33,7 @@
         </div>
     </div>
     
-    <div class="row" v-if="alumno.estado_grado == '0'">
+    <div class="row" v-if="alumno.estado_grado == '0' || (alumno.type == 'U' && alumno.estado_grado == '1' && alumno.old_estado_grado == '0')">
         <div class="col-md-4">
             <div class="form-group">
               <label for="cbues_traslado">¿Es ingreso por traslado externo? <spam style="color:red;">*</spam></label>

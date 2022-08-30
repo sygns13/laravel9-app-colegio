@@ -76,7 +76,7 @@
 
                         <div class="card-footer" v-if="!divFormularioAlumno && !divFormularioCabecera">
                             <button style="margin-right:5px;" id="btnBuscar" type="button" class="btn btn-primary" @click="buscarAlumno()"><span class="fas fa-search"></span> Buscar Alumno</button>
-                            <button id="btnCerrarL" type="button" class="btn btn-success" @click="imprimirMatricula()" style="float:right;"><span class="fas fa-power-off"></span> Test impresion</button>
+                            {{-- <button id="btnCerrarL" type="button" class="btn btn-success" @click="imprimirMatricula()" style="float:right;"><span class="fas fa-power-off"></span> Test impresion</button> --}}
                         </div>
 
 
@@ -138,7 +138,8 @@
 
                         <div class="card-footer" v-if="!divFormularioAlumno && divFormularioCabecera && !divFormularioMatricula && !divSectionMatricula">
                             <button style="margin-right:5px;" id="btnIniMat" type="button" class="btn btn-primary" @click="matriAlumno()"><span class="fas fa-chalkboard-teacher"></span> Iniciar Matrícula</button>
-                            <button style="margin-right:5px;" id="btnEditMat" type="button" class="btn btn-warning" @click="editAlumno()"><span class="fas fa-edit"></span> Editar Datos Personales</button>
+                            <button v-if="alumno.estado_grado === 0" style="margin-right:5px;" id="btnEditMat" type="button" class="btn btn-warning" @click="editAlumno()"><span class="fas fa-edit"></span> Editar Datos Personales</button>
+                            <button v-if="alumno.estado_grado !== 0" style="margin-right:5px;" id="btnEditMat" type="button" class="btn btn-warning" @click="editAlumnoGestion()"><span class="fas fa-edit"></span> Editar Datos Personales</button>
                             <button style="margin-right:5px;" id="btnCancelMat" type="button" class="btn btn-danger" @click="cancelAlumno()"><span class="fas fa-times"></span> Cancelar</button>
                         </div>
 
