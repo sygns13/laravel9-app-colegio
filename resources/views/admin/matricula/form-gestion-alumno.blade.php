@@ -517,7 +517,17 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="txtgrado_instruccionM">Grado de Instrucción</label>
-                              <input type="text" class="form-control" id="txtgrado_instruccionM" placeholder="Dirección" v-model="apoderadoMadre.grado_instruccion" maxlength="100">
+                              {{-- <input type="text" class="form-control" id="txtgrado_instruccionM" placeholder="Dirección" v-model="apoderadoMadre.grado_instruccion" maxlength="100"> --}}
+                              <select class="form-control" style="width: 100%;" v-model="apoderadoMadre.escolaridad_sigla" id="cbuescolaridad_siglaM">
+                                <option value="" disabled>Seleccione ...</option>
+                                <option value="SE" >SIN ESCOLARIDAD</option>
+                                <option value="P" >PRIMARIA COMPLETA</option>
+                                <option value="PI" >PRIMARIA INCOMPLETA</option>
+                                <option value="S" >SECUNDARIA COMPLETA</option>
+                                <option value="SI" >SECUNDARIA INCOMPLETA</option>
+                                <option value="SP" >SUPERIOR COMPLETA</option>
+                                <option value="SPI" >SUPERIOR INCOMPLETA</option>
+                              </select>
                             </div>
                           </div>
   
@@ -646,7 +656,17 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="txtgrado_instruccionP">Grado de Instrucción</label>
-                              <input type="text" class="form-control" id="txtgrado_instruccionP" placeholder="Grado" v-model="apoderadoPadre.grado_instruccion" maxlength="100">
+                              {{-- <input type="text" class="form-control" id="txtgrado_instruccionP" placeholder="Grado" v-model="apoderadoPadre.grado_instruccion" maxlength="100"> --}}
+                              <select class="form-control" style="width: 100%;" v-model="apoderadoPadre.escolaridad_sigla" id="cbuescolaridad_siglaP">
+                                <option value="" disabled>Seleccione ...</option>
+                                <option value="SE" >SIN ESCOLARIDAD</option>
+                                <option value="P" >PRIMARIA COMPLETA</option>
+                                <option value="PI" >PRIMARIA INCOMPLETA</option>
+                                <option value="S" >SECUNDARIA COMPLETA</option>
+                                <option value="SI" >SECUNDARIA INCOMPLETA</option>
+                                <option value="SP" >SUPERIOR COMPLETA</option>
+                                <option value="SPI" >SUPERIOR INCOMPLETA</option>
+                              </select>
                             </div>
                           </div>
   
@@ -783,7 +803,17 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="txtgrado_instruccionO">Grado de Instrucción</label>
-                              <input type="text" class="form-control" id="txtgrado_instruccionO" placeholder="Grado" v-model="apoderadoOtro.grado_instruccion" maxlength="100">
+                              {{-- <input type="text" class="form-control" id="txtgrado_instruccionO" placeholder="Grado" v-model="apoderadoOtro.grado_instruccion" maxlength="100"> --}}
+                              <select class="form-control" style="width: 100%;" v-model="apoderadoOtro.escolaridad_sigla" id="cbuescolaridad_siglaO">
+                                <option value="" disabled>Seleccione ...</option>
+                                <option value="SE" >SIN ESCOLARIDAD</option>
+                                <option value="P" >PRIMARIA COMPLETA</option>
+                                <option value="PI" >PRIMARIA INCOMPLETA</option>
+                                <option value="S" >SECUNDARIA COMPLETA</option>
+                                <option value="SI" >SECUNDARIA INCOMPLETA</option>
+                                <option value="SP" >SUPERIOR COMPLETA</option>
+                                <option value="SPI" >SUPERIOR INCOMPLETA</option>
+                              </select>
                             </div>
                           </div>
   

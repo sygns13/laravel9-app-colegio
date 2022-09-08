@@ -131,6 +131,7 @@ createApp({
                 'tipo_apoderado_id': 1,
                 'principal': 1,
                 'activo': 1,
+                'escolaridad_sigla': '',
 
             },
 
@@ -155,6 +156,7 @@ createApp({
                 'tipo_apoderado_id': 2,
                 'principal': 0,
                 'activo': 1,
+                'escolaridad_sigla': '',
 
             },
 
@@ -179,6 +181,7 @@ createApp({
                 'tipo_apoderado_id': 3,
                 'principal': 0,
                 'activo': 1,
+                'escolaridad_sigla': '',
 
             },
 
@@ -438,7 +441,6 @@ createApp({
             this.$nextTick(() => {
                 $('#txtapellido_paterno').focus();
                 this.stepper = new Stepper(document.querySelector('.bs-stepper'));
-                console.log(this.apoderadoMadre);
             });
         },
         cerrarFormAlumno: function () {
@@ -532,6 +534,7 @@ createApp({
                 'tipo_apoderado_id': 1,
                 'principal': 1,
                 'activo': 1,
+                'escolaridad_sigla': '',
 
             };
             
@@ -556,6 +559,7 @@ createApp({
                 'tipo_apoderado_id': 2,
                 'principal': 0,
                 'activo': 1,
+                'escolaridad_sigla': '',
 
             };
 
@@ -580,6 +584,7 @@ createApp({
                 'tipo_apoderado_id': 3,
                 'principal': 0,
                 'activo': 1,
+                'escolaridad_sigla': '',
 
             };
 

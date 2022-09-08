@@ -29,7 +29,8 @@ class Apoderado extends Model
                             'tipo_apoderado_id',
                             'principal',
                             'activo',
-                            'borrado'
+                            'borrado',
+                            'escolaridad_sigla'
                         ];
 	protected $guarded = ['id'];
 }

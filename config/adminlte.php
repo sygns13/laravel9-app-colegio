@@ -305,6 +305,10 @@ return [
                     'text' => 'Matrículas',
                     'url'  => 'admin/matriculas',
                 ],
+                [
+                    'text' => 'Nómina de Matrícula',
+                    'url'  => 'admin/nominas',
+                ],
 
             ]
         ],

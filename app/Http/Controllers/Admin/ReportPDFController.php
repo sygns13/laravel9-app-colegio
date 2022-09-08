@@ -61,11 +61,49 @@ class ReportPDFController extends Controller
         return $pdf->download('FICHA_MATRICULA_'.$cicloActivo->year.'_'.$alumno->num_documento.'.pdf');
     }
 
-    public function verFichaMatricula($alumno_id)
+    public function impNominaMatricula($ciclo_seccion_id)
     {
 
         //$matricula = Matricula::findOrFail($matricula_id);
 
+        $nominaSeccion = Matricula::GetNominaCicloSeccion($ciclo_seccion_id);
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+  
+        $data = [
+            'nominaSeccion' => $nominaSeccion,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.nomina-matricula', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('NOMINA_MATRICULA_'.$nominaSeccion->ciclo->year.'_'.$nominaSeccion->sigla.'.pdf');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function verPDF()
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+
+        $alumno_id = 1;
         $alumno = Alumno::GetById($alumno_id);
         $institucionEductiva = InstitucionEducativa::where('borrado','0')
         ->where('activo','1')
@@ -83,8 +121,34 @@ class ReportPDFController extends Controller
         $pdf->setPaper('A4', 'landscape');
         $pdf->setOption('defaultFont', 'Arial'); */
 
-        return view('reportspdf.ficha-matricula',compact('alumno','institucionEductiva'));
+        return view('myPDF',compact('alumno','institucionEductiva'));
         
         //return $pdf->download('FICHA_MATRICULA_'.$cicloActivo->year.'_'.$alumno->num_documento.'.pdf');
+    }
+
+    public function descargarPDF()
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+
+        $alumno_id = 1;
+        $alumno = Alumno::GetById($alumno_id);
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+  
+        $data = [
+            'alumno' => $alumno,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('myPDF', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial'); 
+        
+        return $pdf->download('FICHA_MATRICULA_'.$cicloActivo->year.'_'.$alumno->num_documento.'.pdf');
     }
 }

@@ -171,7 +171,7 @@ class AlumnoController extends Controller
         $madre_nombres = isset($apoderadoMadre["nombres"]) ? $apoderadoMadre["nombres"] : null;    
         $madre_vive = isset($apoderadoMadre["vive"]) ? $apoderadoMadre["vive"] : null;    
         $madre_fecha_nacimiento = isset($apoderadoMadre["fecha_nacimiento"]) ? $apoderadoMadre["fecha_nacimiento"] : null;    
-        $madre_grado_instruccion = isset($apoderadoMadre["grado_instruccion"]) ? $apoderadoMadre["grado_instruccion"] : null;    
+        $madre_escolaridad_sigla = isset($apoderadoMadre["escolaridad_sigla"]) ? $apoderadoMadre["escolaridad_sigla"] : null;    
         $madre_ocupacion = isset($apoderadoMadre["ocupacion"]) ? $apoderadoMadre["ocupacion"] : null;    
         $madre_vive_con_estudiante = isset($apoderadoMadre["vive_con_estudiante"]) ? $apoderadoMadre["vive_con_estudiante"] : null;    
         $madre_religion = isset($apoderadoMadre["religion"]) ? $apoderadoMadre["religion"] : null;    
@@ -190,7 +190,7 @@ class AlumnoController extends Controller
         $padre_nombres = isset($apoderadoPadre["nombres"]) ? $apoderadoPadre["nombres"] : null;    
         $padre_vive = isset($apoderadoPadre["vive"]) ? $apoderadoPadre["vive"] : null;    
         $padre_fecha_nacimiento = isset($apoderadoPadre["fecha_nacimiento"]) ? $apoderadoPadre["fecha_nacimiento"] : null;    
-        $padre_grado_instruccion = isset($apoderadoPadre["grado_instruccion"]) ? $apoderadoPadre["grado_instruccion"] : null;    
+        $padre_escolaridad_sigla = isset($apoderadoPadre["escolaridad_sigla"]) ? $apoderadoPadre["escolaridad_sigla"] : null;    
         $padre_ocupacion = isset($apoderadoPadre["ocupacion"]) ? $apoderadoPadre["ocupacion"] : null;    
         $padre_vive_con_estudiante = isset($apoderadoPadre["vive_con_estudiante"]) ? $apoderadoPadre["vive_con_estudiante"] : null;    
         $padre_religion = isset($apoderadoPadre["religion"]) ? $apoderadoPadre["religion"] : null;    
@@ -209,7 +209,7 @@ class AlumnoController extends Controller
         $otro_nombres = isset($apoderadoOtro["nombres"]) ? $apoderadoOtro["nombres"] : null;    
         $otro_vive = isset($apoderadoOtro["vive"]) ? $apoderadoOtro["vive"] : null;    
         $otro_fecha_nacimiento = isset($apoderadoOtro["fecha_nacimiento"]) ? $apoderadoOtro["fecha_nacimiento"] : null;    
-        $otro_grado_instruccion = isset($apoderadoOtro["grado_instruccion"]) ? $apoderadoOtro["grado_instruccion"] : null;    
+        $otro_escolaridad_sigla = isset($apoderadoOtro["escolaridad_sigla"]) ? $apoderadoOtro["escolaridad_sigla"] : null;    
         $otro_ocupacion = isset($apoderadoOtro["ocupacion"]) ? $apoderadoOtro["ocupacion"] : null;    
         $otro_vive_con_estudiante = isset($apoderadoOtro["vive_con_estudiante"]) ? $apoderadoOtro["vive_con_estudiante"] : null;    
         $otro_religion = isset($apoderadoOtro["religion"]) ? $apoderadoOtro["religion"] : null;    
@@ -624,8 +624,37 @@ class AlumnoController extends Controller
         $madre_tipo_apoderado = "Madre";
         $madre_tipo_apoderado_id = 1;
 
-        if($madre_grado_instruccion == null){
+        /* if($madre_grado_instruccion == null){
             $madre_grado_instruccion = "";
+        } */
+        $madre_grado_instruccion = "";
+
+        switch ($madre_escolaridad_sigla) {
+            case 'SE':
+                $madre_grado_instruccion = "SIN ESCOLARIDAD";
+                break;
+            case 'P':
+                $madre_grado_instruccion = "PRIMARIA COMPLETA";
+                break;
+            case 'PI':
+                $madre_grado_instruccion = "PRIMARIA INCOMPLETA";
+                break;
+            case 'S':
+                $madre_grado_instruccion = "SECUNDARIA COMPLETA";
+                break;
+            case 'SI':
+                $madre_grado_instruccion = "SECUNDARIA INCOMPLETA";
+                break;
+            case 'SP':
+                $madre_grado_instruccion = "SUPERIOR COMPLETA";
+                break;
+            case 'SPI':
+                $madre_grado_instruccion = "SUPERIOR INCOMPLETA";
+                break;
+            
+            default:
+                $madre_grado_instruccion = "";
+                break;
         }
 
         if($madre_ocupacion == null){
@@ -701,8 +730,35 @@ class AlumnoController extends Controller
         $padre_tipo_apoderado = "Padre";
         $padre_tipo_apoderado_id = 2;
 
-        if($padre_grado_instruccion == null){
+        /* if($padre_grado_instruccion == null){
             $padre_grado_instruccion = "";
+        } */
+        switch ($padre_escolaridad_sigla) {
+            case 'SE':
+                $padre_grado_instruccion = "SIN ESCOLARIDAD";
+                break;
+            case 'P':
+                $padre_grado_instruccion = "PRIMARIA COMPLETA";
+                break;
+            case 'PI':
+                $padre_grado_instruccion = "PRIMARIA INCOMPLETA";
+                break;
+            case 'S':
+                $padre_grado_instruccion = "SECUNDARIA COMPLETA";
+                break;
+            case 'SI':
+                $padre_grado_instruccion = "SECUNDARIA INCOMPLETA";
+                break;
+            case 'SP':
+                $padre_grado_instruccion = "SUPERIOR COMPLETA";
+                break;
+            case 'SPI':
+                $padre_grado_instruccion = "SUPERIOR INCOMPLETA";
+                break;
+            
+            default:
+                $padre_grado_instruccion = "";
+                break;
         }
 
         if($padre_ocupacion == null){
@@ -790,8 +846,35 @@ class AlumnoController extends Controller
         $otro_vive_con_estudiante = intval($otro_vive_con_estudiante);
         $otro_tipo_apoderado_id = 3;
 
-        if($otro_grado_instruccion == null){
+        /* if($otro_grado_instruccion == null){
             $otro_grado_instruccion = "";
+        } */
+        switch ($otro_escolaridad_sigla) {
+            case 'SE':
+                $otro_grado_instruccion = "SIN ESCOLARIDAD";
+                break;
+            case 'P':
+                $otro_grado_instruccion = "PRIMARIA COMPLETA";
+                break;
+            case 'PI':
+                $otro_grado_instruccion = "PRIMARIA INCOMPLETA";
+                break;
+            case 'S':
+                $otro_grado_instruccion = "SECUNDARIA COMPLETA";
+                break;
+            case 'SI':
+                $otro_grado_instruccion = "SECUNDARIA INCOMPLETA";
+                break;
+            case 'SP':
+                $otro_grado_instruccion = "SUPERIOR COMPLETA";
+                break;
+            case 'SPI':
+                $otro_grado_instruccion = "SUPERIOR INCOMPLETA";
+                break;
+            
+            default:
+                $otro_grado_instruccion = "";
+                break;
         }
 
         if($otro_ocupacion == null){
@@ -916,6 +999,7 @@ class AlumnoController extends Controller
         $registroB->correo=$madre_correo;
         $registroB->tipo_apoderado_id=$madre_tipo_apoderado_id;
         $registroB->principal=$madre_principal;
+        $registroB->escolaridad_sigla=$madre_escolaridad_sigla;
         
         $registroB->activo='1';
         $registroB->borrado='0';
@@ -945,6 +1029,7 @@ class AlumnoController extends Controller
         $registroC->correo=$padre_correo;
         $registroC->tipo_apoderado_id=$padre_tipo_apoderado_id;
         $registroC->principal=$padre_principal;
+        $registroC->escolaridad_sigla=$padre_escolaridad_sigla;
         
         $registroC->activo='1';
         $registroC->borrado='0';
@@ -974,6 +1059,7 @@ class AlumnoController extends Controller
         $registroD->correo=$otro_correo;
         $registroD->tipo_apoderado_id=$otro_tipo_apoderado_id;
         $registroD->principal=$otro_principal;
+        $registroD->escolaridad_sigla=$otro_escolaridad_sigla;
         
         $registroD->activo='1';
         $registroD->borrado='0';
@@ -1082,7 +1168,7 @@ class AlumnoController extends Controller
         $madre_nombres = isset($apoderadoMadre["nombres"]) ? $apoderadoMadre["nombres"] : null;    
         $madre_vive = isset($apoderadoMadre["vive"]) ? $apoderadoMadre["vive"] : null;    
         $madre_fecha_nacimiento = isset($apoderadoMadre["fecha_nacimiento"]) ? $apoderadoMadre["fecha_nacimiento"] : null;    
-        $madre_grado_instruccion = isset($apoderadoMadre["grado_instruccion"]) ? $apoderadoMadre["grado_instruccion"] : null;    
+        $madre_escolaridad_sigla = isset($apoderadoMadre["escolaridad_sigla"]) ? $apoderadoMadre["escolaridad_sigla"] : null;    
         $madre_ocupacion = isset($apoderadoMadre["ocupacion"]) ? $apoderadoMadre["ocupacion"] : null;    
         $madre_vive_con_estudiante = isset($apoderadoMadre["vive_con_estudiante"]) ? $apoderadoMadre["vive_con_estudiante"] : null;    
         $madre_religion = isset($apoderadoMadre["religion"]) ? $apoderadoMadre["religion"] : null;    
@@ -1102,7 +1188,7 @@ class AlumnoController extends Controller
         $padre_nombres = isset($apoderadoPadre["nombres"]) ? $apoderadoPadre["nombres"] : null;    
         $padre_vive = isset($apoderadoPadre["vive"]) ? $apoderadoPadre["vive"] : null;    
         $padre_fecha_nacimiento = isset($apoderadoPadre["fecha_nacimiento"]) ? $apoderadoPadre["fecha_nacimiento"] : null;    
-        $padre_grado_instruccion = isset($apoderadoPadre["grado_instruccion"]) ? $apoderadoPadre["grado_instruccion"] : null;    
+        $padre_escolaridad_sigla = isset($apoderadoPadre["escolaridad_sigla"]) ? $apoderadoPadre["escolaridad_sigla"] : null;    
         $padre_ocupacion = isset($apoderadoPadre["ocupacion"]) ? $apoderadoPadre["ocupacion"] : null;    
         $padre_vive_con_estudiante = isset($apoderadoPadre["vive_con_estudiante"]) ? $apoderadoPadre["vive_con_estudiante"] : null;    
         $padre_religion = isset($apoderadoPadre["religion"]) ? $apoderadoPadre["religion"] : null;    
@@ -1122,7 +1208,7 @@ class AlumnoController extends Controller
         $otro_nombres = isset($apoderadoOtro["nombres"]) ? $apoderadoOtro["nombres"] : null;    
         $otro_vive = isset($apoderadoOtro["vive"]) ? $apoderadoOtro["vive"] : null;    
         $otro_fecha_nacimiento = isset($apoderadoOtro["fecha_nacimiento"]) ? $apoderadoOtro["fecha_nacimiento"] : null;    
-        $otro_grado_instruccion = isset($apoderadoOtro["grado_instruccion"]) ? $apoderadoOtro["grado_instruccion"] : null;    
+        $otro_escolaridad_sigla = isset($apoderadoOtro["escolaridad_sigla"]) ? $apoderadoOtro["escolaridad_sigla"] : null;    
         $otro_ocupacion = isset($apoderadoOtro["ocupacion"]) ? $apoderadoOtro["ocupacion"] : null;    
         $otro_vive_con_estudiante = isset($apoderadoOtro["vive_con_estudiante"]) ? $apoderadoOtro["vive_con_estudiante"] : null;    
         $otro_religion = isset($apoderadoOtro["religion"]) ? $apoderadoOtro["religion"] : null;    
@@ -1537,8 +1623,38 @@ class AlumnoController extends Controller
         $madre_tipo_apoderado = "Madre";
         $madre_tipo_apoderado_id = 1;
 
-        if($madre_grado_instruccion == null){
+        /* if($madre_grado_instruccion == null){
             $madre_grado_instruccion = "";
+        } */
+
+        $madre_grado_instruccion = "";
+
+        switch ($madre_escolaridad_sigla) {
+            case 'SE':
+                $madre_grado_instruccion = "SIN ESCOLARIDAD";
+                break;
+            case 'P':
+                $madre_grado_instruccion = "PRIMARIA COMPLETA";
+                break;
+            case 'PI':
+                $madre_grado_instruccion = "PRIMARIA INCOMPLETA";
+                break;
+            case 'S':
+                $madre_grado_instruccion = "SECUNDARIA COMPLETA";
+                break;
+            case 'SI':
+                $madre_grado_instruccion = "SECUNDARIA INCOMPLETA";
+                break;
+            case 'SP':
+                $madre_grado_instruccion = "SUPERIOR COMPLETA";
+                break;
+            case 'SPI':
+                $madre_grado_instruccion = "SUPERIOR INCOMPLETA";
+                break;
+            
+            default:
+                $madre_grado_instruccion = "";
+                break;
         }
 
         if($madre_ocupacion == null){
@@ -1614,8 +1730,35 @@ class AlumnoController extends Controller
         $padre_tipo_apoderado = "Padre";
         $padre_tipo_apoderado_id = 2;
 
-        if($padre_grado_instruccion == null){
+        /* if($padre_grado_instruccion == null){
             $padre_grado_instruccion = "";
+        } */
+        switch ($padre_escolaridad_sigla) {
+            case 'SE':
+                $padre_grado_instruccion = "SIN ESCOLARIDAD";
+                break;
+            case 'P':
+                $padre_grado_instruccion = "PRIMARIA COMPLETA";
+                break;
+            case 'PI':
+                $padre_grado_instruccion = "PRIMARIA INCOMPLETA";
+                break;
+            case 'S':
+                $padre_grado_instruccion = "SECUNDARIA COMPLETA";
+                break;
+            case 'SI':
+                $padre_grado_instruccion = "SECUNDARIA INCOMPLETA";
+                break;
+            case 'SP':
+                $padre_grado_instruccion = "SUPERIOR COMPLETA";
+                break;
+            case 'SPI':
+                $padre_grado_instruccion = "SUPERIOR INCOMPLETA";
+                break;
+            
+            default:
+                $padre_grado_instruccion = "";
+                break;
         }
 
         if($padre_ocupacion == null){
@@ -1703,8 +1846,35 @@ class AlumnoController extends Controller
         $otro_vive_con_estudiante = intval($otro_vive_con_estudiante);
         $otro_tipo_apoderado_id = 3;
 
-        if($otro_grado_instruccion == null){
+        /* if($otro_grado_instruccion == null){
             $otro_grado_instruccion = "";
+        } */
+        switch ($otro_escolaridad_sigla) {
+            case 'SE':
+                $otro_grado_instruccion = "SIN ESCOLARIDAD";
+                break;
+            case 'P':
+                $otro_grado_instruccion = "PRIMARIA COMPLETA";
+                break;
+            case 'PI':
+                $otro_grado_instruccion = "PRIMARIA INCOMPLETA";
+                break;
+            case 'S':
+                $otro_grado_instruccion = "SECUNDARIA COMPLETA";
+                break;
+            case 'SI':
+                $otro_grado_instruccion = "SECUNDARIA INCOMPLETA";
+                break;
+            case 'SP':
+                $otro_grado_instruccion = "SUPERIOR COMPLETA";
+                break;
+            case 'SPI':
+                $otro_grado_instruccion = "SUPERIOR INCOMPLETA";
+                break;
+            
+            default:
+                $otro_grado_instruccion = "";
+                break;
         }
 
         if($otro_ocupacion == null){
@@ -1823,6 +1993,7 @@ class AlumnoController extends Controller
         $registroB->correo=$madre_correo;
         $registroB->tipo_apoderado_id=$madre_tipo_apoderado_id;
         $registroB->principal=$madre_principal;
+        $registroB->escolaridad_sigla=$madre_escolaridad_sigla;
         
         $registroB->activo='1';
         $registroB->borrado='0';
@@ -1852,6 +2023,7 @@ class AlumnoController extends Controller
         $registroC->correo=$padre_correo;
         $registroC->tipo_apoderado_id=$padre_tipo_apoderado_id;
         $registroC->principal=$padre_principal;
+        $registroC->escolaridad_sigla=$padre_escolaridad_sigla;
         
         $registroC->activo='1';
         $registroC->borrado='0';
@@ -1881,6 +2053,7 @@ class AlumnoController extends Controller
         $registroD->correo=$otro_correo;
         $registroD->tipo_apoderado_id=$otro_tipo_apoderado_id;
         $registroD->principal=$otro_principal;
+        $registroD->escolaridad_sigla=$otro_escolaridad_sigla;
         
         $registroD->activo='1';
         $registroD->borrado='0';

@@ -48,6 +48,17 @@ class CicloEscolar extends Model
         ];
     }
 
+    public static function GetAllCiclos(){
+
+        $registros = CicloEscolar::where('borrado','0')
+                    ->orderBy('year','desc')
+                    ->orderBy('id','desc')
+                    ->get();
+
+        return $registros;
+    }
+
+
     public static function GetCicloActivo(){
         $registro = CicloEscolar::where('activo','1')
                     ->where('borrado','0')

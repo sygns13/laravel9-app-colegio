@@ -56,9 +56,28 @@ class MatriculaController extends Controller
         return view('admin.matricula.index',compact('cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados'));
     }
 
+    public function index2()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+
+        return view('admin.nomina.index',compact('cicloActivo', 'ciclos'));
+    }
+
     public function index(Request $request)
     {
         return $tipoDocumentos = TipoDocumento::all();
+    }
+
+    public function indexNomina(Request $request)
+    {
+        $ciclo_id = $request->ciclo_id;
+
+        $registros = Matricula::GetDatosGenericsByCiclo($ciclo_id);
+
+        return [ 
+                'registros' => $registros,
+               ];
     }
 
     public function getCicloSeccion($gradoMaster_id)
