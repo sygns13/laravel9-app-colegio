@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Grado;
 use App\Models\CicloGrado;
+use App\Models\CicloNivel;
+use stdClass;
 
 class CicloSeccion extends Model
 {
@@ -41,12 +43,23 @@ class CicloSeccion extends Model
             return [];
         }
 
+        $cicloNivel = CicloNivel::find($cicloGrado->ciclo_niveles_id);
+        $turno = "";
+        if($cicloNivel != null){
+            $turno = Turno::find($cicloNivel->turno_id);
+            $turno = $turno->nombre;
+        }
+
         $data = CicloSeccion::where('ciclo_escolar_id', $ciclo_id)
                     ->where('ciclo_grados_id', $cicloGrado->id)
                     ->where('activo', 1)
                     ->where('borrado', 0)
                     ->get();
+        
+        $response = new stdClass();
+        $response->secciones = $data;
+        $response->turno = $turno;
 
-        return $data;
+        return $response;
     }
 }

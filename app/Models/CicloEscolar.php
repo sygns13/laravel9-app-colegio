@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
+use App\Models\CicloNivel;
+use App\Models\Turno;
+
 class CicloEscolar extends Model
 {
     use HasFactory;
@@ -34,6 +37,31 @@ class CicloEscolar extends Model
                     ->orderBy('year','desc')
                     ->orderBy('id','desc')
                     ->paginate(30);
+
+        foreach ($registros as $key => $value) {
+            $cicloNivelInicial = CicloNivel::where('ciclo_escolar_id', $value->id)->where('nivel_id','1')->first();
+            $cicloNivelPrimaria = CicloNivel::where('ciclo_escolar_id', $value->id)->where('nivel_id','2')->first();
+            $cicloNivelSecundaria = CicloNivel::where('ciclo_escolar_id', $value->id)->where('nivel_id','3')->first();
+
+            if($cicloNivelInicial != null){
+                $turno = Turno::find($cicloNivelInicial->turno_id);
+                $cicloNivelInicial->turno = $turno->nombre;
+            }
+
+            if($cicloNivelPrimaria != null){
+                $turno = Turno::find($cicloNivelPrimaria->turno_id);
+                $cicloNivelPrimaria->turno = $turno->nombre;
+            }
+
+            if($cicloNivelSecundaria != null){
+                $turno = Turno::find($cicloNivelSecundaria->turno_id);
+                $cicloNivelSecundaria->turno = $turno->nombre;
+            }
+
+            $value->cicloNivelInicial = $cicloNivelInicial;
+            $value->cicloNivelPrimaria = $cicloNivelPrimaria;
+            $value->cicloNivelSecundaria = $cicloNivelSecundaria;
+        }                        
 
         return [
             'pagination'=>[

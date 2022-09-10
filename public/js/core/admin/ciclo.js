@@ -27,6 +27,21 @@ createApp({
                 'activo_matricula': '0',
                 'opcion': '1',
             },
+            cicloNivelInicial:{
+                'id': '',
+                'nivel_id': '1',
+                'turno_id': '1',
+            },
+            cicloNivelPrimaria:{
+                'id': '',
+                'nivel_id': '2',
+                'turno_id': '1',
+            },
+            cicloNivelSecundaria:{
+                'id': '',
+                'nivel_id': '3',
+                'turno_id': '1',
+            },
 
             pagination: {
                 'total': 0,
@@ -240,6 +255,23 @@ createApp({
                 'activo_matricula': '0',
                 'opcion': '1',
             };
+
+            this.cicloNivelInicial = {
+                'id': '',
+                'nivel_id': '1',
+                'turno_id': '1',
+            };
+            this.cicloNivelPrimaria = {
+                'id': '',
+                'nivel_id': '2',
+                'turno_id': '1',
+            };
+            this.cicloNivelSecundaria = {
+                'id': '',
+                'nivel_id': '3',
+                'turno_id': '1',
+            };
+
             this.$nextTick(() => {
                 $('#txtyear').focus();
             });
@@ -274,6 +306,10 @@ createApp({
             $("#btnGuardar").attr('disabled', true);
             $("#btnClose").attr('disabled', true);
             this.divloaderNuevo=true;
+
+            this.fillobject.cicloNivelInicial = this.cicloNivelInicial;
+            this.fillobject.cicloNivelPrimaria = this.cicloNivelPrimaria;
+            this.fillobject.cicloNivelSecundaria = this.cicloNivelSecundaria;
 
             axios.post(url, this.fillobject).then(response=>{
 
@@ -311,6 +347,22 @@ createApp({
             this.labelBtnSave = 'Modificar';
             this.fillobject.type = 'U';
 
+            this.cicloNivelInicial = {
+                'id': dato.cicloNivelInicial.id,
+                'nivel_id': dato.cicloNivelInicial.nivel_id,
+                'turno_id': dato.cicloNivelInicial.turno_id,
+            };
+            this.cicloNivelPrimaria = {
+                'id': dato.cicloNivelPrimaria.id,
+                'nivel_id': dato.cicloNivelPrimaria.nivel_id,
+                'turno_id': dato.cicloNivelPrimaria.turno_id,
+            };
+            this.cicloNivelSecundaria = {
+                'id': dato.cicloNivelSecundaria.id,
+                'nivel_id': dato.cicloNivelSecundaria.nivel_id,
+                'turno_id': dato.cicloNivelSecundaria.turno_id,
+            };
+
             this.divFormulario=true;
 
             this.$nextTick(() => {
@@ -337,6 +389,10 @@ createApp({
             }).catch(swal.noop);
         },
         update: function () {
+
+            this.fillobject.cicloNivelInicial = this.cicloNivelInicial;
+            this.fillobject.cicloNivelPrimaria = this.cicloNivelPrimaria;
+            this.fillobject.cicloNivelSecundaria = this.cicloNivelSecundaria;
 
             var url="reciclo/"+this.fillobject.id;
             $("#btnGuardar").attr("disabled");

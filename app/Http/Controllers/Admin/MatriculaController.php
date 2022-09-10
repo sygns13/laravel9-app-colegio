@@ -23,6 +23,7 @@ use App\Models\Apoderado;
 use App\Models\Traslado;
 use App\Models\Domicilio;
 use App\Models\ApoderadoMatricula;
+use App\Models\Turno;
 
 use App\Models\InstitucionEducativa;
 
@@ -115,7 +116,12 @@ class MatriculaController extends Controller
                                 ->where('borrado', '0')
                                 ->first();
 
-        return response()->json(["result"=>'1','msj'=>"",'matricula'=>$matricula, 'traslado'=>$traslado]);
+        $cicloSeccion = CicloSeccion::find($matricula->ciclo_seccion_id);
+
+        $turno = Turno::find($cicloSeccion->turno_id);
+        $turno = $turno->nombre;
+
+        return response()->json(["result"=>'1','msj'=>"",'matricula'=>$matricula, 'traslado'=>$traslado, 'turno' => $turno]);
     }
 
 

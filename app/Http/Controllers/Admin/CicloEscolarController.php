@@ -16,6 +16,7 @@ use App\Models\CicloGrado;
 use App\Models\CicloSeccion;
 use App\Models\CicloCurso;
 use App\Models\CicloCompetencia;
+use App\Models\Turno;
 
 
 use stdClass;
@@ -30,7 +31,8 @@ class CicloEscolarController extends Controller
      */
     public function index1()
     {
-        return view('admin.ciclo.index');
+        $turnos = Turno::all();
+        return view('admin.ciclo.index',compact('turnos'));
     }
 
     public function index(Request $request)
@@ -75,6 +77,10 @@ class CicloEscolarController extends Controller
         $fecha_ini_clases=$request->fecha_ini_clases;
         $fecha_fin_clases=$request->fecha_fin_clases;
         $opcion=$request->opcion;
+
+        $cicloNivelInicial=$request->cicloNivelInicial;
+        $cicloNivelPrimaria=$request->cicloNivelPrimaria;
+        $cicloNivelSecundaria=$request->cicloNivelSecundaria;
 
         $result='1';
         $msj='';
@@ -194,12 +200,24 @@ class CicloEscolarController extends Controller
 
         foreach ($data->niveles as $keyN => $nivel)
         {
+            $turno_id = $nivel->turno_id;
+            if($nivel->id == "1" && $cicloNivelInicial["turno_id"] != undefined && $cicloNivelInicial["turno_id"] != null){
+                $turno_id = $cicloNivelInicial["turno_id"];
+            }
+            if($nivel->id == "2" && $cicloNivelPrimaria["turno_id"] != undefined && $cicloNivelInicial["turno_id"] != null){
+                $turno_id = $cicloNivelInicial["turno_id"];
+            }
+            if($nivel->id == "3" && $cicloNivelSecundaria["turno_id"] != undefined && $cicloNivelSecundaria["turno_id"] != null){
+                $turno_id = $cicloNivelSecundaria["turno_id"];
+            }
+
+
             $registro_nivel = new CicloNivel;
             $registro_nivel->nivel_id=$nivel->id;
             $registro_nivel->nombre=$nivel->nombre;
             $registro_nivel->institucion_educativa_id=$data->id;
             $registro_nivel->ciclo_escolar_id=$registro->id;
-            $registro_nivel->turno_id=$nivel->turno_id;
+            $registro_nivel->turno_id = $turno_id;
             $registro_nivel->activo='1';
             $registro_nivel->borrado='0';
 
@@ -226,7 +244,7 @@ class CicloEscolarController extends Controller
                     $registro_seccion->nombre=$seccion->nombre;
                     $registro_seccion->sigla=$seccion->sigla;
                     $registro_seccion->ciclo_grados_id=$registro_grado->id;
-                    $registro_seccion->turno_id='0';
+                    $registro_seccion->turno_id= $turno_id;
                     $registro_seccion->activo='1';
                     $registro_seccion->borrado='0';
                     $registro_seccion->ciclo_escolar_id=$registro->id;
@@ -312,6 +330,10 @@ class CicloEscolarController extends Controller
         $fecha_ini_clases=$request->fecha_ini_clases;
         $fecha_fin_clases=$request->fecha_fin_clases;
         $opcion=$request->opcion;
+
+        $cicloNivelInicial=$request->cicloNivelInicial;
+        $cicloNivelPrimaria=$request->cicloNivelPrimaria;
+        $cicloNivelSecundaria=$request->cicloNivelSecundaria;
 
         $result='1';
         $msj='';
@@ -411,10 +433,42 @@ class CicloEscolarController extends Controller
         $registro->save();
 
         $cursos = CicloCurso::where('ciclo_escolar_id',$id)->get();
-
+        
         foreach ($cursos as $curso) {
             $curso->opcion = $opcion;
             $curso->save();
+        }
+
+
+        //Update Turno de Niveles
+        $cicloNivelInicialUpd = CicloNivel::find($cicloNivelInicial["id"]);
+        $cicloNivelInicialUpd->turno_id = $cicloNivelInicial["turno_id"];
+
+        $cicloNivelInicialUpd->save();
+
+        $gradosInicial = CicloGrado::where('ciclo_niveles_id', $cicloNivelInicial["id"])->get();
+        foreach ($gradosInicial as $key => $gradosI) {
+            CicloSeccion::where('ciclo_grados_id', $gradosI->id)->update(['turno_id' => $cicloNivelInicial["turno_id"]]);
+        }
+
+        $cicloNivelPrimariaUpd = CicloNivel::find($cicloNivelPrimaria["id"]);
+        $cicloNivelPrimariaUpd->turno_id = $cicloNivelPrimaria["turno_id"];
+
+        $cicloNivelPrimariaUpd->save();
+
+        $gradosPrimaria = CicloGrado::where('ciclo_niveles_id', $cicloNivelPrimaria["id"])->get();
+        foreach ($gradosPrimaria as $key => $gradosP) {
+            CicloSeccion::where('ciclo_grados_id', $gradosP->id)->update(['turno_id' => $cicloNivelPrimaria["turno_id"]]);
+        }
+
+        $cicloNivelSecundariaUpd = CicloNivel::find($cicloNivelSecundaria["id"]);
+        $cicloNivelSecundariaUpd->turno_id = $cicloNivelSecundaria["turno_id"];
+
+        $cicloNivelSecundariaUpd->save();
+
+        $gradosSecundaria = CicloGrado::where('ciclo_niveles_id', $cicloNivelSecundaria["id"])->get();
+        foreach ($gradosSecundaria as $key => $gradosS) {
+            CicloSeccion::where('ciclo_grados_id', $gradosS->id)->update(['turno_id' => $cicloNivelSecundaria["turno_id"]]);
         }
 
         $msj='Año Escolar modificado correctamente';

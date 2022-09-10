@@ -306,6 +306,10 @@ return [
                     'url'  => 'admin/matriculas',
                 ],
                 [
+                    'text' => 'Asignación de Docentes',
+                    'url'  => 'admin/asignacion',
+                ],
+                [
                     'text' => 'Nómina de Matrícula',
                     'url'  => 'admin/nominas',
                 ],
@@ -313,7 +317,7 @@ return [
             ]
         ],
         [
-            'text'        => 'Matrícula',
+            'text'        => 'Módulo Docentes',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',
             'submenu' => [

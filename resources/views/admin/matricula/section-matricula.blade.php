@@ -15,6 +15,14 @@
           </select>
         </div>
       </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+            <label for="txtTurno">Turno <spam style="color:red;">*</spam></label>
+            <input type="text" class="form-control" id="txtTurno" placeholder="Turno" v-model="turnoNivel" maxlength="50" readonly>
+        </div>
+    </div>
+
     </div>
 
     <div class="row">

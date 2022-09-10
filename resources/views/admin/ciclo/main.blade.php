@@ -44,14 +44,15 @@
                                     <th class="titles-table" style="width: 4%">#</th>
                                     <th class="titles-table" style="width: 5%">Año</th>
                                     <th class="titles-table" style="width: 10%">Nombre</th>
-                                    <th class="titles-table" style="width: 11%">Sistema de Calificación</th>
-                                    <th class="titles-table" style="width: 9%">Fecha de Inicio</th>
+                                    <th class="titles-table" style="width: 10%">Sistema de Calificación</th>
+                                    <th class="titles-table" style="width: 8%">Fecha de Inicio</th>
                                     <th class="titles-table" style="width: 9%">Fecha de Finalización</th>
+                                    <th class="titles-table" style="width: 10%">Turnos</th>
                                     <th class="titles-table" style="width: 7%">Estado</th>
-                                    <th class="titles-table" style="width: 10%">Estado de Matrícula</th>
+                                    <th class="titles-table" style="width: 9%">Estado de Matrícula</th>
                                     <th class="titles-table" style="width: 10%">Gestión Matrícula</th>
                                     <th class="titles-table" style="width: 10%">Cerrar Año Escolar</th>
-                                    <th class="titles-table" style="width: 15%">Gestión</th>
+                                    <th class="titles-table" style="width: 8%">Gestión</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,6 +70,12 @@
                                     </td>
                                     <td class="rows-table">@{{registro.fecha_ini}}</td>
                                     <td class="rows-table">@{{registro.fecha_fin}}</td>
+                                    <td class="rows-table"> 
+                                      <b>@{{registro.cicloNivelInicial.nombre}}: </b> @{{registro.cicloNivelInicial.turno}} <br>
+                                      <b>@{{registro.cicloNivelPrimaria.nombre}}: </b> @{{registro.cicloNivelPrimaria.turno}} <br>
+                                      <b>@{{registro.cicloNivelSecundaria.nombre}}: </b> @{{registro.cicloNivelSecundaria.turno}} <br>
+
+                                    </td>
                                     <td class="rows-table" style="text-align: center;">
                                         <small style="font-size: 13px;" class="badge badge-success" v-if="registro.activo=='1'">Activo</small>
                                         <small style="font-size: 13px;" class="badge badge-warning" v-if="registro.activo=='0'">Cerrado</small>

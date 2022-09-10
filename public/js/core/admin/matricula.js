@@ -279,6 +279,8 @@ createApp({
             divSectionMatricula: false,
 
             divFormularioGestionAlumno: false,
+
+            turnoNivel: '',
         }
     },
     created: function() {
@@ -881,7 +883,8 @@ createApp({
             var url = 'rematricula/getCicloSeccion/'+this.alumno.grado_actual;
 
             axios.get(url).then(response => {
-                this.secciones= response.data;
+                this.secciones= response.data.secciones;
+                this.turnoNivel= response.data.turno;
                 this.matricula.ciclo_seccion_id = 0;
                 this.divFormularioMatricula = true;
                 this.limpiarFormMatricula();
@@ -894,7 +897,8 @@ createApp({
             var url = 'rematricula/getCicloSeccion/'+this.alumno.grado_actual;
 
             axios.get(url).then(response => {
-                this.secciones= response.data;
+                this.secciones= response.data.secciones;
+                this.turnoNivel= response.data.turno;
             })
         },
         getArchivo(event){
@@ -1072,6 +1076,7 @@ createApp({
                     
                     this.errors=[];
                     //toastr.success(response.data.msj);
+                    this.turnoNivel = response.data.turno;
                     this.divSectionMatricula = true;
                 }else{
                     $('#'+response.data.selector).focus();
@@ -1190,7 +1195,8 @@ createApp({
             var url = 'rematricula/getCicloSeccion/'+this.alumno.grado_actual;
 
             axios.get(url).then(response => {
-                this.secciones= response.data;
+                this.secciones= response.data.secciones;
+                this.turnoNivel= response.data.turno;
                 this.divFormularioMatricula = true;
                 this.labelBtnMatricula = 'Editar Matrícula';
                 this.matricula.type = "U";

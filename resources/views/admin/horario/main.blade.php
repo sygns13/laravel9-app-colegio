@@ -87,7 +87,7 @@
                                                                     <select class="custom-select rounded-0" id="cbuTurno" v-model="turnoSeleccionado" @change="cambioTurno">
                                                                         <option value="0">Seleccione Turno</option>
                                                                         <template v-for="(turno, indexS) in turnos">
-                                                                            <option v-bind:value="turno.id">@{{turno.nombre}}</option>
+                                                                            <option v-bind:value="turno.id" v-if="turno.id == nivel.turno_id">@{{turno.nombre}}</option>
                                                                         </template>
                                                                     </select>
                                                                 </div>

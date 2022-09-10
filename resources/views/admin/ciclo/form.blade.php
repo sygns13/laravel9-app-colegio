@@ -50,6 +50,45 @@
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cbuturno_id1">Turno Habilitado del Nivel Inicial <spam style="color:red;">*</spam></label>
+                  <select class="form-control" style="width: 100%;" v-model="cicloNivelInicial.turno_id" id="cbuturno_id1">
+                    @foreach ($turnos as $dato)
+                      <option value="{{$dato->id}}" selected>{{$dato->nombre}}</option> 
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cbuturno_id2">Turno Habilitado del Nivel Primaria <spam style="color:red;">*</spam></label>
+                  <select class="form-control" style="width: 100%;" v-model="cicloNivelPrimaria.turno_id" id="cbuturno_id2">
+                    @foreach ($turnos as $dato)
+                      <option value="{{$dato->id}}" selected>{{$dato->nombre}}</option> 
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cbuturno_id3">Turno Habilitado del Nivel Secundaria <spam style="color:red;">*</spam></label>
+                  <select class="form-control" style="width: 100%;" v-model="cicloNivelSecundaria.turno_id" id="cbuturno_id3">
+                    @foreach ($turnos as $dato)
+                      <option value="{{$dato->id}}" selected>{{$dato->nombre}}</option> 
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
             <!-- /.card-body -->
           </div>
 
