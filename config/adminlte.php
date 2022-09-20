@@ -306,8 +306,8 @@ return [
                     'url'  => 'admin/matriculas',
                 ],
                 [
-                    'text' => 'Asignación de Docentes',
-                    'url'  => 'admin/asignacion',
+                    'text' => 'Asignación de Cursos',
+                    'url'  => 'admin/asignacion-cursos',
                 ],
                 [
                     'text' => 'Nómina de Matrícula',

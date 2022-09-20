@@ -13,9 +13,10 @@ use App\Http\Controllers\Admin\HorarioController;
 use App\Http\Controllers\Admin\HoraController;
 use App\Http\Controllers\Admin\MatriculaController;
 use App\Http\Controllers\Admin\AlumnoController;
+use App\Http\Controllers\Admin\AsignacionCursoController;
+
+
 use App\Http\Controllers\Admin\ReportPDFController;
-
-
 /* Route::get('admin', function () {
         return "Holi boli";
 })->name('user');
@@ -38,6 +39,7 @@ Route::middleware([
     Route::get('/horas', [HoraController::class, 'index1'])->name('horas');
     Route::get('/matriculas', [MatriculaController::class, 'index1'])->name('matriculas');
     Route::get('/nominas', [MatriculaController::class, 'index2'])->name('nominas');
+    Route::get('/asignacion-cursos', [AsignacionCursoController::class, 'index1'])->name('asignacion-cursos');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
@@ -49,6 +51,7 @@ Route::middleware([
     Route::resource('/rehora', HoraController::class);
     Route::resource('/rematricula', MatriculaController::class);
     Route::resource('/remalumno', AlumnoController::class);
+    Route::resource('/reasignacion-cursos', AsignacionCursoController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
 

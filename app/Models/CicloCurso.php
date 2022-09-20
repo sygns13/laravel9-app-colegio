@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\CicloCurso;
+
 class CicloCurso extends Model
 {
     use HasFactory;
@@ -18,6 +20,7 @@ class CicloCurso extends Model
                             'activo',
                             'borrado',
                             'ciclo_escolar_id',
+                            'docente_id',
                         ];
 	protected $guarded = ['id'];
 
@@ -27,5 +30,26 @@ class CicloCurso extends Model
                     ->first();
 
         return $data;
+    }
+
+    public static function GetCicloCursosActivos(){
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        $data = [];
+
+        if($cicloActivo){
+
+            $data = CicloCurso::where('borrado','0')
+            ->where('activo','1')
+            ->where('ciclo_escolar_id', $cicloActivo->id)
+            ->orderBy('ciclo_grado_id')
+            ->orderBy('orden')
+            ->get();
+
+        }
+
+        return $data;
+
     }
 }
