@@ -41,6 +41,8 @@ Route::middleware([
     Route::get('/nominas', [MatriculaController::class, 'index2'])->name('nominas');
     Route::get('/asignacion-cursos', [AsignacionCursoController::class, 'index1'])->name('asignacion-cursos');
 
+    Route::get('/asistencia', [AsignacionCursoController::class, 'index1'])->name('asistencia');
+
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
     Route::resource('/recursos', CursoController::class);

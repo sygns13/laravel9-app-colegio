@@ -322,8 +322,8 @@ return [
             'icon_color'  => 'white',
             'submenu' => [
                 [
-                    'text' => 'Año Escolar',
-                    'url'  => '#',
+                    'text' => 'Registro de Asistencia',
+                    'url'  => 'admin/asistencia',
                 ],
 
             ]
