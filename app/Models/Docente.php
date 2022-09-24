@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use DB;
 
+use App\Models\DocenteAsistenciaDia;
+use App\Models\AsistenciaDocente;
+
 class Docente extends Model
 {
     use HasFactory;

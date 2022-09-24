@@ -317,6 +317,18 @@ return [
             ]
         ],
         [
+            'text'        => 'Módulo Control',
+            'icon'        => 'fas fa-fw fa-clock',
+            'icon_color'  => 'white',
+            'submenu' => [
+                [
+                    'text' => 'Asistencia de Docentes',
+                    'url'  => 'admin/asistencia-docente',
+                ],
+
+            ]
+        ],
+        [
             'text'        => 'Módulo Docentes',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',
