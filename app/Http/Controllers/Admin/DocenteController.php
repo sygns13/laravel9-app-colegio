@@ -10,6 +10,7 @@ use Auth;
 use App\Models\Docente;
 use App\Models\TipoDocumento;
 use App\Models\User;
+use App\Models\CicloEscolar;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +29,13 @@ class DocenteController extends Controller
         return view('admin.docente.index');
     }
 
+    public function index2()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        return view('docente.lista-alumnos.index',compact('cicloActivo', 'ciclos'));
+    }
+
     public function index(Request $request)
     {
         $response = Docente::GetDocentes($request);
@@ -35,6 +43,24 @@ class DocenteController extends Controller
         $tipoDocumentos = TipoDocumento::all();
         $response["tipoDocumentos"] = $tipoDocumentos;
 
+
+        return $response;
+    }
+
+    public function getListaAlumnos(Request $request)
+    {
+        $ciclo_id=$request->ciclo_id;
+        $iduser =Auth::user()->id;
+
+        $response = Docente::GetListaAlumnos($iduser, $ciclo_id);
+
+        return $response;
+    }
+
+    public function getListaAlumnosAsignacion(Request $request)
+    {
+        $id=$request->id;
+        $response = Docente::GetListaAlumnosAsignacion($id);
 
         return $response;
     }

@@ -42,8 +42,8 @@ Route::middleware([
     Route::get('/matriculas', [MatriculaController::class, 'index1'])->name('matriculas');
     Route::get('/nominas', [MatriculaController::class, 'index2'])->name('nominas');
     Route::get('/asignacion-cursos', [AsignacionCursoController::class, 'index1'])->name('asignacion-cursos');
-
-    Route::get('/asistencia-docente', [DocenteAsistenciaDiaController::class, 'index1'])->name('asistencia');
+    Route::get('/asistencia-docente', [DocenteAsistenciaDiaController::class, 'index1'])->name('asistencia-docente');
+    Route::get('/lista-alumnos', [DocenteController::class, 'index2'])->name('lista-alumnos');
     Route::get('/asistencia', [AsignacionCursoController::class, 'index1'])->name('asistencia');
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -63,24 +63,26 @@ Route::middleware([
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
 
 
-    Route::get('redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
-    Route::get('reciclo/activarMatricula/{id}',[CicloEscolarController::class, 'activarMatricula'])->name('activarMatricula');
-    Route::get('reciclo/desactivarMatricula/{id}',[CicloEscolarController::class, 'desactivarMatricula'])->name('desactivarMatricula');
-    Route::get('reciclo/cerrarCicloEscolar/{id}',[CicloEscolarController::class, 'cerrarCicloEscolar'])->name('cerrarCicloEscolar');
-    Route::get('rematricula/getCicloSeccion/{gradoMaster_id}',[MatriculaController::class, 'getCicloSeccion'])->name('getCicloSeccion');
-    Route::get('rematricula/getmatriculaactiva/{alumno_id}',[MatriculaController::class, 'getMatriculaActiva'])->name('getMatriculaActiva');
+    Route::get('/redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
+    Route::get('/reciclo/activarMatricula/{id}',[CicloEscolarController::class, 'activarMatricula'])->name('activarMatricula');
+    Route::get('/reciclo/desactivarMatricula/{id}',[CicloEscolarController::class, 'desactivarMatricula'])->name('desactivarMatricula');
+    Route::get('/reciclo/cerrarCicloEscolar/{id}',[CicloEscolarController::class, 'cerrarCicloEscolar'])->name('cerrarCicloEscolar');
+    Route::get('/rematricula/getCicloSeccion/{gradoMaster_id}',[MatriculaController::class, 'getCicloSeccion'])->name('getCicloSeccion');
+    Route::get('/rematricula/getmatriculaactiva/{alumno_id}',[MatriculaController::class, 'getMatriculaActiva'])->name('getMatriculaActiva');
+    Route::get('/regetlista-alumnos',[DocenteController::class, 'getListaAlumnos'])->name('getListaAlumnos');
+    Route::get('/regetlista-alumnos-asignacion',[DocenteController::class, 'getListaAlumnosAsignacion'])->name('getListaAlumnosAsignacion');
 
-    Route::get('generate-pdf', [MatriculaController::class, 'generatePDF']);
-    Route::get('ver-pdf', [ReportPDFController::class, 'verPDF']);
-    Route::get('d-pdf', [ReportPDFController::class, 'descargarPDF']);
+    Route::get('/generate-pdf', [MatriculaController::class, 'generatePDF']);
+    Route::get('/ver-pdf', [ReportPDFController::class, 'verPDF']);
+    Route::get('/d-pdf', [ReportPDFController::class, 'descargarPDF']);
 
-    Route::get('realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
+    Route::get('/realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
 
 
 
 
     //Reportes PDF
-    Route::get('reportepdf/ficha-matricula/{alumno_id}',[ReportPDFController::class, 'impFichaMatricula'])->name('impFichaMatricula');
-    Route::get('reportepdf/nomina-matricula/{ciclo_seccion_id}',[ReportPDFController::class, 'impNominaMatricula'])->name('impNominaMatricula');
+    Route::get('/reportepdf/ficha-matricula/{alumno_id}',[ReportPDFController::class, 'impFichaMatricula'])->name('impFichaMatricula');
+    Route::get('/reportepdf/nomina-matricula/{ciclo_seccion_id}',[ReportPDFController::class, 'impNominaMatricula'])->name('impNominaMatricula');
 
 });

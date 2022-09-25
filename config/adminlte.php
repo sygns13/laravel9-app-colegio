@@ -334,6 +334,10 @@ return [
             'icon_color'  => 'white',
             'submenu' => [
                 [
+                    'text' => 'Lista de Alumnos',
+                    'url'  => 'admin/lista-alumnos',
+                ],
+                [
                     'text' => 'Registro de Asistencia',
                     'url'  => 'admin/asistencia',
                 ],
