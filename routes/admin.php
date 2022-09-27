@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\AlumnoController;
 use App\Http\Controllers\Admin\AsignacionCursoController;
 use App\Http\Controllers\Admin\DocenteAsistenciaDiaController;
 use App\Http\Controllers\Admin\AsistenciaDocenteController;
+use App\Http\Controllers\Admin\AsistenciaController;
+use App\Http\Controllers\Admin\AsistenciaAlumnoController;
 
 
 use App\Http\Controllers\Admin\ReportPDFController;
@@ -44,7 +46,7 @@ Route::middleware([
     Route::get('/asignacion-cursos', [AsignacionCursoController::class, 'index1'])->name('asignacion-cursos');
     Route::get('/asistencia-docente', [DocenteAsistenciaDiaController::class, 'index1'])->name('asistencia-docente');
     Route::get('/lista-alumnos', [DocenteController::class, 'index2'])->name('lista-alumnos');
-    Route::get('/asistencia', [AsignacionCursoController::class, 'index1'])->name('asistencia');
+    Route::get('/asistencia', [AsistenciaController::class, 'index1'])->name('asistencia');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
@@ -59,6 +61,8 @@ Route::middleware([
     Route::resource('/reasignacion-cursos', AsignacionCursoController::class);
     Route::resource('/redocente-asistencia-dia', DocenteAsistenciaDiaController::class);
     Route::resource('/reasistencia-docente', AsistenciaDocenteController::class);
+    Route::resource('/reasistencia', AsistenciaController::class);
+    Route::resource('/reasistencia-alumno', AsistenciaAlumnoController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
 

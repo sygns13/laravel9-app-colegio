@@ -16,6 +16,8 @@ class Asistencia extends Model
                             'ciclo_curso_id',
                             'activo',
                             'borrado',
+                            'horario_id',
+                            'tema',
                         ];
 	protected $guarded = ['id'];
 }
