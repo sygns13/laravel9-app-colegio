@@ -56,10 +56,6 @@ createApp({
                 'tema': '',
             },
 
-            
-            divPrimeraParte: false,
-            divSegundaParte: false,
-
             labelBtnSave: 'Registrar',
             turnoNombre : '',
 
@@ -68,6 +64,12 @@ createApp({
 
             indexRegistro : 0,
             indexNivel : 0,
+
+
+            tomarAsistencia: false,
+
+            keyNivel_bk: 0,
+            keyCurso_bk: 0,
 
         }
     },
@@ -122,55 +124,71 @@ createApp({
                 this.data= response.data;
 
                 if(!this.data.error){
-                    this.divPrimeraParte = true;
-                    if(this.indexNivel > 0 && this.indexRegistro){
-                        this.seleccionarCurso(this.data.niveles[this.indexNivel].cursos[this.indexRegistro], this.asistencia_dia.nivel, this.indexNivel, this.indexRegistro);
+                    if(this.keyNivel_bk > 0 && this.keyCurso_bk > 0){ 
+                        this.asistenciaCurso(this.keyNivel_bk, this.keyCurso_bk);
                     }
 
                 }
             })
         },
 
-        seleccionarCurso: function (registro, nivel, indexN, index) {
+        asistenciaCurso: function (keyNivel, keyCurso) {
 
-            this.indexNivel = indexN;
-            this.indexRegistro = index;
+            let nivel = this.data.niveles[keyNivel];
+            let curso = nivel.cursos[keyCurso];
 
-            this.asistencia_dia.id = registro.idAsistencia;
+            this.keyNivel_bk = keyNivel;
+            this.keyCurso_bk = keyCurso;
 
-            if(this.asistencia_dia.id != 0 && registro.asistencia != null){
-                this.asistencia_dia.tema = registro.asistencia.tema;
+            if(curso.cantAlumnos == 0){
+                //toastr.error("No puede registrar la asistencia de esta sección, ya que no cuenta con alumnos matriculados");
+                Swal.fire({
+                    icon: 'info',
+                    title: '',
+                    text: 'No puede registrar la asistencia de este curso - sección, ya que no cuenta con alumnos matriculados',
+                    confirmButtonText: 'Aceptar',
+                  })
+                return;
+            }
+
+
+            this.asistencia_dia.id = curso.idAsistencia;
+
+            if(this.asistencia_dia.id != 0 && curso.asistencia != null){
+                this.asistencia_dia.tema = curso.asistencia.tema;
                 this.asistencia_dia.type = 'U';
             }
 
-            this.asistencia_dia.ciclo_seccion_id = registro.ciclo_seccion_id;
-            this.asistencia_dia.ciclo_curso_id = registro.idcurso;
-            this.asistencia_dia.horario_id = registro.idhorario;
-            this.asistencia_dia.curso = registro.curso;
-            this.asistencia_dia.seccion = registro.sigla;
-            this.asistencia_dia.grado = registro.grado;
-            this.asistencia_dia.turno = registro.turno;
-            this.asistencia_dia.horaIni = registro.hora_ini;
-            this.asistencia_dia.horaFin = registro.hora_fin;
-            this.asistencia_dia.diaNumero = registro.dia_semana;
-            this.asistencia_dia.nivel = nivel;
+            this.asistencia_dia.ciclo_seccion_id = curso.ciclo_seccion_id;
+            this.asistencia_dia.ciclo_curso_id = curso.idcurso;
+            this.asistencia_dia.horario_id = curso.idhorario;
+            this.asistencia_dia.curso = curso.curso;
+            this.asistencia_dia.seccion = curso.sigla;
+            this.asistencia_dia.grado = curso.grado;
+            this.asistencia_dia.turno = curso.turno;
+            this.asistencia_dia.horaIni = curso.hora_ini;
+            this.asistencia_dia.horaFin = curso.hora_fin;
+            this.asistencia_dia.diaNumero = curso.dia_semana;
+            this.asistencia_dia.nivel = nivel.nombre;
 
-            this.alumnos = registro.matriculas;
+            this.alumnos = curso.matriculas;
 
             this.$nextTick(() => {
-                this.divSegundaParte = true;
+                this.tomarAsistencia = true;
+                $('#txttema').focus();
             });
     
         },
 
         cerrarFormDiaAsistencia: function () {
-            this.divSegundaParte = false;
-            this.indexNivel = 0;
-            this.indexRegistro = 0;
+            this.tomarAsistencia = false;
+            this.keyNivel_bk = 0;
+            this.keyCurso_bk = 0;
             this.cancelFormDiaAsistencia();
         },
         cancelFormDiaAsistencia: function () {
             this.asistencia_dia.tema = '';
+            this.asistencia_dia.type = 'C';
 
             this.$nextTick(() => {
                 $('#txttema').focus();
@@ -313,7 +331,96 @@ createApp({
 
 
 
+        createDiaAsistenciaDefault:function () {
+            var url='reasistencia';
+            $("#btnGuardarDiaAsistencia").attr('disabled', true);
+            $("#btnCloseDiaAsistencia").attr('disabled', true);
+            this.divloaderNuevo=true;
 
+            axios.post(url, this.asistencia_dia).then(response=>{
+
+                $("#btnGuardarDiaAsistencia").removeAttr("disabled");
+                $("#btnCloseDiaAsistencia").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.thispage = '1';
+                    this.getDatosDefault(this.thispage);
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardarDiaAsistencia").removeAttr("disabled");
+                $("#btnCloseDiaAsistencia").removeAttr("disabled");
+            })
+        },
+
+        getDatosDefault: function() {
+            let fecha = this.asistencia_dia.fecha;
+            let url = 'reasistencia?fecha=' + fecha;
+            axios.get(url).then(response => {
+                this.data= response.data;
+
+                if(!this.data.error){
+                    if(this.keyNivel_bk > 0 && this.keyCurso_bk > 0){ 
+                        this.asistenciaCursoDefault(this.keyNivel_bk, this.keyCurso_bk);
+                    }
+
+                }
+            })
+        },
+
+        asistenciaCursoDefault: function (keyNivel, keyCurso) {
+
+            let nivel = this.data.niveles[keyNivel];
+            let curso = nivel.cursos[keyCurso];
+
+            this.keyNivel_bk = keyNivel;
+            this.keyCurso_bk = keyCurso;
+
+            this.asistencia_dia.id = curso.idAsistencia;
+
+            if(this.asistencia_dia.id != 0 && curso.asistencia != null){
+                this.asistencia_dia.tema = curso.asistencia.tema;
+                this.asistencia_dia.type = 'U';
+            }
+
+            this.asistencia_dia.ciclo_seccion_id = curso.ciclo_seccion_id;
+            this.asistencia_dia.ciclo_curso_id = curso.idcurso;
+            this.asistencia_dia.horario_id = curso.idhorario;
+            this.asistencia_dia.curso = curso.curso;
+            this.asistencia_dia.seccion = curso.sigla;
+            this.asistencia_dia.grado = curso.grado;
+            this.asistencia_dia.turno = curso.turno;
+            this.asistencia_dia.horaIni = curso.hora_ini;
+            this.asistencia_dia.horaFin = curso.hora_fin;
+            this.asistencia_dia.diaNumero = curso.dia_semana;
+            this.asistencia_dia.nivel = nivel.nombre;
+
+            this.alumnos = curso.matriculas;
+
+            this.$nextTick(() => {
+                this.tomarAsistencia = true;
+                $('#txttema').focus();
+            });
+
+            
+            this.fillobject.fecha = this.asistencia_dia.fecha;
+            this.fillobject.ciclo_seccion_id = this.asistencia_dia.ciclo_seccion_id;
+            this.fillobject.asistencia_id = this.asistencia_dia.id;
+            this.fillobject.ciclo_curso_id = this.asistencia_dia.ciclo_curso_id;
+            this.fillobject.horario_id = this.asistencia_dia.horario_id;
+            this.fillobject.tema = this.asistencia_dia.tema;
+
+
+            this.create();
+    
+        },
 
 
 
@@ -322,7 +429,7 @@ createApp({
             this.cancelForm();
 
             this.fillobject.estado = type;
-            this.fillobject.alumno_id = alumno.id;
+            this.fillobject.alumno_id = alumno.alumno_id;
             this.fillobject.nombre = alumno.nombres_alu;
             this.fillobject.apellidos = alumno.apellido_paterno_alu + ' ' + alumno.apellido_materno_alu;
             this.fillobject.tipo_documentos_sigla = alumno.sigla_tipodoc;
@@ -340,16 +447,18 @@ createApp({
             
             this.fillobject.type = 'C';
 
-            $("#modalFormulario").modal('show');
+            /* $("#modalFormulario").modal('show');
             this.$nextTick(() => {
                 $('#txtobservacion').focus();
-            });
+            }); */
+            this.procesar();
         },
         cerrarForm: function () {
             $("#modalFormulario").modal('hide');
             this.cancelForm();
         },
         cancelForm: function () {
+
             this.fillobject.type = 'C';
             this.fillobject.id = '';
             this.fillobject.fecha = this.asistencia_dia.fecha;
@@ -367,9 +476,9 @@ createApp({
             this.fillobject.horario_id = this.asistencia_dia.horario_id;
             this.fillobject.tema = this.asistencia_dia.tema;
 
-            this.$nextTick(() => {
+            /* this.$nextTick(() => {
                 $('#txtobservacion').focus();
-            });
+            }); */
         },
 
         procesar: function() {
@@ -392,7 +501,14 @@ createApp({
             }).then((result) => {
 
                 if (result.value) {
-                    this.create();
+
+                    if(this.asistencia_dia.id == '0'){
+                        this.createDiaAsistenciaDefault();
+                    }
+                    else{
+                        this.create();
+                    }
+                    
                 }
 
             }).catch(swal.noop);
@@ -431,7 +547,7 @@ createApp({
             this.fillobject.id=alumno.id_asistencia;
 
             this.fillobject.estado = type;
-            this.fillobject.alumno_id = alumno.id;
+            this.fillobject.alumno_id = alumno.alumno_id;
             this.fillobject.nombre = alumno.nombres_alu;
             this.fillobject.apellidos = alumno.apellido_paterno_alu + ' ' + alumno.apellido_materno_alu;
             this.fillobject.tipo_documentos_sigla = alumno.sigla_tipodoc;
@@ -449,10 +565,11 @@ createApp({
 
             this.fillobject.type = 'U';
 
-            $("#modalFormulario").modal('show');
+            /* $("#modalFormulario").modal('show');
             this.$nextTick(() => {
                 $('#txtobservacion').focus();
-            });
+            }); */
+            this.procesar();
 
         },
         confirmActualizar:function () {

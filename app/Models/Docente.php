@@ -321,7 +321,10 @@ class Docente extends Model
 
             foreach ($niveles as $key => $nivel) {
 
-                $cursos = DB::select("select cur.id as idcurso, cur.nombre as curso, gra.id as ciclo_grado_id, gra.nombre as grado, sec.id as ciclo_seccion_id, sec.nombre as seccion, sec.sigla, 
+                $cursos = [];
+                $cursoPivot = null;
+
+                $cursosBeta = DB::select("select cur.id as idcurso, cur.nombre as curso, gra.id as ciclo_grado_id, gra.nombre as grado, sec.id as ciclo_seccion_id, sec.nombre as seccion, sec.sigla, 
                 t.nombre as turno , asig.id as idasignacion, doc.apellidos as apeDocente, doc.nombre as nomDocente,
                 h.id as idhorario, h.dia_semana, h.hora_ini, h.hora_fin
                 from ciclo_cursos cur 
@@ -343,6 +346,29 @@ class Docente extends Model
                 h.dia_semana = ?
                 order by gra.id, sec.id, cur.orden, h.hora_ini;", [$ciclo_id, $nivel->id, $docente->id, $dia_semana]);
 
+                foreach ($cursosBeta as $key => $curso) {
+                    if($cursoPivot == null){
+                        $cursoPivot = $curso;
+                    }
+                    else{
+                        if($curso->idcurso == $cursoPivot->idcurso && 
+                            $curso->ciclo_grado_id == $cursoPivot->ciclo_grado_id && 
+                            $curso->ciclo_seccion_id == $cursoPivot->ciclo_seccion_id && 
+                            $curso->hora_ini == $cursoPivot->hora_fin ) {
+
+                            $cursoPivot->hora_fin = $curso->hora_fin;
+                        }
+                        else{
+                            $cursos[] = $cursoPivot;
+                            $cursoPivot = $curso;
+                        }
+                    }
+                }
+
+                if($cursoPivot != null){
+                    $cursos[] = $cursoPivot;
+                }
+
                 
 
                 foreach ($cursos as $keyC => $curso) {
@@ -352,6 +378,7 @@ class Docente extends Model
                                             ->where('ciclo_escolar_id', $ciclo_id)
                                             ->where('ciclo_seccion_id', $curso->ciclo_seccion_id)
                                             ->where('ciclo_curso_id', $curso->idcurso)
+                                            ->where('horario_id', $curso->idhorario)
                                             ->where('activo', '1')
                                             ->where('borrado', '0')
                                             ->first();

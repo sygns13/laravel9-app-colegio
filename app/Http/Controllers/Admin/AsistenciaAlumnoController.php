@@ -5,6 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Validator;
+use Auth;
+
+use App\Models\AsignacionCurso;
+use App\Models\Curso;
+use App\Models\Grado;
+use App\Models\CicloEscolar;
+use App\Models\Asistencia;
+use App\Models\AsistenciaAlumno;
+use App\Models\CicloCurso;
+use App\Models\CicloGrado;
+use App\Models\Docente;
+
+use DateTime;
+use stdClass;
+
 class AsistenciaAlumnoController extends Controller
 {
     /**
@@ -150,6 +166,7 @@ class AsistenciaAlumnoController extends Controller
         $ciclo_seccion_id=$request->ciclo_seccion_id;
         $estado=$request->estado;
         $asistencia_id=$request->asistencia_id;
+        $observacion=$request->observacion;
 
 
         $result='1';
@@ -245,14 +262,21 @@ class AsistenciaAlumnoController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
-            $registro = AsistenciaAlumno::find($id);
+            $registro = new AsistenciaAlumno;
 
+            $registro->fecha=$fecha;
+            $registro->alumno_id=$alumno_id;
+            $registro->ciclo_escolar_id=$ciclo_escolar_id;
+            $registro->ciclo_seccion_id=$ciclo_seccion_id;
             $registro->estado=$estado;
             $registro->observacion=$observacion;
+            $registro->activo='1';
+            $registro->borrado='0';
+            $registro->asistencia_id=$asistencia_id;
             
             $registro->save();
 
-            $msj='Asistencia de Alumno Registrado Exitosamente';
+            $msj='Asistencia de Alumno Registrada Exitosamente';
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
@@ -294,6 +318,7 @@ class AsistenciaAlumnoController extends Controller
         $ciclo_seccion_id=$request->ciclo_seccion_id;
         $estado=$request->estado;
         $asistencia_id=$request->asistencia_id;
+        $observacion=$request->observacion;
 
 
         $result='1';
@@ -400,21 +425,14 @@ class AsistenciaAlumnoController extends Controller
                 $asistencia_id = $AsistenciaDia->asistencia_id;
             }
 
-            $registro = new AsistenciaAlumno;
+            $registro = AsistenciaAlumno::find($id);
 
-            $registro->fecha=$fecha;
-            $registro->alumno_id=$alumno_id;
-            $registro->ciclo_escolar_id=$ciclo_escolar_id;
-            $registro->ciclo_seccion_id=$ciclo_seccion_id;
             $registro->estado=$estado;
             $registro->observacion=$observacion;
-            $registro->activo='1';
-            $registro->borrado='0';
-            $registro->asistencia_id=$asistencia_id;
             
             $registro->save();
 
-            $msj='Asistencia de Alumno Registrado Exitosamente';
+            $msj='Asistencia de Alumno Registrada Exitosamente';
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }

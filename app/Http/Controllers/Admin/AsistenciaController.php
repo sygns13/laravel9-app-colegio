@@ -34,7 +34,7 @@ class AsistenciaController extends Controller
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $hoy = date('Y-m-d');
 
-        return view('docente.asistencias-alumnos.index',compact('cicloActivo', 'hoy'));
+        return view('docente.asistencia-alumnos.index',compact('cicloActivo', 'hoy'));
     }
 
 
@@ -47,7 +47,7 @@ class AsistenciaController extends Controller
 
         if ($this->validaFecha($fecha)){
             $fechaDateTime = new DateTime($fecha);
-            $tipodia=date("N",$date->getTimestamp());
+            $tipodia=date("N",$fechaDateTime->getTimestamp());
         
             $cicloActivo = CicloEscolar::GetCicloActivo();
             $iduser =Auth::user()->id;
@@ -312,14 +312,7 @@ class AsistenciaController extends Controller
             $tema = "";
         }
 
-            $registro = new Asistencia;
-
-            $registro->fecha=$fecha;
-            $registro->ciclo_seccion_id=$ciclo_seccion_id;
-            $registro->ciclo_escolar_id=$ciclo_escolar_id;
-            $registro->ciclo_curso_id=$ciclo_curso_id;
-            $registro->activo='1';
-            $registro->borrado='0';
+            $registro = Asistencia::find($id);
             $registro->horario_id=$horario_id;
             $registro->tema=$tema;
 
