@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>HORARIO POR SECCION</title>
+    <title>ASISTENCIA POR SESIONES</title>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
     <style>
         @page { 
@@ -74,11 +74,11 @@
     
         .celdaNormalEsp{
             text-align:center; 
-            font-size: 14px; 
+            font-size: 12px; 
             border: 1px solid black; 
             width: 0.5cm!important;
             height: 14px;
-            padding: 10px!important;
+            padding: 2px!important;
         }
     
         .celdaNormalBig{
@@ -181,7 +181,7 @@
             <tr>
                 <th style="text-align: center;">
                     <p style="font-size: 20px; font-weight:bolder; margin-top: 0px;">
-                        HORARIO DE
+                        CONTROL DE ASISTENCIA Y DESARROLLO DE SESIONES DE
                         {{strtoupper($horarioSeccion->ciclo_grado->nombre)}}
                         DEL NIVEL
                         {{strtoupper($horarioSeccion->ciclo_nivel->nombre)}}
@@ -210,6 +210,19 @@
                             @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
                                 @if ($horario->dia_semana == 1 && $horario->hora_id == $hora->id && isset($horario->curso))
                                     {{$horario->curso->nombre}}
+                                    @if(isset($horario->curso) && isset($horario->curso->asignacion) && isset($horario->curso->asignacion->docente))
+                                        Docente: {{$horario->curso->asignacion->docente->nombre}} {{$horario->curso->asignacion->docente->apellidos}}<br>
+                                    @else
+                                        Docente: No Registrado<br>
+                                    @endif
+
+                                    @if(isset($horario->asistencia))
+                                        Tema:  {{$horario->asistencia->tema}}<br>
+                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                    @else
+                                        Tema: <span>Sin Registros</span> <br>
+                                        Asistentes: Sin Registros
+                                    @endif
                                 @endif
                             @endforeach
                         @else
@@ -221,6 +234,19 @@
                             @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
                                 @if ($horario->dia_semana == 2 && $horario->hora_id == $hora->id && isset($horario->curso))
                                     {{$horario->curso->nombre}}
+                                    @if(isset($horario->curso) && isset($horario->curso->asignacion) && isset($horario->curso->asignacion->docente))
+                                        Docente: {{$horario->curso->asignacion->docente->nombre}} {{$horario->curso->asignacion->docente->apellidos}}<br>
+                                    @else
+                                        Docente: No Registrado<br>
+                                    @endif
+
+                                    @if(isset($horario->asistencia))
+                                        Tema:  {{$horario->asistencia->tema}}<br>
+                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                    @else
+                                        Tema: <span>Sin Registros</span> <br>
+                                        Asistentes: Sin Registros
+                                    @endif
                                 @endif
                             @endforeach
                         @else
@@ -232,6 +258,19 @@
                             @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
                                 @if ($horario->dia_semana == 3 && $horario->hora_id == $hora->id && isset($horario->curso))
                                     {{$horario->curso->nombre}}
+                                    @if(isset($horario->curso) && isset($horario->curso->asignacion) && isset($horario->curso->asignacion->docente))
+                                        Docente: {{$horario->curso->asignacion->docente->nombre}} {{$horario->curso->asignacion->docente->apellidos}}<br>
+                                    @else
+                                        Docente: No Registrado<br>
+                                    @endif
+
+                                    @if(isset($horario->asistencia))
+                                        Tema:  {{$horario->asistencia->tema}}<br>
+                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                    @else
+                                        Tema: <span>Sin Registros</span> <br>
+                                        Asistentes: Sin Registros
+                                    @endif
                                 @endif
                             @endforeach
                         @else
@@ -243,6 +282,19 @@
                             @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
                                 @if ($horario->dia_semana == 4 && $horario->hora_id == $hora->id && isset($horario->curso))
                                     {{$horario->curso->nombre}}
+                                    @if(isset($horario->curso) && isset($horario->curso->asignacion) && isset($horario->curso->asignacion->docente))
+                                        Docente: {{$horario->curso->asignacion->docente->nombre}} {{$horario->curso->asignacion->docente->apellidos}}<br>
+                                    @else
+                                        Docente: No Registrado<br>
+                                    @endif
+
+                                    @if(isset($horario->asistencia))
+                                        Tema:  {{$horario->asistencia->tema}}<br>
+                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                    @else
+                                        Tema: <span>Sin Registros</span> <br>
+                                        Asistentes: Sin Registros
+                                    @endif
                                 @endif
                             @endforeach
                         @else
@@ -254,6 +306,19 @@
                             @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
                                 @if ($horario->dia_semana == 5 && $horario->hora_id == $hora->id && isset($horario->curso))
                                     {{$horario->curso->nombre}}
+                                    @if(isset($horario->curso) && isset($horario->curso->asignacion) && isset($horario->curso->asignacion->docente))
+                                        Docente: {{$horario->curso->asignacion->docente->nombre}} {{$horario->curso->asignacion->docente->apellidos}}<br>
+                                    @else
+                                        Docente: No Registrado<br>
+                                    @endif
+
+                                    @if(isset($horario->asistencia))
+                                        Tema:  {{$horario->asistencia->tema}}<br>
+                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                    @else
+                                        Tema: <span>Sin Registros</span> <br>
+                                        Asistentes: Sin Registros
+                                    @endif
                                 @endif
                             @endforeach
                         @else

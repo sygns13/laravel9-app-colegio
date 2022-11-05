@@ -13,7 +13,7 @@
                   <div class="form-group row">
                     <label for="txtsiglas" class="col-sm-2 col-form-label">Fecha</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" id="txtfecha" placeholder="dd/mm/yyyy" v-model="docentes_asistencias_dia.fecha" disabled>
+                        <input type="date" class="form-control" id="txtfecha" placeholder="dd/mm/yyyy" v-model="docentes_asistencias_dia.fecha">
                     </div>
                   </div>
                   <div class="form-group row">

@@ -5,9 +5,9 @@ const {
 createApp({
     data() {
         return {
-            tituloHeader: "Reporte de Horarios",
+            tituloHeader: "Reporte de Asistencia por Sesiones",
             subtituloHeader: "Reporte Académico",
-            subtitulo2Header: "Reporte de Horarios",
+            subtitulo2Header: "Reporte de Asistencia por Sesiones",
 
             subtitle2Header: true,
 
@@ -68,16 +68,13 @@ createApp({
             },
 
             verFormulario: false,
+
+            fecha: '',
         }
     },
     created: function() {
-        //this.getDatos(this.thispage);
-        //console.log("created");
     },
     mounted: function() {
-        /* $("#divtitulo").show('slow');
-        this.divloader0=false;
-        this.divprincipal=true; */
         console.log("mounted");
     },
     computed: {
@@ -109,9 +106,9 @@ createApp({
         }
     },
     methods: {
-        getDatos: function(ciclo_id) {
+        getDatos: function(ciclo_id, fecha) {
             
-            var url = 'rehorarioget?ciclo_id=' + ciclo_id;
+            var url = 'asistenciasesionget?ciclo_id=' + ciclo_id + '&fecha=' + fecha;
 
             axios.get(url).then(response => {
 
@@ -127,8 +124,12 @@ createApp({
         },
 
         changeCiclo:function() {
-            this.verFormulario = false;
-            this.getDatos(this.ciclo_id);
+            if(this.ciclo_id != 0 && this.fecha != null && this.fecha !=''){
+                this.verFormulario = false;
+                this.getDatos(this.ciclo_id, this.fecha);
+            }else{
+                this.verFormulario = false;
+            }
         },
 
         cambioSeccion: function() {
@@ -177,23 +178,23 @@ createApp({
                                             if(hora.id == horario.hora_id){
                                                 if(horario.dia_semana==1){
                                                     isDataLu = true;
-                                                    this.horario.lunes[hora.id] = horario.ciclo_curso_id;
+                                                    this.horario.lunes[hora.id] = horario;
                                                 }
                                                 if(horario.dia_semana==2){
                                                     isDataMa = true;
-                                                    this.horario.martes[hora.id] = horario.ciclo_curso_id;
+                                                    this.horario.martes[hora.id] = horario;
                                                 }
                                                 if(horario.dia_semana==3){
                                                     isDataMi = true;
-                                                    this.horario.miercoles[hora.id] = horario.ciclo_curso_id;
+                                                    this.horario.miercoles[hora.id] = horario;
                                                 }
                                                 if(horario.dia_semana==4){
                                                     isDataJu = true;
-                                                    this.horario.jueves[hora.id] = horario.ciclo_curso_id;
+                                                    this.horario.jueves[hora.id] = horario;
                                                 }
                                                 if(horario.dia_semana==5){
                                                     isDataVi = true;
-                                                    this.horario.viernes[hora.id] = horario.ciclo_curso_id;
+                                                    this.horario.viernes[hora.id] = horario;
                                                 }
                                             }
                                         });
@@ -230,7 +231,7 @@ createApp({
         },
 
         imprimir: function() {
-            url = 'reportepdf/horario-seccion/'+this.seccionSeleccionada;
+            url = 'reportepdf/asistencia-sesiones/'+this.seccionSeleccionada + '/' + this.fecha;
             console.log(url);
             window.open(url, '_blank').focus();
         },

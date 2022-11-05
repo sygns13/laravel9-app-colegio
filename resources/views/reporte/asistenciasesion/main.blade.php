@@ -4,7 +4,7 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Reporte de Horarios</h3>
+                    <h3 class="card-title">Reporte de Asistencia por Sesiones de Clase</h3>
                     <a style="float: right; padding: all; color: black;" type="button" class="btn btn-default btn-sm" href="{{URL::to('admin')}}"><i class="fa fa-reply-all" aria-hidden="true"></i> 
                         Volver</a>
                 </div>
@@ -24,6 +24,13 @@
                                   </select>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="txtfecha" class="col-sm-2 col-form-label">Fecha</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" id="txtfecha" placeholder="dd/mm/yyyy" v-model="fecha" @change="changeCiclo">
+                            </div>
+                          </div>
 
 
 
@@ -76,23 +83,9 @@
                                                                 </div>
                                                               </div>
 
-                                                              <div class="form-group row">
-                                                                <label for="cbuTurno" class="col-sm-2 col-form-label">Seleccione Turno</label>
-                                                                <div class="col-sm-10" v-if="turnos.length > 0">
-                                                                    <select class="custom-select rounded-0" id="cbuTurno" v-model="turnoSeleccionado" @change="cambioTurno">
-                                                                        <option value="0">Seleccione Turno</option>
-                                                                        <template v-for="(turno, indexS) in turnos">
-                                                                            <option v-bind:value="turno.id" v-if="turno.id == nivel.turno_id">@{{turno.nombre}}</option>
-                                                                        </template>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-sm-10" v-else>
-                                                                    <h6>No se tiene registro de Turnos registrados</h6>
-                                                                </div>
-                                                              </div>
 
                                                               <div v-if="grado.seccions.length > 0 && seccionSeleccionada > 0 && turnoSeleccionado != '0'">
-                                                                <h6>Horario:</h6>
+                                                                <h6>CONTROL DE ASISTENCIA Y DESARROLLO DE SESIONES SECUNDARIA</h6>
 
                                                                 <div class="table-responsive p-0">
                                                                     <table class="table table-bordered table-sm">
@@ -112,10 +105,24 @@
                                                                                     <td>@{{hora.horaini}} - @{{hora.horafin}}</td>
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <template v-if="horario.lunes[hora.id] != '0'">
+                                                                                            <template v-if="horario.lunes[hora.id].ciclo_curso_id != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <template v-if="curso.id == horario.lunes[hora.id]">
-                                                                                                        @{{curso.nombre}}
+                                                                                                    <template v-if="curso.id == horario.lunes[hora.id].ciclo_curso_id">
+                                                                                                        Curso: @{{curso.nombre}} <br>
+                                                                                                        <template v-if="curso.asignacion != null">
+                                                                                                            Docente: @{{curso.asignacion.docente.nombre}} @{{curso.asignacion.docente.apellidos}}<br>
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Docente: No Registrado<br>
+                                                                                                        </template>
+                                                                                                        <template v-if="horario.lunes[hora.id].asistencia != null">
+                                                                                                            Tema:  @{{horario.lunes[hora.id].asistencia.tema}}<br>
+                                                                                                            Asistentes: @{{horario.lunes[hora.id].asistencia.cantAsistencia}}
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Tema: <span>Sin Registros</span> <br>
+                                                                                                            Asistentes: Sin Registros
+                                                                                                        </template>
                                                                                                     </template>
                                                                                                 </template>
                                                                                             </template>
@@ -126,10 +133,24 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <template v-if="horario.martes[hora.id] != '0'">
+                                                                                            <template v-if="horario.martes[hora.id].ciclo_curso_id != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <template v-if="curso.id == horario.martes[hora.id]">
-                                                                                                        @{{curso.nombre}}
+                                                                                                    <template v-if="curso.id == horario.martes[hora.id].ciclo_curso_id">
+                                                                                                        Curso: @{{curso.nombre}} <br>
+                                                                                                        <template v-if="curso.asignacion != null">
+                                                                                                            Docente: @{{curso.asignacion.docente.nombre}} @{{curso.asignacion.docente.apellidos}}<br>
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Docente: No Registrado<br>
+                                                                                                        </template>
+                                                                                                        <template v-if="horario.martes[hora.id].asistencia != null">
+                                                                                                            Tema:  @{{horario.martes[hora.id].asistencia.tema}}<br>
+                                                                                                            Asistentes: @{{horario.martes[hora.id].asistencia.cantAsistencia}}
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Tema: <span>Sin Registros</span> <br>
+                                                                                                            Asistentes: Sin Registros
+                                                                                                        </template>
                                                                                                     </template>
                                                                                                 </template>
                                                                                             </template>
@@ -140,10 +161,24 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <template v-if="horario.miercoles[hora.id] != '0'">
+                                                                                            <template v-if="horario.miercoles[hora.id].ciclo_curso_id != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <template v-if="curso.id == horario.miercoles[hora.id]">
-                                                                                                        @{{curso.nombre}}
+                                                                                                    <template v-if="curso.id == horario.miercoles[hora.id].ciclo_curso_id">
+                                                                                                        Curso: @{{curso.nombre}} <br>
+                                                                                                        <template v-if="curso.asignacion != null">
+                                                                                                            Docente: @{{curso.asignacion.docente.nombre}} @{{curso.asignacion.docente.apellidos}}<br>
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Docente: No Registrado<br>
+                                                                                                        </template>
+                                                                                                        <template v-if="horario.miercoles[hora.id].asistencia != null">
+                                                                                                            Tema:  @{{horario.miercoles[hora.id].asistencia.tema}}<br>
+                                                                                                            Asistentes: @{{horario.miercoles[hora.id].asistencia.cantAsistencia}}
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Tema: <span>Sin Registros</span> <br>
+                                                                                                            Asistentes: Sin Registros
+                                                                                                        </template>
                                                                                                     </template>
                                                                                                 </template>
                                                                                             </template>
@@ -154,10 +189,24 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <template v-if="horario.jueves[hora.id] != '0'">
+                                                                                            <template v-if="horario.jueves[hora.id].ciclo_curso_id != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <template v-if="curso.id == horario.jueves[hora.id]">
-                                                                                                        @{{curso.nombre}}
+                                                                                                    <template v-if="curso.id == horario.jueves[hora.id].ciclo_curso_id">
+                                                                                                        Curso: @{{curso.nombre}} <br>
+                                                                                                        <template v-if="curso.asignacion != null">
+                                                                                                            Docente: @{{curso.asignacion.docente.nombre}} @{{curso.asignacion.docente.apellidos}}<br>
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Docente: No Registrado<br>
+                                                                                                        </template>
+                                                                                                        <template v-if="horario.jueves[hora.id].asistencia != null">
+                                                                                                            Tema:  @{{horario.jueves[hora.id].asistencia.tema}}<br>
+                                                                                                            Asistentes: @{{horario.jueves[hora.id].asistencia.cantAsistencia}}
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Tema: <span>Sin Registros</span> <br>
+                                                                                                            Asistentes: Sin Registros
+                                                                                                        </template>
                                                                                                     </template>
                                                                                                 </template>
                                                                                             </template>
@@ -168,10 +217,24 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <template v-if="horario.viernes[hora.id] != '0'">
+                                                                                            <template v-if="horario.viernes[hora.id].ciclo_curso_id != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <template v-if="curso.id == horario.viernes[hora.id]">
-                                                                                                        @{{curso.nombre}}
+                                                                                                    <template v-if="curso.id == horario.viernes[hora.id].ciclo_curso_id">
+                                                                                                        Curso: @{{curso.nombre}} <br>
+                                                                                                        <template v-if="curso.asignacion != null">
+                                                                                                            Docente: @{{curso.asignacion.docente.nombre}} @{{curso.asignacion.docente.apellidos}}<br>
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Docente: No Registrado<br>
+                                                                                                        </template>
+                                                                                                        <template v-if="horario.viernes[hora.id].asistencia != null">
+                                                                                                            Tema:  @{{horario.viernes[hora.id].asistencia.tema}}<br>
+                                                                                                            Asistentes: @{{horario.viernes[hora.id].asistencia.cantAsistencia}}
+                                                                                                        </template>
+                                                                                                        <template v-else>
+                                                                                                            Tema: <span>Sin Registros</span> <br>
+                                                                                                            Asistentes: Sin Registros
+                                                                                                        </template>
                                                                                                     </template>
                                                                                                 </template>
                                                                                             </template>

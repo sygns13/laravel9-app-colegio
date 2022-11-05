@@ -25,6 +25,7 @@ use App\Models\Traslado;
 use App\Models\Domicilio;
 use App\Models\Horario;
 use App\Models\Hora;
+use App\Models\Asistencia;
 
 use App\Models\InstitucionEducativa;
 
@@ -111,6 +112,32 @@ class ReportPDFController extends Controller
         $pdf->setOption('defaultFont', 'Arial');
      
         return $pdf->download('HORARIO_SECCION_'.$horarioSeccion->ciclo->year.'_'.$horarioSeccion->sigla.'.pdf');
+    }
+
+    public function impAsistenciaSesion($ciclo_seccion_id, $fecha)
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+
+        $horarioSeccion = Asistencia::GetAsistenciaSesionBySeccionAndFecha($ciclo_seccion_id, $fecha);
+        $horas = Hora::where('borrado','0')->where('activo','1')->where('turno_id', $horarioSeccion->turno_id)->orderBy('horaini')->orderBy('horafin')->get();
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+  
+        $data = [
+            'horarioSeccion' => $horarioSeccion,
+            'horas' => $horas,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.asistencia-sesion', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('HORARIO_ASISTENCIA_SESIONES_'.$horarioSeccion->ciclo->year.'_'.$horarioSeccion->sigla.'.pdf');
     }
 
 

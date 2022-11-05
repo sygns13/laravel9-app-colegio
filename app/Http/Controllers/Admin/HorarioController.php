@@ -39,12 +39,6 @@ class HorarioController extends Controller
         return view('reporte.horario.index',compact('cicloActivo', 'ciclos'));
     }
 
-    public function index3()
-    {
-        $cicloActivo = CicloEscolar::GetCicloActivo();
-        $ciclos = CicloEscolar::GetAllCiclos();
-        return view('reporte.asistenciasesion.index',compact('cicloActivo', 'ciclos'));
-    }
 
     public function index()
     {

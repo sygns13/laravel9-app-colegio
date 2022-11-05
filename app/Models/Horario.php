@@ -200,9 +200,6 @@ class Horario extends Model
 
         $ciclo_seccion->horarios = $horarios;
 
-
-
         return $ciclo_seccion;
-
     }
 }

@@ -17,6 +17,8 @@ use App\Models\AsistenciaAlumno;
 use App\Models\CicloCurso;
 use App\Models\CicloGrado;
 use App\Models\Docente;
+use App\Models\Turno;
+use App\Models\Hora;
 
 use DateTime;
 use stdClass;
@@ -35,6 +37,13 @@ class AsistenciaController extends Controller
         $hoy = date('Y-m-d');
 
         return view('docente.asistencia-alumnos.index',compact('cicloActivo', 'hoy'));
+    }
+
+    public function index2()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        return view('reporte.asistenciasesion.index',compact('cicloActivo', 'ciclos'));
     }
 
 
@@ -57,6 +66,24 @@ class AsistenciaController extends Controller
         
 
         return $response;
+    }
+
+    public function indexAsistenciaSesion(Request $request)
+    {
+
+        $ciclo_id = $request->ciclo_id;
+        $fecha = $request->fecha;
+
+        $registros = Asistencia::GetDataAsistenciaByCicloAndFecha($ciclo_id, $fecha);
+
+        $turnos = Turno::all();
+        $horas = Hora::where('borrado','0')->where('activo','1')->get();
+        
+        return [ 
+                'registros' => $registros,
+                'turnos' => $turnos,
+                'horas' => $horas,
+               ];
     }
 
     private function validaFecha($fecha){
