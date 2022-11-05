@@ -47,6 +47,8 @@ Route::middleware([
     Route::get('/asistencia-docente', [DocenteAsistenciaDiaController::class, 'index1'])->name('asistencia-docente');
     Route::get('/lista-alumnos', [DocenteController::class, 'index2'])->name('lista-alumnos');
     Route::get('/asistencia', [AsistenciaController::class, 'index1'])->name('asistencia');
+    Route::get('/reporte-horarios', [HorarioController::class, 'index2'])->name('reporte-horarios');
+    Route::get('/asistencia-sesiones', [HorarioController::class, 'index3'])->name('asistencia-sesiones');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
@@ -65,6 +67,7 @@ Route::middleware([
     Route::resource('/reasistencia-alumno', AsistenciaAlumnoController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
+    Route::get('/rehorarioget', [HorarioController::class, 'indexReporte'])->name('rehorarioget');
 
 
     Route::get('/redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
@@ -88,5 +91,7 @@ Route::middleware([
     //Reportes PDF
     Route::get('/reportepdf/ficha-matricula/{alumno_id}',[ReportPDFController::class, 'impFichaMatricula'])->name('impFichaMatricula');
     Route::get('/reportepdf/nomina-matricula/{ciclo_seccion_id}',[ReportPDFController::class, 'impNominaMatricula'])->name('impNominaMatricula');
+    Route::get('/reportepdf/horario-seccion/{ciclo_seccion_id}',[ReportPDFController::class, 'impHorarioSeccion'])->name('impHorarioSeccion');
+    Route::get('/reportepdf/asistencia-sesiones/{ciclo_seccion_id}/{fecha}',[ReportPDFController::class, 'impAsistenciaSesion'])->name('impAsistenciaSesion');
 
 });

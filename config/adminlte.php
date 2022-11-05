@@ -344,6 +344,23 @@ return [
 
             ]
         ],
+        [
+            'text'        => 'Reportes Generales',
+            'icon'        => 'fas fa-fw fa-print',
+            'icon_color'  => 'white',
+            'submenu' => [
+                [
+                    'text' => 'Horarios por Sección',
+                    'url'  => 'admin/reporte-horarios',
+                ],
+                [
+                    'text' => 'Asistencia por Sesiones',
+                    'url'  => 'admin/asistencia-sesiones',
+                ],
+                
+
+            ]
+        ],
 
         /* [
             'text'        => 'pages',

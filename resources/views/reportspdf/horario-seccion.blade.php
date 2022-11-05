@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>REPORTE DE HORARIO</title>
+    <title>NÓMINA DE MATRICULA</title>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
     <style>
         @page { 
@@ -19,7 +19,7 @@
             border: 1px solid black; 
             background-color: #dddddd;
             font-weight: bold;
-            padding: 0px!important;
+            padding: 10px!important;
         }
         .celdaFondoGrisBold2{
             text-align:center; 
@@ -72,13 +72,13 @@
             font-weight: normal;
         }
     
-        .celdaNormal{
+        .celdaNormalEsp{
             text-align:center; 
-            font-size: 10px; 
+            font-size: 14px; 
             border: 1px solid black; 
             width: 0.5cm!important;
             height: 14px;
-            padding: 0px!important;
+            padding: 10px!important;
         }
     
         .celdaNormalBig{
@@ -102,7 +102,7 @@
         .celdaNormal{
             text-align:left; 
             font-size: 9px; 
-            border: 1px solid black; 
+            border: 0px; 
             padding: 0px!important;
         }
         .celdaNormal5{
@@ -154,7 +154,7 @@
                 <div class="widget-user-image" style="padding: 0px!important; width: 154.3px;" >
                     <table>
                         <tr>
-                            <td><center>
+                            <td class="celdaNormal"><center>
                                 <img class="img-circle" src="{{ asset('images/escudo_nac.png') }}" alt="User Avatar" width="70px">
                                 </center>
                             </td>
@@ -169,7 +169,9 @@
               </th>
 
               <th style="text-align: center;" >
-                <p style="font-size: 30px; font-weight:bolder; margin-top: 10px;">AÑO ESCOLAR - 2019</p>
+                <p style="font-size: 30px; font-weight:bolder; margin-top: 10px;">AÑO ESCOLAR -
+                    {{$horarioSeccion->ciclo->year}}
+                </p>
             </th>
             <th style="width: 163px;"></th>
             </tr>
@@ -179,10 +181,12 @@
             <tr>
                 <th style="text-align: center;">
                     <p style="font-size: 20px; font-weight:bolder; margin-top: 0px;">
-                        HORARIO DEL
-                        PRIMER GRADO
-                        DEL NIVEL SECUNDARIA
-                        SECCIÓN: ÚNICA
+                        HORARIO DE
+                        {{strtoupper($horarioSeccion->ciclo_grado->nombre)}}
+                        DEL NIVEL
+                        {{strtoupper($horarioSeccion->ciclo_nivel->nombre)}}
+                        SECCIÓN:
+                        {{strtoupper($horarioSeccion->sigla)}}
                     </p>
                 </th>
             </tr>
@@ -197,14 +201,67 @@
                 <th class="celdaFondoGrisBold1" style="width: 18%">Jueves</th>
                 <th class="celdaFondoGrisBold1" style="width: 18%">Viernes</th>
             </tr>
+
+            @foreach( $horas as $indexHora => $hora)
+                <tr>
+                    <td class="celdaNormalEsp">{{$hora->horaini}} - {{$hora->horafin}}</td>
+                    <td class="celdaNormalEsp">
+                        @if($hora->tipo == 1)
+                            @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
+                                @if ($horario->dia_semana == 1 && $horario->hora_id == $hora->id && isset($horario->curso))
+                                    {{$horario->curso->nombre}}
+                                @endif
+                            @endforeach
+                        @else
+                            RECREO
+                        @endif
+                    </td>                               
+                    <td class="celdaNormalEsp">
+                        @if($hora->tipo == 1)
+                            @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
+                                @if ($horario->dia_semana == 2 && $horario->hora_id == $hora->id && isset($horario->curso))
+                                    {{$horario->curso->nombre}}
+                                @endif
+                            @endforeach
+                        @else
+                            RECREO
+                        @endif
+                    </td>                               
+                    <td class="celdaNormalEsp">
+                        @if($hora->tipo == 1)
+                            @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
+                                @if ($horario->dia_semana == 3 && $horario->hora_id == $hora->id && isset($horario->curso))
+                                    {{$horario->curso->nombre}}
+                                @endif
+                            @endforeach
+                        @else
+                            RECREO
+                        @endif
+                    </td>                               
+                    <td class="celdaNormalEsp">
+                        @if($hora->tipo == 1)
+                            @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
+                                @if ($horario->dia_semana == 4 && $horario->hora_id == $hora->id && isset($horario->curso))
+                                    {{$horario->curso->nombre}}
+                                @endif
+                            @endforeach
+                        @else
+                            RECREO
+                        @endif
+                    </td>                               
+                    <td class="celdaNormalEsp">
+                        @if($hora->tipo == 1)
+                            @foreach( $horarioSeccion->horarios as $indexHorario => $horario)
+                                @if ($horario->dia_semana == 5 && $horario->hora_id == $hora->id && isset($horario->curso))
+                                    {{$horario->curso->nombre}}
+                                @endif
+                            @endforeach
+                        @else
+                            RECREO
+                        @endif
+                    </td>                               
+                </tr>
+            @endforeach
         </table>
-
-
-
-
-
-
     </div>
-
-
 </body>
