@@ -256,12 +256,14 @@ return [
             'url'         => 'admin',
             'icon'        => 'fas fa-fw fa-home',
             'icon_color'  => 'white',
+            'can'         => ['admin', 'director', 'docente', 'alumno']
         ],
 
         [
             'text'        => 'Tablas Base',
             'icon'        => 'fas fa-fw fa-server',
             'icon_color'  => 'white',
+            'can'         => ['admin', 'director'],
             'submenu' => [
                 [
                     'text' => 'Datos de la IE',
@@ -286,32 +288,39 @@ return [
             'text' => 'Docentes',
             'url'  => 'admin/docentes',
             'icon' => 'fas fa-fw fa-user-secret',
+            'can'  => ['admin', 'director']
         ],
 
         [
             'text'        => 'Gestión Académica',
             'icon'        => 'fas fa-fw fa-graduation-cap',
             'icon_color'  => 'white',
+            'can'         => ['admin', 'director', 'docente'],
             'submenu' => [
                 [
                     'text' => 'Gestión del Año Escolar',
                     'url'  => 'admin/ciclo',
+                    'can'  => ['admin', 'director']
                 ],
                 [
                     'text' => 'Gestión de Horarios',
                     'url'  => 'admin/horario',
+                    'can'  => ['admin', 'director']
                 ],
                 [
                     'text' => 'Matrículas',
                     'url'  => 'admin/matriculas',
+                    'can'  => ['admin', 'director']
                 ],
                 [
                     'text' => 'Asignación de Cursos',
                     'url'  => 'admin/asignacion-cursos',
+                    'can'  => ['admin', 'director']
                 ],
                 [
                     'text' => 'Nómina de Matrícula',
                     'url'  => 'admin/nominas',
+                    'can'  => ['admin', 'director', 'docente']
                 ],
 
             ]
@@ -320,18 +329,21 @@ return [
             'text'        => 'Módulo Control',
             'icon'        => 'fas fa-fw fa-clock',
             'icon_color'  => 'white',
+            'can'         => ['admin', 'director'],
             'submenu' => [
                 [
                     'text' => 'Asistencia de Docentes',
                     'url'  => 'admin/asistencia-docente',
+                    'can'  => ['admin', 'director']
                 ],
 
             ]
         ],
         [
-            'text'        => 'Módulo Docentes',
+            'text'        => 'Gestión Docente',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',
+            'can'  => ['docente'],
             'submenu' => [
                 [
                     'text' => 'Lista de Alumnos',
@@ -341,6 +353,10 @@ return [
                     'text' => 'Registro de Asistencia',
                     'url'  => 'admin/asistencia',
                 ],
+                [
+                    'text' => 'Registro de Calificaciones',
+                    'url'  => 'admin/calificacion',
+                ],
 
             ]
         ],
@@ -348,6 +364,7 @@ return [
             'text'        => 'Reportes Generales',
             'icon'        => 'fas fa-fw fa-print',
             'icon_color'  => 'white',
+            'can'         => ['admin', 'director', 'docente'],
             'submenu' => [
                 [
                     'text' => 'Horarios por Sección',

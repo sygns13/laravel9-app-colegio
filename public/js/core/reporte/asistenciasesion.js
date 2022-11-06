@@ -103,6 +103,46 @@ createApp({
                 from++;
             }
             return pagesArray;
+        },
+        registrosFilters: function() {
+
+            if (!this.registros) {
+                return {};
+            }
+
+            var newRegistros = this.registros;
+
+            if (newRegistros.dia1 != null && newRegistros.dia1.length == 10) {
+                newRegistros.dia1_ok = newRegistros.dia1.slice(-2) + '/' + newRegistros.dia1.slice(-5, -3) + '/' + newRegistros.dia1.slice(0, 4);
+            } else {
+                newRegistros.dia1_ok = '';
+            }
+
+            if (newRegistros.dia2 != null && newRegistros.dia2.length == 10) {
+                newRegistros.dia2_ok = newRegistros.dia2.slice(-2) + '/' + newRegistros.dia2.slice(-5, -3) + '/' + newRegistros.dia2.slice(0, 4);
+            } else {
+                newRegistros.dia2_ok = '';
+            }
+
+            if (newRegistros.dia3 != null && newRegistros.dia3.length == 10) {
+                newRegistros.dia3_ok = newRegistros.dia3.slice(-2) + '/' + newRegistros.dia3.slice(-5, -3) + '/' + newRegistros.dia3.slice(0, 4);
+            } else {
+                newRegistros.dia3_ok = '';
+            }
+
+            if (newRegistros.dia4 != null && newRegistros.dia4.length == 10) {
+                newRegistros.dia4_ok = newRegistros.dia4.slice(-2) + '/' + newRegistros.dia4.slice(-5, -3) + '/' + newRegistros.dia4.slice(0, 4);
+            } else {
+                newRegistros.dia4_ok = '';
+            }
+
+            if (newRegistros.dia5 != null && newRegistros.dia5.length == 10) {
+                newRegistros.dia5_ok = newRegistros.dia5.slice(-2) + '/' + newRegistros.dia5.slice(-5, -3) + '/' + newRegistros.dia5.slice(0, 4);
+            } else {
+                newRegistros.dia5_ok = '';
+            }
+
+            return newRegistros;
         }
     },
     methods: {
@@ -204,19 +244,19 @@ createApp({
                         });
 
                         if(!isDataLu){
-                            this.horario.lunes[hora.id] = 0;
+                            this.horario.lunes[hora.id] = null;
                         }
                         if(!isDataMa){
-                            this.horario.martes[hora.id] = 0;
+                            this.horario.martes[hora.id] = null;
                         }
                         if(!isDataMi){
-                            this.horario.miercoles[hora.id] = 0;
+                            this.horario.miercoles[hora.id] = null;
                         }
                         if(!isDataJu){
-                            this.horario.jueves[hora.id] = 0;
+                            this.horario.jueves[hora.id] = null;
                         }
                         if(!isDataVi){
-                            this.horario.viernes[hora.id] = 0;
+                            this.horario.viernes[hora.id] = null;
                         }
                     }
                 });

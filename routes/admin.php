@@ -48,7 +48,8 @@ Route::middleware([
     Route::get('/lista-alumnos', [DocenteController::class, 'index2'])->name('lista-alumnos');
     Route::get('/asistencia', [AsistenciaController::class, 'index1'])->name('asistencia');
     Route::get('/reporte-horarios', [HorarioController::class, 'index2'])->name('reporte-horarios');
-    Route::get('/asistencia-sesiones', [AsistenciaController::class, 'index2'])->name('asistencia-sesiones');
+    Route::get('/asistencia-sesiones', [AsistenciaController::class, 'index2'])->name('asistencia-sevsiones');
+    Route::get('/calificacion', [CicloEscolarController::class, 'index1'])->name('ciclo');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
