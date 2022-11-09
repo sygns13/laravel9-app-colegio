@@ -9,24 +9,29 @@ use Auth;
 
 use App\Models\Curso;
 use App\Models\Competencia;
+use App\Models\Indicador;
 use App\Models\CicloEscolar;
 use App\Models\CicloCurso;
 use App\Models\CicloCompetencia;
+use App\Models\CicloIndicador;
 
 use stdClass;
 
-
-class CompetenciaController extends Controller
+class IndicadorController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
 
-        $cursos_id=$request->cursos_id;
+        $competencia_id=$request->competencia_id;
 
-        $registros = Competencia::where('activo','1')
+        $registros = Indicador::where('activo','1')
                     ->where('borrado','0')
-                    ->where('cursos_id',$cursos_id)
+                    ->where('competencia_id',$competencia_id)
                     ->orderBy('orden')
                     ->orderBy('nombre')
                     ->get();
@@ -44,7 +49,7 @@ class CompetenciaController extends Controller
 
         $nombre=$request->nombre;
         $orden=$request->orden;
-        $cursos_id=$request->cursos_id;
+        $competencia_id=$request->competencia_id;
 
         $input1  = array('nombre' => $nombre);
         $reglas1 = array('nombre' => 'required');
@@ -58,8 +63,8 @@ class CompetenciaController extends Controller
         if ($validator1->fails())
         {
             $result='0';
-            $msj='Debe ingresar el nombre de la Competencia';
-            $selector='txtnombreC';
+            $msj='Debe ingresar el nombre del Indicador';
+            $selector='txtnombreI';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
@@ -67,17 +72,17 @@ class CompetenciaController extends Controller
         if ($validator2->fails())
         {
             $result='0';
-            $msj='Debe ingresar el Orden de impresión de la Competencia';
-            $selector='txtordenC';
+            $msj='Debe ingresar el Orden de impresión del Indicador';
+            $selector='txtordenI';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
-        $registro = new Competencia;
+        $registro = new Indicador;
 
         $registro->nombre=$nombre;
         $registro->orden=$orden;
-        $registro->cursos_id=$cursos_id;
+        $registro->competencia_id=$competencia_id;
         $registro->activo='1';
         $registro->borrado='0';
 
@@ -88,13 +93,13 @@ class CompetenciaController extends Controller
 
         if($cicloActivo != null){
 
-            $cursoActivo = CicloCurso::GetCursoByCicloAndCurso($cicloActivo->id, $cursos_id);
+            $competenciaActiva = CicloCompetencia::GetCompetenciaByCicloAndCompetencia($cicloActivo->id, $competencia_id);
 
-            $registro_competencia = new CicloCompetencia;
-            $registro_competencia->ciclo_cursos_id = $cursoActivo->id;
+            $registro_competencia = new CicloIndicador;
+            $registro_competencia->ciclo_competencia_id = $competenciaActiva->id;
             $registro_competencia->nombre = $registro->nombre;
             $registro_competencia->orden = $registro->orden;
-            $registro_competencia->competencia_id = $registro->id;
+            $registro_competencia->indicador_id = $registro->id;
             $registro_competencia->activo='1';
             $registro_competencia->borrado='0';
             $registro_competencia->ciclo_escolar_id=$cicloActivo->id;
@@ -105,7 +110,7 @@ class CompetenciaController extends Controller
 
 
 
-        $msj='La Competencia se ha registrado con éxito';
+        $msj='El Indicador se ha registrado con éxito';
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
@@ -118,7 +123,7 @@ class CompetenciaController extends Controller
 
         $nombre=$request->nombre;
         $orden=$request->orden;
-        $cursos_id=$request->cursos_id;
+        $competencia_id=$request->competencia_id;
 
         $input1  = array('nombre' => $nombre);
         $reglas1 = array('nombre' => 'required');
@@ -132,8 +137,8 @@ class CompetenciaController extends Controller
         if ($validator1->fails())
         {
             $result='0';
-            $msj='Debe ingresar el nombre de la Competencia';
-            $selector='txtnombreC';
+            $msj='Debe ingresar el nombre del Indicador';
+            $selector='txtnombreI';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
@@ -141,13 +146,13 @@ class CompetenciaController extends Controller
         if ($validator2->fails())
         {
             $result='0';
-            $msj='Debe ingresar el Orden de impresión de la Competencia';
-            $selector='txtordenC';
+            $msj='Debe ingresar el Orden de impresión del Indicador';
+            $selector='txtordenI';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
-        $registro = Competencia::find($id);
+        $registro = Indicador::find($id);
 
         $registro->nombre=$nombre;
         $registro->orden=$orden;
@@ -158,17 +163,17 @@ class CompetenciaController extends Controller
         $cicloActivo = CicloEscolar::GetCicloActivo();
 
         if($cicloActivo != null){
-            $registro_competencia = CicloCompetencia::GetCompetenciaByCicloAndCompetencia($cicloActivo->id, $registro->id);
+            $registro_indicador = CicloIndicador::GetIndicadorByCicloAndIndicador($cicloActivo->id, $registro->id);
 
-            $registro_competencia->nombre=$registro->nombre;
-            $registro_competencia->orden=$registro->orden;
+            $registro_indicador->nombre=$registro->nombre;
+            $registro_indicador->orden=$registro->orden;
 
-            $registro_competencia->save();
+            $registro_indicador->save();
         }
 
 
 
-        $msj='La Competencia se ha modificado con éxito';
+        $msj='El Indicador se ha modificado con éxito';
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
@@ -178,7 +183,7 @@ class CompetenciaController extends Controller
         $result='1';
         $msj='1';
 
-        $registro = Competencia::findOrFail($id);
+        $registro = Indicador::findOrFail($id);
         $registro->borrado = '1';
         $registro->save();
 
@@ -186,8 +191,8 @@ class CompetenciaController extends Controller
         $cicloActivo = CicloEscolar::GetCicloActivo();
 
         if($cicloActivo != null){
-            $registro_competencia = CicloCompetencia::GetCompetenciaByCicloAndCompetencia($cicloActivo->id, $registro->id);
-            $registro_competencia->delete();
+            $registro_indicador = CicloIndicador::GetIndicadorByCicloAndIndicador($cicloActivo->id, $registro->id);
+            $registro_indicador->delete();
         }
         
         //$registro->delete();

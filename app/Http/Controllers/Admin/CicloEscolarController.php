@@ -16,6 +16,7 @@ use App\Models\CicloGrado;
 use App\Models\CicloSeccion;
 use App\Models\CicloCurso;
 use App\Models\CicloCompetencia;
+use App\Models\CicloIndicador;
 use App\Models\Turno;
 
 
@@ -278,6 +279,19 @@ class CicloEscolarController extends Controller
                         $registro_competencia->ciclo_escolar_id=$registro->id;
 
                         $registro_competencia->save();
+
+                        foreach ($competencia->indicadores as $keyCin => $indicador) {
+                            $registro_indicador = new CicloIndicador;
+                            $registro_indicador->ciclo_competencia_id = $registro_competencia->id;
+                            $registro_indicador->nombre = $indicador->nombre;
+                            $registro_indicador->orden = $indicador->orden;
+                            $registro_indicador->indicador_id = $indicador->id;
+                            $registro_indicador->activo='1';
+                            $registro_indicador->borrado='0';
+                            $registro_indicador->ciclo_escolar_id=$registro->id;
+    
+                            $registro_indicador->save();
+                        }
                     }
                 } 
             }

@@ -98,7 +98,9 @@
                 <form>
                   <div class="card-body">
 
-                    <x-adminlte-button @click="nuevoC(fillobject.id)" id="btnNuevoC" class="bg-gradient" type="button" label="Nueva Competencia" theme="primary" icon="fas fa-plus-square"/>
+                    <x-adminlte-button @click="nuevoC(fillobject.id)" id="btnNuevoC" class="bg-gradient" type="button" label="Nueva Competencia" theme="primary" icon="fas fa-plus-square" style="margin-right: 5px;"/>
+
+                    <x-adminlte-button @click="cerrarComeptencia" id="btnCloseC" class="bg-gradient" type="button" label="Cerrar Competencias" theme="danger" icon="fas fa-times" style="margin-left: 5px;"/>
 
                     <h4>Listado de Competencias</h4>
                     <div class="table-responsive p-0" v-if="registros2.length > 0">
@@ -118,8 +120,11 @@
                                     <td>@{{competencia.orden}}</td>
                                     <td>
                                         <center>
+                                        <x-adminlte-button @click="indicador(competencia)" id="btnIndicador" class="bg-gradient btn-sm" type="button" label="" theme="primary" icon="fas fa-list"
+                                        data-placement="top" data-toggle="tooltip" title="Gestionar Indicadores" style="margin-right: 5px;"/>
+
                                         <x-adminlte-button @click="editC(competencia)" id="btnEditC" class="bg-gradient btn-sm" type="button" label="" theme="warning" icon="fas fa-edit"
-                                        data-placement="top" data-toggle="tooltip" title="Editar registro" style="margin-right: 5px;"/>
+                                        data-placement="top" data-toggle="tooltip" title="Editar registro"/>
 
                                         <x-adminlte-button @click="borrarC(competencia)" id="btnBorrarC" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
                                         data-placement="top" data-toggle="tooltip" title="Eliminar registro" style="margin-left: 5px;"/>
@@ -131,6 +136,61 @@
                     </div>
                     <div v-else>
                         <h6>No se tiene registro de Competencias registradas en el curso</h6>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+  
+
+                </form>
+              </div>
+
+
+
+
+              <div class="card card-primary" v-if="verIndicadores">
+                <div class="card-header">
+                  <h3 class="card-title">Gestión de Indicadores de la Competencia @{{fillobject2.nombre}}</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+
+                    <x-adminlte-button @click="nuevoI(fillobject2.id)" id="btnNuevoI" class="bg-gradient" type="button" label="Nuevo Indicador" theme="primary" icon="fas fa-plus-square" style="margin-right: 5px;"/>
+
+                    <x-adminlte-button @click="cerrarIndicador" id="btnCloseI" class="bg-gradient" type="button" label="Cerrar Indicadores" theme="danger" icon="fas fa-times" style="margin-left: 5px;"/>
+
+                    <h4>Listado de Indicadores</h4>
+                    <div class="table-responsive p-0" v-if="registros3.length > 0">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th style="width: 60%">Nombre</th>
+                                    <th style="width: 20%">Orden</th>
+                                    <th style="width: 15%">Gestión</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(indicador, indexI) in registros3">
+                                    <td>@{{indexI + 1}}.</td>
+                                    <td>@{{indicador.nombre}}</td>
+                                    <td>@{{indicador.orden}}</td>
+                                    <td>
+                                        <center>
+                                        <x-adminlte-button @click="editI(indicador)" id="btnEditI" class="bg-gradient btn-sm" type="button" label="" theme="warning" icon="fas fa-edit"
+                                        data-placement="top" data-toggle="tooltip" title="Editar registro" style="margin-right: 5px;"/>
+
+                                        <x-adminlte-button @click="borrarI(indicador)" id="btnBorrarI" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
+                                        data-placement="top" data-toggle="tooltip" title="Eliminar registro" style="margin-left: 5px;"/>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div v-else>
+                        <h6>No se tiene registro de Indicadores registrados en la Competencia</h6>
                     </div>
                   </div>
                   <!-- /.card-body -->

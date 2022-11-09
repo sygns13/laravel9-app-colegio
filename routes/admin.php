@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SeccionesController;
 use App\Http\Controllers\Admin\InstitucionEducativaController;
 use App\Http\Controllers\Admin\CursoController;
 use App\Http\Controllers\Admin\CompetenciaController;
+use App\Http\Controllers\Admin\IndicadorController;
 use App\Http\Controllers\Admin\DocenteController;
 use App\Http\Controllers\Admin\CicloEscolarController;
 use App\Http\Controllers\Admin\HorarioController;
@@ -55,6 +56,7 @@ Route::middleware([
     Route::resource('/reie', InstitucionEducativaController::class);
     Route::resource('/recursos', CursoController::class);
     Route::resource('/recompetencias', CompetenciaController::class);
+    Route::resource('/reindicadores', IndicadorController::class);
     Route::resource('/redocentes', DocenteController::class);
     Route::resource('/reciclo', CicloEscolarController::class);
     Route::resource('/rehorario', HorarioController::class);

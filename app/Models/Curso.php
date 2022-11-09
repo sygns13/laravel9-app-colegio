@@ -53,6 +53,17 @@ class Curso extends Model
                                     ->orderBy('nombre')
                                     ->get();
 
+                    foreach ($competencias as $keyComp => $valueComp) {
+                        $indicadores = Indicador::where('borrado','0')
+                                        ->where('activo','1')
+                                        ->where('competencia_id', $valueComp->id)
+                                        ->orderBy('orden')
+                                        ->orderBy('nombre')
+                                        ->get();
+    
+                        $valueComp->indicadores = $indicadores;
+                    }
+
                     $valueC->competencias = $competencias;
                 }
 
@@ -83,6 +94,17 @@ class Curso extends Model
                             ->orderBy('orden')
                             ->orderBy('nombre')
                             ->get();
+
+            foreach ($competencias as $keyComp => $valueComp) {
+                $indicadores = Indicador::where('borrado','0')
+                                ->where('activo','1')
+                                ->where('competencia_id', $valueComp->id)
+                                ->orderBy('orden')
+                                ->orderBy('nombre')
+                                ->get();
+    
+                $valueComp->indicadores = $indicadores;
+            }
 
             $valueC->competencias = $competencias;
         }

@@ -37,6 +37,18 @@ createApp({
                 'activo': '1',
             },
 
+
+            registros3: [],
+
+            fillobject3: {
+                'type':'C',
+                'id': '',
+                'nombre': '',
+                'orden': '',
+                'competencia_id': '',
+                'activo': '1',
+            },
+
             pagination: {
                 'total': 0,
                 'current_page': 0,
@@ -62,6 +74,7 @@ createApp({
             labelBtnSave: 'Registrar',
 
             verCompetencias: false,
+            verIndicadores: false,
         }
     },
     created: function() {
@@ -102,83 +115,6 @@ createApp({
             return pagesArray;
         }
     },
-    filters: {
-        mostrarNumero(value) {
-
-            if (value != null && value != undefined) {
-                value = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
-
-            return value;
-        },
-        pasfechaVista: function(date) {
-            if (date != null && date.length == 10) {
-                date = date.slice(-2) + '/' + date.slice(-5, -3) + '/' + date.slice(0, 4);
-            } else {
-                return '';
-            }
-
-            return date;
-        },
-        leftpad: function(n, length) {
-            var n = n.toString();
-            while (n.length < length)
-                n = "0" + n;
-            return n;
-        },
-        mescotejar: function(value) {
-            if (!value) return ''
-            value = parseInt(value.toString());
-            switch (value) {
-                case 1:
-                    return "ENERO";
-                    break;
-                case 2:
-                    return "FEBRERO";
-                    break;
-                case 3:
-                    return "MARZO";
-                    break;
-                case 4:
-                    return "ABRIL";
-                    break;
-                case 5:
-                    return "MAYO";
-                    break;
-                case 6:
-                    return "JUNIO";
-                    break;
-                case 7:
-                    return "JULIO";
-                    break;
-                case 8:
-                    return "AGOSTO";
-                    break;
-                case 8:
-                    return "AGOSTO";
-                    break;
-                case 9:
-                    return "SETIEMBRE";
-                    break;
-                case 10:
-                    return "OCTUBRE";
-                    break;
-                case 11:
-                    return "NOVIEMBRE";
-                    break;
-
-                case 12:
-                    return "DICIEMBRE";
-                    break;
-
-                default:
-                    return "";
-                    break;
-            }
-
-            return value
-        },
-    },
     methods: {
         getDatos: function(page) {
             var busca = this.buscar;
@@ -211,6 +147,7 @@ createApp({
         },
         cancelForm: function () {
             this.verCompetencias = false;
+            this.verIndicadores = false;
             this.fillobject = {
                                 'type':'C',
                                 'id': '',
@@ -345,6 +282,7 @@ createApp({
             })
         },  
         borrar:function (dato) {
+            this.verCompetencias = false;
             swal.fire({
                 title: '¿Estás seguro?',
                 text: "Desea Eliminar el registro del Curso",
@@ -363,6 +301,7 @@ createApp({
         },
         delete:function (dato) {
             this.verCompetencias = false;
+            this.verIndicadores = false;
             var url = 'recursos/'+dato.id;
             axios.delete(url).then(response=>{//eliminamos
 
@@ -428,6 +367,7 @@ createApp({
 
             this.$nextTick(() => {
                 $('#txtnombreC').focus();
+                this.verIndicadores = false;
             });
 
             /* this.divEdit=false; */
@@ -553,6 +493,7 @@ createApp({
             })
         },  
         borrarC:function (dato) {
+            this.verIndicadores = false;
             swal.fire({
                 title: '¿Estás seguro?',
                 text: "Desea Eliminar el registro de la Competencia",
@@ -574,7 +515,7 @@ createApp({
             axios.delete(url).then(response=>{//eliminamos
 
                 if(response.data.result=='1'){
-                    this.getDatosC(this.fillobject.id);
+                    this.getDatosC(this.fillobject2.id);
                     this.getDatos(this.thispage);
                     toastr.success(response.data.msj);//mostramos mensaje
                 }else{
@@ -585,6 +526,218 @@ createApp({
         },
         cerrarComeptencia:function () {
             this.verCompetencias = false;
-        }
+            this.verIndicadores = false;
+        },
+
+        //Gestion de Indicadores
+        indicador:function (dato) {
+
+            this.cancelFormC();
+            this.fillobject2.id=dato.id;
+            this.fillobject2.nombre=dato.nombre;
+            this.fillobject2.orden=dato.orden;
+
+            this.registros3 = dato.indicadores;
+
+            
+            this.$nextTick(() => {
+                this.verIndicadores = true;
+            });
+        },
+
+        getDatosI: function(competencia_id) {
+            var url = 'reindicadores?competencia_id=' + competencia_id;
+            axios.get(url).then(response => {
+                this.registros3 = response.data.registros;
+            })
+        },
+
+        nuevoI:function (idCompetencia) {
+            this.cancelFormI();
+            this.fillobject3.competencia_id = idCompetencia;
+            this.labelBtnSave = 'Registrar';
+            this.fillobject3.type = 'C';
+
+            $("#modalFormularioI").modal('show');
+            this.$nextTick(() => {
+                $('#txtnombreI').focus();
+            });
+        },
+        cerrarFormI: function () {
+            /* this.divNuevo=false; */
+            $("#modalFormularioI").modal('hide');
+            this.cancelFormI();
+        },
+        cancelFormI: function () {
+            
+            this.fillobject3 = {
+                                'type':'C',
+                                'id': '',
+                                'nombre': '',
+                                'orden': '',
+                                'competencia_id': '',
+                                'activo': '1',
+                            };
+
+            this.$nextTick(() => {
+                $('#txtnombreI').focus();
+            });
+
+            /* this.divEdit=false; */
+        },
+        procesarI: function() {
+            if(this.fillobject3.type == 'C'){
+                this.confirmRegistrarI();
+            }
+            if(this.fillobject3.type == 'U'){
+                this.confirmActualizarI();
+            }
+        },
+        confirmRegistrarI:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "Desea Confirmar el Registro del Indicador",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    this.createI();
+                }
+
+            }).catch(swal.noop);
+        },
+        createI:function () {
+            var url='reindicadores';
+            $("#btnGuardarI").attr('disabled', true);
+            $("#btnCloseI").attr('disabled', true);
+            this.divloaderNuevo=true;
+
+            axios.post(url, this.fillobject3).then(response=>{
+
+                $("#btnGuardarI").removeAttr("disabled");
+                $("#btnCloseI").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.getDatosI(this.fillobject2.id);
+                    this.getDatos(this.thispage);
+                    this.errors=[];
+                    this.cerrarFormI();
+                    toastr.success(response.data.msj);
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardarI").removeAttr("disabled");
+                $("#btnCloseI").removeAttr("disabled");
+            })
+        },
+        editI:function (dato) {
+
+            console.log(dato);
+
+            this.cancelFormI();
+            this.fillobject3.id=dato.id;
+            this.fillobject3.nombre=dato.nombre;
+            this.fillobject3.orden=dato.orden;
+            this.labelBtnSave = 'Modificar';
+            this.fillobject3.type = 'U';
+
+            $("#modalFormularioI").modal('show');
+            this.$nextTick(() => {
+                $('#txtnombreI').focus();
+            });
+
+        },
+        confirmActualizarI:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "Desea Confirmar la Modificación del Indicador",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    this.updateI();
+                }
+
+            }).catch(swal.noop);
+        },
+        updateI: function () {
+
+            var url="reindicadores/"+this.fillobject3.id;
+            $("#btnGuardarI").attr("disabled");
+            $("#btnCloseI").attr("disabled");
+            this.divloaderEdit=true;
+
+            axios.put(url, this.fillobject3).then(response=>{
+
+
+                $("#btnGuardarI").removeAttr("disabled");
+                $("#btnCloseI").removeAttr("disabled");
+                this.divloaderEdit=false;
+                
+                if(response.data.result=='1'){
+                    this.getDatosI(this.fillobject2.id);
+                    this.getDatos(this.thispage);
+                    this.errors=[];
+                    this.cerrarFormI();
+                    toastr.success(response.data.msj);
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardarI").removeAttr("disabled");
+                $("#btnCloseI").removeAttr("disabled");
+            })
+        },  
+        borrarI:function (dato) {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "Desea Eliminar el registro del Indicador",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    this.deleteI(dato);
+                }
+
+            }).catch(swal.noop);
+        },
+        deleteI:function (dato) {
+            var url = 'reindicadores/'+dato.id;
+            axios.delete(url).then(response=>{//eliminamos
+
+                if(response.data.result=='1'){
+                    this.getDatosI(this.fillobject2.id);
+                    this.getDatos(this.thispage);
+                    toastr.success(response.data.msj);//mostramos mensaje
+                }else{
+                    // $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            });
+        },
+        cerrarIndicador:function () {
+            this.verIndicadores = false;
+        },
     }
 }).mount('#app')
