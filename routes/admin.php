@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\DocenteAsistenciaDiaController;
 use App\Http\Controllers\Admin\AsistenciaDocenteController;
 use App\Http\Controllers\Admin\AsistenciaController;
 use App\Http\Controllers\Admin\AsistenciaAlumnoController;
+use App\Http\Controllers\Admin\NotaController;
 
 
 use App\Http\Controllers\Admin\ReportPDFController;
@@ -50,7 +51,7 @@ Route::middleware([
     Route::get('/asistencia', [AsistenciaController::class, 'index1'])->name('asistencia');
     Route::get('/reporte-horarios', [HorarioController::class, 'index2'])->name('reporte-horarios');
     Route::get('/asistencia-sesiones', [AsistenciaController::class, 'index2'])->name('asistencia-sevsiones');
-    Route::get('/calificacion', [CicloEscolarController::class, 'index1'])->name('ciclo');
+    Route::get('/calificacion', [NotaController::class, 'index1'])->name('index1');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
@@ -68,6 +69,7 @@ Route::middleware([
     Route::resource('/reasistencia-docente', AsistenciaDocenteController::class);
     Route::resource('/reasistencia', AsistenciaController::class);
     Route::resource('/reasistencia-alumno', AsistenciaAlumnoController::class);
+    Route::resource('/renotas', NotaController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
     Route::get('/rehorarioget', [HorarioController::class, 'indexReporte'])->name('rehorarioget');

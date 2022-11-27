@@ -14,7 +14,7 @@
                     <!-- form start -->
                     <form>
                         <div class="card-body">
-                            <h4 class="text-danger">No existe Año Escolar Activo, para gestionar horarios es necesario que un Año Escolar se encuentre Activo.</h4>
+                            <h4 class="text-danger">No existe Año Escolar Activo, registrar asistencias es necesario que un Año Escolar se encuentre Activo.</h4>
                         </div>
                         <!-- /.card-body -->
                     </form>

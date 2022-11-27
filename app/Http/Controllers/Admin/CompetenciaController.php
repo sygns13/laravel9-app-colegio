@@ -12,6 +12,7 @@ use App\Models\Competencia;
 use App\Models\CicloEscolar;
 use App\Models\CicloCurso;
 use App\Models\CicloCompetencia;
+use App\Models\Indicador;
 
 use stdClass;
 
@@ -30,6 +31,17 @@ class CompetenciaController extends Controller
                     ->orderBy('orden')
                     ->orderBy('nombre')
                     ->get();
+
+        foreach ($registros as $key => $registro) {
+            $indicadores = Indicador::where('borrado','0')
+                                        ->where('activo','1')
+                                        ->where('competencia_id', $registro->id)
+                                        ->orderBy('orden')
+                                        ->orderBy('nombre')
+                                        ->get();
+    
+            $registro->indicadores = $indicadores;
+        }
         
         return [ 
                 'registros' => $registros 

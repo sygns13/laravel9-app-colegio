@@ -515,7 +515,7 @@ createApp({
             axios.delete(url).then(response=>{//eliminamos
 
                 if(response.data.result=='1'){
-                    this.getDatosC(this.fillobject2.id);
+                    this.getDatosC(this.fillobject.id);
                     this.getDatos(this.thispage);
                     toastr.success(response.data.msj);//mostramos mensaje
                 }else{
@@ -532,6 +532,8 @@ createApp({
         //Gestion de Indicadores
         indicador:function (dato) {
 
+            this.registros3 = [];
+
             this.cancelFormC();
             this.fillobject2.id=dato.id;
             this.fillobject2.nombre=dato.nombre;
@@ -546,9 +548,10 @@ createApp({
         },
 
         getDatosI: function(competencia_id) {
-            var url = 'reindicadores?competencia_id=' + competencia_id;
+            var url = 'reindicadores?competencia_id=' + competencia_id + '&cursos_id=' + this.fillobject.id;;
             axios.get(url).then(response => {
                 this.registros3 = response.data.registros;
+                this.registros2 = response.data.competencias;
             })
         },
 

@@ -68,8 +68,8 @@ createApp({
 
             tomarAsistencia: false,
 
-            keyNivel_bk: 0,
-            keyCurso_bk: 0,
+            keyNivel_bk: null,
+            keyCurso_bk: null,
 
         }
     },
@@ -124,7 +124,7 @@ createApp({
                 this.data= response.data;
 
                 if(!this.data.error){
-                    if(this.keyNivel_bk > 0 && this.keyCurso_bk > 0){ 
+                    if(this.keyNivel_bk != null && this.keyCurso_bk != null){ 
                         this.asistenciaCurso(this.keyNivel_bk, this.keyCurso_bk);
                     }
 
@@ -182,8 +182,8 @@ createApp({
 
         cerrarFormDiaAsistencia: function () {
             this.tomarAsistencia = false;
-            this.keyNivel_bk = 0;
-            this.keyCurso_bk = 0;
+            this.keyNivel_bk = null;
+            this.keyCurso_bk = null;
             this.cancelFormDiaAsistencia();
         },
         cancelFormDiaAsistencia: function () {

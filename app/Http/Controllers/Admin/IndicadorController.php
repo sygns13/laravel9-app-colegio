@@ -28,6 +28,25 @@ class IndicadorController extends Controller
     {
 
         $competencia_id=$request->competencia_id;
+        $cursos_id=$request->cursos_id;
+
+        $competencias = Competencia::where('activo','1')
+                    ->where('borrado','0')
+                    ->where('cursos_id',$cursos_id)
+                    ->orderBy('orden')
+                    ->orderBy('nombre')
+                    ->get();
+
+        foreach ($competencias as $key => $competencia) {
+            $indicadores = Indicador::where('borrado','0')
+                                        ->where('activo','1')
+                                        ->where('competencia_id', $competencia->id)
+                                        ->orderBy('orden')
+                                        ->orderBy('nombre')
+                                        ->get();
+    
+            $competencia->indicadores = $indicadores;
+        }
 
         $registros = Indicador::where('activo','1')
                     ->where('borrado','0')
@@ -37,7 +56,8 @@ class IndicadorController extends Controller
                     ->get();
         
         return [ 
-                'registros' => $registros 
+                'registros' => $registros ,
+                'competencias' => $competencias ,
                ];
     }
 
