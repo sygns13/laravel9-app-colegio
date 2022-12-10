@@ -206,6 +206,11 @@ createApp({
             console.log(url);
             window.open(url, '_blank').focus();
         },
+        imprimirCurso: function() {
+            url = 'reportepdf/calificaciones-curso/' + this.alumno.data.id + '/' + this.cursoS.idcurso;
+            console.log(url);
+            window.open(url, '_blank').focus();
+        },
 
 
 

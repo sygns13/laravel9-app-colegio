@@ -259,6 +259,10 @@
                                                                         </div>
                                                                         <form>
                                                                           <div class="card-body">
+
+                                                                            <div class="card-footer">
+                                                                              <button style="margin-right:5px;" id="btnImprimir3" type="button" class="btn btn-success" @click="imprimirCurso()"><span class="fas fa-save"></span> @{{labelBtnSave}}</button>
+                                                                            </div>
                                                                             
                                                                             <div class="table-responsive p-0" v-if="cursoS.competencias.length > 0">
                                                                                 <table class="table table-bordered table-sm">

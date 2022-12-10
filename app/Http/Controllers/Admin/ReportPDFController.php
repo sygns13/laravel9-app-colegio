@@ -189,6 +189,30 @@ class ReportPDFController extends Controller
         return $pdf->download('CALIFICACION_ALUMNO_'.$calificacionesAlumno->ciclo->year.'_'.$calificacionesAlumno->matricula->id.'.pdf');
     }
 
+    public function impFichaCalificacionesAlumnoCurso($matricula_id, $ciclo_curso_id)
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+
+        $calificacionesAlumnoCurso = Nota::GetCalificacionesAlumnoCurso($matricula_id, $ciclo_curso_id);
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+  
+        $data = [
+            'calificacionesAlumnoCurso' => $calificacionesAlumnoCurso,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.calificacion-alumno-curso', $data);
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('CALIFICACION_ALUMNO_CURSO'.$calificacionesAlumnoCurso->ciclo->year.'_'.$calificacionesAlumnoCurso->matricula->id.'.pdf');
+    }
+
 
 
 

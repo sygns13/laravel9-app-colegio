@@ -194,37 +194,41 @@
 
                             <table class="table" style="margin-bottom: 0px; width:100%">
                                 <tr>
-                                    <td class="celdaFondoGrisBold3" style="width: 25%">&nbsp;DRE</td>
-                                    <td class="celdaNormal3" style="width: 25%">&nbsp;DRE ANCASH</td>
-                                    <td class="celdaFondoGrisBold3" style="width: 25%">&nbsp;UGEL</td>
-                                    <td class="celdaNormal3" style="width: 25%">&nbsp;UGEL HUARAZ</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important; width: 25%">DRE</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important; width: 25%">DRE {{strtoupper($institucionEductiva->departamento)}}</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important; width: 25%">UGEL</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important; width: 25%">{{strtoupper($institucionEductiva->nombre_ugel)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Nivel</td>
-                                    <td class="celdaNormal3">&nbsp;Primaria</td>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Código Modular</td>
-                                    <td class="celdaNormal3">&nbsp;0485654</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Nivel</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$calificacionesSeccion->nivel->nombre}}</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Código Modular</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$institucionEductiva->codigo_modular}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Institución Educativa</td>
-                                    <td colspan="3" class="celdaNormal3">&nbsp;86005 RICARDO PALMA CARRILLO</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Institución Educativa</td>
+                                    <td colspan="3" class="celdaNormal3" style="padding:1.5px!important;">{{strtoupper($institucionEductiva->nombre)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Grado</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Sección</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                </tr>
-                                {{-- <tr>
-                                    <td class="celdaFondoGrisBold5L">&nbsp;Apellidos y Nombres del Estudiante</td>
-                                    <td colspan="3" class="celdaNormal3">&nbsp;</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Grado</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$calificacionesSeccion->grado->nombre}}</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Sección</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$calificacionesSeccion->seccion->sigla}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold5L">&nbsp;Código del Estudiante</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                    <td class="celdaFondoGrisBold5L">&nbsp;DNI</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                </tr> --}}
+                                    <td class="celdaFondoGrisBold5L" style="padding:1.5px!important;">Apellidos y Nombres del Estudiante</td>
+                                    <td colspan="3" class="celdaNormal3" style="padding:1.5px!important;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaFondoGrisBold5L" style="padding:1.5px!important;">Código del Estudiante</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;"></td>
+                                    <td class="celdaFondoGrisBold5L" style="padding:1.5px!important;">DNI</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="celdaFondoGrisBold5L" style="padding:1.5px!important;">Área Curricular</td>
+                                    <td colspan="3" class="celdaNormal3" style="padding:1.5px!important;"></td>
+                                </tr>
                             </table>
                         </th>
                         
@@ -247,12 +251,12 @@
 
                     <table class="table" style="margin-bottom: 0px; width:100%; margin-top:7px;">
                         <tr>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 5%">N°</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 20%">DNI o Código de Estudiante</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 35%">Apellidos y Nombres</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 15%">Fecha de Nacimiento</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 10%">Sexo</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 15%">Situación de Matrícula</td>
+                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 10%">N°</td>
+                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 40%">Item</td>
+                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 12%">Primer Trimestre</td>
+                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 12%">Segundo Trimestre</td>
+                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 12%">Tercer Trimestre</td>
+                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 14%">Promedio Final</td>
                         </tr>
                     </table>
 

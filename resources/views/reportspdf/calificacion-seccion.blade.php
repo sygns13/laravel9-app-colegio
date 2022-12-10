@@ -247,12 +247,12 @@
 
                     <table class="table" style="margin-bottom: 0px; width:100%; margin-top:7px;">
                         <tr>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 5%">N°</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 20%">DNI o Código de Estudiante</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 35%">Apellidos y Nombres</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 15%">Fecha de Nacimiento</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 10%">Sexo</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 15%">Situación de Matrícula</td>
+                            <td class="celdaFondoGrisBold3c" style="padding:1.5px!important; width: 5%">N°</td>
+                            <td class="celdaFondoGrisBold3c" style="padding:1.5px!important; width: 20%">DNI o Código de Estudiante</td>
+                            <td class="celdaFondoGrisBold3c" style="padding:1.5px!important; width: 35%">Apellidos y Nombres</td>
+                            <td class="celdaFondoGrisBold3c" style="padding:1.5px!important; width: 15%">Fecha de Nacimiento</td>
+                            <td class="celdaFondoGrisBold3c" style="padding:1.5px!important; width: 10%">Sexo</td>
+                            <td class="celdaFondoGrisBold3c" style="padding:1.5px!important; width: 15%">Situación de Matrícula</td>
                         </tr>
 
                         @foreach ($calificacionesSeccion->alumnos as $key =>  $alumno)

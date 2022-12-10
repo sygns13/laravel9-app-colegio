@@ -101,7 +101,8 @@ Route::middleware([
     Route::get('/reportepdf/nomina-matricula/{ciclo_seccion_id}',[ReportPDFController::class, 'impNominaMatricula'])->name('impNominaMatricula');
     Route::get('/reportepdf/horario-seccion/{ciclo_seccion_id}',[ReportPDFController::class, 'impHorarioSeccion'])->name('impHorarioSeccion');
     Route::get('/reportepdf/asistencia-sesiones/{ciclo_seccion_id}/{fecha}',[ReportPDFController::class, 'impAsistenciaSesion'])->name('impAsistenciaSesion');
-    Route::get('/reportepdf/calificaciones-alumno/{matricula_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumno'])->name('impFichaCalificacionesAlumno');
     Route::get('/reportepdf/calificaciones-seccion/{ciclo_seccion_id}',[ReportPDFController::class, 'impFichaCalificacionesSeccion'])->name('impFichaCalificacionesSeccion');
+    Route::get('/reportepdf/calificaciones-alumno/{matricula_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumno'])->name('impFichaCalificacionesAlumno');
+    Route::get('/reportepdf/calificaciones-curso/{matricula_id}/{ciclo_curso_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumnoCurso'])->name('impFichaCalificacionesAlumnoCurso');
 
 });
