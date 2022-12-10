@@ -177,6 +177,11 @@ createApp({
             this.cursoS = {};
         },
 
+        imprimirAlumno: function() {
+            url = 'reportepdf/calificaciones-alumno/' + this.alumno.data.id;
+            console.log(url);
+            window.open(url, '_blank').focus();
+        },
 
 
 

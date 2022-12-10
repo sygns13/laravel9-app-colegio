@@ -26,6 +26,7 @@ use App\Models\Domicilio;
 use App\Models\Horario;
 use App\Models\Hora;
 use App\Models\Asistencia;
+use App\Models\Nota;
 
 use App\Models\InstitucionEducativa;
 
@@ -140,6 +141,29 @@ class ReportPDFController extends Controller
         return $pdf->download('HORARIO_ASISTENCIA_SESIONES_'.$horarioSeccion->ciclo->year.'_'.$horarioSeccion->sigla.'.pdf');
     }
 
+    public function impFichaCalificacionesAlumno($matricula_id)
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+
+        $calificacionesAlumno = Nota::GetCalificacionesAlumno($matricula_id);
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+  
+        $data = [
+            'calificacionesAlumno' => $calificacionesAlumno,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.calificacion-alumno', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('CALIFICACION_ALUMNO_'.$calificacionesAlumno->ciclo->year.'_'.$calificacionesAlumno->matricula->id.'.pdf');
+    }
 
 
 

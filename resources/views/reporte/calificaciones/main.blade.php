@@ -132,6 +132,10 @@
 
 
                                                                 <div class="col-md-12" v-if="verCalificacionAlumno && !verCalificacionAlumnoCompetencia">
+                                                                  <div class="card-footer">
+                                                                    <button style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-success" @click="imprimirAlumno()"><span class="fas fa-save"></span> @{{labelBtnSave}}</button>
+                                                                  </div>
+
                                                                     <div class="card card-primary">
                                                                         <div class="card-header">
                                                       
