@@ -196,7 +196,7 @@
                           </th>
             
                           <th style="text-align: center;" >
-                            <p style="font-size: 11px; font-weight:bolder; margin-top:0px;">INFORME DE PROGRESO DEL APRENDIZAJE DEL ESTUDIANTE - 2019</p>
+                            <p style="font-size: 11px; font-weight:bolder; margin-top:0px;">INFORME DE PROGRESO DEL APRENDIZAJE DEL ESTUDIANTE - {{$calificacionesAlumno->ciclo->year}}</p>
 
                             <table class="table" style="margin-bottom: 0px; width:100%">
                                 <tr>

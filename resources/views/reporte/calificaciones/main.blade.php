@@ -78,8 +78,12 @@
                                                               <div v-if="grado.seccions.length > 0 && seccionSeleccionada > 0">
                                                                 <h6>REPORTE DE CALIFICACIONES</h6>
 
+                                                                <div class="card-footer" v-if="!verCalificacionAlumno">
+                                                                  <button style="margin-right:5px;" id="btnImprimir1" type="button" class="btn btn-success" @click="imprimirAlumnosSeccion()"><span class="fas fa-save"></span> @{{labelBtnSave}}</button>
+                                                                </div>
+
                                                                 <template v-if="!verCalificacionAlumno">
-                                                                    <div class="table-responsive p-0" v-if="alumnos.length > 0">
+                                                                    <div class="table-responsive p-0" v-if="alumnosFilters.length > 0">
                                                                         <table class="table table-bordered table-sm">
                                                                             <thead>
                                                                                 <tr>
@@ -93,23 +97,26 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(registro, indexS) in alumnos">
+                                                                                <tr v-for="(registro, indexS) in alumnosFilters">
                                                                                     <td class="rows-table">@{{indexS+1}}.</td>
                                                                                     <td class="rows-table">@{{registro.sigla_tipodoc}}: @{{registro.num_documento_alu}}</td>
                                                                                     <td class="rows-table">@{{registro.apellido_paterno_alu}} @{{registro.apellido_materno_alu}}, @{{registro.nombres_alu}}</td>
-                                                                                    <td class="rows-table">@{{registro.fecha_nacimiento_alu}}</td>
+                                                                                    <td class="rows-table">@{{registro.fecha_nacimiento_alu_ok}}</td>
                                                                                     <td class="rows-table">@{{registro.genero_alu}}</td>
                                                                                     <td class="rows-table">
-                                                                                    <template v-if="registro.old_estado_grado_alu=='0'">
+                                                                                    <template v-if="registro.estado_grado_alu=='0'">
                                                                                         Ingresante
                                                                                     </template>
-                                                                                    <template v-if="registro.old_estado_grado_alu=='2'">
+                                                                                    <template v-if="registro.estado_grado_alu=='1'">
+                                                                                      Matriculado actualmente
+                                                                                    </template>
+                                                                                    <template v-if="registro.estado_grado_alu=='2'">
                                                                                         Promovido
                                                                                     </template>
-                                                                                    <template v-if="registro.old_estado_grado_alu=='3'">
+                                                                                    <template v-if="registro.estado_grado_alu=='3'">
                                                                                         Permanece en el Grado
                                                                                     </template>
-                                                                                    <template v-if="registro.old_estado_grado_alu=='4'">
+                                                                                    <template v-if="registro.estado_grado_alu=='4'">
                                                                                         Reentrante
                                                                                     </template>
                                                                                 </td>
@@ -133,7 +140,7 @@
 
                                                                 <div class="col-md-12" v-if="verCalificacionAlumno && !verCalificacionAlumnoCompetencia">
                                                                   <div class="card-footer">
-                                                                    <button style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-success" @click="imprimirAlumno()"><span class="fas fa-save"></span> @{{labelBtnSave}}</button>
+                                                                    <button style="margin-right:5px;" id="btnImprimir2" type="button" class="btn btn-success" @click="imprimirAlumno()"><span class="fas fa-save"></span> @{{labelBtnSave}}</button>
                                                                   </div>
 
                                                                     <div class="card card-primary">
@@ -418,10 +425,10 @@
                                                     </template>
                                                 </div>
                                             </div>
-                                            <div class="card-footer" v-if="seccionSeleccionada > 0">
+                                           {{--  <div class="card-footer" v-if="seccionSeleccionada > 0">
                                                 <button style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-success" @click="imprimir()"><span class="fas fa-save"></span> @{{labelBtnSave}}</button>
-                                                {{-- <button id="btnGuardar" type="button" class="btn btn-default" data-dismiss="modal" @click="cerrarForm()"><span class="fas fa-power-off"></span> Cerrar</button> --}}
-                                              </div>
+                                                
+                                              </div> --}}
                                         </div>
                                     </template>
                                 </div>

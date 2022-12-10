@@ -27,7 +27,7 @@
             border: 1px solid black; 
             background-color: #dddddd;
             padding: 0px!important;
-            font-weight: bold;
+            font-weight: normal;
         }
         .celdaFondoGrisBold3{
             text-align:left; 
@@ -35,7 +35,7 @@
             border: 1px solid black; 
             background-color: #dddddd;
             padding: 0px!important;
-            font-weight: bold;
+            font-weight: normal;
         }
         .celdaFondoGrisBold3c{
             text-align:center; 
@@ -43,7 +43,7 @@
             border: 1px solid black; 
             background-color: #dddddd;
             padding: 0px!important;
-            font-weight: bold;
+            font-weight: normal;
         }
     
         .celdaFondoGrisBold4{
@@ -164,10 +164,10 @@
 <body>
 
     {{-- Pagina 1 --}}
-    <div class="box" style="width: 19cm;">
+    <div class="box" style="width: 27.5cm;">
         <table class="table" style="margin-bottom: 0px; width:100%">
             <tr>
-                <td style="width: 100%;">
+                <td style="width: 50%;">
 
                     <table class="table" style="margin-bottom: 0px; width:100%">
                         <tr>
@@ -190,41 +190,41 @@
                           </th>
             
                           <th style="text-align: center;" >
-                            <p style="font-size: 11px; font-weight:bolder; margin-top:0px;">REPORTE DE CALIFICACIONES - 2019</p>
+                            <p style="font-size: 11px; font-weight:bolder; margin-top:0px;">INFORME DE PROGRESO DEL APRENDIZAJE DEL ESTUDIANTE - 2019</p>
 
                             <table class="table" style="margin-bottom: 0px; width:100%">
                                 <tr>
-                                    <td class="celdaFondoGrisBold3" style="width: 25%">&nbsp;DRE</td>
-                                    <td class="celdaNormal3" style="width: 25%">&nbsp;DRE ANCASH</td>
-                                    <td class="celdaFondoGrisBold3" style="width: 25%">&nbsp;UGEL</td>
-                                    <td class="celdaNormal3" style="width: 25%">&nbsp;UGEL HUARAZ</td>
+                                    <td class="celdaFondoGrisBold5L" style="width: 25%">&nbsp;DRE</td>
+                                    <td class="celdaNormal6" style="width: 25%">&nbsp;DRE ANCASH</td>
+                                    <td class="celdaFondoGrisBold5L" style="width: 25%">&nbsp;UGEL</td>
+                                    <td class="celdaNormal6" style="width: 25%">&nbsp;UGEL HUARAZ</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Nivel</td>
-                                    <td class="celdaNormal3">&nbsp;Primaria</td>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Código Modular</td>
-                                    <td class="celdaNormal3">&nbsp;0485654</td>
+                                    <td class="celdaFondoGrisBold5L">&nbsp;Nivel</td>
+                                    <td class="celdaNormal6">&nbsp;Primaria</td>
+                                    <td class="celdaFondoGrisBold5L">&nbsp;Código Modular</td>
+                                    <td class="celdaNormal6">&nbsp;0485654</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Institución Educativa</td>
-                                    <td colspan="3" class="celdaNormal3">&nbsp;86005 RICARDO PALMA CARRILLO</td>
+                                    <td class="celdaFondoGrisBold5L">&nbsp;Institución Educativa</td>
+                                    <td colspan="3" class="celdaNormal6">&nbsp;86005 RICARDO PALMA CARRILLO</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Grado</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Sección</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
+                                    <td class="celdaFondoGrisBold5L">&nbsp;Grado</td>
+                                    <td class="celdaNormal6">&nbsp;</td>
+                                    <td class="celdaFondoGrisBold5L">&nbsp;Sección</td>
+                                    <td class="celdaNormal6">&nbsp;</td>
                                 </tr>
-                                {{-- <tr>
+                                <tr>
                                     <td class="celdaFondoGrisBold5L">&nbsp;Apellidos y Nombres del Estudiante</td>
-                                    <td colspan="3" class="celdaNormal3">&nbsp;</td>
+                                    <td colspan="3" class="celdaNormal6">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="celdaFondoGrisBold5L">&nbsp;Código del Estudiante</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
+                                    <td class="celdaNormal6">&nbsp;</td>
                                     <td class="celdaFondoGrisBold5L">&nbsp;DNI</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                </tr> --}}
+                                    <td class="celdaNormal6">&nbsp;</td>
+                                </tr>
                             </table>
                         </th>
                         
@@ -247,14 +247,23 @@
 
                     <table class="table" style="margin-bottom: 0px; width:100%; margin-top:7px;">
                         <tr>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 5%">N°</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 20%">DNI o Código de Estudiante</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 35%">Apellidos y Nombres</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 15%">Fecha de Nacimiento</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 10%">Sexo</td>
-                            <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 15%">Situación de Matrícula</td>
+                            <td rowspan="2" class="celdaFondoGrisBold6" style="width: 15.75%">&nbsp;ÁREA CURRICULAR</td>
+                            <td rowspan="2" class="celdaFondoGrisBold6" style="width: 27%">&nbsp;COMPETENCIAS</td>
+                            <td colspan="3" class="celdaFondoGrisBold6" style="width: 18.75%">&nbsp;CALIFICATIVO POR PERIODO</td>
+                            <td rowspan="2" class="celdaFondoGrisBold6" style="width: 6.25%">&nbsp;Calif. anual de Comp</td>
+                            <td rowspan="2" class="celdaFondoGrisBold6" style="width: 6.25%">&nbsp;Calif. anual de Área</td>
+                            <td rowspan="2" class="celdaFondoGrisBold6" style="width: 26%">&nbsp;Conclusión descriptiva de final del periodo lectivo</td>
+                        </tr>
+                        <tr>
+                            <td class="celdaFondoGrisBold6" style="width: 6.25%">&nbsp;1</td>
+                            <td class="celdaFondoGrisBold6" style="width: 6.25%">&nbsp;2</td>
+                            <td class="celdaFondoGrisBold6" style="width: 6.25%">&nbsp;3</td>
                         </tr>
                     </table>
+
+                </td>
+                
+                <td style="width: 50%">
 
                 </td>
             </tr>

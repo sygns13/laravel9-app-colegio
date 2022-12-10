@@ -190,40 +190,40 @@
                           </th>
             
                           <th style="text-align: center;" >
-                            <p style="font-size: 11px; font-weight:bolder; margin-top:0px;">REPORTE DE CALIFICACIONES - 2019</p>
+                            <p style="font-size: 11px; font-weight:bolder; margin-top:0px;">REPORTE DE CALIFICACIONES - {{$calificacionesSeccion->ciclo->year}}</p>
 
                             <table class="table" style="margin-bottom: 0px; width:100%">
                                 <tr>
-                                    <td class="celdaFondoGrisBold3" style="width: 25%">&nbsp;DRE</td>
-                                    <td class="celdaNormal3" style="width: 25%">&nbsp;DRE ANCASH</td>
-                                    <td class="celdaFondoGrisBold3" style="width: 25%">&nbsp;UGEL</td>
-                                    <td class="celdaNormal3" style="width: 25%">&nbsp;UGEL HUARAZ</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important; width: 25%">DRE</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important; width: 25%">DRE {{strtoupper($institucionEductiva->departamento)}}</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important; width: 25%">UGEL</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important; width: 25%">{{strtoupper($institucionEductiva->nombre_ugel)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Nivel</td>
-                                    <td class="celdaNormal3">&nbsp;Primaria</td>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Código Modular</td>
-                                    <td class="celdaNormal3">&nbsp;0485654</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Nivel</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$calificacionesSeccion->nivel->nombre}}</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Código Modular</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$institucionEductiva->codigo_modular}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Institución Educativa</td>
-                                    <td colspan="3" class="celdaNormal3">&nbsp;86005 RICARDO PALMA CARRILLO</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Institución Educativa</td>
+                                    <td colspan="3" class="celdaNormal3" style="padding:1.5px!important;">{{strtoupper($institucionEductiva->nombre)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Grado</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                    <td class="celdaFondoGrisBold3">&nbsp;Sección</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Grado</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$calificacionesSeccion->grado->nombre}}</td>
+                                    <td class="celdaFondoGrisBold3" style="padding:1.5px!important;">Sección</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;">{{$calificacionesSeccion->seccion->sigla}}</td>
                                 </tr>
                                 {{-- <tr>
-                                    <td class="celdaFondoGrisBold5L">&nbsp;Apellidos y Nombres del Estudiante</td>
-                                    <td colspan="3" class="celdaNormal3">&nbsp;</td>
+                                    <td class="celdaFondoGrisBold5L" style="padding:1.5px!important;">Apellidos y Nombres del Estudiante</td>
+                                    <td colspan="3" class="celdaNormal3" style="padding:1.5px!important;"></td>
                                 </tr>
                                 <tr>
-                                    <td class="celdaFondoGrisBold5L">&nbsp;Código del Estudiante</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
-                                    <td class="celdaFondoGrisBold5L">&nbsp;DNI</td>
-                                    <td class="celdaNormal3">&nbsp;</td>
+                                    <td class="celdaFondoGrisBold5L" style="padding:1.5px!important;">Código del Estudiante</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;"></td>
+                                    <td class="celdaFondoGrisBold5L" style="padding:1.5px!important;">DNI</td>
+                                    <td class="celdaNormal3" style="padding:1.5px!important;"></td>
                                 </tr> --}}
                             </table>
                         </th>
@@ -254,6 +254,33 @@
                             <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 10%">Sexo</td>
                             <td class="celdaFondoGrisBold3c" style="padding: 1.5px; width: 15%">Situación de Matrícula</td>
                         </tr>
+
+                        @foreach ($calificacionesSeccion->alumnos as $key =>  $alumno)
+                        <tr>
+                            <td class="celdaNormal3" style="padding:1.5px!important;"> {{$key+1}}</td>
+                            <td class="celdaNormal3" style="padding:1.5px!important;"> {{$alumno->sigla_tipodoc}}: {{$alumno->num_documento_alu}}</td>
+                            <td class="celdaNormal3" style="padding:1.5px!important;"> {{$alumno->apellido_paterno_alu}} {{$alumno->apellido_materno_alu}}, {{$alumno->nombres_alu}}</td>
+                            <td class="celdaNormal3" style="padding:1.5px!important;"> 
+                                @if($alumno->fecha_nacimiento_alu != null)
+                                    {{substr(strval($alumno->fecha_nacimiento_alu),8,2)}}/{{substr(strval($alumno->fecha_nacimiento_alu),5,2)}}/{{substr(strval($alumno->fecha_nacimiento_alu),0,4)}}
+                                @endif
+                            </td>
+                            <td class="celdaNormal3" style="padding:1.5px!important;"> {{$alumno->genero_alu}}</td>
+                            <td class="celdaNormal3" style="padding:1.5px!important;"> 
+                                @if($alumno->estado_grado_alu=='0')
+                                    Ingresante
+                                @elseif($alumno->estado_grado_alu=='1')
+                                    Matriculado actualmente
+                                @elseif($alumno->estado_grado_alu=='2')
+                                    Promovido
+                                @elseif($alumno->estado_grado_alu=='3')
+                                    Permanece en el Grado
+                                @elseif($alumno->estado_grado_alu=='4')
+                                    Reentrante
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
                     </table>
 
                 </td>

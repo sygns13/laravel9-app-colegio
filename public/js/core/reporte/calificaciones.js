@@ -101,6 +101,22 @@ createApp({
             }
             return pagesArray;
         },
+        alumnosFilters: function() {
+
+            if (!this.alumnos) {
+                return [];
+            }
+
+            return this.alumnos.map(function(registro) {
+                if (registro.fecha_nacimiento_alu != null && registro.fecha_nacimiento_alu.length == 10) {
+                    registro.fecha_nacimiento_alu_ok = registro.fecha_nacimiento_alu.slice(-2) + '/' + registro.fecha_nacimiento_alu.slice(-5, -3) + '/' + registro.fecha_nacimiento_alu.slice(0, 4);
+                } else {
+                    registro.fecha_nacimiento_alu_ok = '';
+                }
+                return registro;
+            });
+
+        }
     },
     methods: {
         getDatos: function(ciclo_id) {
@@ -147,11 +163,12 @@ createApp({
             this.verCalificacionAlumnoCompetencia = false;
         },
 
-        imprimir: function() {
+        /* imprimir: function() {
             url = 'reportepdf/asistencia-sesiones/'+this.seccionSeleccionada + '/' + this.fecha;
             console.log(url);
             window.open(url, '_blank').focus();
-        },
+        }, */
+        
 
 
         verNotasAlumno: function(data, nivel, grado){
@@ -177,6 +194,13 @@ createApp({
             this.cursoS = {};
         },
 
+
+
+        imprimirAlumnosSeccion: function() {
+            url = 'reportepdf/calificaciones-seccion/' + this.seccionSeleccionada;
+            console.log(url);
+            window.open(url, '_blank').focus();
+        },
         imprimirAlumno: function() {
             url = 'reportepdf/calificaciones-alumno/' + this.alumno.data.id;
             console.log(url);

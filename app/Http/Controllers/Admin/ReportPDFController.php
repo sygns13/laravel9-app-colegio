@@ -141,6 +141,30 @@ class ReportPDFController extends Controller
         return $pdf->download('HORARIO_ASISTENCIA_SESIONES_'.$horarioSeccion->ciclo->year.'_'.$horarioSeccion->sigla.'.pdf');
     }
 
+    public function impFichaCalificacionesSeccion($ciclo_seccion_id)
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+
+        $calificacionesSeccion = Nota::GetCalificacionesSeccion($ciclo_seccion_id);
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+  
+        $data = [
+            'calificacionesSeccion' => $calificacionesSeccion,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.calificacion-seccion', $data);
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('CALIFICACION_SECCION_'.$calificacionesSeccion->ciclo->year.'_'.$calificacionesSeccion->seccion->sigla.'.pdf');
+    }
+
     public function impFichaCalificacionesAlumno($matricula_id)
     {
 
@@ -225,7 +249,7 @@ class ReportPDFController extends Controller
         ]; 
             
         $pdf = PDF::loadView('myPDF', $data);
-        $pdf->setPaper('A4', 'landscape');
+        $pdf->setPaper('A4', 'portrait');
         $pdf->setOption('defaultFont', 'Arial'); 
         
         return $pdf->download('FICHA_MATRICULA_'.$cicloActivo->year.'_'.$alumno->num_documento.'.pdf');
