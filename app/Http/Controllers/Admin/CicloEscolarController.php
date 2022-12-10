@@ -18,6 +18,7 @@ use App\Models\CicloCurso;
 use App\Models\CicloCompetencia;
 use App\Models\CicloIndicador;
 use App\Models\Turno;
+use App\Models\Matricula;
 
 
 use stdClass;
@@ -575,6 +576,23 @@ class CicloEscolarController extends Controller
         $selector='';
 
         //Inicio Validaciones
+        $matriculadosPendientes = Matricula::GetMatriculadosPendientes($id);
+
+        if(!$matriculadosPendientes->ciclo){
+            $result='0';
+            $msj='El Ciclo Seleccionado no es correcto';
+            $selector='cbuopcion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if($matriculadosPendientes->cantAlumnos > 0){
+            $result='2';
+            $msj='El Ciclo No se puede cerrar debido a que existen alumnos matriculados sin definir su resultado final';
+            $selector='cbuopcion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector, 'data'=>$matriculadosPendientes]);
+        }
 
         //Fin Validaciones
 

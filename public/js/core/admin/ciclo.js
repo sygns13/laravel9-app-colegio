@@ -66,6 +66,8 @@ createApp({
 
             yearIni: '',
 
+            matriculas: [],
+
         }
     },
     created: function() {
@@ -540,6 +542,10 @@ createApp({
                 }else{
                     // $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
+                    if(response.data.result=='2'){
+                        this.matriculas = response.data.data.matriculas;
+                        $("#modalTable").modal('show');
+                    }
                 }
             });
         },

@@ -10,6 +10,7 @@
 
 @section('content')
     @include('admin.ciclo.main')
+    @include('admin.ciclo.modal')
 @stop
 
 @section('css')
