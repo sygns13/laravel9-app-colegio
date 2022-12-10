@@ -5,9 +5,9 @@ const {
 createApp({
     data() {
         return {
-            tituloHeader: "Reporte de Asistencia por Sesiones",
+            tituloHeader: "Reporte de Asistencia por Secciones",
             subtituloHeader: "Reporte Académico",
-            subtitulo2Header: "Reporte de Asistencia por Sesiones",
+            subtitulo2Header: "Reporte de Asistencia por Secciones",
 
             subtitle2Header: true,
 

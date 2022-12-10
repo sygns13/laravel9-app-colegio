@@ -374,6 +374,10 @@ return [
                     'text' => 'Asistencia por Sesiones',
                     'url'  => 'admin/asistencia-sesiones',
                 ],
+                [
+                    'text' => 'Reporte de Calificaciones',
+                    'url'  => 'admin/calificaciones',
+                ],
                 
 
             ]

@@ -4,7 +4,7 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Reporte de Asistencia por Sesiones de Clase</h3>
+                    <h3 class="card-title">Reporte de Asistencia por Secciones de Clase</h3>
                     <a style="float: right; padding: all; color: black;" type="button" class="btn btn-default btn-sm" href="{{URL::to('admin')}}"><i class="fa fa-reply-all" aria-hidden="true"></i> 
                         Volver</a>
                 </div>

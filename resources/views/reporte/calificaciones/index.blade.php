@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Reporte de Asistencia por Secciones')
+@section('title', 'Reporte de Calificaciones por Secciones')
 
 {{-- @section('plugins.Sweetalert2', true) --}}
 
@@ -9,8 +9,8 @@
 @stop
 
 @section('content')
-    @include('reporte.asistenciasesion.main')
-    {{-- @include('reporte.asistenciasesion.form') --}}
+    @include('reporte.calificaciones.main')
+    {{-- @include('reporte.calificaciones.form') --}}
 @stop
 
 @section('css')
@@ -26,5 +26,5 @@
 @stop
 
 @section('js')
-<script src="{{ asset('js/core/reporte/asistenciasesion.js')}}"  type="text/javascript"></script>
+<script src="{{ asset('js/core/reporte/calificaciones.js')}}"  type="text/javascript"></script>
 @stop

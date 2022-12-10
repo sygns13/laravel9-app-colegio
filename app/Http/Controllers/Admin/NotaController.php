@@ -39,6 +39,13 @@ class NotaController extends Controller
         return view('docente.notas.index',compact('cicloActivo', 'hoy'));
     }
 
+    public function index2()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        return view('reporte.calificaciones.index',compact('cicloActivo', 'ciclos'));
+    }
+
     public function index(Request $request)
     {
 
@@ -48,6 +55,17 @@ class NotaController extends Controller
     
 
         return $response;
+    }
+    public function indexCalificacion(Request $request)
+    {
+
+        $ciclo_id = $request->ciclo_id;
+
+        $registros = Nota::GetItemsNotasAlumnos($ciclo_id);
+        
+        return [ 
+                'registros' => $registros,
+               ];
     }
 
     /**
