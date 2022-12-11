@@ -573,4 +573,106 @@ class Matricula extends Model
 
         return $data;
     }
+
+
+    public static function PromoverAlumno($matricula_id){
+
+
+        $matricula = Matricula::find($matricula_id);
+
+
+        $matricula->situacion = "Promovido";
+        $matricula->sigla_situacion = "A";
+        $matricula->situacion_final = "Promovido";
+        $matricula->sigla_situacion_final = "A";
+        $matricula->estado = "2"; // 2->cerrado aprobado - aprobado estado final
+
+        $matricula->save();
+
+
+        $alumno = Alumno::find($matricula->alumno_id);
+
+        $alumno->estado_grado = "2"; //cerrado aprobado - aprobado estado fina   - matricular siguiente
+
+        $alumno->save();
+
+        return true;
+    }
+
+
+    public static function PermanecerAlumno($matricula_id){
+
+
+        $matricula = Matricula::find($matricula_id);
+
+
+        $matricula->situacion = "Desaprobado";
+        $matricula->sigla_situacion = "D";
+        $matricula->situacion_final = "Desaprobado";
+        $matricula->sigla_situacion_final = "D";
+        $matricula->estado = "3"; // cerrado repitente  - repitente estado final
+
+        $matricula->save();
+
+
+        $alumno = Alumno::find($matricula->alumno_id);
+
+        $alumno->estado_grado = "3"; // cerrado repitente  - repitente estado final  - matricular mismo grado
+
+        $alumno->save();
+
+        return true;
+    }
+
+
+    public static function ExpulsarAlumno($matricula_id){
+
+
+        $matricula = Matricula::find($matricula_id);
+
+
+        $matricula->situacion = "Retirado";
+        $matricula->sigla_situacion = "R";
+        $matricula->situacion_final = "Retirado";
+        $matricula->sigla_situacion_final = "R";
+        $matricula->estado = "4"; // expulsado              - expulsado estado final  
+
+        $matricula->save();
+
+
+        $alumno = Alumno::find($matricula->alumno_id);
+
+        $alumno->estado_grado = "4"; // expulsado              - expulsado estado final - expulsado 
+
+        $alumno->save();
+
+        return true;
+    }
+
+
+    public static function CancelConclusionAlumno($matricula_id){
+
+
+        $matricula = Matricula::find($matricula_id);
+
+
+        $matricula->situacion = null;
+        $matricula->sigla_situacion = null;
+        $matricula->situacion_final = null;
+        $matricula->sigla_situacion_final = null;
+        $matricula->estado = "1"; // en proceso            - proceso de matricula transitivo  
+
+        $matricula->save();
+
+
+        $alumno = Alumno::find($matricula->alumno_id);
+
+        $alumno->estado_grado = "1"; // expulsado              - expulsado estado final - expulsado 
+
+        $alumno->save();
+
+        return true;
+    }
+
+
 }

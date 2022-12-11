@@ -244,7 +244,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-footer" v-if="seccionSeleccionada > 0 && horas.length > 0 && turnoSeleccionado != '0'">
-                                                <button style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-success" @click="imprimir()"><span class="fas fa-save"></span> @{{labelBtnSave}}</button>
+                                                <button style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-success" @click="imprimir()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
                                                 {{-- <button id="btnGuardar" type="button" class="btn btn-default" data-dismiss="modal" @click="cerrarForm()"><span class="fas fa-power-off"></span> Cerrar</button> --}}
                                               </div>
                                         </div>

@@ -46,6 +46,12 @@ class NotaController extends Controller
         return view('reporte.calificaciones.index',compact('cicloActivo', 'ciclos'));
     }
 
+    public function index3()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        return view('admin.conclusion.index',compact('cicloActivo'));
+    }
+
     public function index(Request $request)
     {
 

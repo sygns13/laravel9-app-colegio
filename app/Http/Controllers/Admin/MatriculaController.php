@@ -24,6 +24,7 @@ use App\Models\Traslado;
 use App\Models\Domicilio;
 use App\Models\ApoderadoMatricula;
 use App\Models\Turno;
+use App\Models\Nota;
 
 use App\Models\InstitucionEducativa;
 
@@ -1007,43 +1008,255 @@ class MatriculaController extends Controller
     {
         $result='1';
         $msj='1';
-
+        
         $registro = Matricula::find($id);
-
+        
         $registroA = Alumno::find($registro->alumno_id);
         $registroA->estado_grado = $registroA->old_estado_grado;
         $registroA->save();
-
+        
         $registroB = Traslado::where('matricula_id', $registro->id)
-                            ->where('tipo', '1')
+        ->where('tipo', '1')
                             ->where('activo', '1')
                             ->where('borrado', '0')
                             ->first();
-
-        if($registroB != null){
-            Storage::disk('documentoMatricula')->delete($registroB->resolucion_traslado);
-            $registroB->delete();
-        }
-
-        $registroC = Domicilio::where('matricula_id', $registro->id)->where('activo', '1')->where('borrado', '0')->first();
-
+                            
+                            if($registroB != null){
+                                Storage::disk('documentoMatricula')->delete($registroB->resolucion_traslado);
+                                $registroB->delete();
+                            }
+                            
+                            $registroC = Domicilio::where('matricula_id', $registro->id)->where('activo', '1')->where('borrado', '0')->first();
+                            
         if($registroC != null){
             $registroC->delete();
         }
-
+        
         $registroD = ApoderadoMatricula::where('matricula_id', $registro->id)->where('activo', '1')->where('borrado', '0')->first();
-
+        
         if($registroD != null){
             $registroD->delete();
         }
-
+        
         if($registro != null){
             $registro->delete();
         }
         
-
+        
         $msj='La Matrícula fue Anulada exitosamente';
-
+        
         return response()->json(["result"=>$result,'msj'=>$msj]);
+    }
+    
+    public function promover(Request $request)
+    {
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $matricula_id = $request->v1;
+
+        //validar notas
+        $notasAlumno = Nota::GetCalificacionesAlumno($matricula_id);
+
+        //return $notasAlumno;
+
+        if($notasAlumno->error){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        $faltaCompletarNotas = false;
+        $msj='Debe completar las Notas del Curso(s): ';
+        foreach ($notasAlumno->matricula->cursos as $key => $curso) {
+            if(!$curso->notaFinal){
+                $faltaCompletarNotas = true;
+                $msj.= " ".$curso->curso;
+            }
+        }
+
+        if($faltaCompletarNotas){
+            $result='0';
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        //fin validar notas
+        
+        //process
+        $result = Matricula::PromoverAlumno($matricula_id);
+
+        if(!$result){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        //fin process
+
+        $msj='Se completó la Promosión del Alumno Adecuadamente';
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$matricula_id]);
+
+    }
+    
+    public function permanecer(Request $request)
+    {
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $matricula_id = $request->v1;
+
+        //validar notas
+        $notasAlumno = Nota::GetCalificacionesAlumno($matricula_id);
+
+        //return $notasAlumno;
+
+        if($notasAlumno->error){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        $faltaCompletarNotas = false;
+        $msj='Debe completar las Notas del Curso(s): ';
+        foreach ($notasAlumno->matricula->cursos as $key => $curso) {
+            if(!$curso->notaFinal){
+                $faltaCompletarNotas = true;
+                $msj.= " ".$curso->curso;
+            }
+        }
+
+        if($faltaCompletarNotas){
+            $result='0';
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        //fin validar notas
+        
+        //process
+        $result = Matricula::PermanecerAlumno($matricula_id);
+
+        if(!$result){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        //fin process
+
+        $msj='Se completó la Permanencia del Alumno en el Grado Adecuadamente';
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$matricula_id]);
+
+    }
+
+    public function expulsar(Request $request)
+    {
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $matricula_id = $request->v1;
+
+        //validar notas
+       /*  $notasAlumno = Nota::GetCalificacionesAlumno($matricula_id);
+
+        //return $notasAlumno;
+
+        if($notasAlumno->error){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        $faltaCompletarNotas = false;
+        $msj='Debe completar las Notas del Curso(s): ';
+        foreach ($notasAlumno->matricula->cursos as $key => $curso) {
+            if(!$curso->notaFinal){
+                $faltaCompletarNotas = true;
+                $msj.= " ".$curso->curso;
+            }
+        }
+
+        if($faltaCompletarNotas){
+            $result='0';
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        } */
+
+        //fin validar notas
+        
+        //process
+        $result = Matricula::ExpulsarAlumno($matricula_id);
+
+        if(!$result){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        //fin process
+
+        $msj='Se completó la Expulsión del Alumno Adecuadamente';
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$matricula_id]);
+
+    }
+
+    public function cancelconclusion(Request $request)
+    {
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $matricula_id = $request->v1;
+
+        //validar notas
+       /*  $notasAlumno = Nota::GetCalificacionesAlumno($matricula_id);
+
+        //return $notasAlumno;
+
+        if($notasAlumno->error){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        $faltaCompletarNotas = false;
+        $msj='Debe completar las Notas del Curso(s): ';
+        foreach ($notasAlumno->matricula->cursos as $key => $curso) {
+            if(!$curso->notaFinal){
+                $faltaCompletarNotas = true;
+                $msj.= " ".$curso->curso;
+            }
+        }
+
+        if($faltaCompletarNotas){
+            $result='0';
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        } */
+
+        //fin validar notas
+        
+        //process
+        $result = Matricula::CancelConclusionAlumno($matricula_id);
+
+        if(!$result){
+            $result='0';
+            $msj='Error de Procesamiento, contacte un administrador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        //fin process
+
+        $msj='Se completó la Cancelación de la Conlusión del Alumno Adecuadamente';
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$matricula_id]);
+
     }
 }

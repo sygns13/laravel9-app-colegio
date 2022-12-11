@@ -322,6 +322,11 @@ return [
                     'url'  => 'admin/nominas',
                     'can'  => ['admin', 'director', 'docente']
                 ],
+                [
+                    'text' => 'Conlusión de Matrículas',
+                    'url'  => 'admin/conclusion-matriculas',
+                    'can'  => ['admin', 'director']
+                ],
 
             ]
         ],

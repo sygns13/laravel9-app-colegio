@@ -2,9 +2,27 @@
     <div class="row">
         <div class="col-md-12">
 
+            @if(!$cicloActivo)
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Gestión de Horarios</h3>
+                        <a style="float: right; padding: all; color: black;" type="button" class="btn btn-default btn-sm" href="{{URL::to('admin')}}"><i class="fa fa-reply-all" aria-hidden="true"></i> 
+                            Volver</a>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form>
+                        <div class="card-body">
+                            <h4 class="text-danger">No existe Año Escolar Activo, para gestionar la conclusión de matrículas de alumnos es necesario que un Año Escolar se encuentre Activo.</h4>
+                        </div>
+                        <!-- /.card-body -->
+                    </form>
+                </div>
+            @else
+
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Reporte de Calificaciones</h3>
+                    <h3 class="card-title">Gestión de Conclusión de Matrículas de Alumnos</h3>
                     <a style="float: right; padding: all; color: black;" type="button" class="btn btn-default btn-sm" href="{{URL::to('admin')}}"><i class="fa fa-reply-all" aria-hidden="true"></i> 
                         Volver</a>
                 </div>
@@ -13,20 +31,9 @@
                 <form>
                     <div class="card-body">
 
-                        <div class="form-group row">
-                            <label for="cbuAnioEscolar" class="col-sm-2 col-form-label">Seleccione Año Escolar</label>
-                            <div class="col-sm-3">
-                                <select class="form-control" style="width: 100%;" v-model="ciclo_id" id="cbuAnioEscolar" @change="changeCiclo">
-                                    <option value="0" disabled>Seleccione ...</option>
-                                    @foreach ($ciclos as $dato)
-                                    <option value="{{$dato->id}}">{{$dato->year}}</option> 
-                                    @endforeach
-                                  </select>
-                            </div>
-                        </div>
+                        <h3>Año Escolar: {{$cicloActivo->nombre}}</h3>
 
-
-                        <div class="card card-primary card-tabs" v-if="verFormulario">
+                        <div class="card card-primary card-tabs">
                             <div class="card-header p-0 pt-1">
                                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                                     <li class="pt-2 px-3">
@@ -75,11 +82,12 @@
                                                               </div>
 
 
+                                                              
                                                               <div v-if="grado.seccions.length > 0 && seccionSeleccionada > 0">
-                                                                <h6>REPORTE DE CALIFICACIONES</h6>
+                                                                <h6>CALIFICACIONES DE ALUMNOS - CONCLUSIÓN DE MATRÍCULA</h6>
 
                                                                 <div class="card-footer" v-if="!verCalificacionAlumno">
-                                                                  <button style="margin-right:5px;" id="btnImprimir1" type="button" class="btn btn-success" @click="imprimirAlumnosSeccion()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
+                                                                  <button style="margin-right:5px;" id="btnImprimir1" type="button" class="btn btn-primary" @click="imprimirAlumnosSeccion()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
                                                                 </div>
 
                                                                 <template v-if="!verCalificacionAlumno">
@@ -105,16 +113,16 @@
                                                                                     <td class="rows-table">@{{registro.genero_alu}}</td>
                                                                                     <td class="rows-table">
                                                                                     <template v-if="registro.estado_grado_alu=='0'">
-                                                                                        Ingresante
+                                                                                        <div>Ingresante</div>
                                                                                     </template>
                                                                                     <template v-if="registro.estado_grado_alu=='1'">
-                                                                                      Matriculado actualmente
+                                                                                      <div style="color:blue;">Matriculado actualmente</div>
                                                                                     </template>
                                                                                     <template v-if="registro.estado_grado_alu=='2'">
-                                                                                        Promovido
+                                                                                      <div style="color:green;">Promovido</div>
                                                                                     </template>
                                                                                     <template v-if="registro.estado_grado_alu=='3'">
-                                                                                        Permanece en el Grado
+                                                                                      <div style="color:red;">Permanece en el Grado</div>
                                                                                     </template>
                                                                                     <template v-if="registro.estado_grado_alu=='4'">
                                                                                         Reentrante
@@ -122,7 +130,7 @@
                                                                                 </td>
                                                                                 <td class="rows-table">
                                                                                     <center>
-                                                                                        <x-adminlte-button @click="verNotasAlumno(registro, nivel, grado)" id="btnVerNota" class="bg-gradient btn-sm" type="button" label="Ver Calificaciones" theme="info" icon="fas fa-list-ol"
+                                                                                        <x-adminlte-button @click="verNotasAlumno(indexS, nivel, grado)" id="btnVerNota" class="bg-gradient btn-sm" type="button" label="Gestión de Matrícula" theme="info" icon="fas fa-list-ol"
                                                                                         data-placement="top" data-toggle="tooltip" title="Visualizar Calificaciones del Alumno"/>
                                                                                     </center>
                                                                                 </td>
@@ -139,8 +147,31 @@
 
 
                                                                 <div class="col-md-12" v-if="verCalificacionAlumno && !verCalificacionAlumnoCompetencia">
+
+                                                                  
+                                                                    <template v-if="alumno.data.estado_grado_alu=='0'">
+                                                                      <h6>ESTADO DEL ALUMNO: INGRESANTE</h6>
+                                                                    </template>
+                                                                    <template v-if="alumno.data.estado_grado_alu=='1'">
+                                                                      <h6 style="color:blue;">ESTADO DEL ALUMNO: MATRICULADO ACTUALMENTE</h6>
+                                                                    </template>
+                                                                    <template v-if="alumno.data.estado_grado_alu=='2'">
+                                                                      <h6 style="color:green;">ESTADO DEL ALUMNO: PROMOVIDO</h6>
+                                                                    </template>
+                                                                    <template v-if="alumno.data.estado_grado_alu=='3'">
+                                                                      <h6 style="color:red;">ESTADO DEL ALUMNO: PERMANECE EN EL GRADO</h6>
+                                                                    </template>
+                                                                    <template v-if="alumno.data.estado_grado_alu=='4'">
+                                                                      <h6>ESTADO DEL ALUMNO: REENTRANTE</h6>
+                                                                    </template>
+                                                                  
                                                                   <div class="card-footer">
-                                                                    <button style="margin-right:5px;" id="btnImprimir2" type="button" class="btn btn-success" @click="imprimirAlumno()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
+                                                                    <button style="margin-right:5px;" id="btnImprimir2" type="button" class="btn btn-primary" @click="imprimirAlumno()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
+                                                                    <button v-if="alumno.data.estado == '1' && alumno.data.estado_grado_alu == '1'" style="margin-right:5px;" id="btnPromover" type="button" class="btn btn-success" @click="confirmPromover()"><span class="fas fa-save"></span> Promover Alumno</button>
+                                                                    <button v-if="alumno.data.estado == '1' && alumno.data.estado_grado_alu == '1'" style="margin-right:5px;" id="btnPermanecer" type="button" class="btn btn-danger" @click="confirmPermanecer()"><span class="fas fa-save"></span> Permanecer en el Grado</button>
+                                                                    <button v-if="alumno.data.estado == '1' && alumno.data.estado_grado_alu == '1'" style="margin-right:5px;" id="btnExpulsar" type="button" class="btn btn-danger" @click="confirmExpulsion()"><span class="fas fa-save"></span> Expulsar Alumno</button>
+
+                                                                    <button v-if="alumno.data.estado != '1' && !alumno.data.estado_grado_alu != '1'" style="margin-right:5px;" id="btnCancelConclusion" type="button" class="btn btn-warning" @click="confirmCancelConclusion()"><span class="fas fa-times"></span> Cancelar Conclusión de Alumno</button>
                                                                   </div>
 
                                                                     <div class="card card-primary">
@@ -240,6 +271,23 @@
 
 
                                                                 <div class="col-md-12" v-if="verCalificacionAlumnoCompetencia">
+
+                                                                  <template v-if="alumno.data.estado_grado_alu=='0'">
+                                                                    <h6>ESTADO DEL ALUMNO: INGRESANTE</h6>
+                                                                  </template>
+                                                                  <template v-if="alumno.data.estado_grado_alu=='1'">
+                                                                    <h6 style="color:blue;">ESTADO DEL ALUMNO: MATRICULADO ACTUALMENTE</h6>
+                                                                  </template>
+                                                                  <template v-if="alumno.data.estado_grado_alu=='2'">
+                                                                    <h6 style="color:green;">ESTADO DEL ALUMNO: PROMOVIDO</h6>
+                                                                  </template>
+                                                                  <template v-if="alumno.data.estado_grado_alu=='3'">
+                                                                    <h6 style="color:red;">ESTADO DEL ALUMNO: PERMANECE EN EL GRADO</h6>
+                                                                  </template>
+                                                                  <template v-if="alumno.data.estado_grado_alu=='4'">
+                                                                    <h6>ESTADO DEL ALUMNO: REENTRANTE</h6>
+                                                                  </template>
+
                                                                     <div class="card card-primary">
                                                                         <div class="card-header">
                                                         
@@ -261,7 +309,7 @@
                                                                           <div class="card-body">
 
                                                                             <div class="card-footer">
-                                                                              <button style="margin-right:5px;" id="btnImprimir3" type="button" class="btn btn-success" @click="imprimirCurso()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
+                                                                              <button style="margin-right:5px;" id="btnImprimir3" type="button" class="btn btn-primary" @click="imprimirCurso()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
                                                                             </div>
                                                                             
                                                                             <div class="table-responsive p-0" v-if="cursoS.competencias.length > 0">
@@ -419,20 +467,13 @@
                                                                       </div>
                                                                 </div>
 
-
-
-
-
-                                                                
                                                               </div>
+                                                              
                                                         </div>
                                                     </template>
                                                 </div>
                                             </div>
-                                           {{--  <div class="card-footer" v-if="seccionSeleccionada > 0">
-                                                <button style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-success" @click="imprimir()"><span class="fas fa-print"></span> @{{labelBtnSave}}</button>
-                                                
-                                              </div> --}}
+
                                         </div>
                                     </template>
                                 </div>
@@ -443,6 +484,7 @@
                     <!-- /.card-body -->
                 </form>
             </div>
+            @endif
         </div>
     </div>
 </div>

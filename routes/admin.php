@@ -53,6 +53,7 @@ Route::middleware([
     Route::get('/asistencia-sesiones', [AsistenciaController::class, 'index2'])->name('asistencia-sevsiones');
     Route::get('/calificacion', [NotaController::class, 'index1'])->name('index1');
     Route::get('/calificaciones', [NotaController::class, 'index2'])->name('index2');
+    Route::get('/conclusion-matriculas', [NotaController::class, 'index3'])->name('index3');
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
@@ -104,5 +105,12 @@ Route::middleware([
     Route::get('/reportepdf/calificaciones-seccion/{ciclo_seccion_id}',[ReportPDFController::class, 'impFichaCalificacionesSeccion'])->name('impFichaCalificacionesSeccion');
     Route::get('/reportepdf/calificaciones-alumno/{matricula_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumno'])->name('impFichaCalificacionesAlumno');
     Route::get('/reportepdf/calificaciones-curso/{matricula_id}/{ciclo_curso_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumnoCurso'])->name('impFichaCalificacionesAlumnoCurso');
+
+
+
+    Route::post('/matricula/promover', [MatriculaController::class, 'promover'])->name('promover');
+    Route::post('/matricula/permanecer', [MatriculaController::class, 'permanecer'])->name('permanecer');
+    Route::post('/matricula/expulsar', [MatriculaController::class, 'expulsar'])->name('expulsar');
+    Route::post('/matricula/cancelconclusion', [MatriculaController::class, 'cancelconclusion'])->name('cancelconclusion');
 
 });

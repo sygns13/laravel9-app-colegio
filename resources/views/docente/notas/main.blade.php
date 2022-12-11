@@ -267,7 +267,7 @@
 
                                 {{-- <td class="rows-table">
                                   <center>
-                                    <x-adminlte-button @click="calificacionCompetencia(registro)" id="btnNuevo2" class="bg-gradient btn-sm" type="button" label="Gestión" theme="primary"
+                                    <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" @click="calificacionCompetencia(registro)" id="btnNuevo2" class="bg-gradient btn-sm" type="button" label="Gestión" theme="primary"
                                     data-placement="top" data-toggle="tooltip" title="Registrar Calificacion" style="margin-right: 5px;"/>
                                   </center>
                               </td> --}}
@@ -279,33 +279,33 @@
 
                               <td class="rows-table" style="text-align: center;">
                                 <template v-if="indicador.notaPrimerPeriodo != null">@{{indicador.notaPrimerPeriodo.nota_num}}
-                                  <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
                                 </template>
                                 <template v-else><div style="color:red;">Pendiente 
-                                  <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 1, {{$cicloActivo->opcion}})" id="btnNuevoI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 1, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                   class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
                                 </template>
                               </td>
 
                               <td class="rows-table" style="text-align: center;">
                                 <template v-if="indicador.notaSegundoPeriodo != null">@{{indicador.notaSegundoPeriodo.nota_num}}
-                                  <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
                                 </template>
                                 <template v-else><div style="color:red;">Pendiente
-                                  <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 2, {{$cicloActivo->opcion}})" id="btnNuevoI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 2, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                   class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
                                 </template>
                               </td>
 
                               <td class="rows-table" style="text-align: center;">
                                 <template v-if="indicador.notaTercerPeriodo != null">@{{indicador.notaTercerPeriodo.nota_num}}
-                                  <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
                                 </template>
                                 <template v-else><div style="color:red;">Pendiente
-                                  <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 3, {{$cicloActivo->opcion}})" id="btnNuevoI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 3, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                   class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
                                 </template>
                               </td>
@@ -313,11 +313,11 @@
                               @if($cicloActivo->opcion == 2)
                                 <td class="rows-table" style="text-align: center;">
                                   <template v-if="indicador.notaCuartoPeriodo != null">@{{indicador.notaCuartoPeriodo.nota_num}}
-                                    <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
+                                    <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
                                   </template>
                                   <template v-else><div style="color:red;">Pendiente
-                                    <x-adminlte-button data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 4, {{$cicloActivo->opcion}})" id="btnNuevoI" 
+                                    <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 4, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                     class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
                                   </template>
                                 </td>
