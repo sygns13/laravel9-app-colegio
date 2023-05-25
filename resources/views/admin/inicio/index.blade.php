@@ -10,14 +10,20 @@
 
 @section('content')
     <p>Bienvenido al Sistema de Gestión Académica IE. Ricardo Palma Carrillo</p>
+    @include('admin.inicio.main')
 @stop
 
 @section('css')
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    <style type="text/css">   
+        .highcharts-credits{
+            display: none!important;
+        }
+    </style>
 @stop
 
 @section('js')
-    {{-- <script> console.log('Hi!'); </script> --}}
+<script src="{{ asset('js/core/admin/inicio.js')}}"  type="text/javascript"></script>
 
     <script>
        /*  Swal.fire(

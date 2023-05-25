@@ -627,6 +627,31 @@ return [
                 ],
             ],
         ],
+        'Hightcharts' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/hightcharts/highcharts.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/hightcharts/modules/exporting.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/hightcharts/modules/export-data.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/hightcharts/modules/accessibility.js',
+                ],
+            ],
+        ],
         
     ],
 
