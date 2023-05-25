@@ -156,6 +156,7 @@
                         <tr>
                             <td class="celdaNormal"><center>
                                 <img class="img-circle" src="{{ asset('images/escudo_nac.png') }}" alt="User Avatar" width="70px">
+                                {{ asset('images/escudo_nac.png') }}
                                 </center>
                             </td>
                         </tr>
