@@ -31,4 +31,21 @@ class HomeController extends Controller
 
         return view('admin.inicio.index');
     }
+
+    public function legajo(){
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        if($user->activo != '1'){
+            Auth::guard('web')->logout();
+
+          return redirect()->back()
+            ->withErrors([
+                'email' => 'usuarioActiv'
+            ]);
+        }
+
+        return view('admin.legajo.index');
+    }
 }

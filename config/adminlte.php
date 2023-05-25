@@ -260,6 +260,14 @@ return [
         ],
 
         [
+            'text'        => 'Legajo',
+            'url'         => 'admin/legajo',
+            'icon'        => 'fas fa-fw fa-folder',
+            'icon_color'  => 'white',
+            'can'         => ['admin']
+        ],
+
+        [
             'text'        => 'Tablas Base',
             'icon'        => 'fas fa-fw fa-server',
             'icon_color'  => 'white',

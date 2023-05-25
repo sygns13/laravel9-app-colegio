@@ -36,6 +36,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('admin');
+    Route::get('/legajo', [HomeController::class, 'legajo'])->name('legajo');
     Route::get('/ie', [InstitucionEducativaController::class, 'index1'])->name('ie');
     Route::get('/secciones', [SeccionesController::class, 'index1'])->name('secciones');
     Route::get('/cursos', [CursoController::class, 'index1'])->name('cursos');
