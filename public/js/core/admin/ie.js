@@ -38,6 +38,11 @@ createApp({
                 'sigla_programa': '',
                 'modalidad': '',
                 'modalidad_siglas': '',
+                'dirección': '',
+                'email': '',
+                'telefono': '',
+                'genero': '',
+                'turno': '',
             },
             fillobjectEdit: {
                 'id': '',
@@ -60,6 +65,11 @@ createApp({
                 'sigla_programa': '',
                 'modalidad': '',
                 'modalidad_siglas': '',
+                'dirección': '',
+                'email': '',
+                'telefono': '',
+                'genero': '',
+                'turno': '',
             },
 
             pagination: {
@@ -261,6 +271,45 @@ createApp({
                     break;
                 case 3:
                     this.fillobject.resolucion_creacion =this.fillobjectEdit.resolucion_creacion;
+                    break;
+                case 4:
+                    this.fillobject.departamento =this.fillobjectEdit.departamento;
+                    break;
+                case 5:
+                    this.fillobject.nombre_ugel =this.fillobjectEdit.nombre_ugel;
+                    break;
+                case 6:
+                    this.fillobject.distrito =this.fillobjectEdit.distrito;
+                    break;
+                case 7:
+                    this.fillobject.provincia =this.fillobjectEdit.provincia;
+                    break;
+                case 8:
+                    this.fillobject.departamento =this.fillobjectEdit.departamento;
+                    break;
+                case 9:
+                    this.fillobject.centro_poblado =this.fillobjectEdit.centro_poblado;
+                    break;
+                case 10:
+                    this.fillobject.dirección =this.fillobjectEdit.dirección;
+                    break;
+                case 11:
+                    this.fillobject.email =this.fillobjectEdit.email;
+                    break;
+                case 12:
+                    this.fillobject.telefono =this.fillobjectEdit.telefono;
+                    break;
+                case 13:
+                    this.fillobject.gestion =this.fillobjectEdit.gestion;
+                    break;
+                case 14:
+                    this.fillobject.genero =this.fillobjectEdit.genero;
+                    break;
+                case 15:
+                    this.fillobject.forma =this.fillobjectEdit.forma;
+                    break;
+                case 16:
+                    this.fillobject.turno =this.fillobjectEdit.turno;
                     break;
             
                 default:

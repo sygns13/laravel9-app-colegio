@@ -29,6 +29,11 @@ class InstitucionEducativa extends Model
                             'sigla_programa',
                             'activo',
                             'borrado',
+                            'dirección',
+                            'email',
+                            'telefono',
+                            'genero',
+                            'turno',
                         ];
 	protected $guarded = ['id'];
 }

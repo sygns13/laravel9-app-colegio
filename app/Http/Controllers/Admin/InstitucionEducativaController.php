@@ -95,6 +95,19 @@ class InstitucionEducativaController extends Controller
         $codigo_modular=$request->codigo_modular;
         $nombre=$request->nombre;
         $resolucion_creacion=$request->resolucion_creacion;
+        $departamento=$request->departamento;
+        $nombre_ugel=$request->nombre_ugel;
+        $distrito=$request->distrito;
+        $provincia=$request->provincia;
+        
+        $centro_poblado=$request->centro_poblado;
+        $dirección=$request->dirección;
+        $email=$request->email;
+        $telefono=$request->telefono;
+        $gestion=$request->gestion;
+        $genero=$request->genero;
+        $forma=$request->forma;
+        $turno=$request->turno;
 
         $input1  = array('codigo_modular' => $codigo_modular);
         $reglas1 = array('codigo_modular' => 'required');
@@ -105,9 +118,58 @@ class InstitucionEducativaController extends Controller
         $input3  = array('resolucion_creacion' => $resolucion_creacion);
         $reglas3 = array('resolucion_creacion' => 'required');
 
+        $input4  = array('departamento' => $departamento);
+        $reglas4 = array('departamento' => 'required');
+
+        $input5  = array('nombre_ugel' => $nombre_ugel);
+        $reglas5 = array('nombre_ugel' => 'required');
+
+        $input6  = array('distrito' => $distrito);
+        $reglas6 = array('distrito' => 'required');
+
+        $input7  = array('provincia' => $provincia);
+        $reglas7 = array('provincia' => 'required');
+
+        $input8  = array('centro_poblado' => $centro_poblado);
+        $reglas8 = array('centro_poblado' => 'required');
+
+        $input9  = array('dirección' => $dirección);
+        $reglas9 = array('dirección' => 'required');
+
+        $input10  = array('email' => $email);
+        $reglas10 = array('email' => 'required');
+
+        $input11  = array('telefono' => $telefono);
+        $reglas11 = array('telefono' => 'required');
+
+        $input12  = array('gestion' => $gestion);
+        $reglas12 = array('gestion' => 'required');
+
+        $input13  = array('genero' => $genero);
+        $reglas13 = array('genero' => 'required');
+
+        $input14  = array('forma' => $forma);
+        $reglas14 = array('forma' => 'required');
+
+        $input15  = array('turno' => $turno);
+        $reglas15 = array('turno' => 'required');
+
+
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
+        $validator4 = Validator::make($input4, $reglas4);
+        $validator5 = Validator::make($input5, $reglas5);
+        $validator6 = Validator::make($input6, $reglas6);
+        $validator7 = Validator::make($input7, $reglas7);
+        $validator8 = Validator::make($input8, $reglas8);
+        $validator9 = Validator::make($input9, $reglas9);
+        $validator10 = Validator::make($input10, $reglas10);
+        $validator11 = Validator::make($input11, $reglas11);
+        $validator12 = Validator::make($input12, $reglas12);
+        $validator13 = Validator::make($input13, $reglas13);
+        $validator14 = Validator::make($input14, $reglas14);
+        $validator15 = Validator::make($input15, $reglas15);
 
         if ($validator1->fails())
         {
@@ -141,6 +203,18 @@ class InstitucionEducativaController extends Controller
         $registro->codigo_modular=$codigo_modular;
         $registro->nombre=$nombre;
         $registro->resolucion_creacion=$resolucion_creacion;
+        $registro->nombre_ugel=$nombre_ugel;
+        $registro->distrito=$distrito;
+        $registro->provincia=$provincia;
+        $registro->departamento=$departamento;
+        $registro->centro_poblado=$centro_poblado;
+        $registro->dirección=$dirección;
+        $registro->email=$email;
+        $registro->telefono=$telefono;
+        $registro->gestion=$gestion;
+        $registro->genero=$genero;
+        $registro->forma=$forma;
+        $registro->turno=$turno;
 
         $registro->save();
 
