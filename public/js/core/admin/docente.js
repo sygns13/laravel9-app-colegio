@@ -28,6 +28,7 @@ createApp({
                 'especialidad': '',
                 'genero': 'M',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'codigo_plaza': '',
                 'name': '',
@@ -239,6 +240,7 @@ createApp({
                 'especialidad': '',
                 'genero': 'M',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'codigo_plaza': '',
                 'name': '',
@@ -323,6 +325,7 @@ createApp({
             this.fillobject.especialidad=dato.especialidad;
             this.fillobject.genero=dato.genero;
             this.fillobject.telefono=dato.telefono;
+            this.fillobject.celular=dato.celular;
             this.fillobject.direccion=dato.direccion;
             this.fillobject.codigo_plaza=dato.codigo_plaza;
             this.fillobject.name=dato.users_name;
@@ -465,6 +468,37 @@ createApp({
                     toastr.error(response.data.msj);
                 }
             });
+        },
+
+        generateUsername:function (){
+
+            if (this.fillobject.nombre != null){
+                this.fillobject.nombre = this.fillobject.nombre.trim();
+            }
+            if (this.fillobject.apellidos != null){
+                this.fillobject.apellidos = this.fillobject.apellidos.trim();
+            }
+
+            this.fillobject.name = "";
+
+            if(this.fillobject.nombre != null && this.fillobject.nombre != "" && this.fillobject.apellidos != null && this.fillobject.apellidos != ""){
+                var arrayApellidos = this.fillobject.apellidos.split(" ");
+                let username = this.fillobject.nombre.substring(0, 1) + arrayApellidos[0];
+
+                //this.fillobject.name = username;
+
+                var url='redocentes/generateusername';
+                axios.post(url, {_username: username}).then(response=>{
+
+                    if(response.data.result == '1'){
+                        this.fillobject.name = response.data.username;
+                        //toastr.success(response.data.msj);
+                    }
+                }).catch(error=>{
+                    console.log(error);
+                })
+            }
+            
         },
     }
 }).mount('#app')

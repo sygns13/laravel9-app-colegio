@@ -31,6 +31,7 @@ class Docente extends Model
                             'user_id',
                             'activo',
                             'borrado',
+                            'celular',
                         ];
 	protected $guarded = ['id'];
 
@@ -72,6 +73,7 @@ class Docente extends Model
                 'docentes.user_id',
                 'docentes.activo',
                 'docentes.borrado',
+                'docentes.celular',
 
                 'tipo_documentos.id as tipo_documentos_id',
                 'tipo_documentos.nombre as tipo_documentos_nombre',

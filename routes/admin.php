@@ -120,4 +120,6 @@ Route::middleware([
     Route::post('/relegajoUpdate/FotoMision', [LegajoController::class, 'updatefotomision'])->name('updatefotomision');
     Route::post('/relegajoUpdate/FotoVision', [LegajoController::class, 'updatefotovision'])->name('updatefotovision');
 
+    Route::post('/redocentes/generateusername', [DocenteController::class, 'generateusername'])->name('generateusername');
+
 });

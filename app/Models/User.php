@@ -73,4 +73,27 @@ class User extends Authenticatable
     public function adminlte_profile_url(){
         return 'profile/username';
     }
+
+    public static function GenerateUsername($username){
+
+        $b = true;
+        $concat = "";
+        $i = 0;
+        while ($b){
+
+            if($i > 0){
+                $concat = str_pad($i, 2, '0', STR_PAD_LEFT);
+            }
+            $username = $username.$concat;
+            $userBD = User::where('name',$username)->where('borrado','0')->first();
+
+            if(!$userBD){
+                $b = false;
+            }
+            $i++;
+        }
+
+        return $username;
+
+    }
 }

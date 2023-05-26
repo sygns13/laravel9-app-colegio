@@ -95,6 +95,7 @@ class DocenteController extends Controller
         $telefono=$request->telefono;
         $direccion=$request->direccion;
         $codigo_plaza=$request->codigo_plaza;
+        $celular=$request->celular;
 
         $name=$request->name;
         $email=$request->email;
@@ -139,6 +140,12 @@ class DocenteController extends Controller
         $input10  = array('activo' => $activo);
         $reglas10 = array('activo' => 'required');
 
+        $input11  = array('telefono' => $telefono);
+        $reglas11 = array('telefono' => 'required');
+
+        $input12  = array('celular' => $celular);
+        $reglas12 = array('celular' => 'required');
+
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
@@ -149,6 +156,8 @@ class DocenteController extends Controller
         $validator8 = Validator::make($input8, $reglas8);
         $validator9 = Validator::make($input9, $reglas9);
         $validator10 = Validator::make($input10, $reglas10);
+        $validator11 = Validator::make($input11, $reglas11);
+        $validator12 = Validator::make($input12, $reglas12);
 
         if ($validator1->fails() || intval($tipo_documento_id) == 0)
         {
@@ -243,6 +252,38 @@ class DocenteController extends Controller
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
+        if ($validator11->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar el Teléfono';
+            $selector='txttelefono';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if (strlen($telefono)< 9 || strlen($telefono)> 9)
+        {
+            $result='0';
+            $msj='El teléfono debe de tener un mínimo de 9 dígitos y un máximo de 11';
+            $selector='txttelefono';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if ($validator12->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar el Celular';
+            $selector='txtcelular';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if (strlen($celular)< 9 || strlen($celular)> 9)
+        {
+            $result='0';
+            $msj='El celular debe de tener un mínimo de 9 dígitos y un máximo de 11';
+            $selector='txtcelular';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
 
 
             $registroA = new User;
@@ -267,6 +308,7 @@ class DocenteController extends Controller
             $registro->telefono=$telefono;
             $registro->direccion=$direccion;
             $registro->codigo_plaza=$codigo_plaza;
+            $registro->celular=$celular;
             $registro->user_id=$registroA->id;
             $registro->activo=$activo;
             $registro->borrado='0';
@@ -321,6 +363,7 @@ class DocenteController extends Controller
         $telefono=$request->telefono;
         $direccion=$request->direccion;
         $codigo_plaza=$request->codigo_plaza;
+        $celular=$request->celular;
 
         $name=$request->name;
         $email=$request->email;
@@ -369,6 +412,12 @@ class DocenteController extends Controller
         $input11  = array('email' => $email);
         $reglas11 = array('email' => 'email');
 
+        $input12  = array('telefono' => $telefono);
+        $reglas12 = array('telefono' => 'required');
+
+        $input13  = array('celular' => $celular);
+        $reglas13 = array('celular' => 'required');
+
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
@@ -380,6 +429,8 @@ class DocenteController extends Controller
         $validator9 = Validator::make($input9, $reglas9);
         $validator10 = Validator::make($input10, $reglas10);
         $validator11 = Validator::make($input11, $reglas11);
+        $validator12 = Validator::make($input12, $reglas12);
+        $validator13 = Validator::make($input13, $reglas13);
 
         if ($validator1->fails())
         {
@@ -483,6 +534,38 @@ class DocenteController extends Controller
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
+        if ($validator12->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar el Teléfono';
+            $selector='txttelefono';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if (strlen($telefono)< 9 || strlen($telefono)> 9)
+        {
+            $result='0';
+            $msj='El teléfono debe de tener un mínimo de 9 dígitos y un máximo de 11';
+            $selector='txttelefono';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if ($validator13->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar el Celular';
+            $selector='txtcelular';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if (strlen($celular)< 9 || strlen($celular)> 9)
+        {
+            $result='0';
+            $msj='El celular debe de tener un mínimo de 9 dígitos y un máximo de 11';
+            $selector='txtcelular';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
 
 
             $registro = Docente::find($id);
@@ -497,6 +580,7 @@ class DocenteController extends Controller
             $registro->direccion=$direccion;
             $registro->codigo_plaza=$codigo_plaza;
             $registro->activo=$activo;
+            $registro->celular=$celular;
 
             $registro->save();
 
@@ -568,6 +652,20 @@ class DocenteController extends Controller
         }
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+
+    }
+
+    public function generateusername(Request $request)
+    {
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $_username = $request->_username;
+
+        $username = User::GenerateUsername($_username);
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector ,'username'=>$username]);
 
     }
 }

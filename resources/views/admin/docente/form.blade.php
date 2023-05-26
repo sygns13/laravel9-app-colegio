@@ -37,14 +37,14 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="txtapellidos">Apellidos <spam style="color:red;">*</spam></label>
-                  <input type="text" class="form-control" id="txtapellidos" placeholder="Apellidos" v-model="fillobject.apellidos" maxlength="250">
+                  <input type="text" class="form-control" id="txtapellidos" placeholder="Apellidos" v-model="fillobject.apellidos" maxlength="250" @change="generateUsername">
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="txtnombre">Nombres <spam style="color:red;">*</spam></label>
-                  <input type="text" class="form-control" id="txtnombre" placeholder="Nombres" v-model="fillobject.nombre" maxlength="250">
+                  <input type="text" class="form-control" id="txtnombre" placeholder="Nombres" v-model="fillobject.nombre" maxlength="250" @change="generateUsername">
                 </div>
               </div>
 
@@ -68,7 +68,14 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label for="txttelefono">Teléfono</label>
-                  <input type="text" class="form-control" id="txttelefono" placeholder="Telefono" v-model="fillobject.telefono" maxlength="45">
+                  <input type="text" class="form-control" id="txttelefono" placeholder="Telefono" v-model="fillobject.telefono" minlength="9" maxlength="11">
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="txtcelular">Celular</label>
+                  <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="fillobject.celular" minlength="9" maxlength="11">
                 </div>
               </div>
 
@@ -100,7 +107,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="txtname">Username <spam style="color:red;">*</spam></label>
-                  <input type="text" class="form-control" id="txtname" placeholder="Username" v-model="fillobject.name" maxlength="255">
+                  <input type="text" class="form-control" id="txtname" placeholder="Username" v-model="fillobject.name" maxlength="255" disabled="true">
                 </div>
               </div>
             </div>
