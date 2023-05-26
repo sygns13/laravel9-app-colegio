@@ -51,6 +51,27 @@ return [
             'throw' => false,
          ],
 
+         'fotoPerfil' => [
+            'driver' => 'local',
+            'root' => public_path('web/perfil/admin'),
+            'visibility' => 'public',
+            'throw' => false,
+         ],
+
+         'imgMision' => [
+            'driver' => 'local',
+            'root' => public_path('web/img/mision'),
+            'visibility' => 'public',
+            'throw' => false,
+         ],
+
+         'imgVision' => [
+            'driver' => 'local',
+            'root' => public_path('web/img/vision'),
+            'visibility' => 'public',
+            'throw' => false,
+         ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

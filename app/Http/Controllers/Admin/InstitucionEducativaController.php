@@ -101,7 +101,7 @@ class InstitucionEducativaController extends Controller
         $provincia=$request->provincia;
         
         $centro_poblado=$request->centro_poblado;
-        $dirección=$request->dirección;
+        $direccion=$request->direccion;
         $email=$request->email;
         $telefono=$request->telefono;
         $gestion=$request->gestion;
@@ -133,8 +133,8 @@ class InstitucionEducativaController extends Controller
         $input8  = array('centro_poblado' => $centro_poblado);
         $reglas8 = array('centro_poblado' => 'required');
 
-        $input9  = array('dirección' => $dirección);
-        $reglas9 = array('dirección' => 'required');
+        $input9  = array('direccion' => $direccion);
+        $reglas9 = array('direccion' => 'required');
 
         $input10  = array('email' => $email);
         $reglas10 = array('email' => 'required');
@@ -208,7 +208,7 @@ class InstitucionEducativaController extends Controller
         $registro->provincia=$provincia;
         $registro->departamento=$departamento;
         $registro->centro_poblado=$centro_poblado;
-        $registro->dirección=$dirección;
+        $registro->direccion=$direccion;
         $registro->email=$email;
         $registro->telefono=$telefono;
         $registro->gestion=$gestion;

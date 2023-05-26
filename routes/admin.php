@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SeccionesController;
 use App\Http\Controllers\Admin\InstitucionEducativaController;
+use App\Http\Controllers\Admin\LegajoController;
 use App\Http\Controllers\Admin\CursoController;
 use App\Http\Controllers\Admin\CompetenciaController;
 use App\Http\Controllers\Admin\IndicadorController;
@@ -58,6 +59,7 @@ Route::middleware([
 
     Route::resource('/resecciones', SeccionesController::class);
     Route::resource('/reie', InstitucionEducativaController::class);
+    Route::resource('/relegajo', LegajoController::class);
     Route::resource('/recursos', CursoController::class);
     Route::resource('/recompetencias', CompetenciaController::class);
     Route::resource('/reindicadores', IndicadorController::class);
@@ -113,5 +115,9 @@ Route::middleware([
     Route::post('/matricula/permanecer', [MatriculaController::class, 'permanecer'])->name('permanecer');
     Route::post('/matricula/expulsar', [MatriculaController::class, 'expulsar'])->name('expulsar');
     Route::post('/matricula/cancelconclusion', [MatriculaController::class, 'cancelconclusion'])->name('cancelconclusion');
+
+    Route::post('/relegajoUpdate/FotoPerfil', [LegajoController::class, 'updatefotoperfil'])->name('updatefotoperfil');
+    Route::post('/relegajoUpdate/FotoMision', [LegajoController::class, 'updatefotomision'])->name('updatefotomision');
+    Route::post('/relegajoUpdate/FotoVision', [LegajoController::class, 'updatefotovision'])->name('updatefotovision');
 
 });

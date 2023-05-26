@@ -10,6 +10,7 @@
 
 @section('content')
     @include('admin.legajo.main')
+    @include('admin.legajo.form')
 @stop
 
 @section('css')

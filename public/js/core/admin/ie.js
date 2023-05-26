@@ -38,7 +38,7 @@ createApp({
                 'sigla_programa': '',
                 'modalidad': '',
                 'modalidad_siglas': '',
-                'dirección': '',
+                'direccion': '',
                 'email': '',
                 'telefono': '',
                 'genero': '',
@@ -65,7 +65,7 @@ createApp({
                 'sigla_programa': '',
                 'modalidad': '',
                 'modalidad_siglas': '',
-                'dirección': '',
+                'direccion': '',
                 'email': '',
                 'telefono': '',
                 'genero': '',
@@ -291,7 +291,7 @@ createApp({
                     this.fillobject.centro_poblado =this.fillobjectEdit.centro_poblado;
                     break;
                 case 10:
-                    this.fillobject.dirección =this.fillobjectEdit.dirección;
+                    this.fillobject.direccion =this.fillobjectEdit.direccion;
                     break;
                 case 11:
                     this.fillobject.email =this.fillobjectEdit.email;

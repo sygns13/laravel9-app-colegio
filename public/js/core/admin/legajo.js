@@ -38,6 +38,14 @@ createApp({
                 'sigla_programa': '',
                 'modalidad': '',
                 'modalidad_siglas': '',
+                'dirección': '',
+                'email': '',
+                'telefono': '',
+                'genero': '',
+                'turno': '',
+                'path_mision': '',
+                'path_vision': '',
+                'niveles': '',
             },
             ieEdit: {
                 'id': '',
@@ -60,6 +68,58 @@ createApp({
                 'sigla_programa': '',
                 'modalidad': '',
                 'modalidad_siglas': '',
+                'dirección': '',
+                'email': '',
+                'telefono': '',
+                'genero': '',
+                'turno': '',
+                'path_mision': '',
+                'path_vision': '',
+                'niveles': '',
+            },
+
+            director: {
+                'id': '',
+                'tipo_documento_id':'', 
+                'num_documento':'', 
+                'apellidos':'', 
+                'nombre':'', 
+                'genero':'',
+                'cargo': '',
+                'condicion': '',
+                'dedicacion': '',
+                'celular': '',
+                'email': '',
+                'user_id': '',
+            },
+
+            directorEdit: {
+                'id': '',
+                'tipo_documento_id':'', 
+                'num_documento':'', 
+                'apellidos':'', 
+                'nombre':'', 
+                'genero':'',
+                'cargo': '',
+                'condicion': '',
+                'dedicacion': '',
+                'celular': '',
+                'email': '',
+                'user_id': '',
+            },
+
+            user: {
+                'id': '',
+                'name': '',
+                'email': '',
+                'profile_photo_path': '',
+            },
+
+            userEdit: {
+                'id': '',
+                'name': '',
+                'email': '',
+                'profile_photo_path': '',
             },
 
             pagination: {
@@ -84,7 +144,10 @@ createApp({
             thispage: '1',
             divprincipal: false,
 
-            labelBtnSave: 'Registrar',
+            labelBtnSave: 'Actualizar',
+
+            imagen : null,
+            uploadReady: true,
         }
     },
     created: function() {
@@ -126,14 +189,20 @@ createApp({
         }
     },
     methods: {
-        getDatos: function(page) {
+        getDatos: function() {
             var busca = this.buscar;
-            var url = 'reie?page=' + page + '&busca=' + busca;
+            var url = 'relegajo';
 
             axios.get(url).then(response => {
 
-                this.ie = response.data.registro;
-                this.ieEdit = response.data.registro;
+                this.ie = response.data.ie;
+                this.ieEdit = response.data.ie;
+
+                this.director = response.data.director;
+                this.directorEdit = response.data.director;
+
+                this.user = response.data.user;
+                this.userEdit = response.data.user;
 
             })
         },
@@ -215,6 +284,252 @@ createApp({
                 $(".editClass").removeAttr("disabled");
             })
         }, 
+
+        editPerfil:function () {
+            this.cancelFoto();
+            this.$nextTick(() => {
+                $("#modalFotoPerfil").modal('show');
+                this.uploadReady = true;
+            });
+        },
+
+        editMision:function () {
+            this.cancelFoto();
+            this.$nextTick(() => {
+                $("#modalFotoMision").modal('show');
+                this.uploadReady = true;
+            });
+        },
+
+        editVision:function () {
+            this.cancelFoto();
+            this.$nextTick(() => {
+                $("#modalFotoVision").modal('show');
+                this.uploadReady = true;
+            });
+        },
+
+
+
+        cerrarFormPerfil: function () {
+            $("#modalFotoPerfil").modal('hide');
+            this.cancelFoto();
+        },
+
+        cerrarFormMision: function () {
+            $("#modalFotoMision").modal('hide');
+            this.cancelFoto();
+        },
+
+        cerrarFormVision: function () {
+            $("#modalFotoVision").modal('hide');
+            this.cancelFoto();
+        },
+
+
+        cancelFoto: function () {
+            this.uploadReady = false;
+            this.imagen = null;
+        },
+
+        procesarFotoPerfil:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Confirmar la modificación de la Imagen de Perfil?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    console.log("aqui llega");
+                    this.updateFotoPerfil();
+                }
+
+            }).catch(swal.noop);
+        },
+
+        procesarFotoMision:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Confirmar la modificación de la Imagen de Misión?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    console.log("aqui llega");
+                    this.updateFotoMision();
+                }
+
+            }).catch(swal.noop);
+        },
+
+        procesarFotoVision:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Confirmar la modificación de la Imagen de Visión?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    console.log("aqui llega");
+                    this.updateFotoVision();
+                }
+
+            }).catch(swal.noop);
+        },
+
+        updateFotoPerfil: function() {
+            var url='relegajoUpdate/FotoPerfil';
+
+            $("#btnGuardarFP").attr('disabled', true);
+            $("#btnCloseFP").attr('disabled', true);
+
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('imagen', this.imagen);
+
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+            axios.post(url,data,config).then(response=>{
+
+                $("#btnGuardarFP").removeAttr("disabled");
+                $("#btnCloseFP").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.cerrarFormPerfil();
+                    this.getDatos();
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                    Swal.fire(
+                        'Actualizado',
+                        response.data.msj,
+                        'success'
+                      )
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardarFP").removeAttr("disabled");
+                $("#btnCloseFP").removeAttr("disabled");
+            })
+
+        },
+
+        updateFotoMision: function() {
+            var url='relegajoUpdate/FotoMision';
+
+            $("#btnGuardarFM").attr('disabled', true);
+            $("#btnCloseFM").attr('disabled', true);
+
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('imagen', this.imagen);
+
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+            axios.post(url,data,config).then(response=>{
+
+                $("#btnGuardarFM").removeAttr("disabled");
+                $("#btnCloseFM").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.cerrarFormMision();
+                    this.getDatos();
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                    Swal.fire(
+                        'Actualizado',
+                        response.data.msj,
+                        'success'
+                      )
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardarFM").removeAttr("disabled");
+                $("#btnCloseFM").removeAttr("disabled");
+            })
+
+        },
+
+        updateFotoVision: function() {
+            var url='relegajoUpdate/FotoVision';
+
+            $("#btnGuardarFV").attr('disabled', true);
+            $("#btnCloseFV").attr('disabled', true);
+
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('imagen', this.imagen);
+
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+            axios.post(url,data,config).then(response=>{
+
+                $("#btnGuardarFV").removeAttr("disabled");
+                $("#btnCloseFV").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.cerrarFormVision();
+                    this.getDatos();
+                    this.errors=[];
+                    //toastr.success(response.data.msj);
+                    Swal.fire(
+                        'Actualizado',
+                        response.data.msj,
+                        'success'
+                      )
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj);
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardarFM").removeAttr("disabled");
+                $("#btnCloseFM").removeAttr("disabled");
+            })
+
+        },
+
+
+        getImagen(event){
+            //Asignamos la imagen a  nuestra data
+
+            if (!event.target.files.length)
+            {
+              this.imagen=null;
+            }
+            else{
+            this.imagen = event.target.files[0];
+            }
+        },
 
     }
 }).mount('#app')

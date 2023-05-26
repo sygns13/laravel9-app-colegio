@@ -29,11 +29,14 @@ class InstitucionEducativa extends Model
                             'sigla_programa',
                             'activo',
                             'borrado',
-                            'dirección',
+                            'direccion',
                             'email',
                             'telefono',
                             'genero',
                             'turno',
+                            'path_mision',
+                            'path_vision',
+                            'niveles',
                         ];
 	protected $guarded = ['id'];
 }

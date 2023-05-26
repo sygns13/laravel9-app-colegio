@@ -105,7 +105,7 @@
                       <label for="txtresolucion_creacion">Dirección</label>
                       <div class="input-group mb-3">
                         <!-- /btn-group -->
-                        <input id="txtresolucion_creacion" name="txtresolucion_creacion" type="text" class="form-control" v-model="fillobjectEdit.dirección" maxlength="500">
+                        <input id="txtresolucion_creacion" name="txtresolucion_creacion" type="text" class="form-control" v-model="fillobjectEdit.direccion" maxlength="500">
                         <div class="input-group-prepend">
                             <button type="button" class="btn btn-success editClass" @click="confirmUpdate(10)"><i class="fas fa-edit"></i> Actualizar</button>
                           </div>
