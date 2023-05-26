@@ -502,6 +502,25 @@ class CicloEscolarController extends Controller
         $result='1';
         $msj='1';
 
+         //Inicio Validaciones
+         $matriculados = Matricula::ValidarDelete($id);
+
+         if(!$matriculados->ciclo){
+             $result='0';
+             $msj='El Año Escolar Seleccionado no es correcto';
+             $selector='cbuopcion';
+ 
+             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+         }
+ 
+         if($matriculados->cantAlumnos > 0){
+             $result='2';
+             $msj='El Año Escolar No se puede eliminar debido a que existen alumnos matriculados';
+             $selector='cbuopcion';
+ 
+             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector, 'data'=>$matriculados]);
+         }
+
         $registro = CicloEscolar::find($id);
         $registro->borrado='1';
         $registro->activo='0';
@@ -580,7 +599,7 @@ class CicloEscolarController extends Controller
 
         if(!$matriculadosPendientes->ciclo){
             $result='0';
-            $msj='El Ciclo Seleccionado no es correcto';
+            $msj='El Año Escolar Seleccionado no es correcto';
             $selector='cbuopcion';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
@@ -588,7 +607,7 @@ class CicloEscolarController extends Controller
 
         if($matriculadosPendientes->cantAlumnos > 0){
             $result='2';
-            $msj='El Ciclo No se puede cerrar debido a que existen alumnos matriculados sin definir su resultado final';
+            $msj='El Año Escolar No se puede cerrar debido a que existen alumnos matriculados sin definir su resultado final';
             $selector='cbuopcion';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector, 'data'=>$matriculadosPendientes]);
@@ -600,7 +619,7 @@ class CicloEscolarController extends Controller
         $registro->activo='0';
         $registro->save();
 
-        $msj='El Ciclo Escolar fue Cerrado exitosamente';
+        $msj='El Año Escolar Escolar fue Cerrado exitosamente';
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
