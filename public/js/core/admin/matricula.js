@@ -383,7 +383,7 @@ createApp({
                         this.alumno = response.data.alumno;
                         this.alumnoBD_BK = response.data.alumno;
                         this.errors=[];
-                        toastr.success(response.data.msj);
+                        toastr.success(response.data.msj, {timeOut: 20000});
                         this.divFormularioCabecera = true;
 
                         this.alumno.apoderados.forEach(apoderado => {
@@ -688,7 +688,7 @@ createApp({
                     this.buscarAlumno(this.thispage);
                     this.errors=[];
                     this.cerrarFormAlumno();
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -755,7 +755,7 @@ createApp({
                     this.buscarAlumno(this.thispage);
                     this.errors=[];
                     this.cerrarFormAlumnoEdit();
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -1039,7 +1039,7 @@ createApp({
                     this.cerrarFormMatricula();
                     this.buscarMatricula();
                     this.errors=[];
-                    //toastr.success(response.data.msj);
+                    //toastr.success(response.data.msj, {timeOut: 20000});
                     Swal.fire(
                         'Matriculado',
                         response.data.msj,
@@ -1075,7 +1075,7 @@ createApp({
                     }
                     
                     this.errors=[];
-                    //toastr.success(response.data.msj);
+                    //toastr.success(response.data.msj, {timeOut: 20000});
                     this.turnoNivel = response.data.turno;
                     this.divSectionMatricula = true;
                 }else{
@@ -1178,7 +1178,7 @@ createApp({
                     this.buscarAlumno(this.thispage);
                     this.errors=[];
                     this.cerrarFormAlumnoEditGestion();
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -1235,7 +1235,7 @@ createApp({
                     this.cerrarFormMatricula();
                     this.buscarMatricula();
                     this.errors=[];
-                    //toastr.success(response.data.msj);
+                    //toastr.success(response.data.msj, {timeOut: 20000});
                     Swal.fire(
                         'Exito',
                         response.data.msj,
@@ -1276,7 +1276,7 @@ createApp({
                 if(response.data.result=='1'){
                     this.buscarAlumno2();
                     this.divSectionMatricula = false;
-                    //toastr.success(response.data.msj);//mostramos mensaje
+                    //toastr.success(response.data.msj, {timeOut: 20000});//mostramos mensaje
                     Swal.fire(
                         'Matricula Anulada',
                         response.data.msj,
@@ -1305,7 +1305,7 @@ createApp({
                         this.alumno = response.data.alumno;
                         this.alumnoBD_BK = response.data.alumno;
                         this.errors=[];
-                        //toastr.success(response.data.msj);
+                        //toastr.success(response.data.msj, {timeOut: 20000});
                         this.divFormularioCabecera = true;
 
                         this.alumno.apoderados.forEach(apoderado => {

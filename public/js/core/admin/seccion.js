@@ -272,7 +272,7 @@ createApp({
                     this.getDatos(this.thispage);
                     this.errors=[];
                     this.cerrarForm();
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -335,7 +335,7 @@ createApp({
                     this.getDatos(this.thispage);
                     this.errors=[];
                     this.cerrarForm();
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -371,7 +371,7 @@ createApp({
 
                 if(response.data.result=='1'){
                     this.getDatos(this.thispage);//listamos
-                    toastr.success(response.data.msj);//mostramos mensaje
+                    toastr.success(response.data.msj, {timeOut: 20000});//mostramos mensaje
                 }else{
                     // $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);

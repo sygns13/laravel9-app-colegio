@@ -272,7 +272,7 @@ createApp({
                 if(response.data.result=='1'){
                     this.getDatos(this.thispage);
                     this.errors=[];
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -413,7 +413,7 @@ createApp({
                     this.cerrarFormPerfil();
                     this.getDatos();
                     this.errors=[];
-                    //toastr.success(response.data.msj);
+                    //toastr.success(response.data.msj, {timeOut: 20000});
                     Swal.fire(
                         'Actualizado',
                         response.data.msj,
@@ -456,7 +456,7 @@ createApp({
                     this.cerrarFormMision();
                     this.getDatos();
                     this.errors=[];
-                    //toastr.success(response.data.msj);
+                    //toastr.success(response.data.msj, {timeOut: 20000});
                     Swal.fire(
                         'Actualizado',
                         response.data.msj,
@@ -499,7 +499,7 @@ createApp({
                     this.cerrarFormVision();
                     this.getDatos();
                     this.errors=[];
-                    //toastr.success(response.data.msj);
+                    //toastr.success(response.data.msj, {timeOut: 20000});
                     Swal.fire(
                         'Actualizado',
                         response.data.msj,

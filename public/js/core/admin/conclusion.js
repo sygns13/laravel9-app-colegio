@@ -341,7 +341,7 @@ createApp({
                     this.cerrarProm();
                     this.getDatos();
                     this.errors=[];
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     //$('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -375,7 +375,7 @@ createApp({
                     this.cerrarProm();
                     this.getDatos();
                     this.errors=[];
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     //$('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -408,7 +408,7 @@ createApp({
                     this.cerrarProm();
                     this.getDatos();
                     this.errors=[];
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     //$('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
@@ -441,7 +441,7 @@ createApp({
                     this.cerrarProm();
                     this.getDatos();
                     this.errors=[];
-                    toastr.success(response.data.msj);
+                    toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     //$('#'+response.data.selector).focus();
                     toastr.error(response.data.msj);
