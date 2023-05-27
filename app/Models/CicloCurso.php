@@ -21,6 +21,7 @@ class CicloCurso extends Model
                             'borrado',
                             'ciclo_escolar_id',
                             'docente_id',
+                            'color',
                         ];
 	protected $guarded = ['id'];
 

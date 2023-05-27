@@ -15,6 +15,7 @@ class Curso extends Model
                             'grado_id',
                             'activo',
                             'borrado',
+                            'color',
                         ];
 	protected $guarded = ['id'];
 

@@ -117,10 +117,13 @@
                                                                                     <td>@{{hora.horaini}} - @{{hora.horafin}}</td>
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <select class="form-control" v-model="horario.lunes[hora.id]">
+                                                                                            <select class="form-control" v-model="horario.lunes[hora.id]" 
+                                                                                                @change="cambiarColor('1', index, indexG, hora.id)"
+                                                                                                :style="{ backgroundColor: horario.coLunes[hora.id]}" 
+                                                                                            >
                                                                                                 <option value="0">Seleccione</option>
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <option v-bind:value="curso.id">@{{curso.nombre}}</option>
+                                                                                                    <option v-bind:value="curso.id" :style="{ backgroundColor: curso.color}">@{{curso.nombre}}</option>
                                                                                                 </template>
                                                                                             </select>
                                                                                         </template>
@@ -130,10 +133,13 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <select class="form-control" v-model="horario.martes[hora.id]">
+                                                                                            <select class="form-control" v-model="horario.martes[hora.id]"
+                                                                                                @change="cambiarColor('2', index, indexG, hora.id)"
+                                                                                                :style="{ backgroundColor: horario.coMartes[hora.id]}" 
+                                                                                            >
                                                                                                 <option value="0">Seleccione</option>
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <option v-bind:value="curso.id">@{{curso.nombre}}</option>
+                                                                                                    <option v-bind:value="curso.id" :style="{ backgroundColor: curso.color}">@{{curso.nombre}}</option>
                                                                                                 </template>
                                                                                             </select>
                                                                                         </template>
@@ -143,10 +149,13 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <select class="form-control" v-model="horario.miercoles[hora.id]">
+                                                                                            <select class="form-control" v-model="horario.miercoles[hora.id]"
+                                                                                                @change="cambiarColor('3', index, indexG, hora.id)"
+                                                                                                :style="{ backgroundColor: horario.coMiercoles[hora.id]}" 
+                                                                                            >
                                                                                                 <option value="0">Seleccione</option>
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <option v-bind:value="curso.id">@{{curso.nombre}}</option>
+                                                                                                    <option v-bind:value="curso.id" :style="{ backgroundColor: curso.color}">@{{curso.nombre}}</option>
                                                                                                 </template>
                                                                                             </select>
                                                                                         </template>
@@ -156,10 +165,13 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <select class="form-control" v-model="horario.jueves[hora.id]">
+                                                                                            <select class="form-control" v-model="horario.jueves[hora.id]"
+                                                                                                @change="cambiarColor('4', index, indexG, hora.id)" 
+                                                                                                :style="{ backgroundColor: horario.coJueves[hora.id]}" 
+                                                                                            >
                                                                                                 <option value="0">Seleccione</option>
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <option v-bind:value="curso.id">@{{curso.nombre}}</option>
+                                                                                                    <option v-bind:value="curso.id" :style="{ backgroundColor: curso.color}">@{{curso.nombre}}</option>
                                                                                                 </template>
                                                                                             </select>
                                                                                         </template>
@@ -169,10 +181,13 @@
                                                                                     </td>                               
                                                                                     <td>
                                                                                         <template v-if="hora.tipo == 1">
-                                                                                            <select class="form-control" v-model="horario.viernes[hora.id]">
+                                                                                            <select class="form-control" v-model="horario.viernes[hora.id]"
+                                                                                                @change="cambiarColor('5', index, indexG, hora.id)" 
+                                                                                                :style="{ backgroundColor: horario.coViernes[hora.id]}" 
+                                                                                            >
                                                                                                 <option value="0">Seleccione</option>
                                                                                                 <template v-for="(curso, index) in grado.cursos">
-                                                                                                    <option v-bind:value="curso.id">@{{curso.nombre}}</option>
+                                                                                                    <option v-bind:value="curso.id" :style="{ backgroundColor: curso.color}">@{{curso.nombre}}</option>
                                                                                                 </template>
                                                                                             </select>
                                                                                         </template>
