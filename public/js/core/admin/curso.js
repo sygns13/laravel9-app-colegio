@@ -24,6 +24,7 @@ createApp({
                 'orden': '',
                 'grado_id': '',
                 'activo': '1',
+                'color': '#fff',
             },
 
             registros2: [],
@@ -134,6 +135,7 @@ createApp({
             this.fillobject.grado_id = idGrado;
             this.labelBtnSave = 'Registrar';
             this.fillobject.type = 'C';
+            this.fillobject.color = '#fff';
 
             $("#modalFormulario").modal('show');
             this.$nextTick(() => {
@@ -154,7 +156,8 @@ createApp({
                                 'nombre': '',
                                 'orden': '',
                                 'grado_id': '',
-                                'activo': '1'
+                                'activo': '1',
+                                'color': '#fff'
                             };
 
             this.$nextTick(() => {
@@ -223,6 +226,7 @@ createApp({
             this.fillobject.id=dato.id;
             this.fillobject.nombre=dato.nombre;
             this.fillobject.orden=dato.orden;
+            this.fillobject.color=dato.color;
             this.labelBtnSave = 'Modificar';
             this.fillobject.type = 'U';
 

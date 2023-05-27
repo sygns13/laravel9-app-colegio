@@ -42,6 +42,11 @@ class CursoController extends Controller
         $nombre=$request->nombre;
         $orden=$request->orden;
         $grado_id=$request->grado_id;
+        $color=$request->color;
+
+        if($color == null) {
+            $color = "#fff";
+        }
 
         $input1  = array('nombre' => $nombre);
         $reglas1 = array('nombre' => 'required');
@@ -75,6 +80,7 @@ class CursoController extends Controller
         $registro->nombre=$nombre;
         $registro->orden=$orden;
         $registro->grado_id=$grado_id;
+        $registro->color=$color;
         $registro->activo='1';
         $registro->borrado='0';
 
@@ -96,6 +102,7 @@ class CursoController extends Controller
             $registro_cursos->activo='1';
             $registro_cursos->borrado='0';
             $registro_cursos->ciclo_escolar_id=$cicloActivo->id;
+            $registro_cursos->color=$registro->color;
 
             $registro_cursos->save();
 
@@ -117,6 +124,11 @@ class CursoController extends Controller
         $nombre=$request->nombre;
         $orden=$request->orden;
         $grado_id=$request->grado_id;
+        $color=$request->color;
+
+        if($color == null) {
+            $color = "#fff";
+        }
 
         $input1  = array('nombre' => $nombre);
         $reglas1 = array('nombre' => 'required');
@@ -149,6 +161,7 @@ class CursoController extends Controller
 
         $registro->nombre=$nombre;
         $registro->orden=$orden;
+        $registro->color=$color;
 
         $registro->save();
 
@@ -160,6 +173,7 @@ class CursoController extends Controller
 
             $registro_curso->nombre=$registro->nombre;
             $registro_curso->orden=$registro->orden;
+            $registro_curso->color=$registro->color;
 
             $registro_curso->save();
         }

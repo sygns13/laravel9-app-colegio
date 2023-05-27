@@ -44,7 +44,8 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th style="width: 5%">#</th>
-                                                                    <th style="width: 60%">Nombre</th>
+                                                                    <th style="width: 45%">Nombre</th>
+                                                                    <th style="width: 15%">Color</th>
                                                                     <th style="width: 20%">Orden</th>
                                                                     <th style="width: 15%">Gestión</th>
                                                                 </tr>
@@ -53,6 +54,11 @@
                                                                 <tr v-for="(curso, indexS) in grado.cursos">
                                                                     <td>@{{indexS + 1}}.</td>
                                                                     <td>@{{curso.nombre}}</td>
+                                                                    <td>
+                                                                        <div class="color-palette" :style="{ backgroundColor: curso.color}">
+                                                                            <span>@{{curso.nombre}}</span>
+                                                                        </div>
+                                                                    </td>
                                                                     <td>@{{curso.orden}}</td>
                                                                     <td>
                                                                         <center>

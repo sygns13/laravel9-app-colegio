@@ -22,6 +22,13 @@
                       <input type="number" class="form-control" id="txtorden" placeholder="1" v-model="fillobject.orden" maxlength="10">
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <label for="txtcolor" class="col-sm-2 col-form-label">Color</label>
+                    <div class="col-sm-10">
+                      {{-- <input type="number" class="form-control" id="txtorden" placeholder="1" v-model="fillobject.orden" maxlength="10"> --}}
+                      <input type="color" id='txtcolor' v-model="fillobject.color">
+                    </div>
+                  </div>
                 </div>
                 <!-- /.card-body -->
               </form>
