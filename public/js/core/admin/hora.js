@@ -265,7 +265,7 @@ createApp({
                     toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             }).catch(error=>{
                 console.log(error);
@@ -330,7 +330,7 @@ createApp({
                     toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
 
             }).catch(error=>{
@@ -366,7 +366,7 @@ createApp({
                     toastr.success(response.data.msj, {timeOut: 20000});//mostramos mensaje
                 }else{
                     // $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             });
         },

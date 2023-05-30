@@ -102,7 +102,14 @@
                   <div class="col-md-2">
                     <div class="form-group">
                       <label for="txtfecha_nacimiento">Fecha de Nacimiento <spam style="color:red;">*</spam></label>
-                      <input type="date" class="form-control" id="txtfecha_nacimiento" placeholder="dd/mm/yyyy" v-model="alumno.fecha_nacimiento">
+                      <input type="date" class="form-control" id="txtfecha_nacimiento" placeholder="dd/mm/yyyy" v-model="alumno.fecha_nacimiento" @change="validateEdadAlumno">
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="txtEdad">Edad <spam style="color:red;">*</spam></label>
+                      <input type="text" class="form-control" id="txtEdad" placeholder="Edad" v-model="alumno.edad" maxlength="10" disabled="true">
                     </div>
                   </div>
       
@@ -126,7 +133,14 @@
                   <div class="col-md-2">
                     <div class="form-group">
                       <label for="txttelefono">Teléfono</label>
-                      <input type="text" class="form-control" id="txttelefono" placeholder="Telefono" v-model="alumno.telefono" maxlength="45">
+                      <input type="text" class="form-control" id="txttelefono" placeholder="Telefono" v-model="alumno.telefono" maxlength="11" onkeypress="return soloNumeros(event);">
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="txtcelular">Celular</label>
+                      <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="alumno.celular" maxlength="11" onkeypress="return soloNumeros(event);">
                     </div>
                   </div>
       
@@ -485,7 +499,14 @@
                         <div class="col-md-2">
                           <div class="form-group">
                             <label for="txtfecha_nacimientoM">Fecha de Nacimiento <spam style="color:red;">*</spam></label>
-                            <input type="date" class="form-control" id="txtfecha_nacimientoM" placeholder="dd/mm/yyyy" v-model="apoderadoMadre.fecha_nacimiento">
+                            <input type="date" class="form-control" id="txtfecha_nacimientoM" placeholder="dd/mm/yyyy" v-model="apoderadoMadre.fecha_nacimiento" @change="validateEdadMadre">
+                          </div>
+                        </div>
+
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="txtEdadM">Edad <spam style="color:red;">*</spam></label>
+                            <input type="text" class="form-control" id="txtEdadM" placeholder="Edad" v-model="apoderadoMadre.edad" maxlength="10" disabled="true">
                           </div>
                         </div>
 
@@ -499,7 +520,14 @@
                         <div class="col-md-2">
                           <div class="form-group">
                             <label for="txttelefonoM">Teléfono</label>
-                            <input type="text" class="form-control" id="txttelefonoM" placeholder="Telefono" v-model="apoderadoMadre.telefono" maxlength="45">
+                            <input type="text" class="form-control" id="txttelefonoM" placeholder="Telefono" v-model="apoderadoMadre.telefono" maxlength="11" onkeypress="return soloNumeros(event);">
+                          </div>
+                        </div>
+
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="txtcelularM">Celular</label>
+                            <input type="text" class="form-control" id="txtcelularM" placeholder="Celular" v-model="apoderadoMadre.celular" maxlength="11" onkeypress="return soloNumeros(event);">
                           </div>
                         </div>
             
@@ -624,7 +652,14 @@
                         <div class="col-md-2">
                           <div class="form-group">
                             <label for="txtfecha_nacimientoP">Fecha de Nacimiento <spam style="color:red;">*</spam></label>
-                            <input type="date" class="form-control" id="txtfecha_nacimientoP" placeholder="dd/mm/yyyy" v-model="apoderadoPadre.fecha_nacimiento">
+                            <input type="date" class="form-control" id="txtfecha_nacimientoP" placeholder="dd/mm/yyyy" v-model="apoderadoPadre.fecha_nacimiento" @change="validateEdadPadre">
+                          </div>
+                        </div>
+
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="txtEdadM">Edad <spam style="color:red;">*</spam></label>
+                            <input type="text" class="form-control" id="txtEdadM" placeholder="Edad" v-model="apoderadoPadre.edad" maxlength="10" disabled="true">
                           </div>
                         </div>
 
@@ -638,7 +673,14 @@
                         <div class="col-md-2">
                           <div class="form-group">
                             <label for="txttelefonoP">Teléfono</label>
-                            <input type="text" class="form-control" id="txttelefonoP" placeholder="Telefono" v-model="apoderadoPadre.telefono" maxlength="45">
+                            <input type="text" class="form-control" id="txttelefonoP" placeholder="Telefono" v-model="apoderadoPadre.telefono" maxlength="11" onkeypress="return soloNumeros(event);">
+                          </div>
+                        </div>
+
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="txtcelularP">Celular</label>
+                            <input type="text" class="form-control" id="txtcelularP" placeholder="Celular" v-model="apoderadoPadre.celular" maxlength="11" onkeypress="return soloNumeros(event);">
                           </div>
                         </div>
             
@@ -771,7 +813,14 @@
                         <div class="col-md-2">
                           <div class="form-group">
                             <label for="txtfecha_nacimientoO">Fecha de Nacimiento <spam style="color:red;">*</spam></label>
-                            <input type="date" class="form-control" id="txtfecha_nacimientoO" placeholder="dd/mm/yyyy" v-model="apoderadoOtro.fecha_nacimiento">
+                            <input type="date" class="form-control" id="txtfecha_nacimientoO" placeholder="dd/mm/yyyy" v-model="apoderadoOtro.fecha_nacimiento" @change="validateEdadOtro">
+                          </div>
+                        </div>
+
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="txtEdadO">Edad <spam style="color:red;">*</spam></label>
+                            <input type="text" class="form-control" id="txtEdadO" placeholder="Edad" v-model="apoderadoOtro.edad" maxlength="10" disabled="true">
                           </div>
                         </div>
 
@@ -785,7 +834,14 @@
                         <div class="col-md-2">
                           <div class="form-group">
                             <label for="txttelefonoO">Teléfono</label>
-                            <input type="text" class="form-control" id="txttelefonoO" placeholder="Telefono" v-model="apoderadoOtro.telefono" maxlength="45">
+                            <input type="text" class="form-control" id="txttelefonoO" placeholder="Telefono" v-model="apoderadoOtro.telefono" maxlength="45" onkeypress="return soloNumeros(event);">
+                          </div>
+                        </div>
+
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="txtcelularO">Celular</label>
+                            <input type="text" class="form-control" id="txtcelularO" placeholder="Celular" v-model="apoderadoOtro.celular" maxlength="11" onkeypress="return soloNumeros(event);">
                           </div>
                         </div>
             

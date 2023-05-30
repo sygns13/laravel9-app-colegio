@@ -132,6 +132,7 @@ class AlumnoController extends Controller
         $alu_grado_actual = isset($alumno["grado_actual"]) ? $alumno["grado_actual"] : null;
         $alu_nivel_actual = isset($alumno["nivel_actual"]) ? $alumno["nivel_actual"] : null;
         $alu_telefono = isset($alumno["telefono"]) ? $alumno["telefono"] : null;
+        $alu_celular = isset($alumno["celular"]) ? $alumno["celular"] : null;
         $alu_direccion = isset($alumno["direccion"]) ? $alumno["direccion"] : null;
         $alu_correo = isset($alumno["correo"]) ? $alumno["correo"] : null;
         $alu_pais = isset($alumno["pais"]) ? $alumno["pais"] : null;
@@ -180,6 +181,7 @@ class AlumnoController extends Controller
         $madre_alumno_id = isset($apoderadoMadre["alumno_id"]) ? $apoderadoMadre["alumno_id"] : null;    
         $madre_num_documento = isset($apoderadoMadre["num_documento"]) ? $apoderadoMadre["num_documento"] : null;    
         $madre_telefono = isset($apoderadoMadre["telefono"]) ? $apoderadoMadre["telefono"] : null;    
+        $madre_celular = isset($apoderadoMadre["celular"]) ? $apoderadoMadre["celular"] : null;    
         $madre_direccion = isset($apoderadoMadre["direccion"]) ? $apoderadoMadre["direccion"] : null;    
         $madre_correo = isset($apoderadoMadre["correo"]) ? $apoderadoMadre["correo"] : null;    
         $madre_tipo_apoderado_id = isset($apoderadoMadre["tipo_apoderado_id"]) ? $apoderadoMadre["tipo_apoderado_id"] : null;    
@@ -199,6 +201,7 @@ class AlumnoController extends Controller
         $padre_alumno_id = isset($apoderadoPadre["alumno_id"]) ? $apoderadoPadre["alumno_id"] : null;    
         $padre_num_documento = isset($apoderadoPadre["num_documento"]) ? $apoderadoPadre["num_documento"] : null;    
         $padre_telefono = isset($apoderadoPadre["telefono"]) ? $apoderadoPadre["telefono"] : null;    
+        $padre_celular = isset($apoderadoPadre["celular"]) ? $apoderadoPadre["celular"] : null;    
         $padre_direccion = isset($apoderadoPadre["direccion"]) ? $apoderadoPadre["direccion"] : null;    
         $padre_correo = isset($apoderadoPadre["correo"]) ? $apoderadoPadre["correo"] : null;    
         $padre_tipo_apoderado_id = isset($apoderadoPadre["tipo_apoderado_id"]) ? $apoderadoPadre["tipo_apoderado_id"] : null;    
@@ -218,6 +221,7 @@ class AlumnoController extends Controller
         $otro_alumno_id = isset($apoderadoOtro["alumno_id"]) ? $apoderadoOtro["alumno_id"] : null;    
         $otro_num_documento = isset($apoderadoOtro["num_documento"]) ? $apoderadoOtro["num_documento"] : null;    
         $otro_telefono = isset($apoderadoOtro["telefono"]) ? $apoderadoOtro["telefono"] : null;    
+        $otro_celular = isset($apoderadoOtro["celular"]) ? $apoderadoOtro["celular"] : null;    
         $otro_direccion = isset($apoderadoOtro["direccion"]) ? $apoderadoOtro["direccion"] : null;    
         $otro_correo = isset($apoderadoOtro["correo"]) ? $apoderadoOtro["correo"] : null;    
         $otro_tipo_apoderado_id = isset($apoderadoOtro["tipo_apoderado_id"]) ? $apoderadoOtro["tipo_apoderado_id"] : null;    
@@ -474,6 +478,10 @@ class AlumnoController extends Controller
             $alu_telefono = "";
         }
 
+        if($alu_celular == null){
+            $alu_celular = "";
+        }
+
         if($alu_direccion == null){
             $alu_direccion = "";
         }
@@ -669,6 +677,10 @@ class AlumnoController extends Controller
             $madre_telefono = "";
         }
 
+        if($madre_celular == null){
+            $madre_celular = "";
+        }
+
         if($madre_direccion == null){
             $madre_direccion = "";
         }
@@ -771,6 +783,10 @@ class AlumnoController extends Controller
 
         if($padre_telefono == null){
             $padre_telefono = "";
+        }
+
+        if($padre_celular == null){
+            $padre_celular = "";
         }
 
         if($padre_direccion == null){
@@ -889,6 +905,10 @@ class AlumnoController extends Controller
             $otro_telefono = "";
         }
 
+        if($otro_celular == null){
+            $otro_celular = "";
+        }
+
         if($otro_direccion == null){
             $otro_direccion = "";
         }
@@ -935,6 +955,7 @@ class AlumnoController extends Controller
         $registro->grado_actual=$alu_grado_actual;
         $registro->nivel_actual=$alu_nivel_actual;
         $registro->telefono=$alu_telefono;
+        $registro->celular=$alu_celular;
         $registro->direccion=$alu_direccion;
         $registro->correo=$alu_correo;
         $registro->pais=$alu_pais;
@@ -995,6 +1016,7 @@ class AlumnoController extends Controller
         $registroB->tipo_documento_id=$madre_tipo_documento_id;
         $registroB->num_documento=$madre_num_documento;
         $registroB->telefono=$madre_telefono;
+        $registroB->celular=$madre_celular;
         $registroB->direccion=$madre_direccion;
         $registroB->correo=$madre_correo;
         $registroB->tipo_apoderado_id=$madre_tipo_apoderado_id;
@@ -1025,6 +1047,7 @@ class AlumnoController extends Controller
         $registroC->tipo_documento_id=$padre_tipo_documento_id;
         $registroC->num_documento=$padre_num_documento;
         $registroC->telefono=$padre_telefono;
+        $registroC->celular=$padre_celular;
         $registroC->direccion=$padre_direccion;
         $registroC->correo=$padre_correo;
         $registroC->tipo_apoderado_id=$padre_tipo_apoderado_id;
@@ -1055,6 +1078,7 @@ class AlumnoController extends Controller
         $registroD->tipo_documento_id=$otro_tipo_documento_id;
         $registroD->num_documento=$otro_num_documento;
         $registroD->telefono=$otro_telefono;
+        $registroD->celular=$otro_celular;
         $registroD->direccion=$otro_direccion;
         $registroD->correo=$otro_correo;
         $registroD->tipo_apoderado_id=$otro_tipo_apoderado_id;
@@ -1128,6 +1152,7 @@ class AlumnoController extends Controller
         $alu_grado_actual = isset($alumno["grado_actual"]) ? $alumno["grado_actual"] : null;
         $alu_nivel_actual = isset($alumno["nivel_actual"]) ? $alumno["nivel_actual"] : null;
         $alu_telefono = isset($alumno["telefono"]) ? $alumno["telefono"] : null;
+        $alu_celular = isset($alumno["celular"]) ? $alumno["celular"] : null;
         $alu_direccion = isset($alumno["direccion"]) ? $alumno["direccion"] : null;
         $alu_correo = isset($alumno["correo"]) ? $alumno["correo"] : null;
         $alu_pais = isset($alumno["pais"]) ? $alumno["pais"] : null;
@@ -1177,6 +1202,7 @@ class AlumnoController extends Controller
         $madre_alumno_id = isset($apoderadoMadre["alumno_id"]) ? $apoderadoMadre["alumno_id"] : null;    
         $madre_num_documento = isset($apoderadoMadre["num_documento"]) ? $apoderadoMadre["num_documento"] : null;    
         $madre_telefono = isset($apoderadoMadre["telefono"]) ? $apoderadoMadre["telefono"] : null;    
+        $madre_celular = isset($apoderadoMadre["celular"]) ? $apoderadoMadre["celular"] : null;    
         $madre_direccion = isset($apoderadoMadre["direccion"]) ? $apoderadoMadre["direccion"] : null;    
         $madre_correo = isset($apoderadoMadre["correo"]) ? $apoderadoMadre["correo"] : null;    
         $madre_tipo_apoderado_id = isset($apoderadoMadre["tipo_apoderado_id"]) ? $apoderadoMadre["tipo_apoderado_id"] : null;    
@@ -1197,6 +1223,7 @@ class AlumnoController extends Controller
         $padre_alumno_id = isset($apoderadoPadre["alumno_id"]) ? $apoderadoPadre["alumno_id"] : null;    
         $padre_num_documento = isset($apoderadoPadre["num_documento"]) ? $apoderadoPadre["num_documento"] : null;    
         $padre_telefono = isset($apoderadoPadre["telefono"]) ? $apoderadoPadre["telefono"] : null;    
+        $padre_celular = isset($apoderadoPadre["celular"]) ? $apoderadoPadre["celular"] : null;    
         $padre_direccion = isset($apoderadoPadre["direccion"]) ? $apoderadoPadre["direccion"] : null;    
         $padre_correo = isset($apoderadoPadre["correo"]) ? $apoderadoPadre["correo"] : null;    
         $padre_tipo_apoderado_id = isset($apoderadoPadre["tipo_apoderado_id"]) ? $apoderadoPadre["tipo_apoderado_id"] : null;    
@@ -1217,6 +1244,7 @@ class AlumnoController extends Controller
         $otro_alumno_id = isset($apoderadoOtro["alumno_id"]) ? $apoderadoOtro["alumno_id"] : null;    
         $otro_num_documento = isset($apoderadoOtro["num_documento"]) ? $apoderadoOtro["num_documento"] : null;    
         $otro_telefono = isset($apoderadoOtro["telefono"]) ? $apoderadoOtro["telefono"] : null;    
+        $otro_celular = isset($apoderadoOtro["celular"]) ? $apoderadoOtro["celular"] : null;    
         $otro_direccion = isset($apoderadoOtro["direccion"]) ? $apoderadoOtro["direccion"] : null;    
         $otro_correo = isset($apoderadoOtro["correo"]) ? $apoderadoOtro["correo"] : null;    
         $otro_tipo_apoderado_id = isset($apoderadoOtro["tipo_apoderado_id"]) ? $apoderadoOtro["tipo_apoderado_id"] : null;    
@@ -1473,6 +1501,10 @@ class AlumnoController extends Controller
             $alu_telefono = "";
         }
 
+        if($alu_celular == null){
+            $alu_celular = "";
+        }
+
         if($alu_direccion == null){
             $alu_direccion = "";
         }
@@ -1669,6 +1701,10 @@ class AlumnoController extends Controller
             $madre_telefono = "";
         }
 
+        if($madre_celular == null){
+            $madre_celular = "";
+        }
+
         if($madre_direccion == null){
             $madre_direccion = "";
         }
@@ -1771,6 +1807,10 @@ class AlumnoController extends Controller
 
         if($padre_telefono == null){
             $padre_telefono = "";
+        }
+
+        if($padre_celular == null){
+            $padre_celular = "";
         }
 
         if($padre_direccion == null){
@@ -1889,6 +1929,10 @@ class AlumnoController extends Controller
             $otro_telefono = "";
         }
 
+        if($otro_celular == null){
+            $otro_celular = "";
+        }
+
         if($otro_direccion == null){
             $otro_direccion = "";
         }
@@ -1923,6 +1967,7 @@ class AlumnoController extends Controller
         $registro->grado_actual=$alu_grado_actual;
         $registro->nivel_actual=$alu_nivel_actual;
         $registro->telefono=$alu_telefono;
+        $registro->celular=$alu_celular;
         $registro->direccion=$alu_direccion;
         $registro->correo=$alu_correo;
         $registro->pais=$alu_pais;
@@ -1989,6 +2034,7 @@ class AlumnoController extends Controller
         $registroB->tipo_documento_id=$madre_tipo_documento_id;
         $registroB->num_documento=$madre_num_documento;
         $registroB->telefono=$madre_telefono;
+        $registroB->celular=$madre_celular;
         $registroB->direccion=$madre_direccion;
         $registroB->correo=$madre_correo;
         $registroB->tipo_apoderado_id=$madre_tipo_apoderado_id;
@@ -2019,6 +2065,7 @@ class AlumnoController extends Controller
         $registroC->tipo_documento_id=$padre_tipo_documento_id;
         $registroC->num_documento=$padre_num_documento;
         $registroC->telefono=$padre_telefono;
+        $registroC->celular=$padre_celular;
         $registroC->direccion=$padre_direccion;
         $registroC->correo=$padre_correo;
         $registroC->tipo_apoderado_id=$padre_tipo_apoderado_id;
@@ -2049,6 +2096,7 @@ class AlumnoController extends Controller
         $registroD->tipo_documento_id=$otro_tipo_documento_id;
         $registroD->num_documento=$otro_num_documento;
         $registroD->telefono=$otro_telefono;
+        $registroD->celular=$otro_celular;
         $registroD->direccion=$otro_direccion;
         $registroD->correo=$otro_correo;
         $registroD->tipo_apoderado_id=$otro_tipo_apoderado_id;
@@ -2137,6 +2185,7 @@ class AlumnoController extends Controller
                     $registroG->ocupacion = $apoderado->ocupacion;
                     $registroG->direccion = $apoderado->direccion;
                     $registroG->telefono = $apoderado->telefono;
+                    $registroG->celular = $apoderado->celular;
 
                     $registroG->save();
                 }

@@ -61,6 +61,7 @@ createApp({
                 'grado_actual' : 0,
                 'nivel_actual' : 0,
                 'telefono' : '',
+                'celular' : '',
                 'direccion' : '',
                 'correo' : '',
                 'pais' : '',
@@ -108,6 +109,7 @@ createApp({
                 'numero_matricula': null,
                 'flag': null,
                 'estado_grado': 0,
+                'edad': null,
             },
 
             apoderadoMadre: {
@@ -126,12 +128,14 @@ createApp({
                 'alumno_id': 0,
                 'num_documento': '',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'correo': '',
                 'tipo_apoderado_id': 1,
                 'principal': 1,
                 'activo': 1,
                 'escolaridad_sigla': '',
+                'edad': null,
 
             },
 
@@ -151,12 +155,14 @@ createApp({
                 'alumno_id': 0,
                 'num_documento': '',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'correo': '',
                 'tipo_apoderado_id': 2,
                 'principal': 0,
                 'activo': 1,
                 'escolaridad_sigla': '',
+                'edad': null,
 
             },
 
@@ -176,12 +182,14 @@ createApp({
                 'alumno_id': 0,
                 'num_documento': '',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'correo': '',
                 'tipo_apoderado_id': 3,
                 'principal': 0,
                 'activo': 1,
                 'escolaridad_sigla': '',
+                'edad': null,
 
             },
 
@@ -409,7 +417,7 @@ createApp({
                     }
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             })
         },
@@ -466,6 +474,7 @@ createApp({
                 'grado_actual' : 0,
                 'nivel_actual' : 0,
                 'telefono' : '',
+                'celular' : '',
                 'direccion' : '',
                 'correo' : '',
                 'pais' : '',
@@ -513,6 +522,7 @@ createApp({
                 'numero_matricula': null,
                 'flag': null,
                 'estado_grado': 0,
+                'edad': null,
             };
 
             this.apoderadoMadre = {
@@ -531,12 +541,14 @@ createApp({
                 'alumno_id': 0,
                 'num_documento': '',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'correo': '',
                 'tipo_apoderado_id': 1,
                 'principal': 1,
                 'activo': 1,
                 'escolaridad_sigla': '',
+                'edad': null,
 
             };
             
@@ -556,12 +568,14 @@ createApp({
                 'alumno_id': 0,
                 'num_documento': '',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'correo': '',
                 'tipo_apoderado_id': 2,
                 'principal': 0,
                 'activo': 1,
                 'escolaridad_sigla': '',
+                'edad': null,
 
             };
 
@@ -581,12 +595,14 @@ createApp({
                 'alumno_id': 0,
                 'num_documento': '',
                 'telefono': '',
+                'celular': '',
                 'direccion': '',
                 'correo': '',
                 'tipo_apoderado_id': 3,
                 'principal': 0,
                 'activo': 1,
                 'escolaridad_sigla': '',
+                'edad': null,
 
             };
 
@@ -691,7 +707,7 @@ createApp({
                     toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             }).catch(error=>{
                 console.log(error);
@@ -735,6 +751,10 @@ createApp({
                 $('#txtapellido_paterno').focus();
                 this.stepper = new Stepper(document.querySelector('.bs-stepper'));
                 this.renderChecksAlumno();
+                this.validateEdadAlumno();
+                this.validateEdadMadre();
+                this.validateEdadPadre();
+                this.validateEdadOtro();
                 
                 
             });
@@ -758,7 +778,7 @@ createApp({
                     toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             }).catch(error=>{
                 console.log(error);
@@ -1047,7 +1067,7 @@ createApp({
                       )
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             }).catch(error=>{
                 console.log(error);
@@ -1080,7 +1100,7 @@ createApp({
                     this.divSectionMatricula = true;
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             })
         },
@@ -1181,7 +1201,7 @@ createApp({
                     toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             }).catch(error=>{
                 console.log(error);
@@ -1243,7 +1263,7 @@ createApp({
                       )
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             }).catch(error=>{
                 console.log(error);
@@ -1284,7 +1304,7 @@ createApp({
                       )
                 }else{
                     // $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             });
         },
@@ -1331,9 +1351,91 @@ createApp({
                     }
                 }else{
                     $('#'+response.data.selector).focus();
-                    toastr.error(response.data.msj);
+                    toastr.error(response.data.msj, {timeOut: 20000});
                 }
             })
+        },
+
+
+        //Nuevos
+        validateEdadAlumno: function() {
+            if(this.alumno.fecha_nacimiento != null && this.alumno.fecha_nacimiento != ""){
+
+                var fechaEntrada = new Date(this.alumno.fecha_nacimiento);
+                var fechaActual = new Date();
+
+                var diferenciaEnMilisegundos = fechaActual - fechaEntrada;
+                var anios = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24 * 365.25));
+
+                if(anios < 1){
+                    toastr.error("El alumno es menor de un año, corrija la fecha de nacimiento", {timeOut: 20000});
+                    this.alumno.edad = null;
+                } else {
+                    this.alumno.edad = anios;
+                }
+            } else {
+                this.alumno.edad = null;
+            }
+        },
+
+        validateEdadMadre: function() {
+            if(this.apoderadoMadre.fecha_nacimiento != null && this.apoderadoMadre.fecha_nacimiento != ""){
+
+                var fechaEntrada = new Date(this.apoderadoMadre.fecha_nacimiento);
+                var fechaActual = new Date();
+
+                var diferenciaEnMilisegundos = fechaActual - fechaEntrada;
+                var anios = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24 * 365.25));
+
+                if(anios < 18){
+                    toastr.error("La Madre es menor a 18 años, corrija la fecha de nacimiento", {timeOut: 20000});
+                    this.apoderadoMadre.edad = null;
+                } else {
+                    this.apoderadoMadre.edad = anios;
+                }
+            } else {
+                this.apoderadoMadre.edad = null;
+            }
+        },
+
+        validateEdadPadre: function() {
+            if(this.apoderadoPadre.fecha_nacimiento != null && this.apoderadoPadre.fecha_nacimiento != ""){
+
+                var fechaEntrada = new Date(this.apoderadoPadre.fecha_nacimiento);
+                var fechaActual = new Date();
+
+                var diferenciaEnMilisegundos = fechaActual - fechaEntrada;
+                var anios = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24 * 365.25));
+
+                if(anios < 18){
+                    toastr.error("El Padre es menor a 18 años, corrija la fecha de nacimiento", {timeOut: 20000});
+                    this.apoderadoPadre.edad = null;
+                } else {
+                    this.apoderadoPadre.edad = anios;
+                }
+            } else {
+                this.apoderadoPadre.edad = null;
+            }
+        },
+
+        validateEdadOtro: function() {
+            if(this.apoderadoOtro.fecha_nacimiento != null && this.apoderadoOtro.fecha_nacimiento != ""){
+
+                var fechaEntrada = new Date(this.apoderadoOtro.fecha_nacimiento);
+                var fechaActual = new Date();
+
+                var diferenciaEnMilisegundos = fechaActual - fechaEntrada;
+                var anios = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24 * 365.25));
+
+                if(anios < 18){
+                    toastr.error("El Apoderado es menor a 18 años, corrija la fecha de nacimiento", {timeOut: 20000});
+                    this.apoderadoOtro.edad = null;
+                } else {
+                    this.apoderadoOtro.edad = anios;
+                }
+            } else {
+                this.apoderadoOtro.edad = null;
+            }
         },
 
 

@@ -37,6 +37,7 @@ class Alumno extends Model
                             'grado_actual',
                             'nivel_actual',
                             'telefono',
+                            'celular',
                             'direccion',
                             'correo',
                             'pais',

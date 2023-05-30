@@ -68,14 +68,14 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label for="txttelefono">Teléfono</label>
-                  <input type="text" class="form-control" id="txttelefono" placeholder="Telefono" v-model="fillobject.telefono" minlength="9" maxlength="11">
+                  <input type="text" class="form-control" id="txttelefono" placeholder="Telefono" v-model="fillobject.telefono" minlength="9" maxlength="11" onkeypress="return soloNumeros(event);">
                 </div>
               </div>
 
               <div class="col-md-2">
                 <div class="form-group">
                   <label for="txtcelular">Celular</label>
-                  <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="fillobject.celular" minlength="9" maxlength="11">
+                  <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="fillobject.celular" minlength="9" maxlength="11" onkeypress="return soloNumeros(event);">
                 </div>
               </div>
 

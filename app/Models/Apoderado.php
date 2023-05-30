@@ -24,6 +24,7 @@ class Apoderado extends Model
                             'alumno_id',
                             'num_documento',
                             'telefono',
+                            'celular',
                             'direccion',
                             'correo',
                             'tipo_apoderado_id',
