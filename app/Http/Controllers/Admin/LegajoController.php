@@ -120,7 +120,9 @@ class LegajoController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
         else{
-            Storage::disk('fotoPerfil')->delete($user->profile_photo_path);
+            if($user->profile_photo_path != null){
+                Storage::disk('fotoPerfil')->delete($user->profile_photo_path);
+            }
 
             $user->profile_photo_path = $imagen;
             $user->save();

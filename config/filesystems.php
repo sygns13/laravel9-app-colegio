@@ -72,6 +72,13 @@ return [
             'throw' => false,
          ],
 
+         'fotoPerfilDocente' => [
+            'driver' => 'local',
+            'root' => public_path('web/perfil/docente'),
+            'visibility' => 'public',
+            'throw' => false,
+         ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

@@ -32,6 +32,9 @@ class Docente extends Model
                             'activo',
                             'borrado',
                             'celular',
+                            'condicion',
+                            'dedicacion',
+                            'cargo',
                         ];
 	protected $guarded = ['id'];
 
@@ -74,6 +77,9 @@ class Docente extends Model
                 'docentes.activo',
                 'docentes.borrado',
                 'docentes.celular',
+                'docentes.condicion',
+                'docentes.dedicacion',
+                'docentes.cargo',
 
                 'tipo_documentos.id as tipo_documentos_id',
                 'tipo_documentos.nombre as tipo_documentos_nombre',
@@ -1019,6 +1025,79 @@ class Docente extends Model
         else{
             $data->niveles = [];
         }
+        return $data;
+    }
+
+    public static function GetDocumentos($iduser){
+
+        //$iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        $docente = Docente::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+
+        $data = DB::select("select ce.id, ce.year, ce.nombre, ce.fecha_ini_clases, ce.fecha_fin_clases from asignacion_cursos as ac
+        inner join ciclo_cursos cc on ac.ciclo_cursos_id = cc.id
+        inner join ciclo_escolars ce on cc.ciclo_escolar_id=ce.id
+        where ac.docente_id = ?
+        group by ce.id
+        order by ce.id desc;", [$docente->id]);
+
+        foreach ($data as $key => $ciclo) {
+
+            $niveles = DB::select("select cn.id, cn.nivel_id, cn.nombre, cg.ciclo_niveles_id from asignacion_cursos as ac
+            inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
+            inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+            inner join ciclo_niveles cn on cg.ciclo_niveles_id=cn.id
+            where ac.docente_id = ?
+            and cn.ciclo_escolar_id = ?
+            group by cn.nivel_id
+            order by cn.nivel_id;", [$docente->id, $ciclo->id]);
+
+            foreach ($niveles as $keyN => $nivel) {
+
+                $grados = DB::select("select cg.id, cg.orden, cg.nombre, cg.ciclo_niveles_id from asignacion_cursos as ac
+                inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
+                inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                where ac.docente_id = ?
+                and cg.ciclo_escolar_id = ?
+                and cg.ciclo_niveles_id = ?
+                group by cg.orden
+                order by cg.orden;", [$docente->id, $ciclo->id, $nivel->id]);
+
+                foreach ($grados as $keyG => $grado) {
+
+                    $secciones = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id from asignacion_cursos as ac
+                    inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
+                    where ac.docente_id = ?
+                    and cs.ciclo_escolar_id = ?
+                    and cs.ciclo_grados_id = ?
+                    group by cs.id
+                    order by cs.id;", [$docente->id, $ciclo->id, $grado->id]);
+
+                    foreach ($secciones as $keyS => $seccion) {
+
+                        $cursos = DB::select("select cc.id, cc.orden, cc.nombre, cc.ciclo_grado_id, cc.opcion from asignacion_cursos as ac
+                        inner join ciclo_cursos cc on ac.ciclo_cursos_id=cc.id
+                        where ac.docente_id = ?
+                        and cc.ciclo_escolar_id = ?
+                        and ac.ciclo_seccion_id = ?
+                        group by cc.id
+                        order by cc.id;", [$docente->id, $ciclo->id, $seccion->id]);
+
+                        $seccion->cursos = $cursos;
+                    }
+                    $grado->secciones = $secciones;
+                }
+                $nivel->grados = $grados;
+            }
+
+            $ciclo->niveles = $niveles;
+        }
+
+
         return $data;
     }
 }

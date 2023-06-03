@@ -29,6 +29,9 @@ createApp({
                 'genero': 'M',
                 'telefono': '',
                 'celular': '',
+                'condicion': '',
+                'dedicacion': '',
+                'cargo': '',
                 'direccion': '',
                 'codigo_plaza': '',
                 'name': '',
@@ -64,7 +67,9 @@ createApp({
                 'nombre': 'Documento',
                 'sigla': '',
                 'digitos': '0',
-            }
+            },
+
+           
         }
     },
     created: function() {
@@ -101,83 +106,6 @@ createApp({
             }
             return pagesArray;
         }
-    },
-    filters: {
-        mostrarNumero(value) {
-
-            if (value != null && value != undefined) {
-                value = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
-
-            return value;
-        },
-        pasfechaVista: function(date) {
-            if (date != null && date.length == 10) {
-                date = date.slice(-2) + '/' + date.slice(-5, -3) + '/' + date.slice(0, 4);
-            } else {
-                return '';
-            }
-
-            return date;
-        },
-        leftpad: function(n, length) {
-            var n = n.toString();
-            while (n.length < length)
-                n = "0" + n;
-            return n;
-        },
-        mescotejar: function(value) {
-            if (!value) return ''
-            value = parseInt(value.toString());
-            switch (value) {
-                case 1:
-                    return "ENERO";
-                    break;
-                case 2:
-                    return "FEBRERO";
-                    break;
-                case 3:
-                    return "MARZO";
-                    break;
-                case 4:
-                    return "ABRIL";
-                    break;
-                case 5:
-                    return "MAYO";
-                    break;
-                case 6:
-                    return "JUNIO";
-                    break;
-                case 7:
-                    return "JULIO";
-                    break;
-                case 8:
-                    return "AGOSTO";
-                    break;
-                case 8:
-                    return "AGOSTO";
-                    break;
-                case 9:
-                    return "SETIEMBRE";
-                    break;
-                case 10:
-                    return "OCTUBRE";
-                    break;
-                case 11:
-                    return "NOVIEMBRE";
-                    break;
-
-                case 12:
-                    return "DICIEMBRE";
-                    break;
-
-                default:
-                    return "";
-                    break;
-            }
-
-            return value
-        },
     },
     methods: {
 
@@ -241,6 +169,9 @@ createApp({
                 'genero': 'M',
                 'telefono': '',
                 'celular': '',
+                'condicion': '',
+                'dedicacion': '',
+                'cargo': '',
                 'direccion': '',
                 'codigo_plaza': '',
                 'name': '',
@@ -326,6 +257,9 @@ createApp({
             this.fillobject.genero=dato.genero;
             this.fillobject.telefono=dato.telefono;
             this.fillobject.celular=dato.celular;
+            this.fillobject.condicion=dato.condicion;
+            this.fillobject.dedicacion=dato.dedicacion;
+            this.fillobject.cargo=dato.cargo;
             this.fillobject.direccion=dato.direccion;
             this.fillobject.codigo_plaza=dato.codigo_plaza;
             this.fillobject.name=dato.users_name;

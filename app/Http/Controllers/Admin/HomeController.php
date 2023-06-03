@@ -29,7 +29,7 @@ class HomeController extends Controller
             ]);
         }
 
-        return view('admin.inicio.index');
+        return view('admin.inicio.index',compact('user'));
     }
 
     public function legajo(){

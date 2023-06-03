@@ -14,6 +14,7 @@ use App\Models\CicloEscolar;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
+use Storage;
 
 
 class DocenteController extends Controller
@@ -43,6 +44,121 @@ class DocenteController extends Controller
         $tipoDocumentos = TipoDocumento::all();
         $response["tipoDocumentos"] = $tipoDocumentos;
 
+
+        return $response;
+    }
+
+    public function indexDocenteMain()
+    {
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        $docente = Docente::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+        
+        return [ 
+                'user' => $user,
+                'docente' => $docente,
+               ];
+    }
+
+    public function updatefotoperfil(Request $request)
+    {
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+
+        $imagen="";
+        $file = $request->imagen;
+        $segureFile=0;
+
+        if($request->hasFile('imagen')){
+
+            $nombreArchivo=$request->nombrefile;
+
+            $aux2='perfil_'.date('d-m-Y').'-'.date('H-i-s');
+            $input2  = array('imagen' => $file) ;
+            $reglas2 = array('imagen' => 'required|file:1,10000');
+            $validatorF = Validator::make($input2, $reglas2);     
+
+            if ($validatorF->fails())
+            {
+                $segureFile=1;
+                $msj="El imagen adjunto ingresado tiene un tamaño superior a 10 MB, ingrese otro imagen o limpie el formulario";
+                $result='0';
+                $selector='imagen';
+            }
+            else
+            {
+                $nombre2=$file->getClientOriginalName();
+                $extension2=$file->getClientOriginalExtension();
+                $nuevoNombre2=$aux2.".".$extension2;
+                //$subir2=Storage::disk('infoFile')->put($nuevoNombre2, \File::get($file));
+
+                if($extension2=="png"|| $extension2=="jpg"|| $extension2=="jpeg"|| $extension2=="gif"|| $extension2=="jpe"|| $extension2=="PNG"|| $extension2=="JPG"|| $extension2=="JPEG"|| $extension2=="GIF"|| $extension2=="JPE")
+                {
+
+                    $subir2=false;
+                    $subir2=Storage::disk('fotoPerfilDocente')->put($nuevoNombre2, \File::get($file));
+
+                if($subir2){
+                    $imagen=$nuevoNombre2;
+                }
+                else{
+                    $msj="Error al subir el imagen adjunto, intentelo nuevamente luego";
+                    $segureFile=1;
+                    $result='0';
+                    $selector='imagen';
+                }
+                }
+                else {
+                    $segureFile=1;
+                    $msj="El imagen adjunto ingresado tiene una extensión no válida, ingrese otro imagen o limpie el formulario";
+                    $result='0';
+                    $selector='imagen';
+                }
+            }
+
+        }
+        else{
+            $msj="Debe de adjuntar un imagen adjunto válido, ingrese un imagen";
+            $segureFile=1;
+            $result='0';
+            $selector='imagen';
+        }     
+
+        if($segureFile==1){
+            Storage::disk('fotoPerfilDocente')->delete($imagen);
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        else{
+            if($user->profile_photo_path != null){
+                Storage::disk('fotoPerfilDocente')->delete($user->profile_photo_path);
+            }
+
+            $user->profile_photo_path = $imagen;
+            $user->save();
+           
+            $msj='Imagen de Perfil Actualizada Exitosamente';
+        }
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        
+    }
+
+    public function getDocumentos(Request $request)
+    {
+        $iduser =Auth::user()->id;
+        $response = Docente::GetDocumentos($iduser);
 
         return $response;
     }
@@ -96,6 +212,9 @@ class DocenteController extends Controller
         $direccion=$request->direccion;
         $codigo_plaza=$request->codigo_plaza;
         $celular=$request->celular;
+        $condicion=$request->condicion;
+        $dedicacion=$request->dedicacion;
+        $cargo=$request->cargo;
 
         $name=$request->name;
         $email=$request->email;
@@ -146,6 +265,15 @@ class DocenteController extends Controller
         $input12  = array('celular' => $celular);
         $reglas12 = array('celular' => 'required');
 
+        $input13  = array('condicion' => $condicion);
+        $reglas13 = array('condicion' => 'required');
+
+        $input14  = array('dedicacion' => $dedicacion);
+        $reglas14 = array('dedicacion' => 'required');
+
+        $input15  = array('cargo' => $cargo);
+        $reglas15 = array('cargo' => 'required');
+
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
@@ -158,6 +286,9 @@ class DocenteController extends Controller
         $validator10 = Validator::make($input10, $reglas10);
         $validator11 = Validator::make($input11, $reglas11);
         $validator12 = Validator::make($input12, $reglas12);
+        $validator13 = Validator::make($input13, $reglas13);
+        $validator14 = Validator::make($input14, $reglas14);
+        $validator15 = Validator::make($input15, $reglas15);
 
         if ($validator1->fails() || intval($tipo_documento_id) == 0)
         {
@@ -285,6 +416,33 @@ class DocenteController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
+        if ($validator13->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar la Condicion del Docente';
+            $selector='txtcondicion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator14->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar la Dedicación del Docente';
+            $selector='txtdedicacion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator15->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar el Cargo del Docente';
+            $selector='txtcargo';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
 
             $registroA = new User;
 
@@ -311,6 +469,9 @@ class DocenteController extends Controller
             $registro->celular=$celular;
             $registro->user_id=$registroA->id;
             $registro->activo=$activo;
+            $registro->condicion=$condicion;
+            $registro->dedicacion=$dedicacion;
+            $registro->cargo=$cargo;
             $registro->borrado='0';
 
             $registro->save();
@@ -364,6 +525,9 @@ class DocenteController extends Controller
         $direccion=$request->direccion;
         $codigo_plaza=$request->codigo_plaza;
         $celular=$request->celular;
+        $condicion=$request->condicion;
+        $dedicacion=$request->dedicacion;
+        $cargo=$request->cargo;
 
         $name=$request->name;
         $email=$request->email;
@@ -418,6 +582,15 @@ class DocenteController extends Controller
         $input13  = array('celular' => $celular);
         $reglas13 = array('celular' => 'required');
 
+        $input14  = array('condicion' => $condicion);
+        $reglas14 = array('condicion' => 'required');
+
+        $input15  = array('dedicacion' => $dedicacion);
+        $reglas15 = array('dedicacion' => 'required');
+
+        $input16  = array('cargo' => $cargo);
+        $reglas16 = array('cargo' => 'required');
+
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
@@ -431,6 +604,9 @@ class DocenteController extends Controller
         $validator11 = Validator::make($input11, $reglas11);
         $validator12 = Validator::make($input12, $reglas12);
         $validator13 = Validator::make($input13, $reglas13);
+        $validator14 = Validator::make($input14, $reglas14);
+        $validator15 = Validator::make($input15, $reglas15);
+        $validator16 = Validator::make($input16, $reglas16);
 
         if ($validator1->fails())
         {
@@ -567,6 +743,33 @@ class DocenteController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
+        if ($validator14->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar la Condicion del Docente';
+            $selector='txtcondicion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator15->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar la Dedicación del Docente';
+            $selector='txtdedicacion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator16->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar el Cargo del Docente';
+            $selector='txtcargo';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
 
             $registro = Docente::find($id);
 
@@ -581,6 +784,9 @@ class DocenteController extends Controller
             $registro->codigo_plaza=$codigo_plaza;
             $registro->activo=$activo;
             $registro->celular=$celular;
+            $registro->condicion=$condicion;
+            $registro->dedicacion=$dedicacion;
+            $registro->cargo=$cargo;
 
             $registro->save();
 

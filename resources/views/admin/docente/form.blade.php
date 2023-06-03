@@ -50,6 +50,27 @@
 
               <div class="col-md-4">
                 <div class="form-group">
+                  <label for="txtcondicion">Condición del Docente <spam style="color:red;">*</spam></label>
+                  <input type="text" class="form-control" id="txtcondicion" placeholder="Condición" v-model="fillobject.condicion" maxlength="100">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="txtdedicacion">Dedicación del Docente <spam style="color:red;">*</spam></label>
+                  <input type="text" class="form-control" id="txtdedicacion" placeholder="Dedicación" v-model="fillobject.dedicacion" maxlength="100">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="txtcargo">Cargo del Docente <spam style="color:red;">*</spam></label>
+                  <input type="text" class="form-control" id="txtcargo" placeholder="Cargo" v-model="fillobject.cargo" maxlength="100">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
                   <label for="txtespecialidad">Especialidad</label>
                   <input type="text" class="form-control" id="txtespecialidad" placeholder="Especialidad" v-model="fillobject.especialidad" maxlength="250">
                 </div>
