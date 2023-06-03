@@ -328,7 +328,12 @@ return [
                 [
                     'text' => 'Nómina de Matrícula',
                     'url'  => 'admin/nominas',
-                    'can'  => ['admin', 'director', 'docente']
+                    'can'  => ['admin', 'director']
+                ],
+                [
+                    'text' => 'Nómina de Matrícula',
+                    'url'  => 'admin/docnominas',
+                    'can'  => ['docente']
                 ],
                 [
                     'text' => 'Conlusión de Matrículas',

@@ -66,6 +66,14 @@ class MatriculaController extends Controller
         return view('admin.nomina.index',compact('cicloActivo', 'ciclos'));
     }
 
+    public function index3()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+
+        return view('admin.docnominas.index',compact('cicloActivo', 'ciclos'));
+    }
+
     public function index(Request $request)
     {
         return $tipoDocumentos = TipoDocumento::all();
@@ -76,6 +84,18 @@ class MatriculaController extends Controller
         $ciclo_id = $request->ciclo_id;
 
         $registros = Matricula::GetDatosGenericsByCiclo($ciclo_id);
+
+        return [ 
+                'registros' => $registros,
+               ];
+    }
+
+    public function indexDocNomina(Request $request)
+    {
+        $ciclo_id = $request->ciclo_id;
+        $iduser =Auth::user()->id;
+
+        $registros = Matricula::GetDatosGenericsByCicloDocente($ciclo_id, $iduser);
 
         return [ 
                 'registros' => $registros,

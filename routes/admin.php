@@ -47,6 +47,7 @@ Route::middleware([
     Route::get('/horas', [HoraController::class, 'index1'])->name('horas');
     Route::get('/matriculas', [MatriculaController::class, 'index1'])->name('matriculas');
     Route::get('/nominas', [MatriculaController::class, 'index2'])->name('nominas');
+    Route::get('/docnominas', [MatriculaController::class, 'index3'])->name('docnominas');
     Route::get('/asignacion-cursos', [AsignacionCursoController::class, 'index1'])->name('asignacion-cursos');
     Route::get('/asistencia-docente', [DocenteAsistenciaDiaController::class, 'index1'])->name('asistencia-docente');
     Route::get('/lista-alumnos', [DocenteController::class, 'index2'])->name('lista-alumnos');
@@ -78,6 +79,7 @@ Route::middleware([
     Route::resource('/renotas', NotaController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
+    Route::get('/redocnominas', [MatriculaController::class, 'indexDocNomina'])->name('redocnominas');
     Route::get('/rehorarioget', [HorarioController::class, 'indexReporte'])->name('rehorarioget');
     Route::get('/asistenciasesionget', [AsistenciaController::class, 'indexAsistenciaSesion'])->name('asistenciasesionget');
     Route::get('/calificacionesget', [NotaController::class, 'indexCalificacion'])->name('calificacionesget');

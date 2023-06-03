@@ -8,7 +8,7 @@
                             <h3 class="widget-user-username">@{{docente.nombre}} @{{docente.apellidos}}</h3>
                         </div>
                         <div class="widget-user-image">
-                            <img class="img-circle elevation-2" :src="'{{ asset('web/perfil/docente/') }}/'+user.profile_photo_path" alt="User Avatar">
+                            <img class="img-circle elevation-2" :src="'{{ asset('web/perfil/docente/') }}/'+user.profile_photo_path" alt="User Avatar" v-if="user.profile_photo_path !=''">
                             <button type="buttton" class="btn btn-info" @click="editPerfil"><i class="fas fa-edit"></i></button>
                         </div>
                         <div class="card-body box-profile">
