@@ -1,0 +1,246 @@
+const {
+    createApp
+} = Vue
+
+createApp({
+    data() {
+        return {
+            tituloHeader: "Lista de Cursos",
+            subtituloHeader: "Docente",
+            subtitulo2Header: "Lista de Cursos",
+
+            subtitle2Header: true,
+
+            userPerfil: '{{ Auth::user()->name }}',
+            mailPerfil: '{{ Auth::user()->email }}',
+
+            registros: [],
+            matriculas: [],
+            errors: [],
+
+            ciclo_id: 0,
+
+            verFormulario: false,
+
+            headerLista: {},
+            nivel: {},
+
+            fillobject: {},
+
+            labelBtnSave: "Registrar",
+
+            archivo : null,
+            uploadReady: true,
+
+
+        }
+    },
+    created: function() {
+/*         this.getDatos(this.thispage);
+        console.log("created"); */
+    },
+    mounted: function() {
+        /* $("#divtitulo").show('slow');
+        this.divloader0=false;
+        this.divprincipal=true; */
+        console.log("mounted");
+    },
+    computed: {
+        isActived: function() {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function() {
+            if (!this.pagination.to) {
+                return [];
+            }
+
+            var from = this.pagination.current_page - this.offset
+            var from2 = this.pagination.current_page - this.offset
+            if (from < 1) {
+                from = 1;
+            }
+
+            var to = from2 + (this.offset * 2);
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        }
+    },
+    methods: {
+        getDatos: function(ciclo_id) {
+            var url = 'regetlista-cursos?ciclo_id=' + ciclo_id;
+
+            axios.get(url).then(response => {
+                this.registros = response.data;
+                this.verFormulario = true;
+            })
+        },
+ 
+        changeCiclo:function() {
+            this.getDatos(this.ciclo_id);
+        },
+        borrar:function (dato) {
+
+            if(dato.plan_anual == null || dato.plan_anual == ""){
+                toastr.error("No se puede eliminar porque No se tiene Plan Anual Registrado", {timeOut: 20000});
+            }else{
+                swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Desea Eliminar el Plan Anual del Curso",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Confirmar'
+                }).then((result) => {
+                    if (result.value) {
+                        this.delete(dato);
+                    }
+                }).catch(swal.noop);
+            }
+        },
+        delete:function (dato) {
+            var url = 'regetlista-cursos/'+dato.id;
+            axios.delete(url).then(response=>{//eliminamos
+
+                if(response.data.result=='1'){
+                    this.getDatos(this.ciclo_id);
+                    toastr.success(response.data.msj, {timeOut: 20000});//mostramos mensaje
+                }else{
+                    // $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj, {timeOut: 20000});
+                }
+            });
+        },
+
+        edit:function (dato) {
+
+            this.fillobject = dato;
+            this.archivo=null;
+            this.uploadReady = false
+            $("#modalFormulario").modal('show');
+
+            this.$nextTick(() => {
+                this.uploadReady = true;
+                $('#archivo2').focus();
+            });
+
+        },
+
+        getArchivo(event){
+            //Asignamos la imagen a  nuestra data
+
+            if (!event.target.files.length)
+            {
+              this.archivo=null;
+            }
+            else{
+            this.archivo = event.target.files[0];
+            }
+        },
+
+        procesar:function () {
+
+            if(this.archivo == null || this.archivo == ""){
+                toastr.error("Adjunte el Plan Anual del Curso", {timeOut: 20000});
+            }else{
+                swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¿Desea Confirmar el Registro/Actualización del Plan Anual?",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Confirmar'
+                }).then((result) => {
+
+                    if (result.value) {
+                        console.log("aqui llega");
+                        this.update();
+                    }
+
+                }).catch(swal.noop);
+            }
+        },
+
+        procesar:function () {
+            var url='regetlista-cursos/'+this.fillobject.id;
+            $("#btnGuardar").attr('disabled', true);
+            $("#btnClose").attr('disabled', true);
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('archivo', this.archivo);
+
+            data.append('_method', 'PUT');
+
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+            axios.post(url,data,config).then(response=>{
+
+                $("#btnGuardar").removeAttr("disabled");
+                $("#btnClose").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.cerrarForm();
+                    this.getDatos(this.ciclo_id);
+                    this.errors=[];
+                    toastr.success(response.data.msj, {timeOut: 20000});
+                    /* Swal.fire(
+                        'Exito',
+                        response.data.msj,
+                        'success'
+                      ) */
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj, {timeOut: 20000});
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardar").removeAttr("disabled");
+                $("#btnClose").removeAttr("disabled");
+            })
+        },
+
+        cerrarForm: function () {
+            $("#modalFormulario").modal('hide');
+        },
+
+        /*
+        detalles:function(registro, nivel) {
+
+            var url = 'regetlista-alumnos-asignacion?id=' + registro.id;
+            this.headerLista = registro;
+            this.nivel = nivel;
+
+            axios.get(url).then(response => {
+                this.matriculas = response.data;
+                $("#modalFormulario").modal('show');
+            })
+            
+        },
+        cerrarForm: function () {
+            $("#modalFormulario").modal('hide');
+        },
+
+
+        imprimirNomina:function () {
+            //console.log("imprimirMatricula");
+            url = 'reportepdf/nomina-matricula/'+this.seccionSeleccionada;
+            console.log(url);
+            window.open(url, '_blank').focus();
+        }, */
+
+      
+    }
+}).mount('#app')

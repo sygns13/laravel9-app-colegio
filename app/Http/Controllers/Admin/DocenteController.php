@@ -11,6 +11,7 @@ use App\Models\Docente;
 use App\Models\TipoDocumento;
 use App\Models\User;
 use App\Models\CicloEscolar;
+use App\Models\AsignacionCurso;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +36,13 @@ class DocenteController extends Controller
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
         return view('docente.lista-alumnos.index',compact('cicloActivo', 'ciclos'));
+    }
+
+    public function index3()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        return view('docente.lista-cursos.index',compact('cicloActivo', 'ciclos'));
     }
 
     public function index(Request $request)
@@ -169,6 +177,16 @@ class DocenteController extends Controller
         $iduser =Auth::user()->id;
 
         $response = Docente::GetListaAlumnos($iduser, $ciclo_id);
+
+        return $response;
+    }
+
+    public function getListaCrusos(Request $request)
+    {
+        $ciclo_id=$request->ciclo_id;
+        $iduser =Auth::user()->id;
+
+        $response = Docente::getListaCrusos($iduser, $ciclo_id);
 
         return $response;
     }
@@ -873,5 +891,112 @@ class DocenteController extends Controller
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector ,'username'=>$username]);
 
+    }
+
+    public function deletePlanAnual($id){
+
+        $result='1';
+        $msj='1';
+
+        $data = AsignacionCurso::find($id);
+
+        if($data->plan_anual != null && $data->plan_anual != ""){
+            Storage::disk('planAnual')->delete($data->plan_anual);
+            $data->plan_anual = null;
+
+            $data->save();   
+        }
+
+        $msj='Plan Anual del Curso eliminado exitosamente';
+
+        return response()->json(["result"=>$result,'msj'=>$msj]);
+    }
+
+    public function AddPlanAnual(Request $request, $id)
+    {
+        ini_set('memory_limit','256M');
+        ini_set('upload_max_filesize','20M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $archivo="";
+        $file = $request->archivo;
+        $segureFile=0;
+
+        if($request->hasFile('archivo')){
+
+            $nombreArchivo=$request->nombrefile;
+
+            $aux2='planAnual_'.date('d-m-Y').'-'.date('H-i-s');
+            $input2  = array('archivo' => $file) ;
+            $reglas2 = array('archivo' => 'required|file:1,1024000');
+            $validatorF = Validator::make($input2, $reglas2);     
+
+            if ($validatorF->fails())
+            {
+                $segureFile=1;
+                $msj="El archivo adjunto ingresado tiene un tamaño superior a 100 MB, ingrese otro archivo o limpie el formulario";
+                $result='0';
+                $selector='archivo';
+            }
+            else
+            {
+                $nombre2=$file->getClientOriginalName();
+                $extension2=$file->getClientOriginalExtension();
+                $nuevoNombre2=$aux2.".".$extension2;
+                //$subir2=Storage::disk('infoFile')->put($nuevoNombre2, \File::get($file));
+
+                if($extension2=="pdf"|| $extension2=="PDF")
+                {
+
+                    $subir2=false;
+                    $subir2=Storage::disk('planAnual')->put($nuevoNombre2, \File::get($file));
+
+                if($subir2){
+                    $archivo=$nuevoNombre2;
+                }
+                else{
+                    $msj="Error al subir el archivo adjunto, intentelo nuevamente luego";
+                    $segureFile=1;
+                    $result='0';
+                    $selector='archivo';
+                }
+                }
+                else {
+                    $segureFile=1;
+                    $msj="El archivo adjunto ingresado tiene una extensión no válida, ingrese otro archivo o limpie el formulario";
+                    $result='0';
+                    $selector='archivo';
+                }
+            }
+
+        }
+        else{
+            $msj="Debe de adjuntar un archivo adjunto válido, ingrese un archivo";
+            $segureFile=1;
+            $result='0';
+            $selector='archivo';
+        }     
+
+        if($segureFile==1){
+            Storage::disk('planAnual')->delete($archivo);
+        }
+        else{
+
+            $data = AsignacionCurso::find($id);
+
+            if($data->plan_anual != null && $data->plan_anual != ""){
+                Storage::disk('planAnual')->delete($data->plan_anual);
+            }
+
+            $data->plan_anual = $archivo;;
+            $data->save(); 
+
+            $msj='Plan Anual del Curso Actualizado con Éxito';
+        }
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
 }

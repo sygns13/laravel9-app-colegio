@@ -368,6 +368,10 @@ return [
                     'url'  => 'admin/lista-alumnos',
                 ],
                 [
+                    'text' => 'Lista de Cursos',
+                    'url'  => 'admin/lista-cursos',
+                ],
+                [
                     'text' => 'Registro de Asistencia',
                     'url'  => 'admin/asistencia',
                 ],

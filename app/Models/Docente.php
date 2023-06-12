@@ -306,6 +306,61 @@ class Docente extends Model
         return $response;
     }
 
+    public static function getListaCrusos($iduser, $ciclo_id){
+
+        $ciclo = CicloEscolar::find($ciclo_id);
+
+        $data = InstitucionEducativa::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->first();
+
+        $data->ciclo = $ciclo;
+
+        $docente = Docente::where('user_id',$iduser)->where('activo','1')->where('borrado','0')->first();
+
+        if($ciclo && $docente){
+            $niveles = CicloNivel::where('borrado','0')
+            ->where('activo','1')
+            ->where('institucion_educativa_id', $data->id)
+            ->where('ciclo_escolar_id', $ciclo_id)
+            ->orderBy('nivel_id')
+            ->get();
+
+            foreach ($niveles as $key => $nivel) {
+
+                $listaGeneral = DB::select("select cur.nombre as curso, gra.nombre as grado, sec.nombre as seccion, sec.sigla, t.nombre as turno , asig.id, count(mat.id) as matriculados
+                , doc.apellidos as apeDocente, doc.nombre as nomDocente, asig.plan_anual
+                from
+                ciclo_cursos cur
+                inner join ciclo_grados gra on gra.id = cur.ciclo_grado_id and gra.activo='1' and gra.borrado='0'
+                inner join asignacion_cursos asig on cur.id = asig.ciclo_cursos_id and asig.activo='1' and asig.borrado='0'
+                inner join ciclo_seccion sec on gra.id = sec.ciclo_grados_id and sec.id = asig.ciclo_seccion_id and sec.activo='1' and sec.borrado='0'
+                inner join turnos t on t.id = sec.turno_id
+                inner join docentes doc on doc.id = asig.docente_id
+                left join matriculas mat on sec.id = mat.ciclo_seccion_id and mat.activo='1' and mat.borrado='0'
+                where
+                cur.activo='1' and cur.borrado='0'
+                and
+                gra.ciclo_escolar_id = ?
+                and
+                gra.ciclo_niveles_id = ?
+                and
+                asig.docente_id= ?
+                group by sec.id, cur.id
+                order by gra.id, sec.id, cur.orden;", [$ciclo_id, $nivel->id, $docente->id]);
+
+                $nivel->listaGeneral = $listaGeneral;
+
+            }
+
+            $data->niveles = $niveles;
+        }
+        else{
+            $data->niveles = [];
+        }
+        return $data;
+    }
+
 
     public static function GetItemsAsistenciaAlumnos($iduser, $ciclo_id, $dia_semana, $fecha){
 

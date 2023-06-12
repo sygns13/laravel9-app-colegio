@@ -24,6 +24,7 @@ class AsignacionCurso extends Model
                             'docente_id',
                             'activo',
                             'borrado',
+                            'plan_anual',
                         ];
 	protected $guarded = ['id'];
 

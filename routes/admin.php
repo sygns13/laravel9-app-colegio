@@ -51,6 +51,7 @@ Route::middleware([
     Route::get('/asignacion-cursos', [AsignacionCursoController::class, 'index1'])->name('asignacion-cursos');
     Route::get('/asistencia-docente', [DocenteAsistenciaDiaController::class, 'index1'])->name('asistencia-docente');
     Route::get('/lista-alumnos', [DocenteController::class, 'index2'])->name('lista-alumnos');
+    Route::get('/lista-cursos', [DocenteController::class, 'index3'])->name('lista-cursos');
     Route::get('/asistencia', [AsistenciaController::class, 'index1'])->name('asistencia');
     Route::get('/reporte-horarios', [HorarioController::class, 'index2'])->name('reporte-horarios');
     Route::get('/asistencia-sesiones', [AsistenciaController::class, 'index2'])->name('asistencia-sevsiones');
@@ -95,6 +96,9 @@ Route::middleware([
     Route::get('/rematricula/getmatriculaactiva/{alumno_id}',[MatriculaController::class, 'getMatriculaActiva'])->name('getMatriculaActiva');
     Route::get('/regetlista-alumnos',[DocenteController::class, 'getListaAlumnos'])->name('getListaAlumnos');
     Route::get('/regetlista-alumnos-asignacion',[DocenteController::class, 'getListaAlumnosAsignacion'])->name('getListaAlumnosAsignacion');
+    Route::get('/regetlista-cursos',[DocenteController::class, 'getListaCrusos'])->name('getListaCrusos');
+    Route::delete('/regetlista-cursos/{id}',[DocenteController::class, 'deletePlanAnual'])->name('deletePlanAnual');
+    Route::put('/regetlista-cursos/{id}',[DocenteController::class, 'AddPlanAnual'])->name('AddPlanAnual');
 
     Route::get('/generate-pdf', [MatriculaController::class, 'generatePDF']);
     Route::get('/ver-pdf', [ReportPDFController::class, 'verPDF']);
