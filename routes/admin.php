@@ -99,6 +99,7 @@ Route::middleware([
     Route::get('/regetlista-cursos',[DocenteController::class, 'getListaCrusos'])->name('getListaCrusos');
     Route::delete('/regetlista-cursos/{id}',[DocenteController::class, 'deletePlanAnual'])->name('deletePlanAnual');
     Route::put('/regetlista-cursos/{id}',[DocenteController::class, 'AddPlanAnual'])->name('AddPlanAnual');
+    Route::put('/reasistencia-validar/{id}',[AsistenciaController::class, 'validarAsistencia'])->name('validarAsistencia');
 
     Route::get('/generate-pdf', [MatriculaController::class, 'generatePDF']);
     Route::get('/ver-pdf', [ReportPDFController::class, 'verPDF']);

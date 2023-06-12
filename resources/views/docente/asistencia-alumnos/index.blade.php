@@ -22,6 +22,10 @@
     .rows-table{
         font-size: 13px; padding: 5px;
     }
+
+    .rows-table2{
+        font-size: 13px; padding: 5px!important;
+    }
     </style>
 @stop
 

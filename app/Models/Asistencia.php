@@ -31,6 +31,8 @@ class Asistencia extends Model
                             'borrado',
                             'horario_id',
                             'tema',
+                            'alumno_id',
+                            'estado',
                         ];
 	protected $guarded = ['id'];
 

@@ -36,6 +36,8 @@ createApp({
                 'horaFin': '',
                 'diaNumero': '',
                 'nivel': '',
+                'estado': '',
+                'alumno_id': '',
             },
             fillobject: {
                 'type':'C',
@@ -54,6 +56,8 @@ createApp({
                 'ciclo_curso_id': '',
                 'horario_id': '',
                 'tema': '',
+                'name': '',
+                'password': '',
             },
 
             labelBtnSave: 'Registrar',
@@ -71,12 +75,23 @@ createApp({
             keyNivel_bk: null,
             keyCurso_bk: null,
 
+            asistenciaHabilitada: false,
+/* 
+            totalAsistentes: 0,
+            porcenAsistentes: 0,
+
+            totalTardanzas: 0,
+            porcenTardanzas: 0,
+
+            totalFaltas: 0,
+            porcenFaltas: 0,
+ */
         }
     },
     created: function() {
         this.asistencia_dia.fecha = fechaHoy;
         this.asistencia_dia.ciclo_escolar_id = ciclo_escolar_id;
-        this.getDatos(this.thispage);
+        this.getDatos();
     },
     mounted: function() {
         console.log("mounted");
@@ -107,7 +122,79 @@ createApp({
                 from++;
             }
             return pagesArray;
-        }
+        },
+        totalAsistentes: function() {
+            var total = 0;
+
+            this.alumnos.forEach((a) => {
+                if(a.estado_asistencia == '1'){
+                    total++;
+                }
+            });
+            return total;
+        },
+        totalTardanzas: function() {
+            var total = 0;
+
+            this.alumnos.forEach((a) => {
+                if(a.estado_asistencia == '2'){
+                    total++;
+                }
+            });
+            return total;
+        },
+        totalFaltas: function() {
+            var total = 0;
+
+            this.alumnos.forEach((a) => {
+                if(a.estado_asistencia == '0'){
+                    total++;
+                }
+            });
+            return total;
+        },
+        porcenAsistentes: function() {
+            var total = 0;
+
+            if(this.alumnos != null && this.alumnos.length > 0){
+                this.alumnos.forEach((a) => {
+                    if(a.estado_asistencia == '1'){
+                        total++;
+                    }
+                });
+
+                total = (total * 100) / this.alumnos.length;
+            }
+            return total.toFixed(2);
+        },
+        porcenTardanzas: function() {
+            var total = 0;
+
+            if(this.alumnos != null && this.alumnos.length > 0){
+                this.alumnos.forEach((a) => {
+                    if(a.estado_asistencia == '2'){
+                        total++;
+                    }
+                });
+
+                total = (total * 100) / this.alumnos.length;
+            }
+            return total.toFixed(2);
+        },
+        porcenFaltas: function() {
+            var total = 0;
+
+            if(this.alumnos != null && this.alumnos.length > 0){
+                this.alumnos.forEach((a) => {
+                    if(a.estado_asistencia == '0'){
+                        total++;
+                    }
+                });
+
+                total = (total * 100) / this.alumnos.length;
+            }
+            return total.toFixed(2);
+        },
     },
     methods: {
 
@@ -155,7 +242,10 @@ createApp({
             this.asistencia_dia.id = curso.idAsistencia;
 
             if(this.asistencia_dia.id != 0 && curso.asistencia != null){
+                this.asistenciaHabilitada = true;
                 this.asistencia_dia.tema = curso.asistencia.tema;
+                this.asistencia_dia.estado = curso.asistencia.estado;
+                this.asistencia_dia.alumno_id = curso.asistencia.alumno_id;
                 this.asistencia_dia.type = 'U';
             }
 
@@ -181,13 +271,17 @@ createApp({
         },
 
         cerrarFormDiaAsistencia: function () {
+            this.asistenciaHabilitada = false;
             this.tomarAsistencia = false;
             this.keyNivel_bk = null;
             this.keyCurso_bk = null;
             this.cancelFormDiaAsistencia();
         },
         cancelFormDiaAsistencia: function () {
+            this.asistenciaHabilitada = false;
             this.asistencia_dia.tema = '';
+            this.asistencia_dia.estado = '';
+            this.asistencia_dia.alumno_id = '0';
             this.asistencia_dia.type = 'C';
 
             this.$nextTick(() => {
@@ -233,7 +327,7 @@ createApp({
 
                 if(response.data.result=='1'){
                     this.thispage = '1';
-                    this.getDatos(this.thispage);
+                    this.getDatos();
                     this.errors=[];
                     toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
@@ -281,7 +375,7 @@ createApp({
                 this.divloaderEdit=false;
                 
                 if(response.data.result=='1'){
-                    this.getDatos(this.thispage);
+                    this.getDatos();
                     this.errors=[];
                     toastr.success(response.data.msj, {timeOut: 20000});
                 }else{
@@ -296,7 +390,7 @@ createApp({
                 $("#btnCloseDiaAsistencia").removeAttr("disabled");
             })
         },  
-        borrarDiaAsistencia:function (dato) {
+        borrarDiaAsistencia:function () {
             swal.fire({
                 title: '¿Estás seguro?',
                 text: "Desea Eliminar el registro del Día de Asistencia. Nota: Se eliminarán todas las asistencias de Alumnos registradas en este Día",
@@ -308,20 +402,22 @@ createApp({
             }).then((result) => {
 
                 if (result.value) {
-                    this.deleteDiaAsistencia(dato);
+                    this.deleteDiaAsistencia();
                 }
 
             }).catch(swal.noop);
         },
-        deleteDiaAsistencia:function (dato) {
-            var url = 'reasistencia/'+dato.id;
+        deleteDiaAsistencia:function () {
+            var url = 'reasistencia/'+this.asistencia_dia.id;
             axios.delete(url).then(response=>{//eliminamos
 
                 if(response.data.result=='1'){
                     this.thispage = '1';
-                    this.getDatos(this.thispage);
+                    this.getDatos();
                     this.errors=[];
                     toastr.success(response.data.msj, {timeOut: 20000});
+                    this.asistenciaHabilitada = false;
+                    this.cancelFormDiaAsistencia();
                 }else{
                     // $('#'+response.data.selector).focus();
                     toastr.error(response.data.msj, {timeOut: 20000});
@@ -386,7 +482,10 @@ createApp({
             this.asistencia_dia.id = curso.idAsistencia;
 
             if(this.asistencia_dia.id != 0 && curso.asistencia != null){
+                this.asistenciaHabilitada = true;
                 this.asistencia_dia.tema = curso.asistencia.tema;
+                this.asistencia_dia.estado = curso.asistencia.estado;
+                this.asistencia_dia.alumno_id = curso.asistencia.alumno_id;
                 this.asistencia_dia.type = 'U';
             }
 
@@ -526,7 +625,7 @@ createApp({
                 this.divloaderNuevo=false;
 
                 if(response.data.result=='1'){
-                    this.getDatos(this.thispage);
+                    this.getDatos();
                     this.errors=[];
                     this.cerrarForm();
                     toastr.success(response.data.msj, {timeOut: 20000});
@@ -605,7 +704,7 @@ createApp({
                 this.divloaderEdit=false;
                 
                 if(response.data.result=='1'){
-                    this.getDatos(this.thispage);
+                    this.getDatos();
                     this.errors=[];
                     this.cerrarForm();
                     toastr.success(response.data.msj, {timeOut: 20000});
@@ -643,7 +742,7 @@ createApp({
             axios.delete(url).then(response=>{//eliminamos
 
                 if(response.data.result=='1'){
-                    this.getDatos(this.thispage);//listamos
+                    this.getDatos();//listamos
                     toastr.success(response.data.msj, {timeOut: 20000});//mostramos mensaje
                 }else{
                     // $('#'+response.data.selector).focus();
@@ -651,5 +750,87 @@ createApp({
                 }
             });
         },
+
+        validarAsistencia: function () {
+
+            if(this.asistencia_dia.alumno_id == null || this.asistencia_dia.alumno_id == '0' || this.asistencia_dia.alumno_id == ''){
+                toastr.error("Seleccione el Brigradier", {timeOut: 20000});
+            }
+            else{
+                this.cancelForm();
+
+                this.alumnos.forEach((alumno) => {
+                    if(this.asistencia_dia.alumno_id == alumno.alumno_id){
+                        this.fillobject.alumno_id = alumno.alumno_id;
+                        this.fillobject.nombre = alumno.nombres_alu;
+                        this.fillobject.apellidos = alumno.apellido_paterno_alu + ' ' + alumno.apellido_materno_alu;
+                        this.fillobject.tipo_documentos_sigla = alumno.sigla_tipodoc;
+                        this.fillobject.num_documento = alumno.num_documento_alu;
+                    }
+                });
+
+                $("#modalValidar").modal('show');
+                this.$nextTick(() => {
+                    $('#txtname').focus();
+                });
+            } 
+        },
+
+        cerrarForm2: function () {
+            $("#modalValidar").modal('hide');
+            this.cancelForm();
+        },
+
+        procesar2:function () {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "Desea Confirmar la Validación de la Asistencia",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+
+                    this.confirmarValidarAsistencia();
+                    
+                }
+
+            }).catch(swal.noop);
+        },
+
+        confirmarValidarAsistencia: function () {
+
+            var url="reasistencia-validar/"+this.asistencia_dia.id;
+            $("#btnGuardar2").attr("disabled");
+            $("#btnClose2").attr("disabled");
+            this.divloaderEdit=true;
+
+            axios.put(url, this.fillobject).then(response=>{
+
+
+                $("#btnGuardar2").removeAttr("disabled");
+                $("#btnClose2").removeAttr("disabled");
+                this.divloaderEdit=false;
+                
+                if(response.data.result=='1'){
+                    this.getDatos();
+                    this.errors=[];
+                    toastr.success(response.data.msj, {timeOut: 20000});
+                    this.cerrarForm2();
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj, {timeOut: 20000});
+                }
+
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardar2").removeAttr("disabled");
+                $("#btnClose2").removeAttr("disabled");
+            })
+        }, 
     }
 }).mount('#app')

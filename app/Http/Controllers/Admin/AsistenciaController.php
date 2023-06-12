@@ -19,9 +19,13 @@ use App\Models\CicloGrado;
 use App\Models\Docente;
 use App\Models\Turno;
 use App\Models\Hora;
+use App\Models\Alumno;
+use App\Models\User;
 
 use DateTime;
 use stdClass;
+
+use Illuminate\Support\Facades\Hash;
 
 class AsistenciaController extends Controller
 {
@@ -210,8 +214,10 @@ class AsistenciaController extends Controller
             $registro->ciclo_escolar_id=$ciclo_escolar_id;
             $registro->ciclo_curso_id=$ciclo_curso_id;
             $registro->activo='1';
+            $registro->estado='0';
             $registro->borrado='0';
             $registro->horario_id=$horario_id;
+            $registro->alumno_id='0';
             $registro->tema=$tema;
 
             $registro->save();
@@ -370,4 +376,102 @@ class AsistenciaController extends Controller
 
         return response()->json(["result"=>$result,'msj'=>$msj]);
     }
+
+    public function validarAsistencia(Request $request, $id)
+    {
+
+        $alumno_id=$request->alumno_id;
+        $name=$request->name;
+        $password=$request->password;
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+
+        $input1  = array('alumno_id' => $alumno_id);
+        $reglas1 = array('alumno_id' => 'required');
+
+        $input2  = array('name' => $name);
+        $reglas2 = array('name' => 'required');
+
+        $input3  = array('password' => $password);
+        $reglas3 = array('password' => 'required');
+
+
+        $validator1 = Validator::make($input1, $reglas1);
+        $validator2 = Validator::make($input2, $reglas2);
+        $validator3 = Validator::make($input3, $reglas3);
+
+
+        if ($validator1->fails())
+        {
+            $result='0';
+            $msj='Seleccione el Brigradier';
+            $selector='cbualumno_id';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator2->fails())
+        {
+            $result='0';
+            $msj='Debe de Ingresar el Username';
+            $selector='txtname';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator3->fails())
+        {
+            $result='0';
+            $msj='Debe de Ingresar el Password';
+            $selector='txtpassword';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $alumno = Alumno::find($alumno_id);
+
+        if(!$alumno){
+            $result='0';
+            $msj='El Alumno enviado no es Correcto';
+            $selector='cbualumno_id';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $user = User::find($alumno->user_id);
+
+        if(!$user){
+            $result='0';
+            $msj='El Alumno no cuenta con un usario customizado';
+            $selector='user';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if (
+            $user->name != $name ||
+            !Hash::check($password, $user->password)
+        ) {
+            $result='0';
+            $msj='El Usuario y/o Contraseña ingresado no son válidos';
+            $selector='txtname';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+                    
+
+            $registro = Asistencia::find($id);
+            $registro->alumno_id=$alumno_id;
+            $registro->estado='1';
+
+            $registro->save();
+
+            $msj='Asistencia Validada Exitosamente';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector, 'asistencia_id' => $registro->id]);
+    }
+
 }

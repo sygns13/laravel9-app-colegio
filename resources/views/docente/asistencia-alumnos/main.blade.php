@@ -174,6 +174,12 @@
                       Horario: @{{asistencia_dia.horaIni}} - @{{asistencia_dia.horaFin}}
                       <br> <br> 
                       Asistencia del Curso: @{{asistencia_dia.curso}} 
+                      <br>
+                      Estado de la Asistencia: <b>
+                      <template v-if="asistencia_dia.estado == '0'">Registrado</template>
+                      <template v-if="asistencia_dia.estado == '1'">Validado</template>
+                      <template v-if="asistencia_dia.id == 0 && asistencia_dia.estado == ''">No Registrado</template>
+                      </b>
                     </h3>
 
                     <a style="float: right; padding: all; color: black;" type="button" class="btn btn-default btn-sm" href="#" @click.prevent="cerrarFormDiaAsistencia"><i class="fa fa-reply-all" aria-hidden="true"></i> 
@@ -190,7 +196,10 @@
                               <input type="text" class="form-control" id="txtsiglas" placeholder="Tema de la clase" v-model="asistencia_dia.tema" maxlength="250">
                             </div>
                             <div class="col-sm-2">
-                              <button id="btnSaveZero" type="button" class="btn btn-primary" @click="procesarDiaAsistencia()"><span class="fas fa-save"></span> Registrar</button>
+                              <button v-if="!asistenciaHabilitada" id="btnSaveZero" type="button" class="btn btn-primary" @click="procesarDiaAsistencia()"><span class="fas fa-save"></span> Registrar</button>
+
+                              <button v-if="asistenciaHabilitada" id="btnSaveZero1" type="button" class="btn btn-primary" @click="procesarDiaAsistencia()" style="margin-right: 10px;"><span class="fas fa-edit"></span></button>
+                              <button v-if="asistenciaHabilitada" id="btnSaveZero2" type="button" class="btn btn-danger" @click="borrarDiaAsistencia()"><span class="fas fa-trash"></span></button>
                             </div>
                           </div>
                         </div>
@@ -199,62 +208,141 @@
 
 
 
+                      <div v-if="asistenciaHabilitada">
 
+                        <div class="table-responsive p-0" v-if="alumnos.length > 0">
 
-                      <div class="table-responsive p-0" v-if="alumnos.length > 0">
-                          <table class="table table-bordered table-sm">
-                            <thead>
-                              <tr>
-                                  <th class="titles-table" style="font-size:14px; width: 5%; vertical-align: middle; text-align: center;">N°</th>
-                                  <th class="titles-table" style="font-size:14px; width: 20%; vertical-align: middle; text-align: center;">DNI o Código del Estudiante</th>
-                                  <th class="titles-table" style="font-size:14px; width: 35%; vertical-align: middle; text-align: center;">Apellidos y Nombres</th>
-                                  <th class="titles-table" style="font-size:14px; width: 10%; vertical-align: middle; text-align: center;">Sexo</th>  
-                                  <th class="titles-table" style="font-size:14px; width: 15%; vertical-align: middle; text-align: center;">Asistencia</th>
-                                  <th class="titles-table" style="font-size:14px; width: 15%; vertical-align: middle; text-align: center;">Acción</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr v-for="(registro, indexS) in alumnos">
-                                  <td class="rows-table">@{{indexS+1}}.</td>
-                                  <td class="rows-table">@{{registro.sigla_tipodoc}}: @{{registro.num_documento_alu}}</td>
-                                  <td class="rows-table">@{{registro.apellido_paterno_alu}} @{{registro.apellido_materno_alu}}, @{{registro.nombres_alu}}</td>
-                                  <td class="rows-table">@{{registro.genero_alu}}</td>
-                                  <td class="rows-table" style="text-align: center;">
-                                    <small style="font-size: 13px;" class="badge badge-success" v-if="registro.estado_asistencia=='1'">Asistió</small>
-                                    <small style="font-size: 13px;" class="badge badge-warning" v-if="registro.estado_asistencia=='2'">Tardanza</small>
-                                    <small style="font-size: 13px;" class="badge badge-danger" v-if="registro.estado_asistencia=='0'">Falta</small>
-                                  </td>
-                                  <td class="rows-table">
-                                    <template v-if="registro.id_asistencia == '0'">
-                                      <center>
-                                        <x-adminlte-button @click="nuevo('1', registro)" id="btnNuevo1" class="bg-gradient btn-sm" type="button" label="A" theme="success"
-                                        data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" style="margin-right: 5px;"/>
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-9">
 
-                                        <x-adminlte-button @click="nuevo('2', registro)" id="btnNuevo2" class="bg-gradient btn-sm" type="button" label="T" theme="warning"
-                                        data-placement="top" data-toggle="tooltip" title="Registrar Tardanza" style="margin-right: 5px;"/>
+                                <table class="table table-bordered" style="max-width: 200px;">
+                                  <thead>
+                                    <tr>
+                                      <th colspan="2" class="titles-table" style="font-size:14px; padding:2px; vertical-align: middle; text-align: center;">Leyenda</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td class="rows-table2"><span class="badge bg-success" style="font-size:100%">A</span></td>
+                                      <td class="rows-table2">Asistencia</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="rows-table2"><span class="badge bg-warning" style="font-size:100%">T</span></td>
+                                      <td class="rows-table2">Tardanza</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="rows-table2"><span class="badge bg-danger" style="font-size:100%">F</span></td>
+                                      <td class="rows-table2">Falta</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
 
-                                        <x-adminlte-button @click="nuevo('0', registro)" id="btnNuevo3" class="bg-gradient btn-sm" type="button" label="F" theme="danger"
-                                        data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" />
-                                        </center>
-                                    </template>
-                                    <template v-else>
-                                      <center>
-                                        <x-adminlte-button @click="edit('1', registro)" id="btnNuevo1" class="bg-gradient btn-sm" type="button" label="A" theme="success"
-                                        data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" style="margin-right: 5px;"/>
+                                <table class="table table-bordered table-sm">
+                                  <thead>
+                                    <tr>
+                                        <th class="titles-table" style="font-size:14px; width: 5%; vertical-align: middle; text-align: center;">N°</th>
+                                        <th class="titles-table" style="font-size:14px; width: 20%; vertical-align: middle; text-align: center;">DNI o Código del Estudiante</th>
+                                        <th class="titles-table" style="font-size:14px; width: 35%; vertical-align: middle; text-align: center;">Apellidos y Nombres</th>
+                                        <th class="titles-table" style="font-size:14px; width: 10%; vertical-align: middle; text-align: center;">Sexo</th>  
+                                        <th class="titles-table" style="font-size:14px; width: 15%; vertical-align: middle; text-align: center;">Asistencia</th>
+                                        <th class="titles-table" style="font-size:14px; width: 15%; vertical-align: middle; text-align: center;">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(registro, indexS) in alumnos">
+                                        <td class="rows-table">@{{indexS+1}}.</td>
+                                        <td class="rows-table">@{{registro.sigla_tipodoc}}: @{{registro.num_documento_alu}}</td>
+                                        <td class="rows-table">@{{registro.apellido_paterno_alu}} @{{registro.apellido_materno_alu}}, @{{registro.nombres_alu}}</td>
+                                        <td class="rows-table">@{{registro.genero_alu}}</td>
+                                        <td class="rows-table" style="text-align: center;">
+                                          <small style="font-size: 13px;" class="badge badge-success" v-if="registro.estado_asistencia=='1'">Asistió</small>
+                                          <small style="font-size: 13px;" class="badge badge-warning" v-if="registro.estado_asistencia=='2'">Tardanza</small>
+                                          <small style="font-size: 13px;" class="badge badge-danger" v-if="registro.estado_asistencia=='0'">Falta</small>
+                                        </td>
+                                        <td class="rows-table">
+                                          <template v-if="asistencia_dia.estado == '0'">
+                                          
+                                            <template v-if="registro.id_asistencia == '0'">
+                                              <center>
+                                                <x-adminlte-button @click="nuevo('1', registro)" id="btnNuevo1" class="bg-gradient btn-sm" type="button" label="A" theme="success"
+                                                data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" style="margin-right: 5px;"/>
 
-                                        <x-adminlte-button @click="edit('2', registro)" id="btnNuevo2" class="bg-gradient btn-sm" type="button" label="T" theme="warning"
-                                        data-placement="top" data-toggle="tooltip" title="Registrar Tardanza" style="margin-right: 5px;"/>
+                                                <x-adminlte-button @click="nuevo('2', registro)" id="btnNuevo2" class="bg-gradient btn-sm" type="button" label="T" theme="warning"
+                                                data-placement="top" data-toggle="tooltip" title="Registrar Tardanza" style="margin-right: 5px;"/>
 
-                                        <x-adminlte-button @click="edit('0', registro)" id="btnNuevo3" class="bg-gradient btn-sm" type="button" label="F" theme="danger"
-                                        data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" />
-                                        </center>
-                                    </template>
-                                </td>
-                              </tr>
-                          </table>
-                      </div>
-                      <div v-else>
-                          <h6>No existen alumnos matriculados en esta sección</h6>
+                                                <x-adminlte-button @click="nuevo('0', registro)" id="btnNuevo3" class="bg-gradient btn-sm" type="button" label="F" theme="danger"
+                                                data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" />
+                                                </center>
+                                            </template>
+                                            <template v-else>
+                                              <center>
+                                                <x-adminlte-button @click="edit('1', registro)" id="btnNuevo1" class="bg-gradient btn-sm" type="button" label="A" theme="success"
+                                                data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" style="margin-right: 5px;"/>
+
+                                                <x-adminlte-button @click="edit('2', registro)" id="btnNuevo2" class="bg-gradient btn-sm" type="button" label="T" theme="warning"
+                                                data-placement="top" data-toggle="tooltip" title="Registrar Tardanza" style="margin-right: 5px;"/>
+
+                                                <x-adminlte-button @click="edit('0', registro)" id="btnNuevo3" class="bg-gradient btn-sm" type="button" label="F" theme="danger"
+                                                data-placement="top" data-toggle="tooltip" title="Registrar Asistencia" />
+                                                </center>
+                                            </template>
+                                          </template>
+                                      </td>
+                                    </tr>
+                                </table>
+                              </div>
+                              <div class="col-md-3">
+                                <h3 style="font-weight: bold;">Validación</h3>
+
+                                <div class="form-group row">
+                                  <label for="cbualumno_id" class="col-sm-12 col-form-label">Seleccione Brigadier</label>
+                                  <div class="col-sm-12">
+                                    <select class="form-control" style="width: 100%;" v-model="asistencia_dia.alumno_id" id="cbualumno_id">
+                                      <option value="0" disabled>Seleccione ...</option>
+                                      <template v-for="(registro, indexS) in alumnos">
+                                        <option  v-bind:value="registro.alumno_id">@{{registro.apellido_paterno_alu}} @{{registro.apellido_materno_alu}}, @{{registro.nombres_alu}}</option> 
+                                      </template>
+                                    </select>
+                                  </div>
+                                </div>
+
+                                <button v-if="asistencia_dia.estado == '0'" id="btnValidar" type="button" class="btn btn-primary" @click="validarAsistencia()"><span class="fas fa-check"></span> Validar</button>
+
+                                <table class="table table-bordered" style="margin-top:20px;">
+                                  <thead>
+                                    <tr>
+                                      <th class="titles-table" style="font-size:14px; padding:5px; vertical-align: middle; text-align: center;">Condición</th>
+                                      <th class="titles-table" style="font-size:14px; padding:5px; vertical-align: middle; text-align: center;">Cantidad</th>
+                                      <th class="titles-table" style="font-size:14px; padding:5px; vertical-align: middle; text-align: center;">Porcentaje</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td class="rows-table"> <span class="badge bg-success" style="font-size:100%">A</span> Asistentes</td>
+                                      <td class="rows-table">@{{totalAsistentes}}</td>
+                                      <td class="rows-table">@{{porcenAsistentes}} %</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="rows-table"> <span class="badge bg-warning" style="font-size:100%">T</span> Tardanzas</td>
+                                      <td class="rows-table">@{{totalTardanzas}}</td>
+                                      <td class="rows-table">@{{porcenTardanzas}} %</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="rows-table"> <span class="badge bg-danger" style="font-size:100%">F</span> Faltas</td>
+                                      <td class="rows-table">@{{totalFaltas}}</td>
+                                      <td class="rows-table">@{{porcenFaltas}} %</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div v-else>
+                            <h6>No existen alumnos matriculados en esta sección</h6>
+                        </div>
                       </div>
                     </div>
                   </form>
