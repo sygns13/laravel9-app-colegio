@@ -18,6 +18,8 @@ use App\Models\Horario;
 use DateTime;
 use DateInterval;
 
+use DB;
+
 class Asistencia extends Model
 {
     use HasFactory;
@@ -179,6 +181,239 @@ class Asistencia extends Model
                                     ->orderBy('sigla')
                                     ->orderBy('nombre')
                                     ->get();
+                
+                foreach ($seccions as $keyS => $valueS) {
+                    $horarios = Horario::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->where('ciclo_seccion_id', $valueS->id)
+                                    ->where('ciclo_escolar_id', $cicloActivo->id)
+                                    ->orderBy('dia_semana')
+                                    ->orderBy('hora_ini')
+                                    ->get();
+
+                    foreach ($horarios as $key => $valueH) {
+                        $curso = CicloCurso::find($valueH->ciclo_curso_id);
+
+                        if(isset($curso)){
+                            $asignacion = AsignacionCurso::where('borrado','0')
+                                ->where('activo','1')
+                                ->where('ciclo_seccion_id', $valueS->id)
+                                ->where('ciclo_cursos_id', $curso->id)
+                                ->first();
+
+                        if($asignacion){
+                            $docente = Docente::find($asignacion->docente_id);
+                            $asignacion->docente = $docente;
+                        }
+                            $curso->asignacion = $asignacion;
+                        }
+
+                        $valueH->curso = $curso;
+
+                        $fechaBuscar = $fecha;
+                        switch ($valueH->dia_semana) {
+                            case '1':
+                                $fechaBuscar = $dia1;
+                            break;
+                            case '2':
+                                $fechaBuscar = $dia2;
+                            break;
+                            case '3':
+                                $fechaBuscar = $dia3;
+                            break;
+                            case '4':
+                                $fechaBuscar = $dia4;
+                            break;
+                            case '5':
+                                $fechaBuscar = $dia5;
+                            break;
+                        
+                        }
+
+                        $asistencia = Asistencia::where('horario_id', $valueH->id)
+                                                ->where('fecha', $fechaBuscar)
+                                                ->first();
+                        
+                        if($asistencia){
+                            $cantAsistencia = AsistenciaAlumno::where('asistencia_id', $asistencia->id)->where('activo','1')->where('borrado','0')->where('estado', '!=','0')->count();
+                            $asistencia->cantAsistencia = $cantAsistencia;
+                        }
+
+                        $valueH->asistencia = $asistencia;
+                    }
+                    
+                    $valueS->horarios = $horarios;
+                }
+
+                $valueG->seccions = $seccions;
+            }
+
+            $value->grados = $grados;
+            }
+
+            $data->niveles = $niveles;
+        }
+        
+
+        return $data;
+    }
+
+    public static function GetDataAsistenciaDocByCicloAndFecha($ciclo_seccion_id, $fecha, $iduser){
+
+        $user = User::find($iduser);
+
+        $docente = Docente::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+
+        $cicloActivo = CicloEscolar::find($ciclo_seccion_id);
+
+        $data = InstitucionEducativa::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->first();
+
+        //$date = DateTimeImmutable::createFromFormat('Y-m-d', $fecha);
+        $date1 = new DateTime($fecha);
+        $date2 = new DateTime($fecha);
+        $date3 = new DateTime($fecha);
+        $date4 = new DateTime($fecha);
+        $date5 = new DateTime($fecha);
+
+        $tipodia=date("N",$date1->getTimestamp());
+
+        $dia1 =$fecha;
+        $dia2 =$fecha;
+        $dia3 =$fecha;
+        $dia4 =$fecha;
+        $dia5 =$fecha;
+
+        switch ($tipodia) {
+            case '1':
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->add(new DateInterval('P1D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->add(new DateInterval('P2D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P3D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P4D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '2':
+                $date1->sub(new DateInterval('P1D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->add(new DateInterval('P1D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P2D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P3D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '3':
+                $date1->sub(new DateInterval('P2D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P1D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P1D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P2D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '4':
+                $date1->sub(new DateInterval('P3D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P2D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P1D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P1D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '5':
+                $date1->sub(new DateInterval('P4D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P3D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P2D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P1D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '6':
+                $date1->sub(new DateInterval('P5D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P4D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P3D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P2D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->sub(new DateInterval('P1D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '7':
+                $date1->sub(new DateInterval('P6D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P5D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P4D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P3D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->sub(new DateInterval('P2D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        $data->dia1 = $dia1;
+        $data->dia2 = $dia2;
+        $data->dia3 = $dia3;
+        $data->dia4 = $dia4;
+        $data->dia5 = $dia5;
+
+        if($cicloActivo){
+            $niveles = CicloNivel::where('borrado','0')
+            ->where('activo','1')
+            ->where('institucion_educativa_id', $data->id)
+            ->where('ciclo_escolar_id', $cicloActivo->id)
+            ->orderBy('nivel_id')
+            ->get();
+
+            foreach ($niveles as $key => $value) {
+
+                $grados = DB::select("select cg.id, cg.orden, cg.nombre, cg.ciclo_niveles_id, ac.docente_id from asignacion_cursos as ac
+                inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
+                inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                where ac.docente_id = ?
+                and cg.ciclo_escolar_id = ?
+                and cg.ciclo_niveles_id = ?
+                group by cg.orden
+                order by cg.orden;", [$docente->id, $cicloActivo->id, $value->id]);
+
+
+
+            $nivel = Niveles::find($value->nivel_id);
+
+            $value->siglas = $nivel->siglas;
+
+            foreach ($grados as $keyG => $valueG) {
+                $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id from asignacion_cursos as ac
+                        inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
+                        where ac.docente_id = ?
+                        and cs.ciclo_escolar_id = ?
+                        and cs.ciclo_grados_id = ?
+                        group by cs.id
+                        order by cs.id;", [$docente->id, $cicloActivo->id, $valueG->id]);
+
                 
                 foreach ($seccions as $keyS => $valueS) {
                     $horarios = Horario::where('borrado','0')

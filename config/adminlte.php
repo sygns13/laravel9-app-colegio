@@ -407,7 +407,19 @@ return [
                 [
                     'text' => 'Asistencia por Sesiones',
                     'url'  => 'admin/asistencia-sesiones',
+                    'can'  => ['admin', 'director']
                 ],
+                [
+                    'text' => 'Asistencia por Sesiones',
+                    'url'  => 'admin/asistencia-doc-sesiones',
+                    'can'  => ['docente']
+                ],
+                [
+                    'text' => 'Asistencia por Sesiones',
+                    'url'  => 'admin/asistencia-alu-sesiones',
+                    'can'  => ['alumno']
+                ],
+
                 [
                     'text' => 'Reporte de Calificaciones',
                     'url'  => 'admin/calificaciones',

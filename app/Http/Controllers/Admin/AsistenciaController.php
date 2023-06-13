@@ -50,6 +50,13 @@ class AsistenciaController extends Controller
         return view('reporte.asistenciasesion.index',compact('cicloActivo', 'ciclos'));
     }
 
+    public function index3()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        return view('docente.asistenciasesion.index',compact('cicloActivo', 'ciclos'));
+    }
+
 
     public function index(Request $request)
     {
@@ -79,6 +86,25 @@ class AsistenciaController extends Controller
         $fecha = $request->fecha;
 
         $registros = Asistencia::GetDataAsistenciaByCicloAndFecha($ciclo_id, $fecha);
+
+        $turnos = Turno::all();
+        $horas = Hora::where('borrado','0')->where('activo','1')->get();
+        
+        return [ 
+                'registros' => $registros,
+                'turnos' => $turnos,
+                'horas' => $horas,
+               ];
+    }
+
+    public function indexDocAsistenciaSesion(Request $request)
+    {
+
+        $iduser =Auth::user()->id;
+        $ciclo_id = $request->ciclo_id;
+        $fecha = $request->fecha;
+
+        $registros = Asistencia::GetDataAsistenciaDocByCicloAndFecha($ciclo_id, $fecha, $iduser);
 
         $turnos = Turno::all();
         $horas = Hora::where('borrado','0')->where('activo','1')->get();
