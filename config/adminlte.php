@@ -391,7 +391,19 @@ return [
                 [
                     'text' => 'Horarios por Sección',
                     'url'  => 'admin/reporte-horarios',
+                    'can'  => ['admin', 'director']
                 ],
+                [
+                    'text' => 'Horarios por Sección',
+                    'url'  => 'admin/reporte-doc-horarios',
+                    'can'  => ['docente']
+                ],
+                [
+                    'text' => 'Horarios por Sección',
+                    'url'  => 'admin/reporte-alu-horarios',
+                    'can'  => ['alumno']
+                ],
+
                 [
                     'text' => 'Asistencia por Sesiones',
                     'url'  => 'admin/asistencia-sesiones',

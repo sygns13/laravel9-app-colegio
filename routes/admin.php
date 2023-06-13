@@ -58,6 +58,7 @@ Route::middleware([
     Route::get('/calificacion', [NotaController::class, 'index1'])->name('index1');
     Route::get('/calificaciones', [NotaController::class, 'index2'])->name('index2');
     Route::get('/conclusion-matriculas', [NotaController::class, 'index3'])->name('index3');
+    Route::get('/reporte-doc-horarios', [HorarioController::class, 'index3'])->name('indexDocHorario');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -86,6 +87,7 @@ Route::middleware([
     Route::get('/calificacionesget', [NotaController::class, 'indexCalificacion'])->name('calificacionesget');
     Route::get('/redocentemain', [DocenteController::class, 'indexDocenteMain'])->name('redocentemain');
     Route::get('/redocentedocumentos', [DocenteController::class, 'getDocumentos'])->name('redocentedocumentos');
+    Route::get('/rehorariogetdoc', [HorarioController::class, 'indexDocHorario'])->name('indexDocHorario');
 
 
     Route::get('/redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
