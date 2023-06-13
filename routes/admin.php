@@ -133,4 +133,6 @@ Route::middleware([
     Route::post('/redocentes/generateusername', [DocenteController::class, 'generateusername'])->name('generateusername');
     Route::post('/redocenteUpdate/FotoPerfil', [DocenteController::class, 'updatefotoperfil'])->name('updatefotoperfil');
 
+    Route::post('/regfecha-calificacion', [NotaController::class, 'programarFecha'])->name('programarFecha');
+
 });

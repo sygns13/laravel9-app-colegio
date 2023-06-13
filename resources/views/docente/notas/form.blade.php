@@ -17,6 +17,10 @@
                     <b>Indicador:</b> @{{indicadorNombre}}
                     <br>
                     <b>Periodo:</b> @{{periodoNombre}}
+                    <template v-if="fechaProgramadaActiva == '1'">
+                    <br>
+                    @{{fechaProgramada}}
+                    </template>
                   </h3>
                 </div>
 

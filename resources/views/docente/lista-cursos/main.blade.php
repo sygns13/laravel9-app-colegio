@@ -47,13 +47,14 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="titles-table" style="width: 5%">#</th>
-                                                        <th class="titles-table" style="width: 23%">Curso</th>
-                                                        <th class="titles-table" style="width: 18%">Grado</th>
+                                                        <th class="titles-table" style="width: 21%">Curso</th>
+                                                        <th class="titles-table" style="width: 17%">Grado</th>
                                                         <th class="titles-table" style="width: 13%">Seccion</th>
                                                         <th class="titles-table" style="width: 8%">Turno</th>
                                                         <th class="titles-table" style="width: 8%">N° Matriculados</th>
-                                                        <th class="titles-table" style="width: 10%">Plan Anual</th>
-                                                        <th class="titles-table" style="width: 15%">Gestión del Plan Anual</th>
+                                                        <th class="titles-table" style="width: 8%">Plan Anual</th>
+                                                        <th class="titles-table" style="width: 10%">Gestion del Plan</th>
+                                                        <th class="titles-table" style="width: 10%">Gestión de Curso</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -78,6 +79,12 @@
 
                                                             <x-adminlte-button @click="borrar(registro)" id="btnBorrar" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
                                                             data-placement="top" data-toggle="tooltip" title="Eliminar Plan de Curso" />
+                                                            </center>
+                                                        </td>
+                                                        <td class="rows-table">
+                                                            <center>
+                                                                <x-adminlte-button @click="edit2(indexN, indexR)" id="btnProgramar" class="bg-gradient btn-sm" type="button" label="Programar" theme="success" icon="fas fa-cogs"
+                                                                data-placement="top" data-toggle="tooltip" title="Programar Calificaciones del Curso" />
                                                             </center>
                                                         </td>
                                                     </tr>

@@ -23,7 +23,7 @@ createApp({
             verFormulario: false,
 
             headerLista: {},
-            nivel: {},
+            //nivel: {},
 
             fillobject: {},
 
@@ -31,6 +31,18 @@ createApp({
 
             archivo : null,
             uploadReady: true,
+
+            programar: false,
+
+            fecha: null,
+            hora: null,
+
+            fillIndicador: {},
+            labelProgramar: '',
+            type: null,
+
+            indexNivel: null,
+            indexProgramacion: null,
 
 
         }
@@ -80,6 +92,11 @@ createApp({
             axios.get(url).then(response => {
                 this.registros = response.data;
                 this.verFormulario = true;
+
+                if(this.indexNivel != null && this.indexProgramacion != null){
+                    console.log("aca");
+                    this.edit2(this.indexNivel, this.indexProgramacion);
+                }
             })
         },
  
@@ -134,7 +151,7 @@ createApp({
 
         },
 
-        getArchivo(event){
+        getArchivo:function (event){
             //Asignamos la imagen a  nuestra data
 
             if (!event.target.files.length)
@@ -240,6 +257,143 @@ createApp({
             console.log(url);
             window.open(url, '_blank').focus();
         }, */
+
+        edit2:function (indexN, indexP) {
+
+            this.indexNivel = indexN;
+            this.indexProgramacion = indexP;
+
+            this.fillobject = this.registros.niveles[indexN].listaGeneral[indexP];
+            this.$nextTick(() => {
+                this.programar = true;
+                $("#modalFormularioProgramar").modal('show');
+            });
+
+        },
+
+        programarCalificacion:function (dato, type) {
+
+            this.fecha = null;
+            this.hora = null;
+            this.type = type;
+            this.labelProgramar = '';
+
+            this.fillIndicador = dato;
+
+            if(this.registros.ciclo.opcion == 1){
+                this.labelProgramar = 'Primer Trimestre';
+            }
+            if(this.registros.ciclo.opcion == 2){
+                this.labelProgramar = 'Primer Bimestre';
+            }
+
+            switch (type) {
+                case 1:
+                    this.fecha = this.fillIndicador.fecha_programada1;
+                    this.hora = this.fillIndicador.hora_programada1;
+                break;
+                case 2:
+                    this.fecha = this.fillIndicador.fecha_programada2;
+                    this.hora = this.fillIndicador.hora_programada2;
+                break;
+                case 3:
+                    this.fecha = this.fillIndicador.fecha_programada3;
+                    this.hora = this.fillIndicador.hora_programada3;
+                break;
+                case 4:
+                    this.fecha = this.fillIndicador.fecha_programada4;
+                    this.hora = this.fillIndicador.hora_programada4;
+                break;
+            
+                default:
+                    this.fecha = null;
+                    this.hora = null;
+                break;
+            }
+
+            this.$nextTick(() => {
+                this.programar = true;
+                $("#modalProgramar").modal('show');
+                console.log("mensaje");
+            });
+
+
+        },
+
+        cerrarFormP: function () {
+            $("#modalProgramar").modal('hide');
+        },
+
+        procesarProgramacion:function () {
+
+            if(this.fecha == null || this.fecha == ""){
+                toastr.error("Ingrese la fecha de Programación", {timeOut: 20000});
+            }else{
+                if(this.hora == null || this.hora == ""){
+                    toastr.error("Ingrese la hora de Programación", {timeOut: 20000});
+                } else {
+                    swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¿Desea Confirmar la Programación de la Fecha de Calificación Ingresada?",
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Confirmar'
+                    }).then((result) => {
+    
+                        if (result.value) {
+                            console.log("aqui llega");
+                            this.upsertFecha();
+                        }
+    
+                    }).catch(swal.noop);
+                }
+            }
+        },
+
+        upsertFecha:function () {
+            var url='regfecha-calificacion';
+            $("#btnGuardarP").attr('disabled', true);
+            $("#btnCloseP").attr('disabled', true);
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('fecha', this.fecha);
+            data.append('hora', this.hora);
+            data.append('type', this.type);
+            data.append('indicator', this.fillIndicador.id);
+
+            axios.post(url,data).then(response=>{
+
+                $("#btnGuardarP").removeAttr("disabled");
+                $("#btnCloseP").removeAttr("disabled");
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    $("#modalFormularioProgramar").modal('hide');
+                    this.cerrarFormP();
+                    this.cerrarForm();
+                    this.getDatos(this.ciclo_id);
+                    this.errors=[];
+                    toastr.success(response.data.msj, {timeOut: 20000});
+                    /* Swal.fire(
+                        'Exito',
+                        response.data.msj,
+                        'success'
+                      ) */
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj, {timeOut: 20000});
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                $("#btnGuardarP").removeAttr("disabled");
+                $("#btnCloseP").removeAttr("disabled");
+            })
+        },
 
       
     }

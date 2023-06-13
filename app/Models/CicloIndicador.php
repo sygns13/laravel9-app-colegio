@@ -17,6 +17,14 @@ class CicloIndicador extends Model
                             'activo',
                             'borrado',
                             'ciclo_escolar_id',
+                            'fecha_programada1',
+                            'hora_programada1',
+                            'fecha_programada2',
+                            'hora_programada2',
+                            'fecha_programada3',
+                            'hora_programada3',
+                            'fecha_programada4',
+                            'hora_programada4',
                         ];
 	protected $guarded = ['id'];
 

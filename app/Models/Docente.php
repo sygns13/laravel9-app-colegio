@@ -329,7 +329,7 @@ class Docente extends Model
             foreach ($niveles as $key => $nivel) {
 
                 $listaGeneral = DB::select("select cur.nombre as curso, gra.nombre as grado, sec.nombre as seccion, sec.sigla, t.nombre as turno , asig.id, count(mat.id) as matriculados
-                , doc.apellidos as apeDocente, doc.nombre as nomDocente, asig.plan_anual
+                , doc.apellidos as apeDocente, doc.nombre as nomDocente, asig.plan_anual, cur.id as idcurso
                 from
                 ciclo_cursos cur
                 inner join ciclo_grados gra on gra.id = cur.ciclo_grado_id and gra.activo='1' and gra.borrado='0'
@@ -348,6 +348,30 @@ class Docente extends Model
                 asig.docente_id= ?
                 group by sec.id, cur.id
                 order by gra.id, sec.id, cur.orden;", [$ciclo_id, $nivel->id, $docente->id]);
+
+                foreach ($listaGeneral as $keyC => $curso) {
+
+                    $competencias = CicloCompetencia::where('ciclo_cursos_id', $curso->idcurso)
+                                                        ->where('ciclo_escolar_id', $ciclo_id)
+                                                        ->where('borrado','0')
+                                                        ->where('activo','1')
+                                                        ->orderBy('orden')
+                                                        ->orderBy('nombre')
+                                                        ->get();
+
+                        foreach ($competencias as $keyCom => $competencia) {
+                            $indicadores = CicloIndicador::where('ciclo_competencia_id', $competencia->id)
+                                                    ->where('ciclo_escolar_id', $ciclo_id)
+                                                    ->where('borrado','0')
+                                                    ->where('activo','1')
+                                                    ->orderBy('orden')
+                                                    ->orderBy('nombre')
+                                                    ->get();
+
+                            $competencia->indicadores = $indicadores;
+                            }
+                    $curso->competencias = $competencias;
+                }
 
                 $nivel->listaGeneral = $listaGeneral;
 
@@ -689,6 +713,27 @@ class Docente extends Model
                                                                 ->orderBy('nombre')
                                                                 ->get();
 
+                                            foreach ($indicadores as $keyInd => $indicador) {
+                                                $hoy = date('Y-m-d');
+                                                $indicador->activo1 = '0';
+                                                $indicador->activo2 = '0';
+                                                $indicador->activo3 = '0';
+                                                $indicador->activo4 = '0';
+
+                                                if($indicador->fecha_programada1 == $hoy){
+                                                    $indicador->activo1 = '1';
+                                                }
+                                                if($indicador->fecha_programada2 == $hoy){
+                                                    $indicador->activo2 = '1';
+                                                }
+                                                if($indicador->fecha_programada3 == $hoy){
+                                                    $indicador->activo3 = '1';
+                                                }
+                                                if($indicador->fecha_programada4 == $hoy){
+                                                    $indicador->activo4 = '1';
+                                                }
+                                            }
+
                                         $competencia->indicadores = $indicadores;
                                         }
                                 $curso->competencias = $competencias;
@@ -904,6 +949,27 @@ class Docente extends Model
                                                                         ->orderBy('orden')
                                                                         ->orderBy('nombre')
                                                                         ->get();
+
+                                                foreach ($indicadores as $keyInd => $indicador) {
+                                                    $hoy = date('Y-m-d');
+                                                    $indicador->activo1 = '0';
+                                                    $indicador->activo2 = '0';
+                                                    $indicador->activo3 = '0';
+                                                    $indicador->activo4 = '0';
+    
+                                                    if($indicador->fecha_programada1 == $hoy){
+                                                        $indicador->activo1 = '1';
+                                                    }
+                                                    if($indicador->fecha_programada2 == $hoy){
+                                                        $indicador->activo2 = '1';
+                                                    }
+                                                    if($indicador->fecha_programada3 == $hoy){
+                                                        $indicador->activo3 = '1';
+                                                    }
+                                                    if($indicador->fecha_programada4 == $hoy){
+                                                        $indicador->activo4 = '1';
+                                                    }
+                                                }
 
                                                 $competencia->indicadores = $indicadores;
                                             }

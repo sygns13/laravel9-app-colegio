@@ -23,6 +23,8 @@ class Nota extends Model
                             'periodo',
                             'activo',
                             'borrado',
+                            'fecha_programada',
+                            'hora_programada',
                         ];
 	protected $guarded = ['id'];
 

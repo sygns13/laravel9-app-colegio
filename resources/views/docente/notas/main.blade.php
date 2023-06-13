@@ -281,45 +281,95 @@
                                 <template v-if="indicador.notaPrimerPeriodo != null">@{{indicador.notaPrimerPeriodo.nota_num}}
                                   <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada1 != undefined && indicador.fecha_programada1 != null && indicador.fecha_programada1 != '' && indicador.activo1 == '1'">
+                                    <a href="javascript:void(null);" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada1}} @{{indicador.hora_programada1}}</span></a> 
+                                  </div>
                                 </template>
                                 <template v-else><div style="color:red;">Pendiente 
                                   <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 1, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                   class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada1 != undefined && indicador.fecha_programada1 != null && indicador.fecha_programada1 != '' && indicador.activo1 == '1'">
+                                    <a href="javascript:void(null);"  @click="nuevo(registro, indicador, 1, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada1}} @{{indicador.hora_programada1}}</span></a> 
+                                  </div>
                                 </template>
+
+                                <div style="margin-top:5px;" v-if="indicador.fecha_programada1 != undefined && indicador.fecha_programada1 != null && indicador.fecha_programada1 != '' && indicador.activo1 == '0'">
+                                  <span class="badge bg-warning" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada1}} @{{indicador.hora_programada1}}</span> 
+                                </div>
                               </td>
 
                               <td class="rows-table" style="text-align: center;">
                                 <template v-if="indicador.notaSegundoPeriodo != null">@{{indicador.notaSegundoPeriodo.nota_num}}
-                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaSegundoPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada2 != undefined && indicador.fecha_programada2 != null && indicador.fecha_programada2 != '' && indicador.activo2 == '1'">
+                                    <a href="javascript:void(null);" @click="edit(registro, indicador, indicador.notaSegundoPeriodo, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada2}} @{{indicador.hora_programada2}}</span></a> 
+                                  </div>
                                 </template>
                                 <template v-else><div style="color:red;">Pendiente
                                   <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 2, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                   class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada2 != undefined && indicador.fecha_programada2 != null && indicador.fecha_programada2 != '' && indicador.activo2 == '1'">
+                                    <a href="javascript:void(null);"  @click="nuevo(registro, indicador, 2, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada2}} @{{indicador.hora_programada2}}</span></a> 
+                                  </div>
                                 </template>
+
+                                <div style="margin-top:5px;" v-if="indicador.fecha_programada2 != undefined && indicador.fecha_programada2 != null && indicador.fecha_programada2 != '' && indicador.activo2 == '0'">
+                                  <span class="badge bg-warning" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada2}} @{{indicador.hora_programada2}}</span> 
+                                </div>
                               </td>
 
                               <td class="rows-table" style="text-align: center;">
                                 <template v-if="indicador.notaTercerPeriodo != null">@{{indicador.notaTercerPeriodo.nota_num}}
-                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
+                                  <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaTercerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada3 != undefined && indicador.fecha_programada3 != null && indicador.fecha_programada3 != '' && indicador.activo3 == '1'">
+                                    <a href="javascript:void(null);" @click="edit(registro, indicador, indicador.notaTercerPeriodo, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada3}} @{{indicador.hora_programada3}}</span></a> 
+                                  </div>
+
                                 </template>
                                 <template v-else><div style="color:red;">Pendiente
                                   <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 3, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                   class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada3 != undefined && indicador.fecha_programada3 != null && indicador.fecha_programada3 != '' && indicador.activo3 == '1'">
+                                    <a href="javascript:void(null);"  @click="nuevo(registro, indicador, 3, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada3}} @{{indicador.hora_programada3}}</span></a> 
+                                  </div>
                                 </template>
+
+                                <div style="margin-top:5px;" v-if="indicador.fecha_programada3 != undefined && indicador.fecha_programada3 != null && indicador.fecha_programada3 != '' && indicador.activo3 == '0'">
+                                  <span class="badge bg-warning" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada3}} @{{indicador.hora_programada3}}</span> 
+                                </div>
                               </td>
 
                               @if($cicloActivo->opcion == 2)
                                 <td class="rows-table" style="text-align: center;">
                                   <template v-if="indicador.notaCuartoPeriodo != null">@{{indicador.notaCuartoPeriodo.nota_num}}
-                                    <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaPrimerPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
+                                    <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Editar Calificación" @click="edit(registro, indicador, indicador.notaCuartoPeriodo, {{$cicloActivo->opcion}})" id="btnEditI" 
                                   class="bg-gradient" type="button" label="" theme="warning" icon="fas fa-pen"/>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada4 != undefined && indicador.fecha_programada4 != null && indicador.fecha_programada4 != '' && indicador.activo4 == '1'">
+                                    <a href="javascript:void(null);" @click="edit(registro, indicador, indicador.notaCuartoPeriodo, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada4}} @{{indicador.hora_programada4}}</span></a> 
+                                  </div>
+
                                   </template>
                                   <template v-else><div style="color:red;">Pendiente
                                     <x-adminlte-button v-if="alumnoCurso.estado == '1' && alumnoCurso.estado_grado_alu == '1'" data-placement="top" data-toggle="tooltip" title="Registrar Calificación" @click="nuevo(registro, indicador, 4, {{$cicloActivo->opcion}})" id="btnNuevoI" 
                                     class="bg-gradient" type="button" label="" theme="primary" icon="fas fa-pen"/></div>
+
+                                    <div style="margin-top:5px;" v-if="indicador.fecha_programada4 != undefined && indicador.fecha_programada4 != null && indicador.fecha_programada4 != '' && indicador.activo4 == '1'">
+                                      <a href="javascript:void(null);"  @click="nuevo(registro, indicador, 3, {{$cicloActivo->opcion}})"><span  class="badge bg-success" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada4}} @{{indicador.hora_programada4}}</span></a> 
+                                    </div>
                                   </template>
+
+                                  <div style="margin-top:5px;" v-if="indicador.fecha_programada4 != undefined && indicador.fecha_programada4 != null && indicador.fecha_programada4 != '' && indicador.activo4 == '0'">
+                                    <span class="badge bg-warning" style="font-size:100%; color: #ffffff!important;">@{{indicador.fecha_programada4}} @{{indicador.hora_programada4}}</span> 
+                                  </div>
                                 </td>
                               @endif
 

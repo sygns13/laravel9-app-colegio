@@ -20,6 +20,7 @@ use App\Models\Docente;
 use App\Models\Turno;
 use App\Models\Hora;
 use App\Models\Nota;
+use App\Models\CicloIndicador;
 
 use DateTime;
 use stdClass;
@@ -436,4 +437,110 @@ class NotaController extends Controller
     {
         //
     }
+
+    public function programarFecha(Request $request)
+    {
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $fecha=$request->fecha;
+        $hora=$request->hora;
+        $type=$request->type;
+        $idIndicador=$request->indicator;
+
+        $input1  = array('fecha' => $fecha);
+        $reglas1 = array('fecha' => 'required');
+
+        $input2  = array('hora' => $hora);
+        $reglas2 = array('hora' => 'required');
+
+        $input3  = array('type' => $type);
+        $reglas3 = array('type' => 'required');
+
+        $input4  = array('idIndicador' => $idIndicador);
+        $reglas4 = array('idIndicador' => 'required');
+
+
+        $validator1 = Validator::make($input1, $reglas1);
+        $validator2 = Validator::make($input2, $reglas2);
+        $validator3 = Validator::make($input3, $reglas3);
+        $validator4 = Validator::make($input4, $reglas4);
+
+        if ($validator1->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar la fecha';
+            $selector='txtfecha';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator2->fails())
+        {
+            $result='0';
+            $msj='Debe ingresar la hora';
+            $selector='txthora';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator3->fails())
+        {
+            $result='0';
+            $msj='Proceso no Válido por Type';
+            $selector='type';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator4->fails())
+        {
+            $result='0';
+            $msj='Proceso no Válido por Indicador';
+            $selector='Indicador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $cicloIndicador = CicloIndicador::find($idIndicador);
+
+        if(!$cicloIndicador){
+            $result='0';
+            $msj='Proceso no Válido por Indicador';
+            $selector='Indicador';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        switch ($type) {
+            case '1':
+                $cicloIndicador->fecha_programada1 = $fecha;
+                $cicloIndicador->hora_programada1 = $hora;
+            break;
+            case '2':
+                $cicloIndicador->fecha_programada2 = $fecha;
+                $cicloIndicador->hora_programada2 = $hora;
+            break;
+            case '3':
+                $cicloIndicador->fecha_programada3 = $fecha;
+                $cicloIndicador->hora_programada3 = $hora;
+            break;
+            case '4':
+                $cicloIndicador->fecha_programada4 = $fecha;
+                $cicloIndicador->hora_programada4 = $hora;
+            break;
+            
+            default:
+                # code...
+            break;
+        }
+
+        $cicloIndicador->save();
+
+        $msj='La Programación se ha registrado con éxito';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+    }
+
 }
