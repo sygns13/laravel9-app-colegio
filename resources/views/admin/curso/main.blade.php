@@ -65,12 +65,14 @@
                                                                         <x-adminlte-button @click="competencia(curso)" id="btnCompetencia" class="bg-gradient btn-sm" type="button" label="" theme="primary" icon="fas fa-list"
                                                                         data-placement="top" data-toggle="tooltip" title="Gestionar Competencias"/>
 
-                                                                        <x-adminlte-button @click="edit(curso)" id="btnEdit" class="bg-gradient btn-sm" type="button" label="" theme="warning" icon="fas fa-edit"
-                                                                        data-placement="top" data-toggle="tooltip" title="Editar registro" style="margin-right: 5px; margin-left: 5px;"/>
+                                                                        @if($isAdmin)
+                                                                            <x-adminlte-button @click="edit(curso)" id="btnEdit" class="bg-gradient btn-sm" type="button" label="" theme="warning" icon="fas fa-edit"
+                                                                            data-placement="top" data-toggle="tooltip" title="Editar registro" style="margin-right: 5px; margin-left: 5px;"/>
 
-                                                                        <x-adminlte-button @click="borrar(curso)" id="btnBorrar" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
-                                                                        data-placement="top" data-toggle="tooltip" title="Eliminar registro"/>
-                                                                        </center>
+                                                                            <x-adminlte-button @click="borrar(curso)" id="btnBorrar" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
+                                                                            data-placement="top" data-toggle="tooltip" title="Eliminar registro"/>
+                                                                            </center>
+                                                                        @endif
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -80,8 +82,9 @@
                                                         <h6>No se tiene registro de Cursos registradas en el grado</h6>
                                                     </div>
 
-                                                    <x-adminlte-button @click="nuevo(grado.id)" id="btnNuevo" class="bg-gradient" type="button" label="Nuevo Curso" theme="primary" icon="fas fa-plus-square"/>
-
+                                                    @if($isAdmin)
+                                                        <x-adminlte-button @click="nuevo(grado.id)" id="btnNuevo" class="bg-gradient" type="button" label="Nuevo Curso" theme="primary" icon="fas fa-plus-square"/>
+                                                    @endif
                                                 </div>
                                             </template>
                                         </div>
@@ -104,7 +107,9 @@
                 <form>
                   <div class="card-body">
 
-                    <x-adminlte-button @click="nuevoC(fillobject.id)" id="btnNuevoC" class="bg-gradient" type="button" label="Nueva Competencia" theme="primary" icon="fas fa-plus-square" style="margin-right: 5px;"/>
+                    @if($isAdmin)
+                        <x-adminlte-button @click="nuevoC(fillobject.id)" id="btnNuevoC" class="bg-gradient" type="button" label="Nueva Competencia" theme="primary" icon="fas fa-plus-square" style="margin-right: 5px;"/>
+                    @endif
 
                     <x-adminlte-button @click="cerrarComeptencia" id="btnCloseC" class="bg-gradient" type="button" label="Cerrar Competencias" theme="danger" icon="fas fa-times" style="margin-left: 5px;"/>
 
@@ -129,12 +134,14 @@
                                         <x-adminlte-button @click="indicador(competencia)" id="btnIndicador" class="bg-gradient btn-sm" type="button" label="" theme="primary" icon="fas fa-list"
                                         data-placement="top" data-toggle="tooltip" title="Gestionar Indicadores" style="margin-right: 5px;"/>
 
-                                        <x-adminlte-button @click="editC(competencia)" id="btnEditC" class="bg-gradient btn-sm" type="button" label="" theme="warning" icon="fas fa-edit"
-                                        data-placement="top" data-toggle="tooltip" title="Editar registro"/>
+                                        @if($isAdmin)
+                                            <x-adminlte-button @click="editC(competencia)" id="btnEditC" class="bg-gradient btn-sm" type="button" label="" theme="warning" icon="fas fa-edit"
+                                            data-placement="top" data-toggle="tooltip" title="Editar registro"/>
 
-                                        <x-adminlte-button @click="borrarC(competencia)" id="btnBorrarC" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
-                                        data-placement="top" data-toggle="tooltip" title="Eliminar registro" style="margin-left: 5px;"/>
-                                        </center>
+                                            <x-adminlte-button @click="borrarC(competencia)" id="btnBorrarC" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
+                                            data-placement="top" data-toggle="tooltip" title="Eliminar registro" style="margin-left: 5px;"/>
+                                            </center>
+                                        @endif
                                     </td>
                                 </tr>
                             </tbody>

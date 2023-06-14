@@ -264,30 +264,34 @@ return [
             'url'         => 'admin/legajo',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',
-            'can'         => ['admin']
+            'can'         => ['admin', 'director']
         ],
 
         [
             'text'        => 'Tablas Base',
             'icon'        => 'fas fa-fw fa-server',
             'icon_color'  => 'white',
-            'can'         => ['admin', 'director'],
+            'can'         => ['admin', 'director', 'docente'],
             'submenu' => [
                 [
                     'text' => 'Datos de la IE',
                     'url'  => 'admin/ie',
+                    'can'  => ['admin', 'director'],
                 ],
                 [
                     'text' => 'Gestión de Secciones',
                     'url'  => 'admin/secciones',
+                    'can'  => ['admin', 'director'],
                 ],
                 [
                     'text' => 'Gestión de Cursos',
                     'url'  => 'admin/cursos',
+                    'can'  => ['admin', 'director', 'docente'],
                 ],
                 [
                     'text' => 'Gestión de Horas',
                     'url'  => 'admin/horas',
+                    'can'  => ['admin', 'director'],
                 ],
 
             ]
