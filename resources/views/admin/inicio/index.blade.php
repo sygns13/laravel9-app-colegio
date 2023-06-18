@@ -28,6 +28,8 @@
         <script src="{{ asset('js/core/admin/inicio.js')}}"  type="text/javascript"></script>
     @elseif($user->tipo_user_id == 3)
         <script src="{{ asset('js/core/admin/inicioDocente.js')}}"  type="text/javascript"></script>
+    @elseif($user->tipo_user_id == 4)
+        <script src="{{ asset('js/core/admin/inicioAlumno.js')}}"  type="text/javascript"></script>
     @endif
 
     <script>

@@ -20,6 +20,9 @@ use App\Models\CicloGrado;
 use App\Models\CicloNivel;
 use App\Models\Turno;
 use App\Models\ApoderadoMatricula;
+use App\Models\AsignacionCurso;
+
+use DB;
 
 class Alumno extends Model
 {
@@ -271,5 +274,57 @@ class Alumno extends Model
         
 
         return $data;
+    }
+
+    public static function GetDataById($alumno_id){
+
+        $data = Alumno::findOrFail($alumno_id);
+
+        $matriculas = Matricula::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->orderBy('id')
+                                ->get();
+
+        foreach ($matriculas as $keyC => $matricula) {
+            $ciclo = CicloEscolar::find($matricula->ciclo_escolar_id);
+            $matricula->ciclo = $ciclo;
+
+            $cicloSeccion = CicloSeccion::find($matricula->ciclo_seccion_id);
+            $matricula->cicloSeccion = $cicloSeccion;
+
+            $turno = Turno::find($cicloSeccion->turno_id);
+            $matricula->turno = $turno;
+
+            $cicloGrado = CicloGrado::find($cicloSeccion->ciclo_grados_id);
+            $matricula->cicloGrado = $cicloGrado;
+
+            $cicloNivel = CicloNivel::find($cicloGrado->ciclo_niveles_id);
+            $matricula->cicloNivel = $cicloNivel;
+
+            $apoderadoMatricula = ApoderadoMatricula::where('alumno_id', $data->id)
+                                                    ->where('matricula_id', $matricula->id)
+                                                    ->where('activo', 1)
+                                                    ->where('borrado', 0)
+                                                    ->first();
+            $matricula->apoderadoMatricula = $apoderadoMatricula;
+
+            $asignacionCursos = DB::table('asignacion_cursos')
+                                ->join('ciclo_seccion', 'ciclo_seccion.id', '=', 'asignacion_cursos.ciclo_seccion_id')
+                                ->join('ciclo_cursos', 'ciclo_cursos.id', '=', 'asignacion_cursos.ciclo_cursos_id')
+                                ->where('ciclo_seccion.id', $cicloSeccion->id)
+                                ->select('asignacion_cursos.id',
+                                            'ciclo_cursos.id as idCicloCurso',
+                                            'ciclo_cursos.nombre as curso',
+                                            'ciclo_cursos.orden as ordenCurso')
+                                            ->get();
+
+            $matricula->cursos = $asignacionCursos;
+        }
+
+        $data->matriculas = $matriculas;
+
+        return $data;
+
     }
 }

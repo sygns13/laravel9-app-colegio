@@ -90,6 +90,7 @@ Route::middleware([
     Route::get('/redocentedocumentos', [DocenteController::class, 'getDocumentos'])->name('redocentedocumentos');
     Route::get('/rehorariogetdoc', [HorarioController::class, 'indexDocHorario'])->name('indexDocHorario');
     Route::get('/asistenciasesiongetdoc', [AsistenciaController::class, 'indexDocAsistenciaSesion'])->name('asistenciasesiongetdoc');
+    Route::get('/realumnomain', [AlumnoController::class, 'indexAlumnoMain'])->name('indexAlumnoMain');
 
 
     Route::get('/redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
@@ -130,13 +131,15 @@ Route::middleware([
     Route::post('/matricula/expulsar', [MatriculaController::class, 'expulsar'])->name('expulsar');
     Route::post('/matricula/cancelconclusion', [MatriculaController::class, 'cancelconclusion'])->name('cancelconclusion');
 
-    Route::post('/relegajoUpdate/FotoPerfil', [LegajoController::class, 'updatefotoperfil'])->name('updatefotoperfil');
+    Route::post('/relegajoUpdate/FotoPerfil', [LegajoController::class, 'updatefotoperfil'])->name('relegajoUpdate');
     Route::post('/relegajoUpdate/FotoMision', [LegajoController::class, 'updatefotomision'])->name('updatefotomision');
     Route::post('/relegajoUpdate/FotoVision', [LegajoController::class, 'updatefotovision'])->name('updatefotovision');
 
     Route::post('/redocentes/generateusername', [DocenteController::class, 'generateusername'])->name('generateusername');
-    Route::post('/redocenteUpdate/FotoPerfil', [DocenteController::class, 'updatefotoperfil'])->name('updatefotoperfil');
+    Route::post('/redocenteUpdate/FotoPerfil', [DocenteController::class, 'updatefotoperfil'])->name('redocenteUpdate');
 
     Route::post('/regfecha-calificacion', [NotaController::class, 'programarFecha'])->name('programarFecha');
+
+    Route::post('/realumnoUpdate/FotoPerfil', [AlumnoController::class, 'updatefotoperfil'])->name('realumnoUpdate');
 
 });

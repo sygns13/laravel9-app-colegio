@@ -4,4 +4,7 @@
 @elseif($user->tipo_user_id == 3)
     @include('admin.inicio.docente')
     @include('admin.inicio.form')
+@elseif($user->tipo_user_id == 4)
+    @include('admin.inicio.alumno')
+    @include('admin.inicio.form')
 @endif
