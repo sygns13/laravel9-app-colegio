@@ -38,6 +38,7 @@ Route::middleware([
 
     Route::get('/', [HomeController::class, 'index'])->name('admin');
     Route::get('/legajo', [HomeController::class, 'legajo'])->name('legajo');
+    Route::get('/legajo-fichas', [HomeController::class, 'legajoFichas'])->name('legajo-fichas');
     Route::get('/ie', [InstitucionEducativaController::class, 'index1'])->name('ie');
     Route::get('/secciones', [SeccionesController::class, 'index1'])->name('secciones');
     Route::get('/cursos', [CursoController::class, 'index1'])->name('cursos');
@@ -60,6 +61,8 @@ Route::middleware([
     Route::get('/conclusion-matriculas', [NotaController::class, 'index3'])->name('index3');
     Route::get('/reporte-doc-horarios', [HorarioController::class, 'index3'])->name('indexDocHorario');
     Route::get('/asistencia-doc-sesiones', [AsistenciaController::class, 'index3'])->name('asistencia-doc-sesiones');
+
+    Route::get('/legajo-nuevo', [HomeController::class, 'legajoNuevo2'])->name('legajo-nuevo');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -105,6 +108,7 @@ Route::middleware([
     Route::delete('/regetlista-cursos/{id}',[DocenteController::class, 'deletePlanAnual'])->name('deletePlanAnual');
     Route::put('/regetlista-cursos/{id}',[DocenteController::class, 'AddPlanAnual'])->name('AddPlanAnual');
     Route::put('/reasistencia-validar/{id}',[AsistenciaController::class, 'validarAsistencia'])->name('validarAsistencia');
+    Route::put('/relegajo-update-director/{id}',[LegajoController::class, 'updateDirector'])->name('relegajo-update-director');
 
     Route::get('/generate-pdf', [MatriculaController::class, 'generatePDF']);
     Route::get('/ver-pdf', [ReportPDFController::class, 'verPDF']);

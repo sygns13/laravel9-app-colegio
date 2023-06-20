@@ -48,4 +48,39 @@ class HomeController extends Controller
 
         return view('admin.legajo.index');
     }
+
+    public function legajoNuevo2(){
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        if($user->activo != '1'){
+            Auth::guard('web')->logout();
+
+          return redirect()->back()
+            ->withErrors([
+                'email' => 'usuarioActiv'
+            ]);
+        }
+
+
+        return view('admin.legajo-nuevo2.index',compact('user'));
+    }
+
+    public function legajoFichas(){
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        if($user->activo != '1'){
+            Auth::guard('web')->logout();
+
+          return redirect()->back()
+            ->withErrors([
+                'email' => 'usuarioActiv'
+            ]);
+        }
+
+        return view('admin.legajo-fichas.index',compact('user'));
+    }
 }

@@ -259,12 +259,32 @@ return [
             'can'         => ['admin', 'director', 'docente', 'alumno']
         ],
 
-        [
+       /*  [
             'text'        => 'Legajo',
             'url'         => 'admin/legajo',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',
             'can'         => ['admin', 'director']
+        ], */
+
+        [
+            'text'        => 'Legajo',
+            'icon'        => 'fas fa-fw fa-folder',
+            'icon_color'  => 'white',
+            'can'         => ['admin', 'director', 'docente', 'alumno'],
+            'submenu' => [
+                [
+                    'text' => 'Registrar Nueva',
+                    'url'  => 'admin/legajo-nuevo',
+                    //'can'  => ['admin', 'director'],
+                ],
+                [
+                    'text' => 'Ver fichas',
+                    'url'  => 'admin/legajo-fichas',
+                    //'can'  => ['admin', 'director'],
+                ],
+
+            ]
         ],
 
         [
@@ -390,7 +410,7 @@ return [
             'text'        => 'Reportes Generales',
             'icon'        => 'fas fa-fw fa-print',
             'icon_color'  => 'white',
-            'can'         => ['admin', 'director', 'docente'],
+            'can'         => ['admin', 'director', 'docente', 'alumno'],
             'submenu' => [
                 [
                     'text' => 'Horarios por Sección',

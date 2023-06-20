@@ -24,6 +24,7 @@ class Director extends Model
                             'user_id',
                             'activo',
                             'borrado',
+                            'telefono',
                         ];
 	protected $guarded = ['id'];
 }
