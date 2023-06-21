@@ -14,6 +14,7 @@ use App\Models\CicloCurso;
 use App\Models\Niveles;
 use App\Models\AsistenciaAlumno;
 use App\Models\Horario;
+use App\Models\Docente;
 
 use DateTime;
 use DateInterval;
@@ -191,7 +192,7 @@ class Asistencia extends Model
                                     ->orderBy('hora_ini')
                                     ->get();
 
-                    foreach ($horarios as $key => $valueH) {
+                    foreach ($horarios as $keyH => $valueH) {
                         $curso = CicloCurso::find($valueH->ciclo_curso_id);
 
                         if(isset($curso)){
@@ -394,6 +395,8 @@ class Asistencia extends Model
                 inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
                 inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
                 where ac.docente_id = ?
+                and ac.activo='1'
+                and ac.borrado='0'
                 and cg.ciclo_escolar_id = ?
                 and cg.ciclo_niveles_id = ?
                 group by cg.orden
@@ -406,78 +409,84 @@ class Asistencia extends Model
             $value->siglas = $nivel->siglas;
 
             foreach ($grados as $keyG => $valueG) {
-                $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id from asignacion_cursos as ac
+                $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id, cs.turno_id from asignacion_cursos as ac
                         inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
                         where ac.docente_id = ?
+                        and ac.activo='1'
+                        and ac.borrado='0'
                         and cs.ciclo_escolar_id = ?
                         and cs.ciclo_grados_id = ?
                         group by cs.id
                         order by cs.id;", [$docente->id, $cicloActivo->id, $valueG->id]);
 
                 
-                foreach ($seccions as $keyS => $valueS) {
-                    $horarios = Horario::where('borrado','0')
+                    foreach ($seccions as $keyS => $valueS) {
+                        $horarios = Horario::where('borrado','0')
+                                        ->where('activo','1')
+                                        ->where('ciclo_seccion_id', $valueS->id)
+                                        ->where('ciclo_escolar_id', $cicloActivo->id)
+                                        ->orderBy('dia_semana')
+                                        ->orderBy('hora_ini')
+                                        ->get();
+
+                        foreach ($horarios as $keyH => $valueH) {
+                            $curso = CicloCurso::find($valueH->ciclo_curso_id);
+
+                            if($curso){
+                                $asignacion = AsignacionCurso::where('borrado','0')
                                     ->where('activo','1')
                                     ->where('ciclo_seccion_id', $valueS->id)
-                                    ->where('ciclo_escolar_id', $cicloActivo->id)
-                                    ->orderBy('dia_semana')
-                                    ->orderBy('hora_ini')
-                                    ->get();
+                                    ->where('ciclo_cursos_id', $curso->id)
+                                    ->first();
 
-                    foreach ($horarios as $key => $valueH) {
-                        $curso = CicloCurso::find($valueH->ciclo_curso_id);
+                                if($asignacion){
+                                    $docenteA = Docente::find($asignacion->docente_id);
+                                    $asignacion->docente = $docenteA;
+                                }
 
-                        if(isset($curso)){
-                            $asignacion = AsignacionCurso::where('borrado','0')
-                                ->where('activo','1')
-                                ->where('ciclo_seccion_id', $valueS->id)
-                                ->where('ciclo_cursos_id', $curso->id)
-                                ->first();
+                                $curso->asignacion = $asignacion;
+                            }
+    
+                            $valueH->curso = $curso;
+    
+                            $fechaBuscar = $fecha;
+                            switch ($valueH->dia_semana) {
+                                case '1':
+                                    $fechaBuscar = $dia1;
+                                break;
+                                case '2':
+                                    $fechaBuscar = $dia2;
+                                break;
+                                case '3':
+                                    $fechaBuscar = $dia3;
+                                break;
+                                case '4':
+                                    $fechaBuscar = $dia4;
+                                break;
+                                case '5':
+                                    $fechaBuscar = $dia5;
+                                break;
+                            
+                            }
+    
+                            $asistencia = Asistencia::where('horario_id', $valueH->id)
+                                                    ->where('fecha', $fechaBuscar)
+                                                    ->first();
+                            
+                            if($asistencia){
+                                $cantAsistencia = AsistenciaAlumno::where('asistencia_id', $asistencia->id)->where('activo','1')->where('borrado','0')->where('estado', '!=','0')->count();
+                                $asistencia->cantAsistencia = $cantAsistencia;
+                            }
 
-                        if($asignacion){
-                            $docente = Docente::find($asignacion->docente_id);
-                            $asignacion->docente = $docente;
+                             
+    
+                            $valueH->asistencia = $asistencia;
+                           
                         }
-                            $curso->asignacion = $asignacion;
-                        }
-
-                        $valueH->curso = $curso;
-
-                        $fechaBuscar = $fecha;
-                        switch ($valueH->dia_semana) {
-                            case '1':
-                                $fechaBuscar = $dia1;
-                            break;
-                            case '2':
-                                $fechaBuscar = $dia2;
-                            break;
-                            case '3':
-                                $fechaBuscar = $dia3;
-                            break;
-                            case '4':
-                                $fechaBuscar = $dia4;
-                            break;
-                            case '5':
-                                $fechaBuscar = $dia5;
-                            break;
-                        
-                        }
-
-                        $asistencia = Asistencia::where('horario_id', $valueH->id)
-                                                ->where('fecha', $fechaBuscar)
-                                                ->first();
-                        
-                        if($asistencia){
-                            $cantAsistencia = AsistenciaAlumno::where('asistencia_id', $asistencia->id)->where('activo','1')->where('borrado','0')->where('estado', '!=','0')->count();
-                            $asistencia->cantAsistencia = $cantAsistencia;
-                        }
-
-                        $valueH->asistencia = $asistencia;
+                         
+                        $valueS->horarios = $horarios;
                     }
-                    
-                    $valueS->horarios = $horarios;
-                }
-
+                
                 $valueG->seccions = $seccions;
             }
 

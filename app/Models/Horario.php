@@ -213,7 +213,7 @@ class Horario extends Model
             $value->siglas = $nivel->siglas;
 
             foreach ($grados as $keyG => $valueG) {
-                $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id from asignacion_cursos as ac
+                $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id, cs.turno_id from asignacion_cursos as ac
                         inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
                         where ac.docente_id = ?
                         and cs.ciclo_escolar_id = ?

@@ -138,10 +138,10 @@ createApp({
 
         cambioSeccion: function() {
 
-            this.turnoSeleccionado = '0';
+            //this.turnoSeleccionado = '0';
             this.cambioTurno();
 
-          /*   this.registros.niveles.forEach(nivel => {
+            this.registros.niveles.forEach(nivel => {
                 nivel.grados.forEach(grado => {
                     grado.seccions.forEach(seccion => {
                         if(seccion.id==this.seccionSeleccionada){
@@ -150,7 +150,7 @@ createApp({
                         }
                     });
                 });
-            });    */
+            });   
         },
 
         cambioTurno: function() {

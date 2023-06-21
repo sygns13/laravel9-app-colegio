@@ -97,7 +97,7 @@
                                                                                     <th style="width: 18%">Martes @{{registrosFilters.dia2_ok}}</th>
                                                                                     <th style="width: 18%">Miercoles @{{registrosFilters.dia3_ok}}</th>
                                                                                     <th style="width: 18%">Jueves @{{registrosFilters.dia4_ok}}</th>
-                                                                                    <th style="width: 18%">Viernes @{{registrosFilters.dia5_ok}}</th>
+                                                                                    <th style="width: 18%">Viernes @{{registrosFilters.dia5_ok}} oro @{{turnoSeleccionado}}</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>

@@ -179,16 +179,18 @@ createApp({
                     grado.seccions.forEach(seccion => {
                         if(seccion.id==this.seccionSeleccionada){
                             this.turnoSeleccionado = seccion.turno_id;
-                            this.cambioTurno();
+                            console.log("turnoSeleccionado");
+                            console.log(this.turnoSeleccionado);
+                            this.generarHorario();
                         }
                     });
                 });
             });   
         },
 
-        cambioTurno: function() {
+        /* cambioTurno: function() {
             this.generarHorario();
-        },
+        }, */
 
         generarHorario: function() {
 
