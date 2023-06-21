@@ -18,9 +18,12 @@ use App\Models\CicloEscolar;
 use App\Models\CicloSeccion;
 use App\Models\CicloGrado;
 use App\Models\CicloNivel;
+use App\Models\CicloCurso;
 use App\Models\Turno;
 use App\Models\ApoderadoMatricula;
 use App\Models\AsignacionCurso;
+use App\Models\CicloCompetencia;
+use App\Models\CicloIndicador;
 
 use DB;
 
@@ -85,6 +88,353 @@ class Alumno extends Model
                             'old_estado_grado',
                         ];
 	protected $guarded = ['id'];
+
+    public static function GetListaCursos($alumno_id, $ciclo_id){
+
+        $data = Matricula::where('ciclo_escolar_id', $ciclo_id)
+                                ->where('alumno_id', $alumno_id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->first();
+
+        $alumno = Alumno::find($alumno_id);
+        $tipoDocumento = TipoDocumento::find($alumno->tipo_documento_id);
+        $alumno->tipoDocumento = $tipoDocumento;
+
+        $ciclo = CicloEscolar::find($ciclo_id);
+
+        if(!$data){
+            return null;
+        }
+
+        $ciclo_seccion = CicloSeccion::find($data->ciclo_seccion_id);
+
+        if(!$ciclo_seccion){
+            return null;
+        }
+
+        $data->alumno = $alumno;
+        $data->cicloSeccion = $ciclo_seccion;
+
+        $ciclo_cursos = CicloCurso::where('ciclo_escolar_id', $ciclo_id)
+                                    ->where('ciclo_grado_id', $ciclo_seccion->ciclo_grados_id)
+                                    ->where('activo', 1)
+                                    ->where('borrado', 0)
+                                    ->orderBy('orden')
+                                    ->get();
+
+        foreach ($ciclo_cursos as $key => $curso) {
+
+            $docentes = DB::select("select d.id, d.tipo_documento_id, d.num_documento, d.apellidos, d.nombre
+            from asignacion_cursos ac
+            inner join docentes d on d.id=ac.docente_id
+            where ac.ciclo_seccion_id = ?
+            and ac.ciclo_cursos_id= ?
+            and ac.activo='1'
+            and ac.borrado='0';", [$ciclo_seccion->id, $curso->id]);
+
+            $curso->docente = null;
+            $curso->evalProgramadas = 0;
+
+            if(count($docentes) > 0){
+                $curso->docente = $docentes[0];
+            }
+
+            $competencias = CicloCompetencia::where('ciclo_escolar_id', $ciclo_id)
+                                        ->where('ciclo_cursos_id', $curso->id)
+                                        ->where('activo', 1)
+                                        ->where('borrado', 0)
+                                        ->orderBy('orden')
+                                        ->get();
+
+            foreach ($competencias as $keyC => $competencia) {
+                $indicadores = CicloIndicador::where('ciclo_escolar_id', $ciclo_id)
+                                            ->where('ciclo_competencia_id', $competencia->id)
+                                            ->where('activo', 1)
+                                            ->where('borrado', 0)
+                                            ->orderBy('orden')
+                                            ->get();
+
+                foreach ($indicadores as $keyI => $indicador) {
+                    if($indicador->fecha_programada1 != null && $indicador->fecha_programada1 != ''){
+                        $curso->evalProgramadas++;
+                    }
+
+                    if($indicador->fecha_programada2 != null && $indicador->fecha_programada2 != ''){
+                        $curso->evalProgramadas++;
+                    }
+
+                    if($indicador->fecha_programada3 != null && $indicador->fecha_programada3 != ''){
+                        $curso->evalProgramadas++;
+                    }
+
+                    if($indicador->fecha_programada4 != null && $indicador->fecha_programada4 != ''){
+                        $curso->evalProgramadas++;
+                    }
+                }
+            }
+
+
+            //Data Notas
+
+            $notaFinal = Nota::where('matricula_id', $data->id)
+            ->where('tipo', 3)
+            ->where('ciclo_curso_id', $curso->id)
+            ->where('alumno_id', $data->alumno_id)
+            ->where('periodo', 0)
+            ->where('activo', 1)
+            ->where('borrado', 0)
+            ->first();
+
+            $data->notaFinal = $notaFinal;
+
+            //Primer Bimestre/Trimestre
+            $notaPrimerPeriodo = Nota::where('matricula_id', $data->id)
+                                    ->where('tipo', 3)
+                                    ->where('ciclo_curso_id', $curso->id)
+                                    ->where('alumno_id', $data->alumno_id)
+                                    ->where('periodo', 1)
+                                    ->where('activo', 1)
+                                    ->where('borrado', 0)
+                                    ->first();
+
+            $data->notaPrimerPeriodo = $notaPrimerPeriodo;
+
+            //Segundo Bimestre/Trimestre
+            $notaSegundoPeriodo = Nota::where('matricula_id', $data->id)
+                                    ->where('tipo', 3)
+                                    ->where('ciclo_curso_id', $curso->id)
+                                    ->where('alumno_id', $data->alumno_id)
+                                    ->where('periodo', 2)
+                                    ->where('activo', 1)
+                                    ->where('borrado', 0)
+                                    ->first();
+
+            $data->notaSegundoPeriodo = $notaSegundoPeriodo;
+
+            //Tercer Bimestre/Trimestre
+            $notaTercerPeriodo = Nota::where('matricula_id', $data->id)
+                                    ->where('tipo', 3)
+                                    ->where('ciclo_curso_id', $curso->id)
+                                    ->where('alumno_id', $data->alumno_id)
+                                    ->where('periodo', 3)
+                                    ->where('activo', 1)
+                                    ->where('borrado', 0)
+                                    ->first();
+
+            $data->notaTercerPeriodo = $notaTercerPeriodo;
+
+
+
+
+            if($ciclo->opcion == 2){
+                //Cuarto Bimestre solo si aplica
+                $notaCuartoPeriodo = Nota::where('matricula_id', $data->id)
+                                    ->where('tipo', 3)
+                                    ->where('ciclo_curso_id', $curso->id)
+                                    ->where('alumno_id', $data->alumno_id)
+                                    ->where('periodo', 4)
+                                    ->where('activo', 1)
+                                    ->where('borrado', 0)
+                                    ->first();
+
+                $data->notaCuartoPeriodo = $notaCuartoPeriodo;
+            }
+
+            $competencias = CicloCompetencia::where('ciclo_cursos_id', $curso->id)
+                                        ->where('ciclo_escolar_id', $ciclo_id)
+                                        ->orderBy('orden')
+                                        ->orderBy('nombre')
+                                        ->get();
+
+                foreach ($competencias as $keyCom => $competencia) {
+                    $indicadores = CicloIndicador::where('ciclo_competencia_id', $competencia->id)
+                                            ->where('ciclo_escolar_id', $ciclo_id)
+                                            ->orderBy('orden')
+                                            ->orderBy('nombre')
+                                            ->get();
+
+                    foreach ($indicadores as $keyInd => $indicador) {
+                        $hoy = date('Y-m-d');
+                        $indicador->activo1 = '0';
+                        $indicador->activo2 = '0';
+                        $indicador->activo3 = '0';
+                        $indicador->activo4 = '0';
+
+                        if($indicador->fecha_programada1 == $hoy){
+                            $indicador->activo1 = '1';
+                        }
+                        if($indicador->fecha_programada2 == $hoy){
+                            $indicador->activo2 = '1';
+                        }
+                        if($indicador->fecha_programada3 == $hoy){
+                            $indicador->activo3 = '1';
+                        }
+                        if($indicador->fecha_programada4 == $hoy){
+                            $indicador->activo4 = '1';
+                        }
+                    }
+
+                    $competencia->indicadores = $indicadores;
+                }
+
+            //Notas Competencias
+            foreach ($competencias as $keyCom => $competencia) {
+
+                //Nota Final
+                $notaFinal = Nota::where('matricula_id', $data->id)
+                    ->where('tipo', 2)
+                    ->where('ciclo_curso_id', $curso->id)
+                    ->where('ciclo_competencia_id', $competencia->id)
+                    ->where('alumno_id', $data->alumno_id)
+                    ->where('periodo', 0)
+                    ->where('activo', 1)
+                    ->where('borrado', 0)
+                    ->first();
+
+                $competencia->notaFinal = $notaFinal;
+
+                //Primer Bimestre/Trimestre
+                $notaPrimerPeriodo = Nota::where('matricula_id', $data->id)
+                ->where('tipo', 2)
+                ->where('ciclo_curso_id', $curso->id)
+                ->where('ciclo_competencia_id', $competencia->id)
+                ->where('alumno_id', $data->alumno_id)
+                ->where('periodo', 1)
+                ->where('activo', 1)
+                ->where('borrado', 0)
+                ->first();
+
+                $competencia->notaPrimerPeriodo = $notaPrimerPeriodo;
+
+                //Segundo Bimestre/Trimestre
+                $notaSegundoPeriodo = Nota::where('matricula_id', $data->id)
+                                        ->where('tipo', 2)
+                                        ->where('ciclo_curso_id', $curso->id)
+                                        ->where('ciclo_competencia_id', $competencia->id)
+                                        ->where('alumno_id', $data->alumno_id)
+                                        ->where('periodo', 2)
+                                        ->where('activo', 1)
+                                        ->where('borrado', 0)
+                                        ->first();
+
+                $competencia->notaSegundoPeriodo = $notaSegundoPeriodo;
+
+                //Tercer Bimestre/Trimestre
+                $notaTercerPeriodo = Nota::where('matricula_id', $data->id)
+                                        ->where('tipo', 2)
+                                        ->where('ciclo_curso_id', $curso->id)
+                                        ->where('ciclo_competencia_id', $competencia->id)
+                                        ->where('alumno_id', $data->alumno_id)
+                                        ->where('periodo', 3)
+                                        ->where('activo', 1)
+                                        ->where('borrado', 0)
+                                        ->first();
+
+                $competencia->notaTercerPeriodo = $notaTercerPeriodo;
+
+                if($ciclo->opcion == 2){
+                    //Cuarto Bimestre solo si aplica
+                    $notaCuartoPeriodo = Nota::where('matricula_id', $data->id)
+                                        ->where('tipo', 2)
+                                        ->where('ciclo_curso_id', $curso->id)
+                                        ->where('ciclo_competencia_id', $competencia->id)
+                                        ->where('alumno_id', $data->alumno_id)
+                                        ->where('periodo', 4)
+                                        ->where('activo', 1)
+                                        ->where('borrado', 0)
+                                        ->first();
+
+                    $competencia->notaCuartoPeriodo = $notaCuartoPeriodo;
+                }  
+
+                //Notas Indicadores
+                foreach ($competencia->indicadores as $keyInd => $indicador) {
+
+                    //Nota Final
+                    $notaFinal = Nota::where('matricula_id', $data->id)
+                        ->where('tipo', 1)
+                        ->where('ciclo_curso_id', $curso->id)
+                        ->where('ciclo_competencia_id', $competencia->id)
+                        ->where('ciclo_indicador_id', $indicador->id)
+                        ->where('alumno_id', $data->alumno_id)
+                        ->where('periodo', 0)
+                        ->where('activo', 1)
+                        ->where('borrado', 0)
+                        ->first();
+
+                    $indicador->notaFinal = $notaFinal;
+
+
+                    //Primer Bimestre/Trimestre
+                    $notaPrimerPeriodo = Nota::where('matricula_id', $data->id)
+                    ->where('tipo', 1)
+                    ->where('ciclo_curso_id', $curso->id)
+                    ->where('ciclo_competencia_id', $competencia->id)
+                    ->where('ciclo_indicador_id', $indicador->id)
+                    ->where('alumno_id', $data->alumno_id)
+                    ->where('periodo', 1)
+                    ->where('activo', 1)
+                    ->where('borrado', 0)
+                    ->first();
+
+                    $indicador->notaPrimerPeriodo = $notaPrimerPeriodo;
+
+                    //Segundo Bimestre/Trimestre
+                    $notaSegundoPeriodo = Nota::where('matricula_id', $data->id)
+                                            ->where('tipo', 1)
+                                            ->where('ciclo_curso_id', $curso->id)
+                                            ->where('ciclo_competencia_id', $competencia->id)
+                                            ->where('ciclo_indicador_id', $indicador->id)
+                                            ->where('alumno_id', $data->alumno_id)
+                                            ->where('periodo', 2)
+                                            ->where('activo', 1)
+                                            ->where('borrado', 0)
+                                            ->first();
+
+                    $indicador->notaSegundoPeriodo = $notaSegundoPeriodo;
+
+                    //Tercer Bimestre/Trimestre
+                    $notaTercerPeriodo = Nota::where('matricula_id', $data->id)
+                                            ->where('tipo', 1)
+                                            ->where('ciclo_curso_id', $curso->id)
+                                            ->where('ciclo_competencia_id', $competencia->id)
+                                            ->where('ciclo_indicador_id', $indicador->id)
+                                            ->where('alumno_id', $data->alumno_id)
+                                            ->where('periodo', 3)
+                                            ->where('activo', 1)
+                                            ->where('borrado', 0)
+                                            ->first();
+
+                    $indicador->notaTercerPeriodo = $notaTercerPeriodo;
+
+                    if($ciclo->opcion == 2){
+                        //Cuarto Bimestre solo si aplica
+                        $notaCuartoPeriodo = Nota::where('matricula_id', $curso->id)
+                                            ->where('tipo', 1)
+                                            ->where('ciclo_curso_id', $curso->id)
+                                            ->where('ciclo_competencia_id', $competencia->id)
+                                            ->where('ciclo_indicador_id', $indicador->id)
+                                            ->where('alumno_id', $curso->alumno_id)
+                                            ->where('periodo', 4)
+                                            ->where('activo', 1)
+                                            ->where('borrado', 0)
+                                            ->first();
+
+                        $indicador->notaCuartoPeriodo = $notaCuartoPeriodo;
+                    }  
+                }
+            }
+
+            $curso->competencias = $competencias;
+        }
+
+        $data->ciclo_cursos = $ciclo_cursos;
+
+        return $data;
+
+
+    }
 
     public static function GetByDocIdentidad($tipo_documento_id, $num_documento){
         $data = Alumno::where('tipo_documento_id', $tipo_documento_id)

@@ -16,6 +16,7 @@ use App\Models\Departamento;
 use App\Models\Provincia;
 use App\Models\Distrito;
 use App\Models\User;
+use App\Models\CicloEscolar;
 
 use App\Models\Matricula;
 use App\Models\ApoderadoMatricula;
@@ -128,6 +129,32 @@ class AlumnoController extends Controller
                 'alumno' => $alumno,
 
                ];
+    }
+
+    public function index2()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        return view('alumno.lista-cursos.index',compact('cicloActivo'));
+    }
+
+    public function GetListaCursos()
+    {
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        $alumno = Alumno::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+
+        $data = Alumno::GetListaCursos($alumno->id, $cicloActivo->id);
+
+        return [ 
+            'data' => $data,
+           ];
     }
 
     public function index()

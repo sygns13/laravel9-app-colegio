@@ -1163,6 +1163,8 @@ class Docente extends Model
         inner join ciclo_cursos cc on ac.ciclo_cursos_id = cc.id
         inner join ciclo_escolars ce on cc.ciclo_escolar_id=ce.id
         where ac.docente_id = ?
+        and ac.activo='1'
+        and ac.borrado='0'
         group by ce.id
         order by ce.id desc;", [$docente->id]);
 
@@ -1173,6 +1175,8 @@ class Docente extends Model
             inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
             inner join ciclo_niveles cn on cg.ciclo_niveles_id=cn.id
             where ac.docente_id = ?
+            and ac.activo='1'
+            and ac.borrado='0'
             and cn.ciclo_escolar_id = ?
             group by cn.nivel_id
             order by cn.nivel_id;", [$docente->id, $ciclo->id]);
@@ -1183,6 +1187,8 @@ class Docente extends Model
                 inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
                 inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
                 where ac.docente_id = ?
+                and ac.activo='1'
+                and ac.borrado='0'
                 and cg.ciclo_escolar_id = ?
                 and cg.ciclo_niveles_id = ?
                 group by cg.orden
@@ -1193,6 +1199,8 @@ class Docente extends Model
                     $secciones = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id from asignacion_cursos as ac
                     inner join ciclo_seccion cs on ac.ciclo_seccion_id=cs.id
                     where ac.docente_id = ?
+                    and ac.activo='1'
+                    and ac.borrado='0'
                     and cs.ciclo_escolar_id = ?
                     and cs.ciclo_grados_id = ?
                     group by cs.id
@@ -1203,6 +1211,8 @@ class Docente extends Model
                         $cursos = DB::select("select cc.id, cc.orden, cc.nombre, cc.ciclo_grado_id, cc.opcion from asignacion_cursos as ac
                         inner join ciclo_cursos cc on ac.ciclo_cursos_id=cc.id
                         where ac.docente_id = ?
+                        and ac.activo='1'
+                        and ac.borrado='0'
                         and cc.ciclo_escolar_id = ?
                         and ac.ciclo_seccion_id = ?
                         group by cc.id

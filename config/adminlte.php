@@ -406,6 +406,23 @@ return [
 
             ]
         ],
+
+        [
+            'text'        => 'Lista de Cursos',
+            'url'         => 'admin/listado-cursos',
+            'icon'        => 'fas fa-fw fa-book',
+            'icon_color'  => 'white',
+            'can'         => ['alumno']
+        ],
+
+
+
+
+
+
+
+
+
         [
             'text'        => 'Reportes Generales',
             'icon'        => 'fas fa-fw fa-print',
