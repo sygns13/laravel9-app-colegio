@@ -65,6 +65,7 @@ Route::middleware([
     Route::get('/legajo-nuevo', [HomeController::class, 'legajoNuevo2'])->name('legajo-nuevo');
 
     Route::get('/listado-cursos', [AlumnoController::class, 'index2'])->name('listado-cursos');
+    Route::get('/horario-alumno', [AlumnoController::class, 'index3'])->name('horario-alumno');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -119,6 +120,7 @@ Route::middleware([
     Route::get('/realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
 
     Route::get('/get-lista-cursos', [AlumnoController::class, 'GetListaCursos'])->name('get-lista-cursos');
+    Route::get('/get-horario', [AlumnoController::class, 'GetHorario'])->name('get-horario');
 
 
 

@@ -49,6 +49,11 @@ createApp({
                 'miercoles': [],
                 'jueves': [],
                 'viernes': [],
+                'coLunes': [],
+                'coMartes': [],
+                'coMiercoles': [],
+                'coJueves': [],
+                'coViernes': [],
             },
 
             turnos:[],
@@ -160,6 +165,11 @@ createApp({
                 'miercoles': [],
                 'jueves': [],
                 'viernes': [],
+                'coLunes': [],
+                'coMartes': [],
+                'coMiercoles': [],
+                'coJueves': [],
+                'coViernes': [],
             };
 
             this.turnos.forEach(turno => {
@@ -172,6 +182,12 @@ createApp({
                         let isDataJu = false;
                         let isDataVi = false;
 
+                        let isColorLu = false;
+                        let isColorMa = false;
+                        let isColorMi = false;
+                        let isColorJu = false;
+                        let isColorVi = false;
+
                         this.registros.niveles.forEach(nivel => {
                             nivel.grados.forEach(grado => {
                                 grado.seccions.forEach(seccion => {
@@ -181,22 +197,52 @@ createApp({
                                                 if(horario.dia_semana==1){
                                                     isDataLu = true;
                                                     this.horario.lunes[hora.id] = horario.ciclo_curso_id;
+                                                    grado.cursos.forEach(curso => {
+                                                        if(horario.ciclo_curso_id == curso.id){
+                                                            this.horario.coLunes[hora.id] = curso.color;
+                                                            isColorLu = true;
+                                                        }
+                                                    });
                                                 }
                                                 if(horario.dia_semana==2){
                                                     isDataMa = true;
                                                     this.horario.martes[hora.id] = horario.ciclo_curso_id;
+                                                    grado.cursos.forEach(curso => {
+                                                        if(horario.ciclo_curso_id == curso.id){
+                                                            this.horario.coMartes[hora.id] = curso.color;
+                                                            isColorMa = true;
+                                                        }
+                                                    });
                                                 }
                                                 if(horario.dia_semana==3){
                                                     isDataMi = true;
                                                     this.horario.miercoles[hora.id] = horario.ciclo_curso_id;
+                                                    grado.cursos.forEach(curso => {
+                                                        if(horario.ciclo_curso_id == curso.id){
+                                                            this.horario.coMiercoles[hora.id] = curso.color;
+                                                            isColorMi = true;
+                                                        }
+                                                    });
                                                 }
                                                 if(horario.dia_semana==4){
                                                     isDataJu = true;
                                                     this.horario.jueves[hora.id] = horario.ciclo_curso_id;
+                                                    grado.cursos.forEach(curso => {
+                                                        if(horario.ciclo_curso_id == curso.id){
+                                                            this.horario.coJueves[hora.id] = curso.color;
+                                                            isColorJu = true;
+                                                        }
+                                                    });
                                                 }
                                                 if(horario.dia_semana==5){
                                                     isDataVi = true;
                                                     this.horario.viernes[hora.id] = horario.ciclo_curso_id;
+                                                    grado.cursos.forEach(curso => {
+                                                        if(horario.ciclo_curso_id == curso.id){
+                                                            this.horario.coViernes[hora.id] = curso.color;
+                                                            isColorVi = true;
+                                                        }
+                                                    });
                                                 }
                                             }
                                         });
@@ -219,6 +265,22 @@ createApp({
                         }
                         if(!isDataVi){
                             this.horario.viernes[hora.id] = 0;
+                        }
+
+                        if(!isColorLu){
+                            this.horario.coLunes[hora.id] = "#fff";
+                        }
+                        if(!isColorMa){
+                            this.horario.coMartes[hora.id] = "#fff";
+                        }
+                        if(!isColorMi){
+                            this.horario.coMiercoles[hora.id] = "#fff";
+                        }
+                        if(!isColorJu){
+                            this.horario.coJueves[hora.id] = "#fff";
+                        }
+                        if(!isColorVi){
+                            this.horario.coViernes[hora.id] = "#fff";
                         }
                     }
                 });

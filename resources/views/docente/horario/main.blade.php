@@ -111,7 +111,7 @@
                                                                             <template v-for="(hora, indexHora) in horas">
                                                                                 <tr v-if ="hora.turno_id == turnoSeleccionado">
                                                                                     <td>@{{hora.horaini}} - @{{hora.horafin}}</td>
-                                                                                    <td>
+                                                                                    <td :style="{ backgroundColor: horario.coLunes[hora.id]}">
                                                                                         <template v-if="hora.tipo == 1">
                                                                                             <template v-if="horario.lunes[hora.id] != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
@@ -125,7 +125,7 @@
                                                                                             RECREO
                                                                                         </template>
                                                                                     </td>                               
-                                                                                    <td>
+                                                                                    <td :style="{ backgroundColor: horario.coMartes[hora.id]}">
                                                                                         <template v-if="hora.tipo == 1">
                                                                                             <template v-if="horario.martes[hora.id] != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
@@ -139,7 +139,7 @@
                                                                                             RECREO
                                                                                         </template>
                                                                                     </td>                               
-                                                                                    <td>
+                                                                                    <td :style="{ backgroundColor: horario.coMiercoles[hora.id]}">
                                                                                         <template v-if="hora.tipo == 1">
                                                                                             <template v-if="horario.miercoles[hora.id] != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
@@ -153,7 +153,7 @@
                                                                                             RECREO
                                                                                         </template>
                                                                                     </td>                               
-                                                                                    <td>
+                                                                                    <td :style="{ backgroundColor: horario.coJueves[hora.id]}">
                                                                                         <template v-if="hora.tipo == 1">
                                                                                             <template v-if="horario.jueves[hora.id] != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">
@@ -167,7 +167,7 @@
                                                                                             RECREO
                                                                                         </template>
                                                                                     </td>                               
-                                                                                    <td>
+                                                                                    <td :style="{ backgroundColor: horario.coViernes[hora.id]}">
                                                                                         <template v-if="hora.tipo == 1">
                                                                                             <template v-if="horario.viernes[hora.id] != '0'">
                                                                                                 <template v-for="(curso, index) in grado.cursos">

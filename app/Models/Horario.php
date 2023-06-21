@@ -234,7 +234,7 @@ class Horario extends Model
                     $valueS->horarios = $horarios;
                 }
 
-                $cursos = DB::select("select cc.id, cc.orden, cc.nombre, cc.ciclo_grado_id, cc.opcion from asignacion_cursos as ac
+                $cursos = DB::select("select cc.id, cc.orden, cc.nombre, cc.ciclo_grado_id, cc.opcion, cc.color from asignacion_cursos as ac
                         inner join ciclo_cursos cc on ac.ciclo_cursos_id=cc.id
                         where ac.docente_id = ?
                         and cc.ciclo_escolar_id = ?

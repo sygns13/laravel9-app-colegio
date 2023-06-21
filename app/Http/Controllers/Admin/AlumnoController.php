@@ -27,6 +27,8 @@ use App\Models\Traslado;
 use App\Models\Niveles;
 use App\Models\Grado;
 use App\Models\CicloSeccion;
+use App\Models\Turno;
+use App\Models\Hora;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
@@ -138,6 +140,13 @@ class AlumnoController extends Controller
         return view('alumno.lista-cursos.index',compact('cicloActivo'));
     }
 
+    public function index3()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        return view('alumno.horario.index',compact('cicloActivo'));
+    }
+
     public function GetListaCursos()
     {
         $iduser=Auth::user()->id;
@@ -154,6 +163,30 @@ class AlumnoController extends Controller
 
         return [ 
             'data' => $data,
+           ];
+    }
+
+    public function GetHorario()
+    {
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        $alumno = Alumno::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+
+        $data = Alumno::GetHorario($alumno->id, $cicloActivo->id);
+
+        $turnos = Turno::all();
+        $horas = Hora::where('borrado','0')->where('activo','1')->get();
+
+        return [ 
+            'data' => $data,
+            'turnos' => $turnos,
+            'horas' => $horas,
            ];
     }
 

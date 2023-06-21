@@ -113,8 +113,13 @@ class Alumno extends Model
             return null;
         }
 
+        $grado = CicloGrado::find($ciclo_seccion->ciclo_grados_id);
+        $nivel = CicloNivel::find($grado->ciclo_niveles_id);
+
         $data->alumno = $alumno;
         $data->cicloSeccion = $ciclo_seccion;
+        $data->grado = $grado;
+        $data->nivel = $nivel;
 
         $ciclo_cursos = CicloCurso::where('ciclo_escolar_id', $ciclo_id)
                                     ->where('ciclo_grado_id', $ciclo_seccion->ciclo_grados_id)
@@ -677,4 +682,60 @@ class Alumno extends Model
         return $data;
 
     }
+
+    public static function GetHorario($alumno_id, $ciclo_id){
+
+
+        $data = Matricula::where('ciclo_escolar_id', $ciclo_id)
+                                ->where('alumno_id', $alumno_id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->first();
+
+        $alumno = Alumno::find($alumno_id);
+        $tipoDocumento = TipoDocumento::find($alumno->tipo_documento_id);
+        $alumno->tipoDocumento = $tipoDocumento;
+
+        $ciclo = CicloEscolar::find($ciclo_id);
+
+        if(!$data){
+            return null;
+        }
+
+        $ciclo_seccion = CicloSeccion::find($data->ciclo_seccion_id);
+
+        if(!$ciclo_seccion){
+            return null;
+        }
+
+        $grado = CicloGrado::find($ciclo_seccion->ciclo_grados_id);
+        $nivel = CicloNivel::find($grado->ciclo_niveles_id);
+
+        $data->alumno = $alumno;
+        $data->cicloSeccion = $ciclo_seccion;
+        $data->grado = $grado;
+        $data->nivel = $nivel;
+
+        $horarios = Horario::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->where('ciclo_seccion_id', $ciclo_seccion->id)
+                                    ->where('ciclo_escolar_id', $ciclo->id)
+                                    ->orderBy('dia_semana')
+                                    ->orderBy('hora_ini')
+                                    ->get();
+
+        $cursos = CicloCurso::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->where('ciclo_grado_id', $ciclo_seccion->ciclo_grados_id)
+                                    ->where('ciclo_escolar_id', $ciclo->id)
+                                    ->orderBy('orden')
+                                    ->orderBy('nombre')
+                                    ->get();
+
+        $data->horarios = $horarios;
+        $data->cursos = $cursos;        
+
+        return $data;
+    }
+
 }

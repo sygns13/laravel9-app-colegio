@@ -414,6 +414,13 @@ return [
             'icon_color'  => 'white',
             'can'         => ['alumno']
         ],
+        [
+            'text'        => 'Horario del Alumno',
+            'url'         => 'admin/horario-alumno',
+            'icon'        => 'fas fa-fw fa-calendar',
+            'icon_color'  => 'white',
+            'can'         => ['alumno']
+        ],
 
 
 

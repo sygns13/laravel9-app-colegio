@@ -27,7 +27,7 @@
                         <br>
                         <b>Año Escolar</b>: {{$cicloActivo->year}}
                         <br>
-                        <b>Sección</b>: @{{data.cicloSeccion.nombre}}
+                        <b>Nivel</b>: @{{data.nivel.nombre}} <b>Grado</b>: @{{data.grado.nombre}} <b>Sección</b>: @{{data.cicloSeccion.nombre}}
                         <br>
                         <br>
                         <b>Alumno</b>: @{{data.alumno.apellido_paterno}} @{{data.alumno.apellido_materno}}, @{{data.alumno.nombres}}
