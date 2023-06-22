@@ -213,6 +213,35 @@ class ReportPDFController extends Controller
         return $pdf->download('CALIFICACION_ALUMNO_CURSO'.$calificacionesAlumnoCurso->ciclo->year.'_'.$calificacionesAlumnoCurso->matricula->id.'.pdf');
     }
 
+    public function impAsistenciaSesionAlumno($ciclo_id, $fecha, $alumno_id)
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+        $alumno = Alumno::find($alumno_id);
+
+        $horarioSeccion = Alumno::GetAsistencia($alumno_id, $ciclo_id, $fecha);
+        $horas = Hora::where('borrado','0')->where('activo','1')->where('turno_id', $horarioSeccion->cicloSeccion->turno_id)->orderBy('horaini')->orderBy('horafin')->get();
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+        
+
+  
+        $data = [
+            'horarioSeccion' => $horarioSeccion,
+            'horas' => $horas,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.asistencia-sesion-alumno', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('HORARIO_ASISTENCIA_ALUMNO_'.$horarioSeccion->ciclo->year.'_'.$horarioSeccion->cicloSeccion->sigla.'_'.$alumno->num_documento.'.pdf');
+    }
+
 
 
 

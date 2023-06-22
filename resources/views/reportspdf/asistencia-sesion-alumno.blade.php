@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ASISTENCIA POR SESIONES</title>
+    <title>ASISTENCIA POR ALUMNO</title>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
     <style>
         @page { 
@@ -170,7 +170,7 @@
 
               <th style="text-align: center;" >
                 <p style="font-size: 20px; font-weight:bolder; margin-top: 10px;">AÑO ESCOLAR -
-                    
+                    {{$horarioSeccion->cicloSeccion->year}}
                 </p>
             </th>
             <th style="width: 163px;"></th>
@@ -182,15 +182,25 @@
                 <th style="text-align: center;">
                     <p style="font-size: 15px; font-weight:bolder; margin-top: 0px;">
                         CONTROL DE ASISTENCIA Y DESARROLLO DE SESIONES DE
-                        {{strtoupper($horarioSeccion->ciclo_grado->nombre)}}
+                        {{strtoupper($horarioSeccion->grado->nombre)}}
                         DEL NIVEL
-                        {{strtoupper($horarioSeccion->ciclo_nivel->nombre)}}
+                        {{strtoupper($horarioSeccion->nivel->nombre)}}
                         SECCIÓN:
-                        {{strtoupper($horarioSeccion->sigla)}} <br>
+                        {{strtoupper($horarioSeccion->cicloSeccion->sigla)}} <br>
                         DESDE EL {{substr(strval($horarioSeccion->dia1),8,2)}}/{{substr(strval($horarioSeccion->dia1),5,2)}}/{{substr(strval($horarioSeccion->dia1),0,4)}}
                         HASTA EL {{substr(strval($horarioSeccion->dia5),8,2)}}/{{substr(strval($horarioSeccion->dia5),5,2)}}/{{substr(strval($horarioSeccion->dia5),0,4)}}
                     </p>
                 </th>
+            </tr>
+            <tr>
+                <td>
+                    <p style="font-size: 13px; margin-top: 2px;">
+                        <B>ALUMNO:<B>
+                        {{strtoupper($horarioSeccion->alumno->nombres)}}
+                        {{strtoupper($horarioSeccion->alumno->apellido_paterno)}}
+                        {{strtoupper($horarioSeccion->alumno->apellido_materno)}}
+                    </p>
+                </td>
             </tr>
         </table>
 
@@ -220,10 +230,20 @@
 
                                     @if(isset($horario->asistencia))
                                         Tema:  {{$horario->asistencia->tema}}<br>
-                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                        Estado: 
+                                        @if($horario->asistencia->asistenciaAlumno == null)
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '0')
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '1')
+                                            <span style="color:rgb(0, 17, 252);">Asistió</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '2')
+                                            <span style="color:rgb(255, 174, 0);">Tardanza</span>
+                                        @endif
+
                                     @else
-                                        <div style="color:red!important;">Tema: Sin Registros</div>
-                                        <div style="color:red!important;">Asistentes: Sin Registros</div>
+                                        <div style="color:red!important;">Tema: Sin Registro</div>
+                                        <div style="color:red!important;">Asistencia: Sin Registro</div>
                                     @endif
                                 @endif
                             @endforeach
@@ -244,10 +264,19 @@
 
                                     @if(isset($horario->asistencia))
                                         Tema:  {{$horario->asistencia->tema}}<br>
-                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                        Estado: 
+                                        @if($horario->asistencia->asistenciaAlumno == null)
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '0')
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '1')
+                                            <span style="color:rgb(0, 17, 252);">Asistió</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '2')
+                                            <span style="color:rgb(255, 174, 0);">Tardanza</span>
+                                        @endif
                                     @else
-                                        <div style="color:red!important;">Tema: Sin Registros</div>
-                                        <div style="color:red!important;">Asistentes: Sin Registros</div>
+                                        <div style="color:red!important;">Tema: Sin Registro</div>
+                                        <div style="color:red!important;">Asistencia: Sin Registro</div>
                                     @endif
                                 @endif
                             @endforeach
@@ -268,10 +297,19 @@
 
                                     @if(isset($horario->asistencia))
                                         Tema:  {{$horario->asistencia->tema}}<br>
-                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                        Estado: 
+                                        @if($horario->asistencia->asistenciaAlumno == null)
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '0')
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '1')
+                                            <span style="color:rgb(0, 17, 252);">Asistió</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '2')
+                                            <span style="color:rgb(255, 174, 0);">Tardanza</span>
+                                        @endif
                                     @else
-                                        <div style="color:red!important;">Tema: Sin Registros</div>
-                                        <div style="color:red!important;">Asistentes: Sin Registros</div>
+                                        <div style="color:red!important;">Tema: Sin Registro</div>
+                                        <div style="color:red!important;">Asistencia: Sin Registro</div>
                                     @endif
                                 @endif
                             @endforeach
@@ -292,10 +330,19 @@
 
                                     @if(isset($horario->asistencia))
                                         Tema:  {{$horario->asistencia->tema}}<br>
-                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                        Estado: 
+                                        @if($horario->asistencia->asistenciaAlumno == null)
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '0')
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '1')
+                                            <span style="color:rgb(0, 17, 252);">Asistió</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '2')
+                                            <span style="color:rgb(255, 174, 0);">Tardanza</span>
+                                        @endif
                                     @else
-                                        <div style="color:red!important;">Tema: Sin Registros</div>
-                                        <div style="color:red!important;">Asistentes: Sin Registros</div>
+                                        <div style="color:red!important;">Tema: Sin Registro</div>
+                                        <div style="color:red!important;">Asistencia: Sin Registro</div>
                                     @endif
                                 @endif
                             @endforeach
@@ -316,10 +363,19 @@
 
                                     @if(isset($horario->asistencia))
                                         Tema:  {{$horario->asistencia->tema}}<br>
-                                        Asistentes: {{$horario->asistencia->cantAsistencia}}
+                                        Estado: 
+                                        @if($horario->asistencia->asistenciaAlumno == null)
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '0')
+                                            <span style="color:red;">Faltó</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '1')
+                                            <span style="color:rgb(0, 17, 252);">Asistió</span>
+                                        @elseif($horario->asistencia->asistenciaAlumno != null && $horario->asistencia->asistenciaAlumno->estado == '2')
+                                            <span style="color:rgb(255, 174, 0);">Tardanza</span>
+                                        @endif
                                     @else
-                                        <div style="color:red!important;">Tema: Sin Registros</div>
-                                        <div style="color:red!important;">Asistentes: Sin Registros</div>
+                                        <div style="color:red!important;">Tema: Sin Registro</div>
+                                        <div style="color:red!important;">Asistencia: Sin Registro</div>
                                     @endif
                                 @endif
                             @endforeach

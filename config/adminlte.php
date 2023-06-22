@@ -421,6 +421,13 @@ return [
             'icon_color'  => 'white',
             'can'         => ['alumno']
         ],
+        [
+            'text'        => 'Asistencia del Alumno',
+            'url'         => 'admin/asistencia-alumno',
+            'icon'        => 'fas fa-fw fa-bars',
+            'icon_color'  => 'white',
+            'can'         => ['alumno']
+        ],
 
 
 

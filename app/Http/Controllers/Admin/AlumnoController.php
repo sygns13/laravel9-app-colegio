@@ -147,6 +147,13 @@ class AlumnoController extends Controller
         return view('alumno.horario.index',compact('cicloActivo'));
     }
 
+    public function index4()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        return view('alumno.asistencia.index',compact('cicloActivo'));
+    }
+
     public function GetListaCursos()
     {
         $iduser=Auth::user()->id;
@@ -188,6 +195,33 @@ class AlumnoController extends Controller
             'turnos' => $turnos,
             'horas' => $horas,
            ];
+    }
+
+    public function GetAsistencia(Request $request)
+    {
+
+        
+        $fecha = $request->fecha;
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+        $alumno = Alumno::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+
+        $data = Alumno::GetAsistencia($alumno->id, $cicloActivo->id, $fecha);
+
+        $turnos = Turno::all();
+        $horas = Hora::where('borrado','0')->where('activo','1')->get();
+        
+        return [ 
+                'data' => $data,
+                'turnos' => $turnos,
+                'horas' => $horas,
+               ];
     }
 
     public function index()

@@ -66,6 +66,7 @@ Route::middleware([
 
     Route::get('/listado-cursos', [AlumnoController::class, 'index2'])->name('listado-cursos');
     Route::get('/horario-alumno', [AlumnoController::class, 'index3'])->name('horario-alumno');
+    Route::get('/asistencia-alumno', [AlumnoController::class, 'index4'])->name('asistencia-alumno');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -97,6 +98,7 @@ Route::middleware([
     Route::get('/rehorariogetdoc', [HorarioController::class, 'indexDocHorario'])->name('indexDocHorario');
     Route::get('/asistenciasesiongetdoc', [AsistenciaController::class, 'indexDocAsistenciaSesion'])->name('asistenciasesiongetdoc');
     Route::get('/realumnomain', [AlumnoController::class, 'indexAlumnoMain'])->name('indexAlumnoMain');
+    
 
 
     Route::get('/redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
@@ -121,6 +123,7 @@ Route::middleware([
 
     Route::get('/get-lista-cursos', [AlumnoController::class, 'GetListaCursos'])->name('get-lista-cursos');
     Route::get('/get-horario', [AlumnoController::class, 'GetHorario'])->name('get-horario');
+    Route::get('/get-asistencia', [AlumnoController::class, 'GetAsistencia'])->name('get-asistencia');
 
 
 
@@ -136,6 +139,7 @@ Route::middleware([
     
     //Alumno
     //Route::get('/reportepdf/calificacion-alumno/{matricula_id}/{ciclo_curso_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumnoCurso'])->name('impFichaCalificacionesAlumnoCurso');
+    Route::get('/reportepdf/asistencia-sesiones-alumno/{ciclo_id}/{fecha}/{alumno_id}',[ReportPDFController::class, 'impAsistenciaSesionAlumno'])->name('impAsistenciaSesionAlumno');
 
 
     Route::post('/matricula/promover', [MatriculaController::class, 'promover'])->name('promover');
