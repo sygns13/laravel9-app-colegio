@@ -313,6 +313,11 @@ return [
                     'url'  => 'admin/horas',
                     'can'  => ['admin', 'director'],
                 ],
+                [
+                    'text' => 'Gestión de Resoluciones',
+                    'url'  => 'admin/resoluciones',
+                    'can'  => ['admin', 'director'],
+                ],
 
             ]
         ],
@@ -360,7 +365,7 @@ return [
                     'can'  => ['docente']
                 ],
                 [
-                    'text' => 'Conlusión de Matrículas',
+                    'text' => 'Conclusión de Matrículas',
                     'url'  => 'admin/conclusion-matriculas',
                     'can'  => ['admin', 'director']
                 ],

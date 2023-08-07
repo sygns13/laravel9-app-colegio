@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\AsistenciaDocenteController;
 use App\Http\Controllers\Admin\AsistenciaController;
 use App\Http\Controllers\Admin\AsistenciaAlumnoController;
 use App\Http\Controllers\Admin\NotaController;
+use App\Http\Controllers\Admin\ResolucionController;
 
 
 use App\Http\Controllers\Admin\ReportPDFController;
@@ -67,6 +68,7 @@ Route::middleware([
     Route::get('/listado-cursos', [AlumnoController::class, 'index2'])->name('listado-cursos');
     Route::get('/horario-alumno', [AlumnoController::class, 'index3'])->name('horario-alumno');
     Route::get('/asistencia-alumno', [AlumnoController::class, 'index4'])->name('asistencia-alumno');
+    Route::get('/resoluciones', [ResolucionController::class, 'index1'])->name('resoluciones');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -87,6 +89,7 @@ Route::middleware([
     Route::resource('/reasistencia', AsistenciaController::class);
     Route::resource('/reasistencia-alumno', AsistenciaAlumnoController::class);
     Route::resource('/renotas', NotaController::class);
+    Route::resource('/reresolucion', ResolucionController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
     Route::get('/redocnominas', [MatriculaController::class, 'indexDocNomina'])->name('redocnominas');
@@ -124,6 +127,9 @@ Route::middleware([
     Route::get('/get-lista-cursos', [AlumnoController::class, 'GetListaCursos'])->name('get-lista-cursos');
     Route::get('/get-horario', [AlumnoController::class, 'GetHorario'])->name('get-horario');
     Route::get('/get-asistencia', [AlumnoController::class, 'GetAsistencia'])->name('get-asistencia');
+
+    Route::get('/get-resoluciones1', [ResolucionController::class, 'indexGetData1'])->name('get-resoluciones1');
+    Route::get('/get-resoluciones2', [ResolucionController::class, 'indexGetData2'])->name('get-resoluciones2');
 
 
 

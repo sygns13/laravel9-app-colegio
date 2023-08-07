@@ -125,7 +125,7 @@
                                                                                       <div style="color:red;">Permanece en el Grado</div>
                                                                                     </template>
                                                                                     <template v-if="registro.estado_grado_alu=='4'">
-                                                                                        Reentrante
+                                                                                        Expulsado
                                                                                     </template>
                                                                                 </td>
                                                                                 <td class="rows-table">
@@ -162,7 +162,7 @@
                                                                       <h6 style="color:red;">ESTADO DEL ALUMNO: PERMANECE EN EL GRADO</h6>
                                                                     </template>
                                                                     <template v-if="alumno.data.estado_grado_alu=='4'">
-                                                                      <h6>ESTADO DEL ALUMNO: REENTRANTE</h6>
+                                                                      <h6>ESTADO DEL ALUMNO: EXPULSADO</h6>
                                                                     </template>
                                                                   
                                                                   <div class="card-footer">
@@ -285,7 +285,7 @@
                                                                     <h6 style="color:red;">ESTADO DEL ALUMNO: PERMANECE EN EL GRADO</h6>
                                                                   </template>
                                                                   <template v-if="alumno.data.estado_grado_alu=='4'">
-                                                                    <h6>ESTADO DEL ALUMNO: REENTRANTE</h6>
+                                                                    <h6>ESTADO DEL ALUMNO: EXPULSADO</h6>
                                                                   </template>
 
                                                                     <div class="card card-primary">

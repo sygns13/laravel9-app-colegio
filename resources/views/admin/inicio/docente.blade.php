@@ -66,24 +66,17 @@
                                           </tr>
                                       </thead>
                                       <tbody>
+                                        @foreach ($resolucionAperturas as $index => $resolucion)
                                           <tr>
-                                              <td class="rows-table">1.</td>
+                                              <td class="rows-table">{{$index+1}}</td>
                                               <td class="rows-table">
-                                                  <a href="javascript:void(0);">
-                                                      Resolución N° 2022
+                                                  <a download href="{{ asset('web/resolucion/') }}/{{$resolucion->archivo}}">
+                                                      {{$resolucion->nombre}}
                                                   </a>
                                               </td>
-                                              <td class="rows-table">2022</td>
+                                              <td class="rows-table">{{$resolucion->year}}</td>
                                           </tr>
-                                          <tr>
-                                              <td class="rows-table">2.</td>
-                                              <td class="rows-table">
-                                                  <a href="javascript:void(0);">
-                                                      Resolución N° 2023
-                                                  </a>
-                                              </td>
-                                              <td class="rows-table">2023</td>
-                                          </tr>
+                                        @endforeach
                                       </tbody>
                                   </table>
                               </div>
@@ -110,24 +103,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="rows-table">1.</td>
-                                            <td class="rows-table">
-                                                <a href="javascript:void(0);">
-                                                    Resolución N° 2022
-                                                </a>
-                                            </td>
-                                            <td class="rows-table">2022</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="rows-table">2.</td>
-                                            <td class="rows-table">
-                                                <a href="javascript:void(0);">
-                                                    Resolución N° 2023
-                                                </a>
-                                            </td>
-                                            <td class="rows-table">2023</td>
-                                        </tr>
+                                      @foreach ($resolucionCierres as $index => $resolucion)
+                                          <tr>
+                                              <td class="rows-table">{{$index+1}}</td>
+                                              <td class="rows-table">
+                                                  <a download href="{{ asset('web/resolucion/') }}/{{$resolucion->archivo}}">
+                                                      {{$resolucion->nombre}}
+                                                  </a>
+                                              </td>
+                                              <td class="rows-table">{{$resolucion->year}}</td>
+                                          </tr>
+                                      @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -216,22 +202,22 @@
                                                                                                 <tbody>
                                                                                                     <tr>
                                                                                                         <td class="rows-table">
-                                                                                                            <a href="javascript:void(0);">
+                                                                                                            <a href="{{URL::to('admin/reporte-doc-horarios')}}">
                                                                                                                 Horarios
                                                                                                             </a>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                     <tr>
                                                                                                         <td class="rows-table">
-                                                                                                            <a href="javascript:void(0);">
+                                                                                                            <a href="{{URL::to('admin/asistencia-doc-sesiones')}}">
                                                                                                                 Reporte de Asistencia de Alumnos
                                                                                                             </a>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                     <tr>
                                                                                                         <td class="rows-table">
-                                                                                                            <a href="javascript:void(0);">
-                                                                                                                Reporte de Asistencia de Docente
+                                                                                                            <a href="{{URL::to('admin/calificaciones')}}">
+                                                                                                                Reporte de Calificaciones
                                                                                                             </a>
                                                                                                         </td>
                                                                                                     </tr>

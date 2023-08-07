@@ -64,7 +64,7 @@
                               Permanece en el Grado
                           </template>
                           <template v-if="registro.old_estado_grado_alu=='4'">
-                              Reentrante
+                              Expulsado
                           </template>
                       </td>
                     </tr>

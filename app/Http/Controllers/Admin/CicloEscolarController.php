@@ -203,13 +203,13 @@ class CicloEscolarController extends Controller
         foreach ($data->niveles as $keyN => $nivel)
         {
             $turno_id = $nivel->turno_id;
-            if($nivel->id == "1" && $cicloNivelInicial["turno_id"] != undefined && $cicloNivelInicial["turno_id"] != null){
+            if($nivel->id == "1" && isset($cicloNivelInicial["turno_id"]) ){
                 $turno_id = $cicloNivelInicial["turno_id"];
             }
-            if($nivel->id == "2" && $cicloNivelPrimaria["turno_id"] != undefined && $cicloNivelInicial["turno_id"] != null){
+            if($nivel->id == "2" && isset($cicloNivelPrimaria["turno_id"]) ){
                 $turno_id = $cicloNivelInicial["turno_id"];
             }
-            if($nivel->id == "3" && $cicloNivelSecundaria["turno_id"] != undefined && $cicloNivelSecundaria["turno_id"] != null){
+            if($nivel->id == "3" && isset($cicloNivelSecundaria["turno_id"]) ){
                 $turno_id = $cicloNivelSecundaria["turno_id"];
             }
 
@@ -223,6 +223,7 @@ class CicloEscolarController extends Controller
             $registro_nivel->activo='1';
             $registro_nivel->borrado='0';
 
+            
             $registro_nivel->save();
 
             foreach ($nivel->grados as $keyG => $grado) {

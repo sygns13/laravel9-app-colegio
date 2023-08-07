@@ -86,6 +86,13 @@ return [
             'throw' => false,
          ],
 
+         'resolucion' => [
+            'driver' => 'local',
+            'root' => public_path('web/resolucion'),
+            'visibility' => 'public',
+            'throw' => false,
+         ],
+
          'fotoPerfilAlumno' => [
             'driver' => 'local',
             'root' => public_path('web/perfil/alumno'),

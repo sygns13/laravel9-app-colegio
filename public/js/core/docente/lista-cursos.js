@@ -141,7 +141,7 @@ createApp({
 
             this.fillobject = dato;
             this.archivo=null;
-            this.uploadReady = false
+            this.uploadReady = false;
             $("#modalFormulario").modal('show');
 
             this.$nextTick(() => {

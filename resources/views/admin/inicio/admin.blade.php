@@ -21,24 +21,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="rows-table">1.</td>
-                                            <td class="rows-table">
-                                                <a href="javascript:void(0);">
-                                                    Resolución N° 2022
-                                                </a>
-                                            </td>
-                                            <td class="rows-table">2022</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="rows-table">2.</td>
-                                            <td class="rows-table">
-                                                <a href="javascript:void(0);">
-                                                    Resolución N° 2023
-                                                </a>
-                                            </td>
-                                            <td class="rows-table">2023</td>
-                                        </tr>
+                                        @foreach ($resolucionAperturas as $index => $resolucion)
+                                            <tr>
+                                                <td class="rows-table">{{$index+1}}</td>
+                                                <td class="rows-table">
+                                                    <a download href="{{ asset('web/resolucion/') }}/{{$resolucion->archivo}}">
+                                                        {{$resolucion->nombre}}
+                                                    </a>
+                                                </td>
+                                                <td class="rows-table">{{$resolucion->year}}</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -67,24 +60,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="rows-table">1.</td>
-                                            <td class="rows-table">
-                                                <a href="javascript:void(0);">
-                                                    Resolución N° 2022
-                                                </a>
-                                            </td>
-                                            <td class="rows-table">2022</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="rows-table">2.</td>
-                                            <td class="rows-table">
-                                                <a href="javascript:void(0);">
-                                                    Resolución N° 2023
-                                                </a>
-                                            </td>
-                                            <td class="rows-table">2023</td>
-                                        </tr>
+                                        @foreach ($resolucionCierres as $index => $resolucion)
+                                            <tr>
+                                                <td class="rows-table">{{$index+1}}</td>
+                                                <td class="rows-table">
+                                                    <a download href="{{ asset('web/resolucion/') }}/{{$resolucion->archivo}}">
+                                                        {{$resolucion->nombre}}
+                                                    </a>
+                                                </td>
+                                                <td class="rows-table">{{$resolucion->year}}</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -110,9 +96,9 @@
                     <div class="card-body">
                         <div class="table-responsive p-0">
                           <ul>
-                            <li><a href="javascript:void(0);">Reporte de Asistencia de Docentes</a></li>
-                            <li><a href="javascript:void(0);">Reporte de Asistencia de Alumnos</a></li>
-                            <li><a href="javascript:void(0);">Legajos</a></li>
+                            <li><a href="{{URL::to('admin/asistencia-docente')}}">Reporte de Asistencia de Docentes</a></li>
+                            <li><a href="{{URL::to('admin/asistencia-sesiones')}}">Reporte de Asistencia de Alumnos</a></li>
+                            <li><a href="{{URL::to('admin/legajo-fichas')}}">Legajos</a></li>
                           </ul>
                         </div>
                     </div>

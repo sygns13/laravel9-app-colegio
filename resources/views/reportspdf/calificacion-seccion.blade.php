@@ -276,7 +276,7 @@
                                 @elseif($alumno->estado_grado_alu=='3')
                                     Permanece en el Grado
                                 @elseif($alumno->estado_grado_alu=='4')
-                                    Reentrante
+                                    Expulsado
                                 @endif
                             </td>
                         </tr>

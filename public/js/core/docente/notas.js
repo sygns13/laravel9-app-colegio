@@ -217,12 +217,14 @@ createApp({
             this.competencianombre = competencia.nombre;
             this.indicadorNombre = indicador.nombre;
 
+            this.fechaProgramada = '';
+
             if(tipoCiclo == 1){
                 switch (periodo) {
                     case 1:
                         this.periodoNombre = 'Primer Trimestre';
                         this.fechaProgramadaActiva = indicador.activo1;
-                        if(indicador.activo1 == '1'){
+                        if(indicador.fecha_programada1 != null){
                             this.fechaProgramada = 'Fecha: ' + indicador.fecha_programada1 + ' hora: ' + indicador.hora_programada1;
                         }
                         
@@ -230,14 +232,14 @@ createApp({
                     case 2:
                         this.periodoNombre = 'Segundo Trimestre';
                         this.fechaProgramadaActiva = indicador.activo2;
-                        if(indicador.activo2 == '1'){
+                        if(indicador.fecha_programada2 != null){
                             this.fechaProgramada = 'Fecha: ' + indicador.fecha_programada2 + ' hora: ' + indicador.hora_programada2;
                         }
                     break;
                     case 3:
                         this.periodoNombre = 'Tercer Trimestre';
                         this.fechaProgramadaActiva = indicador.activo3;
-                        if(indicador.activo3 == '1'){
+                        if(indicador.fecha_programada3 != null){
                             this.fechaProgramada = 'Fecha: ' + indicador.fecha_programada3 + ' hora: ' + indicador.hora_programada3;
                         }
                     break;
@@ -253,28 +255,28 @@ createApp({
                     case 1:
                         this.periodoNombre = 'Primer Bimestre';
                         this.fechaProgramadaActiva = indicador.activo1;
-                        if(indicador.activo1 == '1'){
+                        if(indicador.fecha_programada1 != null){
                             this.fechaProgramada = 'Fecha: ' + indicador.fecha_programada1 + ' hora: ' + indicador.hora_programada1;
                         }
                     break;
                     case 2:
                         this.periodoNombre = 'Segundo Bimestre';
                         this.fechaProgramadaActiva = indicador.activo2;
-                        if(indicador.activo2 == '1'){
+                        if(indicador.fecha_programada2 != null){
                             this.fechaProgramada = 'Fecha: ' + indicador.fecha_programada2 + ' hora: ' + indicador.hora_programada2;
                         }
                     break;
                     case 3:
                         this.periodoNombre = 'Tercer Bimestre';
                         this.fechaProgramadaActiva = indicador.activo3;
-                        if(indicador.activo3 == '1'){
+                        if(indicador.fecha_programada3 != null){
                             this.fechaProgramada = 'Fecha: ' + indicador.fecha_programada3 + ' hora: ' + indicador.hora_programada3;
                         }
                     break;
                     case 4:
                         this.periodoNombre = 'Cuarto Bimestre';
                         this.fechaProgramadaActiva = indicador.activo4;
-                        if(indicador.activo4 == '1'){
+                        if(indicador.fecha_programada4 != null){
                             this.fechaProgramada = 'Fecha: ' + indicador.fecha_programada4 + ' hora: ' + indicador.hora_programada4;
                         }
                     break;
