@@ -29,6 +29,7 @@ use App\Models\Grado;
 use App\Models\CicloSeccion;
 use App\Models\Turno;
 use App\Models\Hora;
+use App\Models\ApoderadoUser;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
@@ -746,6 +747,25 @@ class AlumnoController extends Controller
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
+        if(intval($madre_principal) == 1)
+        {
+            $nameApo = 'APO_'.$madre_num_documento;
+
+            $userValid = User::where('name', '!=' ,$nameApo)
+                ->where('email', $madre_correo)
+                ->where('borrado',0)
+                ->count();
+
+            if($userValid > 0){
+                $result='0';
+                $msj='Si selecciona a la Madre como Apoderado Principal, el correo ingresado para la creación de su cuenta ya está registrado, ingrese otro';
+                $selector='txtcorreoM';
+    
+                return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+            }
+
+        }
+
         if($madre_apellido_materno == null){
             $madre_apellido_materno = "";
         }
@@ -854,6 +874,24 @@ class AlumnoController extends Controller
             $selector='txtcorreoP';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if(intval($padre_principal) == 1)
+        {
+            $nameApo = 'APO_'.$padre_num_documento;
+
+            $userValid = User::where('name', '!=' ,$nameApo)
+                ->where('email', $padre_correo)
+                ->where('borrado',0)
+                ->count();
+
+            if($userValid > 0){
+                $result='0';
+                $msj='Si selecciona a la Padre como Apoderado Principal, el correo ingresado para la creación de su cuenta ya está registrado, ingrese otro';
+                $selector='txtcorreoM';
+    
+                return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+            }
+
         }
 
         if($padre_apellido_materno == null){
@@ -967,6 +1005,24 @@ class AlumnoController extends Controller
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
+        if(intval($otro_principal) == 1)
+        {
+            $nameApo = 'APO_'.$otro_num_documento;
+
+            $userValid = User::where('name', '!=' ,$nameApo)
+                ->where('email', $otro_correo)
+                ->where('borrado',0)
+                ->count();
+
+            if($userValid > 0){
+                $result='0';
+                $msj='Si selecciona al Otro Apoderado como Apoderado Principal, el correo ingresado para la creación de su cuenta ya está registrado, ingrese otro';
+                $selector='txtcorreoM';
+    
+                return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+            }
+
+        }
 
         if(intval($otro_principal) == 1 && $validator25->fails())
         {
@@ -1055,8 +1111,9 @@ class AlumnoController extends Controller
 
 
         //Si paso todas las validaciones registro de Datos
-        $emailCuenta = "";
-        if($madre_principal == 1){
+        //TODO: Se comenta porque ahora el usuario del alumno es del alumno y para el padre es su usuario
+        $emailCuenta = $alu_correo;
+        /* if($madre_principal == 1){
             $emailCuenta = $madre_correo;
         }
         if($padre_principal == 1){
@@ -1064,7 +1121,7 @@ class AlumnoController extends Controller
         }
         if($otro_principal == 1){
             $emailCuenta = $otro_correo;
-        }
+        } */
 
         $registroA = new User;
 
@@ -1225,6 +1282,103 @@ class AlumnoController extends Controller
         $registroD->borrado='0';
 
         $registroD->save();
+
+        //Apoderado Usuario
+        $apoderado = Apoderado::where('alumno_id', $registro->id)
+                            ->where('activo',1)
+                            ->where('borrado',0)
+                            ->where('principal',1)
+                            ->first();
+                            
+        $apoderadoUser = ApoderadoUser::where('tipo_documento_id', $apoderado->tipo_documento_id)
+        ->where('num_documento', $apoderado->num_documento)
+        ->where('activo',1)
+        ->where('borrado',0)
+        ->first();
+
+        if($apoderadoUser){
+
+            $apoderadoUsers = ApoderadoUser::where('user_id', $apoderadoUser->user_id)
+            ->where('borrado',0)
+            ->where('activo',1)
+            ->get();
+
+            foreach ($apoderadoUsers as $key => $data) {
+                $apoUsr = ApoderadoUser::find($data->id);
+                $apoUsr->apellido_paterno = $apoderado->apellido_paterno;
+                $apoUsr->apellido_materno = $apoderado->apellido_materno;
+                $apoUsr->nombres = $apoderado->nombres;
+
+                $apoUsr->save();
+            }
+
+            $newApoderadoUser = new ApoderadoUser();
+
+            $newApoderadoUser->apellido_paterno = $apoderado->apellido_paterno;
+            $newApoderadoUser->apellido_materno = $apoderado->apellido_materno;
+            $newApoderadoUser->nombres = $apoderado->nombres;
+            $newApoderadoUser->user_id = $apoderadoUser->user_id;
+            $newApoderadoUser->tipo_documento_id = $apoderado->tipo_documento_id;
+            $newApoderadoUser->num_documento = $apoderado->num_documento;
+            $newApoderadoUser->tipo_apoderado = $apoderado->tipo_apoderado;
+            $newApoderadoUser->alumno_id = $registro->id;
+            $newApoderadoUser->activo = '1';
+            $newApoderadoUser->borrado = '0';
+
+            $newApoderadoUser->save();
+        }
+        else {
+            $nameApo = 'APO_'.$apoderado->num_documento;
+
+            $registroApoUOld = User::where('name', $nameApo)
+                ->where('tipo_user_id', '5')
+                ->where('borrado',0)
+                ->first();
+
+            if($registroApoUOld){
+                $newApoderadoUser = new ApoderadoUser();
+    
+                $newApoderadoUser->apellido_paterno = $apoderado->apellido_paterno;
+                $newApoderadoUser->apellido_materno = $apoderado->apellido_materno;
+                $newApoderadoUser->nombres = $apoderado->nombres;
+                $newApoderadoUser->user_id = $registroApoUOld->id;
+                $newApoderadoUser->tipo_documento_id = $apoderado->tipo_documento_id;
+                $newApoderadoUser->num_documento = $apoderado->num_documento;
+                $newApoderadoUser->tipo_apoderado = $apoderado->tipo_apoderado;
+                $newApoderadoUser->alumno_id = $registro->id;
+                $newApoderadoUser->activo = '1';
+                $newApoderadoUser->borrado = '0';
+
+                $newApoderadoUser->save();
+            }
+            else{
+                $registroApoU = new User;
+
+                $registroApoU->name=$nameApo;
+                $registroApoU->email=$apoderado->correo;
+                $registroApoU->password=bcrypt($apoderado->num_documento);
+                $registroApoU->tipo_user_id='5';
+                $registroApoU->activo='1';
+                $registroApoU->borrado='0';
+        
+                $registroApoU->save();
+    
+                $newApoderadoUser = new ApoderadoUser();
+    
+                $newApoderadoUser->apellido_paterno = $apoderado->apellido_paterno;
+                $newApoderadoUser->apellido_materno = $apoderado->apellido_materno;
+                $newApoderadoUser->nombres = $apoderado->nombres;
+                $newApoderadoUser->user_id = $registroApoU->id;
+                $newApoderadoUser->tipo_documento_id = $apoderado->tipo_documento_id;
+                $newApoderadoUser->num_documento = $apoderado->num_documento;
+                $newApoderadoUser->tipo_apoderado = $apoderado->tipo_apoderado;
+                $newApoderadoUser->alumno_id = $registro->id;
+                $newApoderadoUser->activo = '1';
+                $newApoderadoUser->borrado = '0';
+
+                $newApoderadoUser->save();
+            }
+        }
 
 
         $msj='Nuevo Alumno Registrado con Éxito';
@@ -1768,6 +1922,24 @@ class AlumnoController extends Controller
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
+        if(intval($madre_principal) == 1)
+        {
+            $nameApo = 'APO_'.$madre_num_documento;
+
+            $userValid = User::where('name', '!=' ,$nameApo)
+                ->where('email', $madre_correo)
+                ->where('borrado',0)
+                ->count();
+
+            if($userValid > 0){
+                $result='0';
+                $msj='Si selecciona a la Madre como Apoderado Principal, el correo ingresado para la creación de su cuenta ya está registrado, ingrese otro';
+                $selector='txtcorreoM';
+    
+                return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+            }
+
+        }
 
         if($madre_apellido_materno == null){
             $madre_apellido_materno = "";
@@ -1878,6 +2050,24 @@ class AlumnoController extends Controller
             $selector='txtcorreoP';
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        if(intval($padre_principal) == 1)
+        {
+            $nameApo = 'APO_'.$padre_num_documento;
+
+            $userValid = User::where('name', '!=' ,$nameApo)
+                ->where('email', $padre_correo)
+                ->where('borrado',0)
+                ->count();
+
+            if($userValid > 0){
+                $result='0';
+                $msj='Si selecciona a la Padre como Apoderado Principal, el correo ingresado para la creación de su cuenta ya está registrado, ingrese otro';
+                $selector='txtcorreoP';
+    
+                return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+            }
+
         }
 
         if($padre_apellido_materno == null){
@@ -1991,6 +2181,24 @@ class AlumnoController extends Controller
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
+        if(intval($otro_principal) == 1)
+        {
+            $nameApo = 'APO_'.$otro_num_documento;
+
+            $userValid = User::where('name', '!=' ,$nameApo)
+                ->where('email', $otro_correo)
+                ->where('borrado',0)
+                ->count();
+
+            if($userValid > 0){
+                $result='0';
+                $msj='Si selecciona al Otro Apoderado como Apoderado Principal, el correo ingresado para la creación de su cuenta ya está registrado, ingrese otro';
+                $selector='txtcorreoO';
+    
+                return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+            }
+
+        }
 
         if(intval($otro_principal) == 1 && $validator25->fails())
         {
@@ -2079,8 +2287,10 @@ class AlumnoController extends Controller
 
 
         //Si paso todas las validaciones registro de Datos
-        $emailCuenta = "";
-        if($madre_principal == 1){
+
+        //TODO: Se comenta porque ahora el usuario del alumno es del alumno y para el padre es su usuario
+        $emailCuenta = $alu_correo;
+        /* if($madre_principal == 1){
             $emailCuenta = $madre_correo;
         }
         if($padre_principal == 1){
@@ -2088,7 +2298,7 @@ class AlumnoController extends Controller
         }
         if($otro_principal == 1){
             $emailCuenta = $otro_correo;
-        }
+        } */
 
         
         $registro = Alumno::findOrFail($id);
@@ -2327,7 +2537,114 @@ class AlumnoController extends Controller
                 }
             }
 
-            
+        }
+
+        //Apoderado Usuario
+        $apoderado = Apoderado::where('alumno_id', $id)
+                            ->where('activo',1)
+                            ->where('borrado',0)
+                            ->where('principal',1)
+                            ->first();
+
+        $apoderadoUserOld = ApoderadoUser::where('alumno_id', $id)
+        ->where('activo',1)
+        ->where('borrado',0)
+        ->first();
+
+        if($apoderadoUserOld){
+            $apoderadoUserOld->delete();
+        }
+                            
+        $apoderadoUser = ApoderadoUser::where('tipo_documento_id', $apoderado->tipo_documento_id)
+        ->where('num_documento', $apoderado->num_documento)
+        ->where('activo',1)
+        ->where('borrado',0)
+        ->first();
+
+        if($apoderadoUser){
+
+            $apoderadoUsers = ApoderadoUser::where('user_id', $apoderadoUser->user_id)
+            ->where('borrado',0)
+            ->where('activo',1)
+            ->get();
+
+            foreach ($apoderadoUsers as $key => $data) {
+                $apoUsr = ApoderadoUser::find($data->id);
+                $apoUsr->apellido_paterno = $apoderado->apellido_paterno;
+                $apoUsr->apellido_materno = $apoderado->apellido_materno;
+                $apoUsr->nombres = $apoderado->nombres;
+
+                $apoUsr->save();
+            }
+
+            $newApoderadoUser = new ApoderadoUser();
+
+            $newApoderadoUser->apellido_paterno = $apoderado->apellido_paterno;
+            $newApoderadoUser->apellido_materno = $apoderado->apellido_materno;
+            $newApoderadoUser->nombres = $apoderado->nombres;
+            $newApoderadoUser->user_id = $apoderadoUser->user_id;
+            $newApoderadoUser->tipo_documento_id = $apoderado->tipo_documento_id;
+            $newApoderadoUser->num_documento = $apoderado->num_documento;
+            $newApoderadoUser->tipo_apoderado = $apoderado->tipo_apoderado;
+            $newApoderadoUser->alumno_id = $registro->id;
+            $newApoderadoUser->activo = '1';
+            $newApoderadoUser->borrado = '0';
+
+            $newApoderadoUser->save();
+        }
+        else {
+
+            $nameApo = 'APO_'.$apoderado->num_documento;
+
+            $registroApoUOld = User::where('name', $nameApo)
+                ->where('tipo_user_id', '5')
+                ->where('borrado',0)
+                ->first();
+
+            if($registroApoUOld){
+                $newApoderadoUser = new ApoderadoUser();
+    
+                $newApoderadoUser->apellido_paterno = $apoderado->apellido_paterno;
+                $newApoderadoUser->apellido_materno = $apoderado->apellido_materno;
+                $newApoderadoUser->nombres = $apoderado->nombres;
+                $newApoderadoUser->user_id = $registroApoUOld->id;
+                $newApoderadoUser->tipo_documento_id = $apoderado->tipo_documento_id;
+                $newApoderadoUser->num_documento = $apoderado->num_documento;
+                $newApoderadoUser->tipo_apoderado = $apoderado->tipo_apoderado;
+                $newApoderadoUser->alumno_id = $registro->id;
+                $newApoderadoUser->activo = '1';
+                $newApoderadoUser->borrado = '0';
+
+                $newApoderadoUser->save();
+            }
+            else{
+                $registroApoU = new User;
+
+                $registroApoU->name=$nameApo;
+                $registroApoU->email=$apoderado->correo;
+                $registroApoU->password=bcrypt($apoderado->num_documento);
+                $registroApoU->tipo_user_id='5';
+                $registroApoU->activo='1';
+                $registroApoU->borrado='0';
+        
+                $registroApoU->save();
+    
+                $newApoderadoUser = new ApoderadoUser();
+    
+                $newApoderadoUser->apellido_paterno = $apoderado->apellido_paterno;
+                $newApoderadoUser->apellido_materno = $apoderado->apellido_materno;
+                $newApoderadoUser->nombres = $apoderado->nombres;
+                $newApoderadoUser->user_id = $registroApoU->id;
+                $newApoderadoUser->tipo_documento_id = $apoderado->tipo_documento_id;
+                $newApoderadoUser->num_documento = $apoderado->num_documento;
+                $newApoderadoUser->tipo_apoderado = $apoderado->tipo_apoderado;
+                $newApoderadoUser->alumno_id = $registro->id;
+                $newApoderadoUser->activo = '1';
+                $newApoderadoUser->borrado = '0';
+
+                $newApoderadoUser->save();
+            }
+
         }
 
 
