@@ -350,6 +350,11 @@ return [
                     'can'  => ['admin', 'director']
                 ],
                 [
+                    'text' => 'Matrícula Masiva',
+                    'url'  => 'admin/matricula-masiva',
+                    'can'  => ['admin', 'director']
+                ],
+                [
                     'text' => 'Asignación de Cursos',
                     'url'  => 'admin/asignacion-cursos',
                     'can'  => ['admin', 'director']

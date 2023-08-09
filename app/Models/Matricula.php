@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Traslado;
 use App\Models\Alumno;
+use App\Models\Niveles;
+use App\Models\Grado;
+use App\Models\CicloSeccion;
 
 use DB;
+use stdClass;
 
 class Matricula extends Model
 {
@@ -1034,6 +1038,222 @@ class Matricula extends Model
         $alumno->save();
 
         return true;
+    }
+
+    public static function GetDatosPendientesBySeccion($ciclo_seccion_id){
+
+        $ciclo_seccion = CicloSeccion::findOrFail($ciclo_seccion_id);
+        $cicloEval = CicloEscolar::find($ciclo_seccion->ciclo_escolar_id);
+
+        $matriculas = Matricula::select('alumno_id')
+            ->where('borrado','0')
+            ->where('activo','1')
+            ->whereIn('estado', [2, 3])
+            ->where('ciclo_seccion_id', $ciclo_seccion_id)
+            ->where('ciclo_escolar_id', $cicloEval->id)
+            ->orderBy('alumno_id')
+            ->get();
+
+        $alumnos = Alumno::where('borrado','0')
+            ->where('activo','1')
+            ->whereIn('estado_grado', [2, 3])
+            ->whereIn('id', $matriculas)
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
+            ->orderBy('nombres')
+            ->get();
+
+            foreach ($alumnos as $key => $alumno) {
+                $matricula = Matricula::where('borrado','0')
+                ->where('activo','1')
+                ->whereIn('estado', [2, 3])
+                ->where('ciclo_seccion_id', $ciclo_seccion_id)
+                ->where('ciclo_escolar_id', $cicloEval->id)
+                ->where('alumno_id', $alumno->id)
+                ->orderBy('ciclo_escolar_id', 'desc')
+                ->first();
+
+                $nivel = Niveles::find($alumno->nivel_actual);
+                $grado = Grado::find($alumno->grado_actual);
+                $cicloSeccion = null;
+
+                if($matricula){
+                    $cicloSeccion = CicloSeccion::find($matricula->ciclo_seccion_id);
+                }
+
+                $alumno->numero_matricula = str_pad($alumno->numero_matricula, 4, "0", STR_PAD_LEFT);
+                $alumno->matriculaLast = $matricula;
+                $alumno->nivel = $nivel;
+                $alumno->grado = $grado;
+                $alumno->cicloSeccion = $cicloSeccion;
+
+            }
+
+
+        return $alumnos;
+    }
+
+    public static function GetDatosActualesBySeccionLast($ciclo_seccion_id, $ciclo_grado_id, $ciclo_nivel_id){
+
+        //Data Transaccional
+        $ciclo_seccion = CicloSeccion::findOrFail($ciclo_seccion_id);
+        $seccion = Secciones::findOrFail($ciclo_seccion->seccion_id);
+
+        $ciclo_grado = CicloGrado::findOrFail($ciclo_grado_id);
+        $grado = Grado::findOrFail($ciclo_grado->grado_id);
+
+        $ciclo_nivel = CicloNivel::findOrFail($ciclo_nivel_id);
+        $nivel = Niveles::findOrFail($ciclo_nivel->nivel_id);
+
+        //Data Historica
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $response = new stdClass();
+
+        $ciclo_seccion_r = CicloSeccion::where('borrado','0')
+        ->where('activo','1')
+        ->where('seccion_id', $seccion->id)
+        ->where('ciclo_escolar_id', $cicloActivo->id)
+        ->first();
+
+        $ciclo_grado_r = CicloGrado::where('borrado','0')
+        ->where('activo','1')
+        ->where('grado_id', $grado->id)
+        ->where('ciclo_escolar_id', $cicloActivo->id)
+        ->first();
+
+        $ciclo_nivel_r = CicloNivel::where('borrado','0')
+        ->where('activo','1')
+        ->where('nivel_id', $nivel->id)
+        ->where('ciclo_escolar_id', $cicloActivo->id)
+        ->first();
+
+        $response->nivel_R =$ciclo_nivel_r;
+        $response->grado_R =$ciclo_grado_r;
+        $response->seccion_R =$ciclo_seccion_r;
+
+        //Obtener Grado Siguiente
+        $nivel_p = $nivel->id;
+        $grado_p = intval($grado->id) +1 ;
+
+
+        if($grado->nivele_id == 1 && $grado->orden == 2){
+            $nivel_p = 2;
+            $grado_p = 3;
+        }
+        if($grado->nivele_id == 2 && $grado->orden == 6){
+            $nivel_p = 3;
+            $grado_p = 9;
+        }
+        if($grado->nivele_id == 3 && $grado->orden == 5){
+            $nivel_p = 0;
+            $grado_p = 0;
+        }
+
+        if($nivel_p == 0 && $grado_p == 0){
+            $response->nivel_P = null;
+            $response->grado_P = null;
+            $response->seccion_P = null;
+            $response->isQuintoSecundariaBefore = true;
+
+            return $response;
+        }
+
+
+        $ciclo_grado_p = CicloGrado::where('borrado','0')
+        ->where('activo','1')
+        ->where('grado_id', $grado_p)
+        ->where('ciclo_escolar_id', $cicloActivo->id)
+        ->first();
+
+        $ciclo_nivel_p = CicloNivel::where('borrado','0')
+        ->where('activo','1')
+        ->where('nivel_id', $nivel_p)
+        ->where('ciclo_escolar_id', $cicloActivo->id)
+        ->first();
+
+        $ciclo_seccion_p = CicloSeccion::where('borrado','0')
+        ->where('activo','1')
+        ->where('ciclo_grados_id', $ciclo_grado_p->id)
+        ->where('ciclo_escolar_id', $cicloActivo->id)
+        ->first();
+
+        $response->nivel_P =$ciclo_nivel_p;
+        $response->grado_P =$ciclo_grado_p;
+        $response->seccion_P =$ciclo_seccion_p;
+        $response->isQuintoSecundariaBefore = false;
+
+        return $response;
+        
+    }
+
+    public static function MatriculaRapida($alumno, $cabecera, $dataMatricular){
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        $matricula = new Matricula;
+        $matricula->alumno_id = $alumno->matriculaLast->alumno_id;
+        //$matricula->ciclo_escolar_id = $alumno->matriculaLast->ciclo_escolar_id;
+        //$matricula->fecha = $alumno->matriculaLast->fecha;
+        //$matricula->estado = $alumno->matriculaLast->estado;
+        //$matricula->es_traslado = $alumno->matriculaLast->es_traslado;
+        $matricula->tiene_discapacidad = $alumno->matriculaLast->tiene_discapacidad;
+        $matricula->vive_madre = $alumno->matriculaLast->vive_madre;
+        $matricula->vive_padre = $alumno->matriculaLast->vive_padre;
+        //$matricula->responsable_matricula_nombres = $alumno->matriculaLast->responsable_matricula_nombres;
+        //$matricula->cargo_responsable = $alumno->matriculaLast->cargo_responsable;
+        //$matricula->ciclo_seccion_id = $alumno->matriculaLast->ciclo_seccion_id;
+        //$matricula->situacion_final = $alumno->matriculaLast->situacion_final;
+        $matricula->nota_final = $alumno->matriculaLast->nota_final;
+        //$matricula->situacion = $alumno->matriculaLast->situacion;
+        $matricula->sigla_situacion = $alumno->matriculaLast->sigla_situacion;
+        $matricula->trabaja = $alumno->matriculaLast->trabaja;
+        $matricula->activo = $alumno->matriculaLast->activo;
+        $matricula->borrado = $alumno->matriculaLast->borrado;
+        $matricula->created_at = $alumno->matriculaLast->created_at;
+        $matricula->updated_at = $alumno->matriculaLast->updated_at;
+        $matricula->DI = $alumno->matriculaLast->DI;
+        $matricula->DA = $alumno->matriculaLast->DA;
+        $matricula->DV = $alumno->matriculaLast->DV;
+        $matricula->DM = $alumno->matriculaLast->DM;
+        $matricula->SC = $alumno->matriculaLast->SC;
+        $matricula->OT = $alumno->matriculaLast->OT;
+        //$matricula->sigla_situacion_final = $alumno->matriculaLast->sigla_situacion_final;
+
+
+        $matricula->ciclo_escolar_id = $cicloActivo->id;
+        $matricula->fecha = $cabecera->fecha;
+        $matricula->estado = 5; //Pendiente Transitivo
+        $matricula->es_traslado = 0; //No
+
+        $matricula->responsable_matricula_nombres = $cabecera->responsable_matricula_nombres; //No
+        $matricula->cargo_responsable = ""; //No
+        $matricula->ciclo_seccion_id = $dataMatricular->seccion; //No
+        $matricula->situacion = null;
+        $matricula->situacion_final = null; //null
+        $matricula->sigla_situacion = null; //null
+        $matricula->sigla_situacion_final = null; //null
+
+        $matricula->save();
+
+        //Update Alumno
+
+        $nivelCiclo = CicloNivel::find($dataMatricular->nivel);
+        $gradoCiclo = CicloGrado::find($dataMatricular->grado);
+
+        $alumnoBD = Alumno::find($alumno->id);
+
+        $alumnoBD->grado_actual = $gradoCiclo->grado_id;
+        $alumnoBD->nivel_actual = $nivelCiclo->nivel_id;
+        $alumnoBD->old_estado_grado = $alumnoBD->estado_grado;
+        $alumnoBD->estado_grado = 0; // Por Matricular
+
+        $alumnoBD->save();
+
+        return [ 
+            'alumno' => $alumnoBD,
+            'matricula' => $matricula,
+           ];
+
     }
 
 

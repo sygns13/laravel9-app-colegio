@@ -69,6 +69,8 @@ Route::middleware([
     Route::get('/horario-alumno', [AlumnoController::class, 'index3'])->name('horario-alumno');
     Route::get('/asistencia-alumno', [AlumnoController::class, 'index4'])->name('asistencia-alumno');
     Route::get('/resoluciones', [ResolucionController::class, 'index1'])->name('resoluciones');
+
+    Route::get('/matricula-masiva', [MatriculaController::class, 'index4'])->name('matricula-masiva');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -163,5 +165,8 @@ Route::middleware([
     Route::post('/regfecha-calificacion', [NotaController::class, 'programarFecha'])->name('programarFecha');
 
     Route::post('/realumnoUpdate/FotoPerfil', [AlumnoController::class, 'updatefotoperfil'])->name('realumnoUpdate');
+
+    Route::post('/rematricula-masiva/buscar', [MatriculaController::class, 'buscarMasivo'])->name('rematricula-masiva/buscar');
+    Route::post('/rematricula-masiva/store', [MatriculaController::class, 'storeMasivo'])->name('rematricula-masiva/store');
 
 });

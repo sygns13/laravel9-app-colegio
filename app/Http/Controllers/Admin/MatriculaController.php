@@ -26,6 +26,9 @@ use App\Models\ApoderadoMatricula;
 use App\Models\Turno;
 use App\Models\Nota;
 
+use App\Models\CicloNivel;
+use App\Models\CicloGrado;
+
 use App\Models\InstitucionEducativa;
 
 use stdClass;
@@ -72,6 +75,34 @@ class MatriculaController extends Controller
         $ciclos = CicloEscolar::GetAllCiclos();
 
         return view('admin.docnominas.index',compact('cicloActivo', 'ciclos'));
+    }
+    public function index4()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $cicloActivoLast = CicloEscolar::GetCicloActivoLast();
+
+        $estados = Estado::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $departamentos = Departamento::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $provincias = Provincia::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $distritos = Distrito::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+
+        $niveles = []; 
+        $grados = []; 
+        $secciones = []; 
+
+        if(!$cicloActivoLast){
+            return view('admin.matricula-masiva.index',compact('cicloActivo','cicloActivoLast', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
+        }
+        
+        $niveles = CicloNivel::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivoLast->id)->orderBy('id','asc')->get();
+        $grados = CicloGrado::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivoLast->id)->orderBy('id','asc')->get();
+        $secciones = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivoLast->id)->orderBy('id','asc')->get();
+
+        $nivelesNow = CicloNivel::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $gradosNow = CicloGrado::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $seccionesNow = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+
+        return view('admin.matricula-masiva.index',compact('cicloActivo','cicloActivoLast', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones', 'nivelesNow', 'gradosNow', 'seccionesNow'));
     }
 
     public function index(Request $request)
@@ -1279,4 +1310,131 @@ class MatriculaController extends Controller
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$matricula_id]);
 
     }
+
+    public function buscarMasivo(Request $request)
+    {
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $nivel=$request->nivel;
+        $grado=$request->grado;
+        $seccion=$request->seccion;
+        $responsable_matricula_nombres=$request->responsable_matricula_nombres;
+        $fecha=$request->fecha;
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+
+        $input1  = array('nivel' => $nivel);
+        $reglas1 = array('nivel' => 'required');
+
+        $input2  = array('grado' => $grado);
+        $reglas2 = array('grado' => 'required');
+
+        $input3  = array('seccion' => $seccion);
+        $reglas3 = array('seccion' => 'required');
+
+        $input4  = array('responsable_matricula_nombres' => $responsable_matricula_nombres);
+        $reglas4 = array('responsable_matricula_nombres' => 'required');
+
+        $input5  = array('fecha' => $fecha);
+        $reglas5 = array('fecha' => 'required');
+
+        $validator1 = Validator::make($input1, $reglas1);
+        $validator2 = Validator::make($input2, $reglas2);
+        $validator3 = Validator::make($input3, $reglas3);
+        $validator4 = Validator::make($input4, $reglas4);
+        $validator5 = Validator::make($input5, $reglas5);
+
+        if ($validator1->fails() || intval($nivel) <= 0)
+        {
+            $result='0';
+            $msj='Debe Seleccionar el Nivel';
+            $selector='cbunivel';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator2->fails() || intval($grado) <= 0)
+        {
+            $result='0';
+            $msj='Debe Seleccionar el Grado';
+            $selector='cbugrado';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator3->fails() || intval($seccion) <= 0)
+        {
+            $result='0';
+            $msj='Debe Seleccionar la Sección';
+            $selector='cbuseccion';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+
+
+        if ($validator4->fails())
+        {
+            $result='0';
+            $msj='Debe de ingresar el Responsable de Matrícula';
+            $selector='txtresponsable_matricula_nombres';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator5->fails())
+        {
+            $result='0';
+            $msj='Debe de ingresar la Fecha de Matrícula';
+            $selector='cbutipo';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $registros = Matricula::GetDatosPendientesBySeccion($seccion);
+        $cicloActivoLast = CicloEscolar::GetCicloActivoLast();
+
+        $dataCabecera = Matricula::GetDatosActualesBySeccionLast($seccion, $grado, $nivel);
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector,'registros'=>$registros,'cicloActivoLast'=>$cicloActivoLast,'dataCabecera'=>$dataCabecera]);
+    }
+
+
+    public function storeMasivo(Request $request){
+
+        ini_set('memory_limit','256M');
+
+        $result='0';
+        $msj='Se tuvo un error en el proceso, comunicarse con el Administrador';
+        $selector='';
+
+        $cabecera = json_decode(stripslashes($request->cabecera));
+        $registros = json_decode(stripslashes($request->registros));
+        $dataRepetir = json_decode(stripslashes($request->dataRepetir));
+        $dataPromover = json_decode(stripslashes($request->dataPromover));
+
+        foreach ($registros as $key => $alumno) {
+            //flow Repitente
+            if($alumno->estado_grado == 3){
+                Matricula::MatriculaRapida($alumno, $cabecera, $dataRepetir);
+            }
+            //flow Repitente
+            elseif($alumno->estado_grado == 2){
+                Matricula::MatriculaRapida($alumno, $cabecera, $dataPromover);
+            }
+        }
+
+        $result='1';
+        $msj='Se realizó la Matrícula Masiva de Forma Exitosa';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector, 'registros'=>$registros]);
+    }
+
+
+    
 }

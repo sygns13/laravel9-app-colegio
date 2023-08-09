@@ -94,4 +94,13 @@ class CicloEscolar extends Model
 
         return $registro;
     }
+
+    public static function GetCicloActivoLast(){
+        $registro = CicloEscolar::where('borrado','0')
+                    ->where('activo','0')
+                    ->orderBy('id','desc')
+                    ->first();
+
+        return $registro;
+    }
 }
