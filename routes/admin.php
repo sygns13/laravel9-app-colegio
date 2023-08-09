@@ -145,6 +145,7 @@ Route::middleware([
     Route::get('/reportepdf/calificaciones-alumno/{matricula_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumno'])->name('impFichaCalificacionesAlumno');
     Route::get('/reportepdf/calificaciones-curso/{matricula_id}/{ciclo_curso_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumnoCurso'])->name('impFichaCalificacionesAlumnoCurso');
     
+    Route::get('/reportepdf/constancia-matricula-activo/{alumno_id}',[ReportPDFController::class, 'impConstanciaMatriculaActive'])->name('impConstanciaMatriculaActive');
     //Alumno
     //Route::get('/reportepdf/calificacion-alumno/{matricula_id}/{ciclo_curso_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumnoCurso'])->name('impFichaCalificacionesAlumnoCurso');
     Route::get('/reportepdf/asistencia-sesiones-alumno/{ciclo_id}/{fecha}/{alumno_id}',[ReportPDFController::class, 'impAsistenciaSesionAlumno'])->name('impAsistenciaSesionAlumno');

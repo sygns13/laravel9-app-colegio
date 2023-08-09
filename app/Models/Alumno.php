@@ -945,4 +945,65 @@ class Alumno extends Model
         return $data;
     }
 
+    public static function GetLastConstanciaById($alumno_id){
+        $data = Alumno::findOrFail($alumno_id);
+                    
+
+        if($data){
+            $tipoDocumento = TipoDocumento::find($data->tipo_documento_id);
+            $data->tipoDocumento = $tipoDocumento;
+
+            $apoderados = Apoderado::where('alumno_id', $data->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->get();
+
+                                foreach ($apoderados as $key => $apoderado) {
+                                    $tipoApoderado = Tipoapoderado::find($apoderado->tipo_apoderado_id);
+                                    $apoderado->tipoApoderado = $tipoApoderado;
+                                }
+            $data->apoderados = $apoderados;
+
+            $cicloActivo = CicloEscolar::GetCicloActivo();
+
+            $matricula = Matricula::where('alumno_id', $data->id)
+                                ->where('ciclo_escolar_id', $cicloActivo->id)
+                                ->where('activo', 1)
+                                ->where('borrado', 0)
+                                ->first();
+
+
+            $ciclo = CicloEscolar::find($matricula->ciclo_escolar_id);
+            $matricula->ciclo = $ciclo;
+
+            $cicloSeccion = CicloSeccion::find($matricula->ciclo_seccion_id);
+            $matricula->cicloSeccion = $cicloSeccion;
+
+            $turno = Turno::find($cicloSeccion->turno_id);
+            $matricula->turno = $turno;
+
+            $cicloGrado = CicloGrado::find($cicloSeccion->ciclo_grados_id);
+            $matricula->cicloGrado = $cicloGrado;
+
+            $cicloNivel = CicloNivel::find($cicloGrado->ciclo_niveles_id);
+            $matricula->cicloNivel = $cicloNivel;
+
+            $apoderadoMatricula = ApoderadoMatricula::where('alumno_id', $data->id)
+                                                    ->where('matricula_id', $matricula->id)
+                                                    ->where('activo', 1)
+                                                    ->where('borrado', 0)
+                                                    ->first();
+            $matricula->apoderadoMatricula = $apoderadoMatricula;
+
+
+            $data->matricula = $matricula;
+
+            $data->fullNombre = $data->apellido_paterno . ' ' . $data->apellido_materno . ' ' . $data->nombres;
+        }
+        
+
+        return $data;
+    }
+
+
 }

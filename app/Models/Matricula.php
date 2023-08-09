@@ -1249,6 +1249,52 @@ class Matricula extends Model
 
         $alumnoBD->save();
 
+        //Apoderado Matricula
+        $apoderados = Apoderado::where('alumno_id', $alumnoBD->id)
+                            ->where('activo',1)
+                            ->where('borrado',0)
+                            ->get();
+
+        foreach ($apoderados as $apoderado) {
+            if($apoderado->principal == "1"){
+
+                $registroD = new ApoderadoMatricula;
+
+                $registroD->alumno_id = $alumnoBD->id;
+                $registroD->matricula_id = $matricula->id;
+                $registroD->apellido_paterno = $apoderado->apellido_materno;
+                $registroD->apellido_materno = $apoderado->apellido_paterno;
+                $registroD->nombres = $apoderado->nombres;
+                $registroD->parentesco = $apoderado->tipo_apoderado;
+                $registroD->fecha_nac = $apoderado->fecha_nacimiento;
+                $registroD->instruccion = $apoderado->grado_instruccion;
+                $registroD->ocupacion = $apoderado->ocupacion;
+                $registroD->direccion = $apoderado->direccion;
+                $registroD->telefono = $apoderado->telefono;
+                $registroD->activo = '1';
+                $registroD->borrado = '0';
+
+                $registroD->save();
+            }
+        }
+
+        //Domicilio
+        $registroC = new Domicilio;
+
+        $registroC->anio = $cicloActivo->year;
+        $registroC->direccion = $alumno->direccion;
+        $registroC->lugar = $alumno->lugar;
+        $registroC->departamento = $alumno->departamento;
+        $registroC->provincia = $alumno->provincia;
+        $registroC->distrito = $alumno->distrito;
+        $registroC->telefono = $alumno->telefono;
+        $registroC->alumno_id = $alumno->id;
+        $registroC->activo = '1';
+        $registroC->borrado = '0';
+        $registroC->matricula_id = $matricula->id;
+        
+        $registroC->save();
+
         return [ 
             'alumno' => $alumnoBD,
             'matricula' => $matricula,

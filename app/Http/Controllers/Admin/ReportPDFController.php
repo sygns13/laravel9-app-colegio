@@ -242,6 +242,31 @@ class ReportPDFController extends Controller
         return $pdf->download('HORARIO_ASISTENCIA_ALUMNO_'.$horarioSeccion->ciclo->year.'_'.$horarioSeccion->cicloSeccion->sigla.'_'.$alumno->num_documento.'.pdf');
     }
 
+    public function impConstanciaMatriculaActive($alumno_id)
+    {
+
+        //$matricula = Matricula::findOrFail($matricula_id);
+
+        $alumno = Alumno::GetLastConstanciaById($alumno_id);
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+  
+        $data = [
+            'alumno' => $alumno,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.constancia-matricula', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('CONSTANCIA_MATRICULA_'.$cicloActivo->year.'_'.$alumno->num_documento.'.pdf');
+    }
+
 
 
 

@@ -369,7 +369,7 @@ createApp({
 
         consultarMatricula:function (registro) {
             //console.log("imprimirMatricula");
-            url = 'reportepdf/ficha-matricula/'+registro.id;
+            url = 'reportepdf/constancia-matricula-activo/'+registro.id;
             console.log(url);
             window.open(url, '_blank').focus();
         },
