@@ -43,6 +43,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('alumno', function (User $user) {
             return $user->tipo_user_id === 4;
         });
+
+        Gate::define('apoderado', function (User $user) {
+            return $user->tipo_user_id === 5;
+        });
+
+        Gate::define('tutor', function (User $user) {
+            return $user->tipo_user_id === 6;
+        });
     }
 
 }

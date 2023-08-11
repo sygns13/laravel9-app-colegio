@@ -134,6 +134,62 @@ class AlumnoController extends Controller
                ];
     }
 
+    public function indexApoderadoMain()
+    {
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        $apoderadoUsers = ApoderadoUser::where('activo','1')->where('borrado','0')
+                                        ->where('user_id',$iduser)
+                                        ->get();
+
+        foreach ($apoderadoUsers as $key => $dato) {
+            $tipoDocumento = TipoDocumento::find($dato->tipo_documento_id);
+            $alumno = Alumno::find($dato->alumno_id);
+
+            $nivel = Niveles::find($alumno->nivel_actual);
+            $grado = Grado::find($alumno->grado_actual);
+            $matricula = Matricula::where('alumno_id', $alumno->id)->where('activo','1')->where('borrado','0') ->orderBy('id', 'desc')->first();
+
+            $data = Alumno::GetDataById($alumno->id);
+
+            $seccion = null;
+
+            if($matricula != null){
+                $seccion = CicloSeccion::find($matricula->ciclo_seccion_id);
+            }
+            
+
+            $alumno->nivel = $nivel;
+            $alumno->grado = $grado;
+            $alumno->matricula = $matricula;
+            $alumno->seccion = $seccion;
+            $alumno->data = $data;
+
+            $apoderado = Apoderado::where('tipo_documento_id', $dato->tipo_documento_id)
+                                    ->where('num_documento', $dato->num_documento)
+                                    ->where('alumno_id', $dato->alumno_id)
+                                    ->first();
+
+            $dato->tipoDocumento = $tipoDocumento;
+            $dato->alumno = $alumno;
+            $dato->apoderado = $apoderado;
+        }
+
+        $apoderado = ApoderadoUser::where('activo','1')->where('borrado','0')
+                                        ->where('user_id',$iduser)
+                                        ->first();
+        $tipoDocumento = TipoDocumento::find($apoderado->tipo_documento_id);
+        $apoderado->tipoDocumento = $tipoDocumento;
+
+        return [ 
+                'user' => $user,
+                'apoderado' => $apoderado,
+                'apoderadoUsers' => $apoderadoUsers,
+               ];
+    }
+
     public function index2()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
@@ -2746,6 +2802,96 @@ class AlumnoController extends Controller
         else{
             if($user->profile_photo_path != null){
                 Storage::disk('fotoPerfilAlumno')->delete($user->profile_photo_path);
+            }
+
+            $user->profile_photo_path = $imagen;
+            $user->save();
+           
+            $msj='Imagen de Perfil Actualizada Exitosamente';
+        }
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        
+    }
+
+    public function updatefotoperfilApoderado(Request $request)
+    {
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+
+        $imagen="";
+        $file = $request->imagen;
+        $segureFile=0;
+
+        if($request->hasFile('imagen')){
+
+            $nombreArchivo=$request->nombrefile;
+
+            $aux2='perfil_'.date('d-m-Y').'-'.date('H-i-s');
+            $input2  = array('imagen' => $file) ;
+            $reglas2 = array('imagen' => 'required|file:1,10000');
+            $validatorF = Validator::make($input2, $reglas2);     
+
+            if ($validatorF->fails())
+            {
+                $segureFile=1;
+                $msj="El imagen adjunto ingresado tiene un tamaño superior a 10 MB, ingrese otro imagen o limpie el formulario";
+                $result='0';
+                $selector='imagen';
+            }
+            else
+            {
+                $nombre2=$file->getClientOriginalName();
+                $extension2=$file->getClientOriginalExtension();
+                $nuevoNombre2=$aux2.".".$extension2;
+                //$subir2=Storage::disk('infoFile')->put($nuevoNombre2, \File::get($file));
+
+                if($extension2=="png"|| $extension2=="jpg"|| $extension2=="jpeg"|| $extension2=="gif"|| $extension2=="jpe"|| $extension2=="PNG"|| $extension2=="JPG"|| $extension2=="JPEG"|| $extension2=="GIF"|| $extension2=="JPE")
+                {
+
+                    $subir2=false;
+                    $subir2=Storage::disk('fotoPerfilApoderado')->put($nuevoNombre2, \File::get($file));
+
+                if($subir2){
+                    $imagen=$nuevoNombre2;
+                }
+                else{
+                    $msj="Error al subir el imagen adjunto, intentelo nuevamente luego";
+                    $segureFile=1;
+                    $result='0';
+                    $selector='imagen';
+                }
+                }
+                else {
+                    $segureFile=1;
+                    $msj="El imagen adjunto ingresado tiene una extensión no válida, ingrese otro imagen o limpie el formulario";
+                    $result='0';
+                    $selector='imagen';
+                }
+            }
+
+        }
+        else{
+            $msj="Debe de adjuntar un imagen adjunto válido, ingrese un imagen";
+            $segureFile=1;
+            $result='0';
+            $selector='imagen';
+        }     
+
+        if($segureFile==1){
+            Storage::disk('fotoPerfilApoderado')->delete($imagen);
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+        else{
+            if($user->profile_photo_path != null){
+                Storage::disk('fotoPerfilApoderado')->delete($user->profile_photo_path);
             }
 
             $user->profile_photo_path = $imagen;

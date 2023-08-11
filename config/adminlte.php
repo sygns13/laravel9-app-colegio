@@ -256,7 +256,7 @@ return [
             'url'         => 'admin',
             'icon'        => 'fas fa-fw fa-home',
             'icon_color'  => 'white',
-            'can'         => ['admin', 'director', 'docente', 'alumno']
+            'can'         => ['admin', 'director', 'docente', 'alumno', 'apoderado']
         ],
 
        /*  [
@@ -271,7 +271,7 @@ return [
             'text'        => 'Legajo',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',
-            'can'         => ['admin', 'director', 'docente', 'alumno'],
+            'can'         => ['admin', 'director', 'docente', 'alumno', 'apoderado'],
             'submenu' => [
                 [
                     'text' => 'Registrar Nueva',
@@ -451,7 +451,7 @@ return [
             'text'        => 'Reportes Generales',
             'icon'        => 'fas fa-fw fa-print',
             'icon_color'  => 'white',
-            'can'         => ['admin', 'director', 'docente', 'alumno'],
+            'can'         => ['admin', 'director', 'docente', 'alumno', 'apoderado'],
             'submenu' => [
                 [
                     'text' => 'Horarios por Sección',
@@ -467,6 +467,11 @@ return [
                     'text' => 'Horarios por Sección',
                     'url'  => 'admin/reporte-alu-horarios',
                     'can'  => ['alumno']
+                ],
+                [
+                    'text' => 'Horarios por Sección',
+                    'url'  => 'admin/reporte-apo-horarios',
+                    'can'  => ['apoderado']
                 ],
 
                 [
@@ -484,10 +489,16 @@ return [
                     'url'  => 'admin/asistencia-alu-sesiones',
                     'can'  => ['alumno']
                 ],
+                [
+                    'text' => 'Asistencia por Sesiones',
+                    'url'  => 'admin/asistencia-apo-sesiones',
+                    'can'  => ['apoderado']
+                ],
 
                 [
                     'text' => 'Reporte de Calificaciones',
                     'url'  => 'admin/calificaciones',
+                    'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
                 ],
                 
 

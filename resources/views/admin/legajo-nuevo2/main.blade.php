@@ -1,8 +1,28 @@
 <div class="container-fluid">
     <div class="row">
 
+      @if($user->tipo_user_id == "5") {{-- Apoderado --}}
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                          <h3 class="card-title">Aviso Informativo</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <h4>"No se puede editar los datos comuníquese con su director"</h4>
+    
+          
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        @if($user->tipo_user_id == "4") {{-- Alumno --}}
+
+        @elseif($user->tipo_user_id == "4") {{-- Alumno --}}
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">

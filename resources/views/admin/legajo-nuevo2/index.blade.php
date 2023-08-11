@@ -34,6 +34,9 @@
 
     @elseif($user->tipo_user_id == "1" || $user->tipo_user_id == "2") {{-- Admin --}}
         <script src="{{ asset('js/core/admin/legajo-nuevo.js')}}"  type="text/javascript"></script>
+
+    @elseif($user->tipo_user_id == "5") {{-- Apoderado --}}
+        <script src="{{ asset('js/core/admin/legajo-nuevo2.js')}}"  type="text/javascript"></script>
         
     @endif
 

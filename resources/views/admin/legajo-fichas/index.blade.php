@@ -27,7 +27,10 @@
 
 @section('js')
 
-    @if($user->tipo_user_id == "4") {{-- Alumno --}}
+    @if($user->tipo_user_id == "5") {{-- Apoderado --}}
+        <script src="{{ asset('js/core/admin/legajo-fichas4.js')}}"  type="text/javascript"></script>
+
+    @elseif($user->tipo_user_id == "4") {{-- Alumno --}}
         <script src="{{ asset('js/core/admin/legajo-fichas3.js')}}"  type="text/javascript"></script>
 
     @elseif($user->tipo_user_id == "3") {{-- Docente --}}
