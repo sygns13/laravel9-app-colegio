@@ -258,7 +258,30 @@
                 </td>
                 <td class="celdaFondoGrisBold1">VALIDADO</td>
                 <td class="celdaNormalBig">
-                    NO
+                    @if($alumno !== null && $alumno->matricula !== null && $alumno->matricula->validado_apoderado !== null && $alumno->matricula->validado_apoderado == '1' && $alumno->matricula->fecha_valid_apo !== null)
+                    {{substr(strval($alumno->matricula->fecha_valid_apo),8,2)}}/{{substr(strval($alumno->matricula->fecha_valid_apo),5,2)}}/{{substr(strval($alumno->matricula->fecha_valid_apo),0,4)}}
+                    @else
+                        NO
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td class="celdaFondoGrisBold1">DIRECTOR</td>
+                <td class="celdaNormalBig" colspan="3">
+                    <div style="height:12px; overflow:hidden;">
+                        @if($director !== null)
+                            {{strtoupper(strval($director->apellidos))}} 
+                            {{strtoupper(strval($director->nombre))}}
+                        @endif
+                    </div>
+                </td>
+                <td class="celdaFondoGrisBold1">VALIDADO</td>
+                <td class="celdaNormalBig">
+                    @if($alumno !== null && $alumno->matricula !== null && $alumno->matricula->validado_director !== null && $alumno->matricula->validado_director == '1' && $alumno->matricula->fecha_valid_dir !== null)
+                    {{substr(strval($alumno->matricula->fecha_valid_dir),8,2)}}/{{substr(strval($alumno->matricula->fecha_valid_dir),5,2)}}/{{substr(strval($alumno->matricula->fecha_valid_dir),0,4)}}
+                    @else
+                        NO
+                    @endif
                 </td>
             </tr>
 

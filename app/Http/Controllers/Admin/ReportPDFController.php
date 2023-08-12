@@ -27,6 +27,7 @@ use App\Models\Horario;
 use App\Models\Hora;
 use App\Models\Asistencia;
 use App\Models\Nota;
+use App\Models\Director;
 
 use App\Models\InstitucionEducativa;
 
@@ -253,8 +254,13 @@ class ReportPDFController extends Controller
         ->first();
 
         $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        $director = Director::where('borrado','0')
+        ->where('activo','1')
+        ->first();
   
         $data = [
+            'director' => $director,
             'alumno' => $alumno,
             'date' => date('m/d/Y'),
             'institucionEductiva' => $institucionEductiva
@@ -265,6 +271,36 @@ class ReportPDFController extends Controller
         $pdf->setOption('defaultFont', 'Arial');
      
         return $pdf->download('CONSTANCIA_MATRICULA_'.$cicloActivo->year.'_'.$alumno->num_documento.'.pdf');
+    }
+
+    public function impConstanciaMatriculaById($matricula_id)
+    {
+
+        $matricula = Matricula::findOrFail($matricula_id);
+
+        $alumno = Alumno::GetConstanciaByMatricula($matricula_id);
+        $institucionEductiva = InstitucionEducativa::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+
+        $ciclo = CicloEscolar::find($matricula->ciclo_escolar_id);
+
+        $director = Director::where('borrado','0')
+        ->where('activo','1')
+        ->first();
+  
+        $data = [
+            'director' => $director,
+            'alumno' => $alumno,
+            'date' => date('m/d/Y'),
+            'institucionEductiva' => $institucionEductiva
+        ]; 
+            
+        $pdf = PDF::loadView('reportspdf.constancia-matricula', $data);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption('defaultFont', 'Arial');
+     
+        return $pdf->download('CONSTANCIA_MATRICULA_'.$ciclo->year.'_'.$alumno->num_documento.'.pdf');
     }
 
 

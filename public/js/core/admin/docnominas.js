@@ -117,6 +117,11 @@ createApp({
             this.getDatos(this.ciclo_id);
         },
 
+        buscarBtn: function () {
+            this.getDatos();
+            this.thispage='1';
+        },
+
         cambioSeccion: function() {
             
             this.registros.niveles.forEach(nivel => {

@@ -46,6 +46,10 @@ class Matricula extends Model
                             'SC',
                             'OT',
                             'sigla_situacion_final',
+                            'validado_apoderado',
+                            'validado_director',
+                            'fecha_valid_apo',
+                            'fecha_valid_dir',
                         ];
 	protected $guarded = ['id'];
 
@@ -1232,6 +1236,11 @@ class Matricula extends Model
         $matricula->situacion_final = null; //null
         $matricula->sigla_situacion = null; //null
         $matricula->sigla_situacion_final = null; //null
+
+        $registro->validado_apoderado='0';
+        $registro->validado_director='0';
+        $registro->fecha = null;
+        $registro->fecha = null;
 
         $matricula->save();
 

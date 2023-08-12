@@ -5,8 +5,8 @@ const {
 createApp({
     data() {
         return {
-            tituloHeader: "Gestión de Docentes",
-            subtituloHeader: "Docentes",
+            tituloHeader: "Matrícula de Alumnos",
+            subtituloHeader: "Matrículas",
             subtitulo2Header: "",
 
             subtitle2Header: false,
@@ -69,12 +69,14 @@ createApp({
                 'digitos': '0',
             },
 
+            ciclo_id: 0,
+
            
         }
     },
     created: function() {
-        this.getDatos(this.thispage);
-        console.log("created");
+        //this.getDatos(this.thispage);
+        //console.log("created");
     },
     mounted: function() {
         console.log("mounted");
@@ -109,23 +111,19 @@ createApp({
     },
     methods: {
 
-        changeTipoDoc: function() {
-            this.tipoDocumentos.forEach((element) => {
-                if(element.id == this.fillobject.tipo_documento_id){
-                    this.tipoDocSelect = element;
-                }
-            });
-            this.fillobject.num_documento = '';
+        changeCiclo:function() {
+            this.getDatos(this.thispage);
         },
+
         getDatos: function(page) {
             var busca = this.buscar;
-            var url = 'redocentes?page=' + page + '&busca=' + busca;
+            var ciclo_id = this.ciclo_id;
+            var url = 'get-matriculas-verificar?page=' + page + '&busca=' + busca + '&ciclo_id=' + ciclo_id;
 
             axios.get(url).then(response => {
 
                 this.registros= response.data.registros.data;
                 this.pagination= response.data.pagination;
-                this.tipoDocumentos= response.data.tipoDocumentos;
 
                 //this.mostrarPalenIni=true;
 
@@ -146,7 +144,68 @@ createApp({
             this.getDatos();
             this.thispage='1';
         },
-        nuevo:function () {
+
+
+        consultarMatricula:function (registro) {
+            //console.log("imprimirMatricula");
+            url = 'reportepdf/constancia-matricula-byid/'+registro.id;
+            console.log(url);
+            window.open(url, '_blank').focus();
+        },
+
+        validarMatricula:function (registro) {
+            swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Desea Validar la Matrícula del Alumno como Apoderado?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Confirmar'
+            }).then((result) => {
+
+                if (result.value) {
+                    //console.log("aqui llega");
+                    this.validar(registro);
+                }
+
+            }).catch(swal.noop);
+        },
+
+        validar:function (registro) {
+            var url='matriculas-verificar';
+/*             $("#btnGuardar").attr('disabled', true);
+            $("#btnClose").attr('disabled', true); */
+            this.divloaderNuevo=true;
+
+            var data = new  FormData();
+
+            data.append('idM', registro.id);
+
+            axios.post(url, data).then(response=>{
+
+                /* $("#btnGuardar").removeAttr("disabled");
+                $("#btnClose").removeAttr("disabled"); */
+                this.divloaderNuevo=false;
+
+                if(response.data.result=='1'){
+                    this.getDatos(this.thispage);
+                    this.errors=[];
+                    //this.cerrarForm();
+                    toastr.success(response.data.msj, {timeOut: 20000});
+                }else{
+                    $('#'+response.data.selector).focus();
+                    toastr.error(response.data.msj, {timeOut: 20000});
+                }
+            }).catch(error=>{
+                console.log(error);
+                //this.errors=error.response.data;
+                /* $("#btnGuardar").removeAttr("disabled");
+                $("#btnClose").removeAttr("disabled"); */
+            })
+        },
+
+      /*   nuevo:function () {
             this.cancelForm();
             this.labelBtnSave = 'Registrar';
             this.fillobject.type = 'C';
@@ -437,6 +496,6 @@ createApp({
                 })
             }
             
-        },
+        }, */
     }
 }).mount('#app')

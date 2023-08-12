@@ -355,6 +355,11 @@ return [
                     'can'  => ['admin', 'director']
                 ],
                 [
+                    'text' => 'Consulta de Matrículas',
+                    'url'  => 'admin/consultar-matricula',
+                    'can'  => ['admin', 'director']
+                ],
+                [
                     'text' => 'Asignación de Cursos',
                     'url'  => 'admin/asignacion-cursos',
                     'can'  => ['admin', 'director']
@@ -377,6 +382,14 @@ return [
 
             ]
         ],
+
+        [
+            'text' => 'Verificar Matrícula',
+            'url'  => 'admin/verificar-matricula',
+            'icon' => 'fas fa-fw fa-check',
+            'can'  => ['apoderado']
+        ],
+
         [
             'text'        => 'Módulo Control',
             'icon'        => 'fas fa-fw fa-clock',

@@ -230,6 +230,10 @@ createApp({
             this.getDatos(page);
             this.thispage = page;
         },
+        buscarBtn: function () {
+            this.getDatos();
+            this.thispage='1';
+        },
         nuevo:function () {
             this.cancelForm();
             this.labelBtnSave = 'Registrar';

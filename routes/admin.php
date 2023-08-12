@@ -71,6 +71,8 @@ Route::middleware([
     Route::get('/resoluciones', [ResolucionController::class, 'index1'])->name('resoluciones');
 
     Route::get('/matricula-masiva', [MatriculaController::class, 'index4'])->name('matricula-masiva');
+    Route::get('/verificar-matricula', [MatriculaController::class, 'index5'])->name('verificar-matricula');
+    Route::get('/consultar-matricula', [MatriculaController::class, 'index6'])->name('consultar-matricula');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -92,6 +94,7 @@ Route::middleware([
     Route::resource('/reasistencia-alumno', AsistenciaAlumnoController::class);
     Route::resource('/renotas', NotaController::class);
     Route::resource('/reresolucion', ResolucionController::class);
+    Route::resource('/rematriculas-verificar', ResolucionController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
     Route::get('/redocnominas', [MatriculaController::class, 'indexDocNomina'])->name('redocnominas');
@@ -135,6 +138,9 @@ Route::middleware([
     Route::get('/get-resoluciones1', [ResolucionController::class, 'indexGetData1'])->name('get-resoluciones1');
     Route::get('/get-resoluciones2', [ResolucionController::class, 'indexGetData2'])->name('get-resoluciones2');
 
+    Route::get('/get-matriculas-verificar', [MatriculaController::class, 'indexGetVerificar'])->name('indexGetVerificar');
+    Route::get('/get-matriculas-director', [MatriculaController::class, 'indexGetDirector'])->name('indexGetDirector');
+
 
 
 
@@ -148,6 +154,7 @@ Route::middleware([
     Route::get('/reportepdf/calificaciones-curso/{matricula_id}/{ciclo_curso_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumnoCurso'])->name('impFichaCalificacionesAlumnoCurso');
     
     Route::get('/reportepdf/constancia-matricula-activo/{alumno_id}',[ReportPDFController::class, 'impConstanciaMatriculaActive'])->name('impConstanciaMatriculaActive');
+    Route::get('/reportepdf/constancia-matricula-byid/{matricula_id}',[ReportPDFController::class, 'impConstanciaMatriculaById'])->name('impConstanciaMatriculaById');
     //Alumno
     //Route::get('/reportepdf/calificacion-alumno/{matricula_id}/{ciclo_curso_id}',[ReportPDFController::class, 'impFichaCalificacionesAlumnoCurso'])->name('impFichaCalificacionesAlumnoCurso');
     Route::get('/reportepdf/asistencia-sesiones-alumno/{ciclo_id}/{fecha}/{alumno_id}',[ReportPDFController::class, 'impAsistenciaSesionAlumno'])->name('impAsistenciaSesionAlumno');
@@ -172,5 +179,8 @@ Route::middleware([
 
     Route::post('/rematricula-masiva/buscar', [MatriculaController::class, 'buscarMasivo'])->name('rematricula-masiva/buscar');
     Route::post('/rematricula-masiva/store', [MatriculaController::class, 'storeMasivo'])->name('rematricula-masiva/store');
+
+    Route::post('/matriculas-verificar', [MatriculaController::class, 'VerificarApoderado'])->name('matriculas-verificar');
+    Route::post('/matriculas-verificardir', [MatriculaController::class, 'VerificarDirector'])->name('matriculas-verificardir');
 
 });

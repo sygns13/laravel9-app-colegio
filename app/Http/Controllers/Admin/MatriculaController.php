@@ -30,6 +30,7 @@ use App\Models\CicloNivel;
 use App\Models\CicloGrado;
 
 use App\Models\InstitucionEducativa;
+use App\Models\ApoderadoUser;
 
 use stdClass;
 use DB;
@@ -103,6 +104,379 @@ class MatriculaController extends Controller
         $seccionesNow = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
 
         return view('admin.matricula-masiva.index',compact('cicloActivo','cicloActivoLast', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones', 'nivelesNow', 'gradosNow', 'seccionesNow'));
+    }
+
+    public function index5()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+
+        $estados = Estado::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $departamentos = Departamento::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $provincias = Provincia::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $distritos = Distrito::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+
+        $niveles = CicloNivel::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $grados = CicloGrado::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $secciones = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+
+        return view('admin.verificar-matricula.index',compact('ciclos','cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
+    }
+
+    public function index6()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+
+        $estados = Estado::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $departamentos = Departamento::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $provincias = Provincia::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $distritos = Distrito::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+
+        $niveles = CicloNivel::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $grados = CicloGrado::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $secciones = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+
+        return view('admin.consultar-matricula.index',compact('ciclos','cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
+    }
+
+    public function indexGetVerificar(Request $request)
+    {
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $buscar=$request->busca;
+        $ciclo_id=$request->ciclo_id;
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+        $apoderadoUsers = ApoderadoUser::where('activo','1')->where('borrado','0')
+                                        ->where('user_id',$iduser)
+                                        ->get();
+
+        $alumnosIds = array();
+
+        foreach ($apoderadoUsers as $key => $dato) {
+            $tipoDocumento = TipoDocumento::find($dato->tipo_documento_id);
+            $dato->tipoDocumento = $tipoDocumento;
+
+            $alumnosIds[] = $dato->alumno_id;
+        }
+
+        $registros = DB::table('matriculas')
+                        ->join('alumnos', 'alumnos.id', '=', 'matriculas.alumno_id')
+                        ->join('ciclo_seccion', 'ciclo_seccion.id', '=', 'matriculas.ciclo_seccion_id')
+                        ->join('ciclo_grados', 'ciclo_grados.id', '=', 'ciclo_seccion.ciclo_grados_id')
+                        ->join('ciclo_niveles', 'ciclo_niveles.id', '=', 'ciclo_grados.ciclo_niveles_id')
+                        ->join('tipo_documentos', 'tipo_documentos.id', '=', 'alumnos.tipo_documento_id')
+    
+                        ->where('matriculas.activo','1')
+                        ->where('matriculas.borrado', '0')
+                        ->where('matriculas.ciclo_escolar_id', $ciclo_id)
+                        ->where(function($query) use ($buscar){
+                            $query->where('alumnos.num_documento','like','%'.$buscar.'%');
+                            $query->orWhere('alumnos.nombres','like','%'.$buscar.'%');
+                            $query->orWhere('alumnos.apellido_paterno','like','%'.$buscar.'%');
+                            $query->orWhere('alumnos.apellido_materno','like','%'.$buscar.'%');
+                            }) 
+                        ->whereIn('alumnos.id', $alumnosIds)
+                            ->orderBy('ciclo_niveles.id')
+                            ->orderBy('ciclo_grados.id')
+                            ->orderBy('ciclo_seccion.id')
+                            ->orderBy('alumnos.apellido_paterno')
+                            ->orderBy('alumnos.apellido_materno')
+                            ->orderBy('alumnos.nombres')
+                            ->orderBy('matriculas.id')
+                            ->select('matriculas.id',
+                                'matriculas.alumno_id',
+                                'matriculas.ciclo_escolar_id',
+                                'matriculas.fecha',
+                                'matriculas.estado',
+                                'matriculas.es_traslado',
+                                'matriculas.tiene_discapacidad',
+                                'matriculas.vive_madre',
+                                'matriculas.vive_padre',
+                                'matriculas.responsable_matricula_nombres',
+                                'matriculas.cargo_responsable',
+                                'matriculas.ciclo_seccion_id',
+                                'matriculas.situacion_final',
+                                'matriculas.nota_final',
+                                'matriculas.situacion',
+                                'matriculas.sigla_situacion',
+                                'matriculas.trabaja',
+                                'matriculas.activo',
+                                'matriculas.borrado',
+                                'matriculas.created_at',
+                                'matriculas.updated_at',
+                                'matriculas.DI',
+                                'matriculas.DA',
+                                'matriculas.DV',
+                                'matriculas.DM',
+                                'matriculas.SC',
+                                'matriculas.OT',
+                                'matriculas.sigla_situacion_final',
+                                'matriculas.validado_apoderado',
+                                'matriculas.validado_director',
+                                'matriculas.fecha_valid_apo',
+                                'matriculas.fecha_valid_dir',
+                                'alumnos.id as id_alu',
+                                'alumnos.tipo_documento_id as tipo_documento_id_alu',
+                                'alumnos.num_documento as num_documento_alu',
+                                'alumnos.apellido_paterno as apellido_paterno_alu',
+                                'alumnos.apellido_materno as apellido_materno_alu',
+                                'alumnos.nombres as nombres_alu',
+                                'alumnos.fecha_nacimiento as fecha_nacimiento_alu',
+                                'alumnos.genero as genero_alu',
+                                'alumnos.grado_actual as grado_actual_alu',
+                                'alumnos.nivel_actual as nivel_actual_alu',
+                                'alumnos.telefono as telefono_alu',
+                                'alumnos.direccion as direccion_alu',
+                                'alumnos.correo as correo_alu',
+                                'alumnos.pais as pais_alu',
+                                'alumnos.sigla_pais as sigla_pais_alu',
+                                'alumnos.departamento as departamento_alu',
+                                'alumnos.provincia as provincia_alu',
+                                'alumnos.distrito as distrito_alu',
+                                'alumnos.lugar as lugar_alu',
+                                'alumnos.lengua_materna as lengua_materna_alu',
+                                'alumnos.segunda_lengua as segunda_lengua_alu',
+                                'alumnos.num_hermanos as num_hermanos_alu',
+                                'alumnos.lugar_hermano as lugar_hermano_alu',
+                                'alumnos.religion as religion_alu',
+                                'alumnos.DI as DI_alu',
+                                'alumnos.DA as DA_alu',
+                                'alumnos.DV as DV_alu',
+                                'alumnos.nacimiento as nacimiento_alu',
+                                'alumnos.obs_nacimiento as obs_nacimiento_alu',
+                                'alumnos.levanto_cabeza as levanto_cabeza_alu',
+                                'alumnos.se_sento as se_sento_alu',
+                                'alumnos.se_paro as se_paro_alu',
+                                'alumnos.se_camino as se_camino_alu',
+                                'alumnos.se_control_esfinter as se_control_esfinter_alu',
+                                'alumnos.se_primeras_palabras as se_primeras_palabras_alu',
+                                'alumnos.se_hablo_fluido as se_hablo_fluido_alu',
+                                'alumnos.nacimiento_registrado as nacimiento_registrado_alu',
+                                'alumnos.activo as activo_alu',
+                                'alumnos.borrado as borrado_alu',
+                                'alumnos.created_at as created_at_alu',
+                                'alumnos.updated_at as updated_at_alu',
+                                'alumnos.estado_grado as estado_grado_alu',
+                                'alumnos.DM as DM_alu',
+                                'alumnos.SC as SC_alu',
+                                'alumnos.OT as OT_alu',
+                                'alumnos.user_id as user_id_alu',
+                                'alumnos.pais_id as pais_id_alu',
+                                'alumnos.departamento_id as departamento_id_alu',
+                                'alumnos.provincia_id as provincia_id_alu',
+                                'alumnos.distrito_id as distrito_id_alu',
+                                'alumnos.anio_ingreso as anio_ingreso_alu',
+                                'alumnos.codigo_modular as codigo_modular_alu',
+                                'alumnos.numero_matricula as numero_matricula_alu',
+                                'alumnos.flag as flag_alu',
+                                'alumnos.old_estado_grado as old_estado_grado_alu',
+                                'alumnos.celular as celular_alu',
+
+                                'tipo_documentos.id as id_tipodoc',
+                                'tipo_documentos.nombre as nombre_tipodoc',
+                                'tipo_documentos.sigla as sigla_tipodoc',
+                                'tipo_documentos.digitos as digitos_tipodoc',
+
+                                'ciclo_niveles.id as id_ciclo_niveles',
+                                'ciclo_niveles.nombre as nombre_ciclo_niveles',
+
+                                'ciclo_grados.id as id_ciclo_grados',
+                                'ciclo_grados.nombre as nombre_ciclo_grados',
+
+                                'ciclo_seccion.id as id_ciclo_seccion',
+                                'ciclo_seccion.nombre as nombre_ciclo_seccion',
+                                'ciclo_seccion.sigla as sigla_ciclo_seccion',
+
+                                )
+                                ->paginate(30);
+
+        return [
+            'pagination'=>[
+                'total'=> $registros->total(),
+                'current_page'=> $registros->currentPage(),
+                'per_page'=> $registros->perPage(),
+                'last_page'=> $registros->lastPage(),
+                'from'=> $registros->firstItem(),
+                'to'=> $registros->lastItem(),
+            ],
+            'registros'=>$registros
+        ];
+
+
+       
+    }
+
+    public function indexGetDirector(Request $request)
+    {
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $buscar=$request->busca;
+        $ciclo_id=$request->ciclo_id;
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $iduser=Auth::user()->id;
+        $user = User::find($iduser);
+
+
+        $registros = DB::table('matriculas')
+                        ->join('alumnos', 'alumnos.id', '=', 'matriculas.alumno_id')
+                        ->join('ciclo_seccion', 'ciclo_seccion.id', '=', 'matriculas.ciclo_seccion_id')
+                        ->join('ciclo_grados', 'ciclo_grados.id', '=', 'ciclo_seccion.ciclo_grados_id')
+                        ->join('ciclo_niveles', 'ciclo_niveles.id', '=', 'ciclo_grados.ciclo_niveles_id')
+                        ->join('tipo_documentos', 'tipo_documentos.id', '=', 'alumnos.tipo_documento_id')
+    
+                        ->where('matriculas.activo','1')
+                        ->where('matriculas.borrado', '0')
+                        ->where('matriculas.ciclo_escolar_id', $ciclo_id)
+                        ->where(function($query) use ($buscar){
+                            $query->where('alumnos.num_documento','like','%'.$buscar.'%');
+                            $query->orWhere('alumnos.nombres','like','%'.$buscar.'%');
+                            $query->orWhere('alumnos.apellido_paterno','like','%'.$buscar.'%');
+                            $query->orWhere('alumnos.apellido_materno','like','%'.$buscar.'%');
+                            }) 
+                            ->orderBy('ciclo_niveles.id')
+                            ->orderBy('ciclo_grados.id')
+                            ->orderBy('ciclo_seccion.id')
+                            ->orderBy('alumnos.apellido_paterno')
+                            ->orderBy('alumnos.apellido_materno')
+                            ->orderBy('alumnos.nombres')
+                            ->orderBy('matriculas.id')
+                            ->select('matriculas.id',
+                                'matriculas.alumno_id',
+                                'matriculas.ciclo_escolar_id',
+                                'matriculas.fecha',
+                                'matriculas.estado',
+                                'matriculas.es_traslado',
+                                'matriculas.tiene_discapacidad',
+                                'matriculas.vive_madre',
+                                'matriculas.vive_padre',
+                                'matriculas.responsable_matricula_nombres',
+                                'matriculas.cargo_responsable',
+                                'matriculas.ciclo_seccion_id',
+                                'matriculas.situacion_final',
+                                'matriculas.nota_final',
+                                'matriculas.situacion',
+                                'matriculas.sigla_situacion',
+                                'matriculas.trabaja',
+                                'matriculas.activo',
+                                'matriculas.borrado',
+                                'matriculas.created_at',
+                                'matriculas.updated_at',
+                                'matriculas.DI',
+                                'matriculas.DA',
+                                'matriculas.DV',
+                                'matriculas.DM',
+                                'matriculas.SC',
+                                'matriculas.OT',
+                                'matriculas.sigla_situacion_final',
+                                'matriculas.validado_apoderado',
+                                'matriculas.validado_director',
+                                'matriculas.fecha_valid_apo',
+                                'matriculas.fecha_valid_dir',
+                                'alumnos.id as id_alu',
+                                'alumnos.tipo_documento_id as tipo_documento_id_alu',
+                                'alumnos.num_documento as num_documento_alu',
+                                'alumnos.apellido_paterno as apellido_paterno_alu',
+                                'alumnos.apellido_materno as apellido_materno_alu',
+                                'alumnos.nombres as nombres_alu',
+                                'alumnos.fecha_nacimiento as fecha_nacimiento_alu',
+                                'alumnos.genero as genero_alu',
+                                'alumnos.grado_actual as grado_actual_alu',
+                                'alumnos.nivel_actual as nivel_actual_alu',
+                                'alumnos.telefono as telefono_alu',
+                                'alumnos.direccion as direccion_alu',
+                                'alumnos.correo as correo_alu',
+                                'alumnos.pais as pais_alu',
+                                'alumnos.sigla_pais as sigla_pais_alu',
+                                'alumnos.departamento as departamento_alu',
+                                'alumnos.provincia as provincia_alu',
+                                'alumnos.distrito as distrito_alu',
+                                'alumnos.lugar as lugar_alu',
+                                'alumnos.lengua_materna as lengua_materna_alu',
+                                'alumnos.segunda_lengua as segunda_lengua_alu',
+                                'alumnos.num_hermanos as num_hermanos_alu',
+                                'alumnos.lugar_hermano as lugar_hermano_alu',
+                                'alumnos.religion as religion_alu',
+                                'alumnos.DI as DI_alu',
+                                'alumnos.DA as DA_alu',
+                                'alumnos.DV as DV_alu',
+                                'alumnos.nacimiento as nacimiento_alu',
+                                'alumnos.obs_nacimiento as obs_nacimiento_alu',
+                                'alumnos.levanto_cabeza as levanto_cabeza_alu',
+                                'alumnos.se_sento as se_sento_alu',
+                                'alumnos.se_paro as se_paro_alu',
+                                'alumnos.se_camino as se_camino_alu',
+                                'alumnos.se_control_esfinter as se_control_esfinter_alu',
+                                'alumnos.se_primeras_palabras as se_primeras_palabras_alu',
+                                'alumnos.se_hablo_fluido as se_hablo_fluido_alu',
+                                'alumnos.nacimiento_registrado as nacimiento_registrado_alu',
+                                'alumnos.activo as activo_alu',
+                                'alumnos.borrado as borrado_alu',
+                                'alumnos.created_at as created_at_alu',
+                                'alumnos.updated_at as updated_at_alu',
+                                'alumnos.estado_grado as estado_grado_alu',
+                                'alumnos.DM as DM_alu',
+                                'alumnos.SC as SC_alu',
+                                'alumnos.OT as OT_alu',
+                                'alumnos.user_id as user_id_alu',
+                                'alumnos.pais_id as pais_id_alu',
+                                'alumnos.departamento_id as departamento_id_alu',
+                                'alumnos.provincia_id as provincia_id_alu',
+                                'alumnos.distrito_id as distrito_id_alu',
+                                'alumnos.anio_ingreso as anio_ingreso_alu',
+                                'alumnos.codigo_modular as codigo_modular_alu',
+                                'alumnos.numero_matricula as numero_matricula_alu',
+                                'alumnos.flag as flag_alu',
+                                'alumnos.old_estado_grado as old_estado_grado_alu',
+                                'alumnos.celular as celular_alu',
+
+                                'tipo_documentos.id as id_tipodoc',
+                                'tipo_documentos.nombre as nombre_tipodoc',
+                                'tipo_documentos.sigla as sigla_tipodoc',
+                                'tipo_documentos.digitos as digitos_tipodoc',
+
+                                'ciclo_niveles.id as id_ciclo_niveles',
+                                'ciclo_niveles.nombre as nombre_ciclo_niveles',
+
+                                'ciclo_grados.id as id_ciclo_grados',
+                                'ciclo_grados.nombre as nombre_ciclo_grados',
+
+                                'ciclo_seccion.id as id_ciclo_seccion',
+                                'ciclo_seccion.nombre as nombre_ciclo_seccion',
+                                'ciclo_seccion.sigla as sigla_ciclo_seccion',
+
+                                )
+                                ->paginate(30);
+
+        return [
+            'pagination'=>[
+                'total'=> $registros->total(),
+                'current_page'=> $registros->currentPage(),
+                'per_page'=> $registros->perPage(),
+                'last_page'=> $registros->lastPage(),
+                'from'=> $registros->firstItem(),
+                'to'=> $registros->lastItem(),
+            ],
+            'registros'=>$registros
+        ];
+
+
+       
     }
 
     public function index(Request $request)
@@ -509,6 +883,10 @@ class MatriculaController extends Controller
             $registro->DM = $alumno->DM;
             $registro->SC = $alumno->SC;
             $registro->OT = $alumno->OT;
+            $registro->validado_apoderado='1';
+            $registro->validado_director='1';
+            $registro->fecha_valid_apo = $fecha;
+            $registro->fecha_valid_dir = $fecha;
 
             $registro->save();
 
@@ -955,6 +1333,10 @@ class MatriculaController extends Controller
             $registro->DM = $alumno->DM;
             $registro->SC = $alumno->SC;
             $registro->OT = $alumno->OT;
+            $registro->validado_apoderado='1';
+            $registro->validado_director='1';
+            $registro->fecha_valid_apo = $fecha;
+            $registro->fecha_valid_dir = $fecha;
 
             $registro->save();
 
@@ -1433,6 +1815,84 @@ class MatriculaController extends Controller
         $msj='Se realizó la Matrícula Masiva de Forma Exitosa';
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector, 'registros'=>$registros]);
+    }
+
+
+    public function VerificarApoderado(Request $request){
+
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $idM = $request->idM;
+
+        $input1  = array('idM' => $idM);
+        $reglas1 = array('idM' => 'required');
+
+        $validator1 = Validator::make($input1, $reglas1);
+
+        if ($validator1->fails() || intval($idM) <= 0)
+        {
+            $result='0';
+            $msj='Debe Remitir el Alumno Correctamente';
+            $selector='txtidM';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $hoy = date('Y-m-d');
+
+        $registro = Matricula::find($idM);
+
+        $registro->fecha_valid_apo = $hoy;
+        $registro->validado_apoderado = '1';
+
+        $registro->save();
+
+        $msj='Se realizó la Validación de la Matrícula de Forma Exitosa';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+    }
+
+    public function VerificarDirector(Request $request){
+
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $idM = $request->idM;
+
+        $input1  = array('idM' => $idM);
+        $reglas1 = array('idM' => 'required');
+
+        $validator1 = Validator::make($input1, $reglas1);
+
+        if ($validator1->fails() || intval($idM) <= 0)
+        {
+            $result='0';
+            $msj='Debe Remitir el Alumno Correctamente';
+            $selector='txtidM';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $hoy = date('Y-m-d');
+
+        $registro = Matricula::find($idM);
+
+        $registro->estado = '1';
+        $registro->fecha_valid_dir = $hoy;
+        $registro->validado_director = '1';
+
+        $registro->save();
+
+        $msj='Se realizó la Validación de la Matrícula de Forma Exitosa';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
 
 
