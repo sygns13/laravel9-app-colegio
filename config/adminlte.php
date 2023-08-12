@@ -365,6 +365,11 @@ return [
                     'can'  => ['admin', 'director']
                 ],
                 [
+                    'text' => 'Asignación de Tutor',
+                    'url'  => 'admin/asignacion-tutor',
+                    'can'  => ['admin', 'director']
+                ],
+                [
                     'text' => 'Nómina de Matrícula',
                     'url'  => 'admin/nominas',
                     'can'  => ['admin', 'director']

@@ -31,6 +31,7 @@ use App\Models\CicloGrado;
 
 use App\Models\InstitucionEducativa;
 use App\Models\ApoderadoUser;
+use App\Models\Docente;
 
 use stdClass;
 use DB;
@@ -505,6 +506,23 @@ class MatriculaController extends Controller
         return [ 
                 'registros' => $registros,
                ];
+    }
+
+    public function indexAsignacionTutor()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $docentesActivos = Docente::where('activo', '1')->where('borrado', '0')->orderBy('apellidos')->orderBy('nombre')->get();
+
+        return view('admin.asignacion-tutor.index',compact('cicloActivo', 'docentesActivos'));
+    }
+
+    public function indexGetTutor()
+    {
+        $registros = Matricula::GetAllDataAsignacionActivo();
+
+        return [ 
+            'registros' => $registros
+           ];
     }
 
     public function getCicloSeccion($gradoMaster_id)
@@ -1893,6 +1911,120 @@ class MatriculaController extends Controller
         $msj='Se realizó la Validación de la Matrícula de Forma Exitosa';
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+    }
+
+    public function AsignarTutor(Request $request){
+
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $ciclo_seccion_id = $request->ciclo_seccion_id;
+        $tutor_id = $request->tutor_id;
+
+        $input1  = array('ciclo_seccion_id' => $ciclo_seccion_id);
+        $reglas1 = array('ciclo_seccion_id' => 'required');
+
+        $input2  = array('tutor_id' => $tutor_id);
+        $reglas2 = array('tutor_id' => 'required');
+
+        $validator1 = Validator::make($input1, $reglas1);
+        $validator2 = Validator::make($input2, $reglas2);
+
+        if ($validator1->fails() || intval($ciclo_seccion_id) <= 0)
+        {
+            $result='0';
+            $msj='Debe Remitir la Sección  Correctamente';
+            $selector='cbuciclo_seccion_id';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator2->fails() || intval($tutor_id) <= 0)
+        {
+            $result='0';
+            $msj='Debe Remitir el Docente Correctamente';
+            $selector='cbututor_id';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $hoy = date('Y-m-d');
+
+        $registro = CicloSeccion::find($ciclo_seccion_id);
+
+        $registro->tutor_id = $tutor_id;
+        $registro->save();
+
+        $msj='Se realizó la Asignación del Tutor de Forma Exitosa';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+    }
+
+    public function ActualizarTutor(Request $request){
+
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $ciclo_seccion_id = $request->ciclo_seccion_id;
+        $tutor_id = $request->tutor_id;
+
+        $input1  = array('ciclo_seccion_id' => $ciclo_seccion_id);
+        $reglas1 = array('ciclo_seccion_id' => 'required');
+
+        $input2  = array('tutor_id' => $tutor_id);
+        $reglas2 = array('tutor_id' => 'required');
+
+        $validator1 = Validator::make($input1, $reglas1);
+        $validator2 = Validator::make($input2, $reglas2);
+
+        if ($validator1->fails() || intval($ciclo_seccion_id) <= 0)
+        {
+            $result='0';
+            $msj='Debe Remitir la Sección  Correctamente';
+            $selector='cbuciclo_seccion_id';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        if ($validator2->fails() || intval($tutor_id) <= 0)
+        {
+            $result='0';
+            $msj='Debe Remitir el Docente Correctamente';
+            $selector='cbututor_id';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+        $hoy = date('Y-m-d');
+
+        $registro = CicloSeccion::find($ciclo_seccion_id);
+
+        $registro->tutor_id = $tutor_id;
+        $registro->save();
+
+        $msj='Se realizó la  Actualización del Tutor de Forma Exitosa';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+    }
+
+    public function destroyTutor($id)
+    {
+        $result='1';
+        $msj='1';
+        
+        $registro = CicloSeccion::find($id);
+        $registro->tutor_id = null;
+        $registro->save();
+        
+        $msj='Se eliminó la Asignación del Tutor de Forma Exitosa';
+        
+        return response()->json(["result"=>$result,'msj'=>$msj]);
     }
 
 

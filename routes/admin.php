@@ -73,6 +73,8 @@ Route::middleware([
     Route::get('/matricula-masiva', [MatriculaController::class, 'index4'])->name('matricula-masiva');
     Route::get('/verificar-matricula', [MatriculaController::class, 'index5'])->name('verificar-matricula');
     Route::get('/consultar-matricula', [MatriculaController::class, 'index6'])->name('consultar-matricula');
+
+    Route::get('/asignacion-tutor', [MatriculaController::class, 'indexAsignacionTutor'])->name('asignacion-tutor');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -140,6 +142,7 @@ Route::middleware([
 
     Route::get('/get-matriculas-verificar', [MatriculaController::class, 'indexGetVerificar'])->name('indexGetVerificar');
     Route::get('/get-matriculas-director', [MatriculaController::class, 'indexGetDirector'])->name('indexGetDirector');
+    Route::get('/get-asignacion-tutor', [MatriculaController::class, 'indexGetTutor'])->name('indexGetTutor');
 
 
 
@@ -182,5 +185,8 @@ Route::middleware([
 
     Route::post('/matriculas-verificar', [MatriculaController::class, 'VerificarApoderado'])->name('matriculas-verificar');
     Route::post('/matriculas-verificardir', [MatriculaController::class, 'VerificarDirector'])->name('matriculas-verificardir');
+    Route::post('/reasignacion-tutor', [MatriculaController::class, 'AsignarTutor'])->name('reasignacion-tutorC');
+    Route::put('/reasignacion-tutor', [MatriculaController::class, 'ActualizarTutor'])->name('reasignacion-tutorU');
+    Route::delete('/reasignacion-tutor/{ciclo_seccion_id}', [MatriculaController::class, 'destroyTutor'])->name('reasignacion-tutorD');
 
 });

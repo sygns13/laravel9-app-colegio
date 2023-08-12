@@ -1311,5 +1311,69 @@ class Matricula extends Model
 
     }
 
+    public static function GetAllDataAsignacionActivo(){
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+
+        $data = InstitucionEducativa::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->first();
+        
+        if($cicloActivo){
+            $niveles = CicloNivel::where('borrado','0')
+            ->where('activo','1')
+            ->where('institucion_educativa_id', $data->id)
+            ->where('ciclo_escolar_id', $cicloActivo->id)
+            ->orderBy('nivel_id')
+            ->get();
+
+            foreach ($niveles as $key => $value) {
+            $grados = CicloGrado::where('borrado','0')
+                            ->where('activo','1')
+                            ->where('ciclo_niveles_id', $value->id)
+                            ->where('ciclo_escolar_id', $cicloActivo->id)
+                            ->orderBy('orden')
+                            ->get();
+
+            $nivel = Niveles::find($value->nivel_id);
+
+            $value->siglas = $nivel->siglas;
+
+            foreach ($grados as $keyG => $valueG) {
+                $seccions = CicloSeccion::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->where('ciclo_grados_id', $valueG->id)
+                                    ->where('ciclo_escolar_id', $cicloActivo->id)
+                                    ->orderBy('sigla')
+                                    ->orderBy('nombre')
+                                    ->get();
+                
+                foreach ($seccions as $keyS => $valueS) {
+                    $docente = null;
+
+                    if($valueS->tutor_id != null && intval($valueS->tutor_id) > 0){
+                        $tutor = Docente::find($valueS->tutor_id);
+                        if($tutor){
+                            $tipoDocumento = TipoDocumento::find($tutor->tipo_documento_id);
+                            $tutor->tipoDocumento = $tipoDocumento;
+                            $docente = $tutor;
+                        }
+                    }
+                    $valueS->tutor = $docente;
+                }
+
+                $valueG->seccions = $seccions;
+            }
+
+            $value->grados = $grados;
+            }
+
+            $data->niveles = $niveles;
+        }
+        
+
+        return $data;
+    }
+
 
 }
