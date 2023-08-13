@@ -431,6 +431,10 @@ return [
                     'text' => 'Registro de Calificaciones',
                     'url'  => 'admin/calificacion',
                 ],
+                [
+                    'text' => 'Tutor Apreciaciones',
+                    'url'  => 'admin/apreciacion-tutor',
+                ],
 
             ]
         ],

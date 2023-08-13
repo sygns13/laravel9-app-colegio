@@ -301,6 +301,10 @@ class MatriculaController extends Controller
                                 )
                                 ->paginate(30);
 
+            foreach ($registros as $key => $matricula) {
+                $matricula->numero_matricula_alu = str_pad($matricula->numero_matricula_alu, 4, "0", STR_PAD_LEFT);
+            }
+
         return [
             'pagination'=>[
                 'total'=> $registros->total(),
@@ -464,6 +468,11 @@ class MatriculaController extends Controller
                                 )
                                 ->paginate(30);
 
+
+        foreach ($registros as $key => $matricula) {
+            $matricula->numero_matricula_alu = str_pad($matricula->numero_matricula_alu, 4, "0", STR_PAD_LEFT);
+        }
+
         return [
             'pagination'=>[
                 'total'=> $registros->total(),
@@ -519,6 +528,27 @@ class MatriculaController extends Controller
     public function indexGetTutor()
     {
         $registros = Matricula::GetAllDataAsignacionActivo();
+
+        return [ 
+            'registros' => $registros
+           ];
+    }
+
+    public function indexApreciacionTutor()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $hoy = date('Y-m-d');
+
+        return view('docente.apreciacion-tutor.index',compact('cicloActivo', 'hoy'));
+    }
+
+    public function indexGetTutorAsignación()
+    {
+
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $iduser =Auth::user()->id;
+
+        $registros = Matricula::GetAllDataTutorActivo($cicloActivo->id, $iduser);
 
         return [ 
             'registros' => $registros
@@ -2012,7 +2042,7 @@ class MatriculaController extends Controller
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
-
+    
     public function destroyTutor($id)
     {
         $result='1';
@@ -2025,6 +2055,48 @@ class MatriculaController extends Controller
         $msj='Se eliminó la Asignación del Tutor de Forma Exitosa';
         
         return response()->json(["result"=>$result,'msj'=>$msj]);
+    }
+    
+    public function RegistrarApreciacion(Request $request){
+
+        ini_set('memory_limit','256M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $id = $request->id;
+        $aprecia_tutor_1 = $request->aprecia_tutor_1;
+        $aprecia_tutor_2 = $request->aprecia_tutor_2;
+        $aprecia_tutor_3 = $request->aprecia_tutor_3;
+
+        $input1  = array('id' => $id);
+        $reglas1 = array('id' => 'required');
+
+        $validator1 = Validator::make($input1, $reglas1);
+
+        if ($validator1->fails() || intval($id) <= 0)
+        {
+            $result='0';
+            $msj='Debe Remitir al Alumno Correctamente';
+            $selector='alumno_id';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
+
+
+        //$hoy = date('Y-m-d');
+
+        $registro = Matricula::find($id);
+
+        $registro->aprecia_tutor_1 = $aprecia_tutor_1;
+        $registro->aprecia_tutor_2 = $aprecia_tutor_2;
+        $registro->aprecia_tutor_3 = $aprecia_tutor_3;
+        $registro->save();
+
+        $msj='Se realizó el registro de Apresiación del Tutor de Forma Exitosa';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
 
 

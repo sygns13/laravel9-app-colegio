@@ -23,6 +23,7 @@ class CicloSeccion extends Model
                             'activo',
                             'borrado',
                             'ciclo_escolar_id',
+                            'tutor_id',
                         ];
 	protected $guarded = ['id'];
 

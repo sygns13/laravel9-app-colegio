@@ -75,6 +75,7 @@ Route::middleware([
     Route::get('/consultar-matricula', [MatriculaController::class, 'index6'])->name('consultar-matricula');
 
     Route::get('/asignacion-tutor', [MatriculaController::class, 'indexAsignacionTutor'])->name('asignacion-tutor');
+    Route::get('/apreciacion-tutor', [MatriculaController::class, 'indexApreciacionTutor'])->name('apreciacion-tutor');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -143,6 +144,7 @@ Route::middleware([
     Route::get('/get-matriculas-verificar', [MatriculaController::class, 'indexGetVerificar'])->name('indexGetVerificar');
     Route::get('/get-matriculas-director', [MatriculaController::class, 'indexGetDirector'])->name('indexGetDirector');
     Route::get('/get-asignacion-tutor', [MatriculaController::class, 'indexGetTutor'])->name('indexGetTutor');
+    Route::get('/get-alumnos-tutor', [MatriculaController::class, 'indexGetTutorAsignación'])->name('indexGetTutorAsignación');
 
 
 
@@ -188,5 +190,6 @@ Route::middleware([
     Route::post('/reasignacion-tutor', [MatriculaController::class, 'AsignarTutor'])->name('reasignacion-tutorC');
     Route::put('/reasignacion-tutor', [MatriculaController::class, 'ActualizarTutor'])->name('reasignacion-tutorU');
     Route::delete('/reasignacion-tutor/{ciclo_seccion_id}', [MatriculaController::class, 'destroyTutor'])->name('reasignacion-tutorD');
+    Route::post('/alumnos-tutor-save', [MatriculaController::class, 'RegistrarApreciacion'])->name('alumnos-tutor-save');
 
 });
