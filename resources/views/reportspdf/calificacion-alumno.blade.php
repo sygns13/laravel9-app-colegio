@@ -425,15 +425,15 @@
                                     </tr>
                                     <tr>
                                         <td class="celdaNormal6" style="text-align:center; padding:1.5px!important;" valign="middle"><div style="height: 12px;">1</div></td>
-                                        <td class="celdaNormal6" style="padding:1.5px!important;"></td>
+                                        <td class="celdaNormal6" style="padding:1.5px!important;">{{$calificacionesAlumno->matricula->aprecia_tutor_1}}</td>
                                     </tr>
                                     <tr>
                                         <td class="celdaNormal6" style="text-align:center; padding:1.5px!important;" valign="middle"><div style="height: 12px;">2</div></td>
-                                        <td class="celdaNormal6" style="padding:1.5px!important;"></td>
+                                        <td class="celdaNormal6" style="padding:1.5px!important;">{{$calificacionesAlumno->matricula->aprecia_tutor_2}}</td>
                                     </tr>
                                     <tr>
                                         <td class="celdaNormal6" style="text-align:center; padding:1.5px!important;" valign="middle"><div style="height: 12px;">3</div></td>
-                                        <td class="celdaNormal6" style="padding:1.5px!important;"></td>
+                                        <td class="celdaNormal6" style="padding:1.5px!important;">{{$calificacionesAlumno->matricula->aprecia_tutor_3}}</td>
                                     </tr>
                                 </table>
 
