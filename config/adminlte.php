@@ -527,6 +527,13 @@ return [
             ]
         ],
 
+        [
+            'text' => 'Mensajes',
+            'url'  => 'admin/mensajes',
+            'icon' => 'fas fa-fw fa-envelope',
+            'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
+        ],
+
         /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
@@ -789,6 +796,21 @@ return [
                     'asset' => true,
                     'location' => 'js/hightcharts/modules/accessibility.js',
                 ],
+            ],
+        ],
+        'ckeditor5' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/ckeditor/ckeditor5-build-classic/build/ckeditor.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/ckeditor/ckeditor5-vue/dist/ckeditor.js',
+                ],                
             ],
         ],
         

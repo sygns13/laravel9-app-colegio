@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\AsistenciaController;
 use App\Http\Controllers\Admin\AsistenciaAlumnoController;
 use App\Http\Controllers\Admin\NotaController;
 use App\Http\Controllers\Admin\ResolucionController;
+use App\Http\Controllers\Admin\MensajeController;
 
 
 use App\Http\Controllers\Admin\ReportPDFController;
@@ -76,6 +77,8 @@ Route::middleware([
 
     Route::get('/asignacion-tutor', [MatriculaController::class, 'indexAsignacionTutor'])->name('asignacion-tutor');
     Route::get('/apreciacion-tutor', [MatriculaController::class, 'indexApreciacionTutor'])->name('apreciacion-tutor');
+
+    Route::get('/mensajes', [MensajeController::class, 'index1'])->name('mensajes');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -98,6 +101,7 @@ Route::middleware([
     Route::resource('/renotas', NotaController::class);
     Route::resource('/reresolucion', ResolucionController::class);
     Route::resource('/rematriculas-verificar', ResolucionController::class);
+    Route::resource('/remensajes', MensajeController::class);
 
     Route::get('/renominas', [MatriculaController::class, 'indexNomina'])->name('renominas');
     Route::get('/redocnominas', [MatriculaController::class, 'indexDocNomina'])->name('redocnominas');
@@ -145,6 +149,7 @@ Route::middleware([
     Route::get('/get-matriculas-director', [MatriculaController::class, 'indexGetDirector'])->name('indexGetDirector');
     Route::get('/get-asignacion-tutor', [MatriculaController::class, 'indexGetTutor'])->name('indexGetTutor');
     Route::get('/get-alumnos-tutor', [MatriculaController::class, 'indexGetTutorAsignación'])->name('indexGetTutorAsignación');
+    Route::get('/get-personas-mensajes', [MensajeController::class, 'indexGetPersonas'])->name('indexGetPersonas');
 
 
 

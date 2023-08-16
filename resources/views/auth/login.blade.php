@@ -211,9 +211,9 @@
                             <option value="3">
                                 Docente
                             </option>
-                            <option value="6">
+                            {{-- <option value="6">
                                 Tutor
-                            </option>
+                            </option> --}}
                             <option value="5">
                                 Padre de Familia
                             </option>
