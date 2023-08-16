@@ -58,6 +58,8 @@ createApp({
             divprincipal: false,
             divRecibidos: false,
             divEnviados: false,
+            divMensajeRecibido: false,
+            divMensajeEnviado: false,
 
             labelBtnSave: 'Registrar',
             turnoNombre : '',
@@ -73,13 +75,21 @@ createApp({
 
             type: 0,
 
+            fillMsjeRecibido: {
+                
+            },
+
+            fillMsjeEnviado: {
+                
+            },
+
         }
     },
     created: function() {
 
     },
     mounted: function() {
-        //this.getDatos();
+        this.recibidos();
     },
     computed: {
         isActived: function() {
@@ -248,6 +258,8 @@ createApp({
             this.divFormulario=true;
             this.divRecibidos=false;
             this.divEnviados=false;
+            this.divMensajeRecibido=false;
+            this.divMensajeEnviado=false;
 
             this.$nextTick(() => {
                 $('#txtmensaje').focus();
@@ -516,6 +528,8 @@ createApp({
                 this.divFormulario = false;
                 this.divRecibidos = true;
                 this.divEnviados = false;
+                this.divMensajeRecibido=false;
+                this.divMensajeEnviado=false;
             });  
         },
 
@@ -528,7 +542,62 @@ createApp({
                 this.divFormulario = false;
                 this.divRecibidos = false;
                 this.divEnviados = true;
+                this.divMensajeRecibido=false;
+                this.divMensajeEnviado=false;
             });  
+        },
+
+        //Leer Mensaje
+        leerMensaje:function(registro){
+
+            this.fillMsjeRecibido = registro;
+            var url='remensajes-leido';
+
+            if(registro.user_mensajes_estado == '0'){
+                var data = new  FormData();
+
+                data.append('id', registro.id);
+                data.append('user_mensajes_id', registro.user_mensajes_id);
+    
+                axios.post(url, data).then(response=>{
+    
+                    if(response.data.result=='1'){
+                        //this.getDatos(this.thispage);
+                        this.errors=[];
+                        //this.cerrarForm();
+                        //toastr.success(response.data.msj, {timeOut: 20000});
+                        console.log("exito");
+                    }else{
+                        $('#'+response.data.selector).focus();
+                        //toastr.error(response.data.msj, {timeOut: 20000});
+                    }
+                }).catch(error=>{
+                    console.log(error);
+                    //this.errors=error.response.data;
+                })
+            }
+
+            this.$nextTick(() => {
+                this.divFormulario = false;
+                this.divRecibidos = false;
+                this.divEnviados = false;
+                this.divMensajeRecibido = true;
+                this.divMensajeEnviado = false;
+            });
+        },
+
+        //Leer Mensaje Enviado
+        leerMensajeEnviado:function(registro){
+
+            this.fillMsjeEnviado = registro;
+
+            this.$nextTick(() => {
+                this.divFormulario = false;
+                this.divRecibidos = false;
+                this.divEnviados = false;
+                this.divMensajeRecibido = false;
+                this.divMensajeEnviado = true;
+            });
         },
 
         /*

@@ -197,4 +197,6 @@ Route::middleware([
     Route::delete('/reasignacion-tutor/{ciclo_seccion_id}', [MatriculaController::class, 'destroyTutor'])->name('reasignacion-tutorD');
     Route::post('/alumnos-tutor-save', [MatriculaController::class, 'RegistrarApreciacion'])->name('alumnos-tutor-save');
 
+    Route::post('/remensajes-leido', [MensajeController::class, 'MensajeLeido'])->name('remensajes-leido');
+
 });

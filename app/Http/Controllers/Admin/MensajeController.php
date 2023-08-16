@@ -699,7 +699,7 @@ class MensajeController extends Controller
 
         $registro = Mensaje::find($id);
 
-        $registro->fecha = date('d-m-Y');
+        $registro->fecha = date('Y-m-d');
         $registro->hora = date('H:i:s');
         $registro->estado = '0';
         $registro->titulo=$titulo;
@@ -729,5 +729,30 @@ class MensajeController extends Controller
         $msj='Mensaje eliminado exitosamente';
 
         return response()->json(["result"=>$result,'msj'=>$msj]);
+    }
+
+    public function MensajeLeido(Request $request)
+    {
+        ini_set('memory_limit','256M');
+        ini_set('upload_max_filesize','20M');
+
+        $result='1';
+        $msj='';
+        $selector='';
+
+        $id=$request->id;
+        $user_mensajes_id=$request->user_mensajes_id;
+
+        $registro = UserMensaje::find($user_mensajes_id);
+
+        $registro->fecha_leida = date('Y-m-d');
+        $registro->hora_leida = date('H:i:s');
+        $registro->estado = '1';
+
+        $registro->save();
+
+        $msj='Mensaje Actualizado con Éxito';
+
+        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
     }
 }
