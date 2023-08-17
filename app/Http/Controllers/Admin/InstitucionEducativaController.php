@@ -9,6 +9,7 @@ use Validator;
 use Auth;
 
 use App\Models\InstitucionEducativa;
+use App\Models\Mensaje;
 
 use stdClass;
 
@@ -21,7 +22,9 @@ class InstitucionEducativaController extends Controller
      */
     public function index1()
     {
-        return view('admin.ie.index');
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.ie.index', compact('mensajes'));
     }
 
     public function index()

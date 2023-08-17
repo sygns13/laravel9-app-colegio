@@ -21,6 +21,7 @@ use App\Models\Turno;
 use App\Models\Hora;
 use App\Models\Nota;
 use App\Models\CicloIndicador;
+use App\Models\Mensaje;
 
 use DateTime;
 use stdClass;
@@ -36,21 +37,26 @@ class NotaController extends Controller
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $hoy = date('Y-m-d');
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('docente.notas.index',compact('cicloActivo', 'hoy'));
+        return view('docente.notas.index',compact('cicloActivo', 'hoy', 'mensajes'));
     }
 
     public function index2()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
-        return view('reporte.calificaciones.index',compact('cicloActivo', 'ciclos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('reporte.calificaciones.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
     public function index3()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
-        return view('admin.conclusion.index',compact('cicloActivo'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.conclusion.index',compact('cicloActivo', 'mensajes'));
     }
 
     public function index(Request $request)

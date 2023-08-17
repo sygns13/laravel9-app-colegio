@@ -32,6 +32,7 @@ use App\Models\CicloGrado;
 use App\Models\InstitucionEducativa;
 use App\Models\ApoderadoUser;
 use App\Models\Docente;
+use App\Models\Mensaje;
 
 use stdClass;
 use DB;
@@ -59,24 +60,27 @@ class MatriculaController extends Controller
 
         $niveles = Niveles::where('activo',1)->where('borrado',0)->orderBy('id','asc')->get();
         $grados = Grado::where('activo',1)->where('borrado',0)->orderBy('orden','asc')->get();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.matricula.index',compact('cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados'));
+        return view('admin.matricula.index',compact('cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados', 'mensajes'));
     }
 
     public function index2()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.nomina.index',compact('cicloActivo', 'ciclos'));
+        return view('admin.nomina.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
     public function index3()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.docnominas.index',compact('cicloActivo', 'ciclos'));
+        return view('admin.docnominas.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
     public function index4()
     {
@@ -87,13 +91,14 @@ class MatriculaController extends Controller
         $departamentos = Departamento::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
         $provincias = Provincia::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
         $distritos = Distrito::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
+        $mensajes = Mensaje::GetNotificaciones();
 
         $niveles = []; 
         $grados = []; 
         $secciones = []; 
 
         if(!$cicloActivoLast){
-            return view('admin.matricula-masiva.index',compact('cicloActivo','cicloActivoLast', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
+            return view('admin.matricula-masiva.index',compact('cicloActivo','cicloActivoLast', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones', 'mensajes'));
         }
         
         $niveles = CicloNivel::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivoLast->id)->orderBy('id','asc')->get();
@@ -104,7 +109,7 @@ class MatriculaController extends Controller
         $gradosNow = CicloGrado::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
         $seccionesNow = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
 
-        return view('admin.matricula-masiva.index',compact('cicloActivo','cicloActivoLast', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones', 'nivelesNow', 'gradosNow', 'seccionesNow'));
+        return view('admin.matricula-masiva.index',compact('cicloActivo','cicloActivoLast', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones', 'nivelesNow', 'gradosNow', 'seccionesNow', 'mensajes'));
     }
 
     public function index5()
@@ -120,8 +125,9 @@ class MatriculaController extends Controller
         $niveles = CicloNivel::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
         $grados = CicloGrado::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
         $secciones = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.verificar-matricula.index',compact('ciclos','cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
+        return view('admin.verificar-matricula.index',compact('mensajes','ciclos','cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
     }
 
     public function index6()
@@ -137,8 +143,9 @@ class MatriculaController extends Controller
         $niveles = CicloNivel::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
         $grados = CicloGrado::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
         $secciones = CicloSeccion::where('activo',1)->where('borrado',0)->where('ciclo_escolar_id',$cicloActivo->id)->orderBy('id','asc')->get();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.consultar-matricula.index',compact('ciclos','cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
+        return view('admin.consultar-matricula.index',compact('mensajes','ciclos','cicloActivo', 'estados', 'departamentos', 'provincias', 'distritos', 'niveles', 'grados','secciones'));
     }
 
     public function indexGetVerificar(Request $request)
@@ -521,8 +528,9 @@ class MatriculaController extends Controller
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $docentesActivos = Docente::where('activo', '1')->where('borrado', '0')->orderBy('apellidos')->orderBy('nombre')->get();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.asignacion-tutor.index',compact('cicloActivo', 'docentesActivos'));
+        return view('admin.asignacion-tutor.index',compact('cicloActivo', 'docentesActivos', 'mensajes'));
     }
 
     public function indexGetTutor()
@@ -538,8 +546,9 @@ class MatriculaController extends Controller
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $hoy = date('Y-m-d');
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('docente.apreciacion-tutor.index',compact('cicloActivo', 'hoy'));
+        return view('docente.apreciacion-tutor.index',compact('cicloActivo', 'hoy', 'mensajes'));
     }
 
     public function indexGetTutorAsignación()

@@ -12,6 +12,7 @@ use App\Models\TipoDocumento;
 use App\Models\User;
 use App\Models\CicloEscolar;
 use App\Models\AsignacionCurso;
+use App\Models\Mensaje;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
@@ -28,21 +29,27 @@ class DocenteController extends Controller
 
     public function index1()
     {
-        return view('admin.docente.index');
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.docente.index', compact('mensajes'));
     }
 
     public function index2()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
-        return view('docente.lista-alumnos.index',compact('cicloActivo', 'ciclos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('docente.lista-alumnos.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
     public function index3()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
-        return view('docente.lista-cursos.index',compact('cicloActivo', 'ciclos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('docente.lista-cursos.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
     public function index(Request $request)

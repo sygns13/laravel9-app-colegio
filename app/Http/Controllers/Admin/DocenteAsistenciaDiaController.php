@@ -17,6 +17,7 @@ use App\Models\AsistenciaDocente;
 use App\Models\CicloCurso;
 use App\Models\CicloGrado;
 use App\Models\Docente;
+use App\Models\Mensaje;
 
 
 use stdClass;
@@ -33,9 +34,10 @@ class DocenteAsistenciaDiaController extends Controller
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $hoy = date('Y-m-d');
+        $mensajes = Mensaje::GetNotificaciones();
 
 
-        return view('admin.asistencia-docente.index',compact('cicloActivo', 'hoy'));
+        return view('admin.asistencia-docente.index',compact('cicloActivo', 'hoy', 'mensajes'));
     }
 
     public function index(Request $request)

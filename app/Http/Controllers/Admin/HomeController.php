@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Models\Resolucion;
+use App\Models\Mensaje;
 
 class HomeController extends Controller
 {
@@ -33,7 +34,9 @@ class HomeController extends Controller
             ]);
         }
 
-        return view('admin.inicio.index',compact('user', 'resolucionAperturas', 'resolucionCierres'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.inicio.index',compact('user', 'resolucionAperturas', 'resolucionCierres', 'mensajes'));
     }
 
     public function legajo(){
@@ -50,7 +53,9 @@ class HomeController extends Controller
             ]);
         }
 
-        return view('admin.legajo.index');
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.legajo.index',compact('mensajes'));
     }
 
     public function legajoNuevo2(){
@@ -67,8 +72,9 @@ class HomeController extends Controller
             ]);
         }
 
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.legajo-nuevo2.index',compact('user'));
+        return view('admin.legajo-nuevo2.index',compact('user', 'mensajes'));
     }
 
     public function legajoFichas(){
@@ -85,6 +91,8 @@ class HomeController extends Controller
             ]);
         }
 
-        return view('admin.legajo-fichas.index',compact('user'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.legajo-fichas.index',compact('user','mensajes'));
     }
 }

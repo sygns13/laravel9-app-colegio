@@ -15,6 +15,7 @@ use App\Models\CicloEscolar;
 use App\Models\CicloCurso;
 use App\Models\CicloGrado;
 use App\Models\Docente;
+use App\Models\Mensaje;
 
 
 use stdClass;
@@ -30,8 +31,9 @@ class AsignacionCursoController extends Controller
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $docentesActivos = Docente::where('activo', '1')->where('borrado', '0')->orderBy('apellidos')->orderBy('nombre')->get();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('admin.asignacion-curso.index',compact('cicloActivo', 'docentesActivos'));
+        return view('admin.asignacion-curso.index',compact('cicloActivo', 'docentesActivos', 'mensajes'));
     }
 
     public function index()

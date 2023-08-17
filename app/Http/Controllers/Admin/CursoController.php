@@ -13,6 +13,7 @@ use App\Models\Grado;
 use App\Models\CicloEscolar;
 use App\Models\CicloCurso;
 use App\Models\CicloGrado;
+use App\Models\Mensaje;
 
 
 use stdClass;
@@ -27,7 +28,9 @@ class CursoController extends Controller
             $isAdmin = true;
         }
 
-        return view('admin.curso.index',compact('isAdmin'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.curso.index',compact('isAdmin', 'mensajes'));
     }
 
     public function index()

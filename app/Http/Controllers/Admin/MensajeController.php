@@ -35,6 +35,7 @@ class MensajeController extends Controller
     public function index1()
     {
          $cicloActivo = CicloEscolar::GetCicloActivo();
+         $mensajes = Mensaje::GetNotificaciones();
         /*
         $estados = Estado::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
         $departamentos = Departamento::where('activo',1)->where('borrado',0)->orderBy('nombre','asc')->get();
@@ -44,7 +45,7 @@ class MensajeController extends Controller
         $niveles = Niveles::where('activo',1)->where('borrado',0)->orderBy('id','asc')->get();
         $grados = Grado::where('activo',1)->where('borrado',0)->orderBy('orden','asc')->get(); */
 
-        return view('admin.mensajes.index',compact('cicloActivo'));
+        return view('admin.mensajes.index',compact('cicloActivo', 'mensajes'));
     }
 
     public function index(Request $request)

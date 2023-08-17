@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\Resolucion;
+use App\Models\Mensaje;
 
 use stdClass;
 use DB;
@@ -32,7 +33,9 @@ class ResolucionController extends Controller
             $isAdmin = true;
         }
 
-        return view('admin.resolucion.index',compact('isAdmin'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.resolucion.index',compact('isAdmin', 'mensajes'));
     }
 
     public function indexGetData1(Request $request)

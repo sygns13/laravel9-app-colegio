@@ -14,6 +14,7 @@ use App\Models\CicloGrado;
 use App\Models\CicloEscolar;
 use App\Models\Turno;
 use App\Models\Hora;
+use App\Models\Mensaje;
 
 
 use stdClass;
@@ -29,21 +30,27 @@ class HorarioController extends Controller
     public function index1()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
-        return view('admin.horario.index',compact('cicloActivo'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.horario.index',compact('cicloActivo', 'mensajes'));
     }
 
     public function index2()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
-        return view('reporte.horario.index',compact('cicloActivo', 'ciclos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('reporte.horario.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
     public function index3()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
-        return view('docente.horario.index',compact('cicloActivo', 'ciclos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('docente.horario.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
 

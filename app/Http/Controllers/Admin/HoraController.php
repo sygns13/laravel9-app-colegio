@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Turno;
 use App\Models\Hora;
+use App\Models\Mensaje;
 
 use Validator;
 use Auth;
@@ -20,7 +21,9 @@ class HoraController extends Controller
     public function index1()
     {
         $turnos = Turno::all();
-        return view('admin.hora.index',compact('turnos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.hora.index',compact('turnos', 'mensajes'));
     }
 
     public function index(Request $request)

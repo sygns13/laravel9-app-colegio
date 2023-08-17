@@ -19,6 +19,7 @@ use App\Models\CicloCompetencia;
 use App\Models\CicloIndicador;
 use App\Models\Turno;
 use App\Models\Matricula;
+use App\Models\Mensaje;
 
 
 use stdClass;
@@ -34,7 +35,9 @@ class CicloEscolarController extends Controller
     public function index1()
     {
         $turnos = Turno::all();
-        return view('admin.ciclo.index',compact('turnos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.ciclo.index',compact('turnos', 'mensajes'));
     }
 
     public function index(Request $request)

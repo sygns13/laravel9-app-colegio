@@ -11,6 +11,7 @@ use App\Models\Secciones;
 use App\Models\CicloSeccion;
 use App\Models\CicloGrado;
 use App\Models\CicloEscolar;
+use App\Models\Mensaje;
 
 use stdClass;
 
@@ -23,7 +24,9 @@ class SeccionesController extends Controller
      */
     public function index1()
     {
-        return view('admin.seccion.index');
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('admin.seccion.index', compact('mensajes'));
     }
 
 

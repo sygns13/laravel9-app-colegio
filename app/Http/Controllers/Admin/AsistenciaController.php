@@ -21,6 +21,7 @@ use App\Models\Turno;
 use App\Models\Hora;
 use App\Models\Alumno;
 use App\Models\User;
+use App\Models\Mensaje;
 
 use DateTime;
 use stdClass;
@@ -39,22 +40,27 @@ class AsistenciaController extends Controller
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $hoy = date('Y-m-d');
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('docente.asistencia-alumnos.index',compact('cicloActivo', 'hoy'));
+        return view('docente.asistencia-alumnos.index',compact('cicloActivo', 'hoy', 'mensajes'));
     }
 
     public function index2()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
-        return view('reporte.asistenciasesion.index',compact('cicloActivo', 'ciclos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('reporte.asistenciasesion.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
     public function index3()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
         $ciclos = CicloEscolar::GetAllCiclos();
-        return view('docente.asistenciasesion.index',compact('cicloActivo', 'ciclos'));
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('docente.asistenciasesion.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
 

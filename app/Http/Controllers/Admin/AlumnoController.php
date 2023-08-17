@@ -30,6 +30,7 @@ use App\Models\CicloSeccion;
 use App\Models\Turno;
 use App\Models\Hora;
 use App\Models\ApoderadoUser;
+use App\Models\Mensaje;
 
 use stdClass;
 use Illuminate\Support\Facades\Hash;
@@ -193,22 +194,25 @@ class AlumnoController extends Controller
     public function index2()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('alumno.lista-cursos.index',compact('cicloActivo'));
+        return view('alumno.lista-cursos.index',compact('cicloActivo', 'mensajes'));
     }
 
     public function index3()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('alumno.horario.index',compact('cicloActivo'));
+        return view('alumno.horario.index',compact('cicloActivo', 'mensajes'));
     }
 
     public function index4()
     {
         $cicloActivo = CicloEscolar::GetCicloActivo();
+        $mensajes = Mensaje::GetNotificaciones();
 
-        return view('alumno.asistencia.index',compact('cicloActivo'));
+        return view('alumno.asistencia.index',compact('cicloActivo', 'mensajes'));
     }
 
     public function GetListaCursos()
