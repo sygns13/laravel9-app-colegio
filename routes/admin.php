@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\AsistenciaAlumnoController;
 use App\Http\Controllers\Admin\NotaController;
 use App\Http\Controllers\Admin\ResolucionController;
 use App\Http\Controllers\Admin\MensajeController;
+use App\Http\Controllers\Admin\UserController;
 
 
 use App\Http\Controllers\Admin\ReportPDFController;
@@ -63,21 +64,17 @@ Route::middleware([
     Route::get('/conclusion-matriculas', [NotaController::class, 'index3'])->name('index3');
     Route::get('/reporte-doc-horarios', [HorarioController::class, 'index3'])->name('indexDocHorario');
     Route::get('/asistencia-doc-sesiones', [AsistenciaController::class, 'index3'])->name('asistencia-doc-sesiones');
-
+    Route::get('/passwords', [UserController::class, 'index1'])->name('passwords');
     Route::get('/legajo-nuevo', [HomeController::class, 'legajoNuevo2'])->name('legajo-nuevo');
-
     Route::get('/listado-cursos', [AlumnoController::class, 'index2'])->name('listado-cursos');
     Route::get('/horario-alumno', [AlumnoController::class, 'index3'])->name('horario-alumno');
     Route::get('/asistencia-alumno', [AlumnoController::class, 'index4'])->name('asistencia-alumno');
     Route::get('/resoluciones', [ResolucionController::class, 'index1'])->name('resoluciones');
-
     Route::get('/matricula-masiva', [MatriculaController::class, 'index4'])->name('matricula-masiva');
     Route::get('/verificar-matricula', [MatriculaController::class, 'index5'])->name('verificar-matricula');
     Route::get('/consultar-matricula', [MatriculaController::class, 'index6'])->name('consultar-matricula');
-
     Route::get('/asignacion-tutor', [MatriculaController::class, 'indexAsignacionTutor'])->name('asignacion-tutor');
     Route::get('/apreciacion-tutor', [MatriculaController::class, 'indexApreciacionTutor'])->name('apreciacion-tutor');
-
     Route::get('/mensajes', [MensajeController::class, 'index1'])->name('mensajes');
     
 
@@ -113,11 +110,7 @@ Route::middleware([
     Route::get('/rehorariogetdoc', [HorarioController::class, 'indexDocHorario'])->name('indexDocHorario');
     Route::get('/asistenciasesiongetdoc', [AsistenciaController::class, 'indexDocAsistenciaSesion'])->name('asistenciasesiongetdoc');
     Route::get('/realumnomain', [AlumnoController::class, 'indexAlumnoMain'])->name('indexAlumnoMain');
-
     Route::get('/reapoderadomain', [AlumnoController::class, 'indexApoderadoMain'])->name('indexApoderadoMain');
-    
-
-
     Route::get('/redocentes/altabajadocente/{id}/{var}',[DocenteController::class, 'altabaja'])->name('altabajadocente');
     Route::get('/reciclo/activarMatricula/{id}',[CicloEscolarController::class, 'activarMatricula'])->name('activarMatricula');
     Route::get('/reciclo/desactivarMatricula/{id}',[CicloEscolarController::class, 'desactivarMatricula'])->name('desactivarMatricula');
@@ -137,19 +130,17 @@ Route::middleware([
     Route::get('/d-pdf', [ReportPDFController::class, 'descargarPDF']);
 
     Route::get('/realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
-
     Route::get('/get-lista-cursos', [AlumnoController::class, 'GetListaCursos'])->name('get-lista-cursos');
     Route::get('/get-horario', [AlumnoController::class, 'GetHorario'])->name('get-horario');
     Route::get('/get-asistencia', [AlumnoController::class, 'GetAsistencia'])->name('get-asistencia');
-
     Route::get('/get-resoluciones1', [ResolucionController::class, 'indexGetData1'])->name('get-resoluciones1');
     Route::get('/get-resoluciones2', [ResolucionController::class, 'indexGetData2'])->name('get-resoluciones2');
-
     Route::get('/get-matriculas-verificar', [MatriculaController::class, 'indexGetVerificar'])->name('indexGetVerificar');
     Route::get('/get-matriculas-director', [MatriculaController::class, 'indexGetDirector'])->name('indexGetDirector');
     Route::get('/get-asignacion-tutor', [MatriculaController::class, 'indexGetTutor'])->name('indexGetTutor');
     Route::get('/get-alumnos-tutor', [MatriculaController::class, 'indexGetTutorAsignación'])->name('indexGetTutorAsignación');
     Route::get('/get-personas-mensajes', [MensajeController::class, 'indexGetPersonas'])->name('indexGetPersonas');
+    Route::get('/get-cambiar-password', [UserController::class, 'indexGetUser'])->name('indexGetUser');
 
 
 
@@ -174,29 +165,23 @@ Route::middleware([
     Route::post('/matricula/permanecer', [MatriculaController::class, 'permanecer'])->name('permanecer');
     Route::post('/matricula/expulsar', [MatriculaController::class, 'expulsar'])->name('expulsar');
     Route::post('/matricula/cancelconclusion', [MatriculaController::class, 'cancelconclusion'])->name('cancelconclusion');
-
     Route::post('/relegajoUpdate/FotoPerfil', [LegajoController::class, 'updatefotoperfil'])->name('relegajoUpdate');
     Route::post('/relegajoUpdate/FotoMision', [LegajoController::class, 'updatefotomision'])->name('updatefotomision');
     Route::post('/relegajoUpdate/FotoVision', [LegajoController::class, 'updatefotovision'])->name('updatefotovision');
-
     Route::post('/redocentes/generateusername', [DocenteController::class, 'generateusername'])->name('generateusername');
     Route::post('/redocenteUpdate/FotoPerfil', [DocenteController::class, 'updatefotoperfil'])->name('redocenteUpdate');
-
     Route::post('/regfecha-calificacion', [NotaController::class, 'programarFecha'])->name('programarFecha');
-
     Route::post('/realumnoUpdate/FotoPerfil', [AlumnoController::class, 'updatefotoperfil'])->name('realumnoUpdate');
     Route::post('/reapoderadoUpdate/FotoPerfil', [AlumnoController::class, 'updatefotoperfilApoderado'])->name('reapoderadoUpdate');
-
     Route::post('/rematricula-masiva/buscar', [MatriculaController::class, 'buscarMasivo'])->name('rematricula-masiva/buscar');
     Route::post('/rematricula-masiva/store', [MatriculaController::class, 'storeMasivo'])->name('rematricula-masiva/store');
-
     Route::post('/matriculas-verificar', [MatriculaController::class, 'VerificarApoderado'])->name('matriculas-verificar');
     Route::post('/matriculas-verificardir', [MatriculaController::class, 'VerificarDirector'])->name('matriculas-verificardir');
     Route::post('/reasignacion-tutor', [MatriculaController::class, 'AsignarTutor'])->name('reasignacion-tutorC');
     Route::put('/reasignacion-tutor', [MatriculaController::class, 'ActualizarTutor'])->name('reasignacion-tutorU');
     Route::delete('/reasignacion-tutor/{ciclo_seccion_id}', [MatriculaController::class, 'destroyTutor'])->name('reasignacion-tutorD');
     Route::post('/alumnos-tutor-save', [MatriculaController::class, 'RegistrarApreciacion'])->name('alumnos-tutor-save');
-
     Route::post('/remensajes-leido', [MensajeController::class, 'MensajeLeido'])->name('remensajes-leido');
+    Route::post('/update-psw-v1', [UserController::class, 'UpdatePassword'])->name('update-psw-v1');
 
 });

@@ -9,7 +9,7 @@ class TipoUser extends Model
 {
     use HasFactory;
 
-    protected $table = 'tipo_documentos';
+    protected $table = 'tipo_users';
     protected $fillable = ['id',
                             'nombre',
                             'descripcion',

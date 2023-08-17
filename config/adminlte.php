@@ -534,6 +534,13 @@ return [
             'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
         ],
 
+        [
+            'text' => 'Cambiar Contraseña',
+            'url'  => 'admin/passwords',
+            'icon' => 'fas fa-fw fa-lock',
+            'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
+        ],
+
         /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',

@@ -18,7 +18,16 @@
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
-            <img src="{{ Auth::user()->adminlte_image() }}"
+            {{-- <img src="{{ Auth::user()->adminlte_image() }}" --}}
+            @if(Auth::user()->tipo_user_id == '1' || Auth::user()->tipo_user_id == '2')
+                <img src="{{ asset('web/perfil/admin/') }}/{{Auth::user()->profile_photo_path}}"
+            @elseif(Auth::user()->tipo_user_id == '3')
+                <img src="{{ asset('web/perfil/docente/') }}/{{Auth::user()->profile_photo_path}}"
+            @elseif(Auth::user()->tipo_user_id == '4')
+                <img src="{{ asset('web/perfil/alumno/') }}/{{Auth::user()->profile_photo_path}}"
+            @elseif(Auth::user()->tipo_user_id == '5')
+                <img src="{{ asset('web/perfil/apoderado/') }}/{{Auth::user()->profile_photo_path}}"
+            @endif
                  class="user-image img-circle elevation-2"
                  alt="{{ Auth::user()->name }}">
         @endif
@@ -35,7 +44,16 @@
             <li class="user-header {{ config('adminlte.usermenu_header_class', 'bg-primary') }}
                 @if(!config('adminlte.usermenu_image')) h-auto @endif">
                 @if(config('adminlte.usermenu_image'))
-                    <img src="{{ Auth::user()->adminlte_image() }}"
+                    {{-- <img src="{{ Auth::user()->adminlte_image() }}" --}}
+                    @if(Auth::user()->tipo_user_id == '1' || Auth::user()->tipo_user_id == '2')
+                        <img src="{{ asset('web/perfil/admin/') }}/{{Auth::user()->profile_photo_path}}"
+                    @elseif(Auth::user()->tipo_user_id == '3')
+                        <img src="{{ asset('web/perfil/docente/') }}/{{Auth::user()->profile_photo_path}}"
+                    @elseif(Auth::user()->tipo_user_id == '4')
+                        <img src="{{ asset('web/perfil/alumno/') }}/{{Auth::user()->profile_photo_path}}"
+                    @elseif(Auth::user()->tipo_user_id == '5')
+                        <img src="{{ asset('web/perfil/apoderado/') }}/{{Auth::user()->profile_photo_path}}"
+                    @endif
                          class="img-circle elevation-2"
                          alt="{{ Auth::user()->name }}">
                 @endif
