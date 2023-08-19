@@ -116,7 +116,7 @@ createApp({
     methods: {
         getDatos: function(ciclo_id) {
             
-            var url = 'rehorarioget?ciclo_id=' + ciclo_id;
+            var url = 'rehorariogetapo?ciclo_id=' + ciclo_id;
 
             axios.get(url).then(response => {
 
@@ -138,6 +138,9 @@ createApp({
         },
 
         cambioSeccion: function() {
+
+            //this.turnoSeleccionado = '0';
+            this.cambioTurno();
 
             this.registros.niveles.forEach(nivel => {
                 nivel.grados.forEach(grado => {

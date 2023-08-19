@@ -53,6 +53,15 @@ class HorarioController extends Controller
         return view('docente.horario.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
+    public function index4()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('apoderado.horario.index',compact('cicloActivo', 'ciclos', 'mensajes'));
+    }
+
 
     public function index()
     {
@@ -76,6 +85,24 @@ class HorarioController extends Controller
         $ciclo_id = $request->ciclo_id;
 
         $registros = Horario::GetDocenteDataHorarioActivo($ciclo_id, $iduser);
+
+        $turnos = Turno::all();
+        $horas = Hora::where('borrado','0')->where('activo','1')->get();
+
+        return [ 
+                'registros' => $registros,
+                'turnos' => $turnos,
+                'horas' => $horas,
+               ];
+    }
+
+    public function indexApoHorario(Request $request)
+    {
+
+        $iduser =Auth::user()->id;
+        $ciclo_id = $request->ciclo_id;
+
+        $registros = Horario::GetApoderadoDataHorarioActivo($ciclo_id, $iduser);
 
         $turnos = Turno::all();
         $horas = Hora::where('borrado','0')->where('activo','1')->get();

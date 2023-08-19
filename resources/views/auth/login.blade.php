@@ -205,9 +205,9 @@
                             <option value="1">
                                 Director
                             </option>
-                            <option value="2">
+                            {{-- <option value="2">
                                 Administrativo
-                            </option>
+                            </option> --}}
                             <option value="3">
                                 Docente
                             </option>

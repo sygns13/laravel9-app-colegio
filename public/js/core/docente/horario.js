@@ -133,6 +133,7 @@ createApp({
 
         changeCiclo:function() {
             this.verFormulario = false;
+            this.cerrarHorario();
             this.getDatos(this.ciclo_id);
         },
 

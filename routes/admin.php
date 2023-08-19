@@ -76,6 +76,7 @@ Route::middleware([
     Route::get('/asignacion-tutor', [MatriculaController::class, 'indexAsignacionTutor'])->name('asignacion-tutor');
     Route::get('/apreciacion-tutor', [MatriculaController::class, 'indexApreciacionTutor'])->name('apreciacion-tutor');
     Route::get('/mensajes', [MensajeController::class, 'index1'])->name('mensajes');
+    Route::get('/reporte-apo-horarios', [HorarioController::class, 'index4'])->name('indexApoHorario');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -141,6 +142,8 @@ Route::middleware([
     Route::get('/get-alumnos-tutor', [MatriculaController::class, 'indexGetTutorAsignación'])->name('indexGetTutorAsignación');
     Route::get('/get-personas-mensajes', [MensajeController::class, 'indexGetPersonas'])->name('indexGetPersonas');
     Route::get('/get-cambiar-password', [UserController::class, 'indexGetUser'])->name('indexGetUser');
+
+    Route::get('/rehorariogetapo', [HorarioController::class, 'indexApoHorario'])->name('indexApoHorario');
 
 
 
