@@ -170,6 +170,8 @@ createApp({
             }else{
                 this.verFormulario = false;
             }
+
+            this.cerrarHorario();
         },
 
         cambioSeccion: function() {

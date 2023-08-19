@@ -164,12 +164,15 @@ createApp({
         },
 
         changeCiclo:function() {
+
             if(this.ciclo_id != 0 && this.fecha != null && this.fecha !=''){
                 this.verFormulario = false;
                 this.getDatos(this.ciclo_id, this.fecha);
             }else{
                 this.verFormulario = false;
             }
+
+            this.cerrarHorario();
         },
 
         cambioSeccion: function() {
