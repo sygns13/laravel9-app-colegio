@@ -73,6 +73,7 @@ Route::middleware([
     Route::get('/matricula-masiva', [MatriculaController::class, 'index4'])->name('matricula-masiva');
     Route::get('/verificar-matricula', [MatriculaController::class, 'index5'])->name('verificar-matricula');
     Route::get('/consultar-matricula', [MatriculaController::class, 'index6'])->name('consultar-matricula');
+    Route::get('/consultar-matricula-alu', [MatriculaController::class, 'index7'])->name('consultar-matricula-alu');
     Route::get('/asignacion-tutor', [MatriculaController::class, 'indexAsignacionTutor'])->name('asignacion-tutor');
     Route::get('/apreciacion-tutor', [MatriculaController::class, 'indexApreciacionTutor'])->name('apreciacion-tutor');
     Route::get('/mensajes', [MensajeController::class, 'index1'])->name('mensajes');
@@ -145,6 +146,7 @@ Route::middleware([
     Route::get('/get-resoluciones2', [ResolucionController::class, 'indexGetData2'])->name('get-resoluciones2');
     Route::get('/get-matriculas-verificar', [MatriculaController::class, 'indexGetVerificar'])->name('indexGetVerificar');
     Route::get('/get-matriculas-director', [MatriculaController::class, 'indexGetDirector'])->name('indexGetDirector');
+    Route::get('/get-matriculas-consultar-alu', [MatriculaController::class, 'indexGetAlumno'])->name('indexGetAlumno');
     Route::get('/get-asignacion-tutor', [MatriculaController::class, 'indexGetTutor'])->name('indexGetTutor');
     Route::get('/get-alumnos-tutor', [MatriculaController::class, 'indexGetTutorAsignación'])->name('indexGetTutorAsignación');
     Route::get('/get-personas-mensajes', [MensajeController::class, 'indexGetPersonas'])->name('indexGetPersonas');

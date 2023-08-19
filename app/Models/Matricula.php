@@ -1237,10 +1237,10 @@ class Matricula extends Model
         $matricula->sigla_situacion = null; //null
         $matricula->sigla_situacion_final = null; //null
 
-        $registro->validado_apoderado='0';
-        $registro->validado_director='0';
-        $registro->fecha = null;
-        $registro->fecha = null;
+        $matricula->validado_apoderado='0';
+        $matricula->validado_director='0';
+        $matricula->fecha_valid_apo = null;
+        $matricula->fecha_valid_dir = null;
 
         $matricula->save();
 

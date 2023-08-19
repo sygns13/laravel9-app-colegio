@@ -23,7 +23,7 @@ class HomeController extends Controller
         $user = User::find($iduser);
         
         $resolucionAperturas = Resolucion::where('activo',1)->where('borrado',0)->where('tipo',1)->orderBy('id','desc')->get();
-        $resolucionCierres = Resolucion::where('activo',1)->where('borrado',0)->where('tipo',1)->orderBy('id','desc')->get();
+        $resolucionCierres = Resolucion::where('activo',1)->where('borrado',0)->where('tipo',2)->orderBy('id','desc')->get();
 
         if($user->activo != '1'){
             Auth::guard('web')->logout();

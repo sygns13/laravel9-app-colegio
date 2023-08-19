@@ -396,6 +396,12 @@ return [
         ],
 
         [
+            'text' => 'Consulta de Matrículas',
+            'url'  => 'admin/consultar-matricula-alu',
+            'can'  => ['alumno']
+        ],
+
+        [
             'text'        => 'Módulo Control',
             'icon'        => 'fas fa-fw fa-clock',
             'icon_color'  => 'white',
