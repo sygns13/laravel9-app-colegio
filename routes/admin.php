@@ -80,6 +80,10 @@ Route::middleware([
     Route::get('/reporte-alu-horarios', [HorarioController::class, 'index5'])->name('indexAluHorario');
     Route::get('/asistencia-apo-sesiones', [AsistenciaController::class, 'index4'])->name('asistencia-apo-sesiones');
     Route::get('/asistencia-alu-sesiones', [AsistenciaController::class, 'index5'])->name('asistencia-alu-sesiones');
+
+    Route::get('/calificaciones-doc', [NotaController::class, 'index4'])->name('index3');
+    Route::get('/calificaciones-alu', [NotaController::class, 'index5'])->name('index3');
+    Route::get('/calificaciones-apo', [NotaController::class, 'index6'])->name('index3');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -132,7 +136,7 @@ Route::middleware([
     Route::get('/generate-pdf', [MatriculaController::class, 'generatePDF']);
     Route::get('/ver-pdf', [ReportPDFController::class, 'verPDF']);
     Route::get('/d-pdf', [ReportPDFController::class, 'descargarPDF']);
-
+    
     Route::get('/realumnobuscar/buscar/{tipo_documento_id}/{num_documento}',[AlumnoController::class, 'buscarAlumno'])->name('buscarAlumno');
     Route::get('/get-lista-cursos', [AlumnoController::class, 'GetListaCursos'])->name('get-lista-cursos');
     Route::get('/get-horario', [AlumnoController::class, 'GetHorario'])->name('get-horario');
@@ -145,15 +149,18 @@ Route::middleware([
     Route::get('/get-alumnos-tutor', [MatriculaController::class, 'indexGetTutorAsignación'])->name('indexGetTutorAsignación');
     Route::get('/get-personas-mensajes', [MensajeController::class, 'indexGetPersonas'])->name('indexGetPersonas');
     Route::get('/get-cambiar-password', [UserController::class, 'indexGetUser'])->name('indexGetUser');
-
+    
     Route::get('/rehorariogetapo', [HorarioController::class, 'indexApoHorario'])->name('indexApoHorario');
     Route::get('/rehorariogetalu', [HorarioController::class, 'indexAluHorario'])->name('indexAluHorario');
     
     Route::get('/asistenciasesiongetapo', [AsistenciaController::class, 'indexApoAsistenciaSesion'])->name('asistenciasesiongetapo');
     Route::get('/asistenciasesiongetalu', [AsistenciaController::class, 'indexAluAsistenciaSesion'])->name('asistenciasesiongetalu');
     
-
-
+    Route::get('/calificacionesget-doc', [NotaController::class, 'indexCalificacionDoc'])->name('calificacionesget-doc');
+    Route::get('/calificacionesget-apo', [NotaController::class, 'indexCalificacionApo'])->name('calificacionesget-apo');
+    Route::get('/calificacionesget-alu', [NotaController::class, 'indexCalificacionAlu'])->name('calificacionesget-alu');
+    
+    
     //Reportes PDF
     Route::get('/reportepdf/ficha-matricula/{alumno_id}',[ReportPDFController::class, 'impFichaMatricula'])->name('impFichaMatricula');
     Route::get('/reportepdf/nomina-matricula/{ciclo_seccion_id}',[ReportPDFController::class, 'impNominaMatricula'])->name('impNominaMatricula');

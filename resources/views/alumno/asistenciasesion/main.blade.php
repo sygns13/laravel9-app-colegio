@@ -326,14 +326,14 @@
                                                 </div>
                                             </template>
                                             <template v-else>
-                                                <h6>Los Alumnos bajo su poder aun no tiene sección asignada o no están matriculados en el año escolar seleccionado</h6>
+                                                <h6>El Alumno no están matriculados en el año escolar seleccionado</h6>
                                             </template>
                                         </div>
                                     </template>
                                 </div>
                                 </template>
                                 <template v-else>
-                                    <h6>Los Alumnos bajo su poder aun no tiene sección asignada o no están matriculados en el año escolar seleccionado</h6>
+                                    <h6>El Alumno no están matriculados en el año escolar seleccionado</h6>
                                 </template>
                             </div>
                             <!-- /.card -->

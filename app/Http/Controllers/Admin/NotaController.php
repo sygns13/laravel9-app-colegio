@@ -59,6 +59,33 @@ class NotaController extends Controller
         return view('admin.conclusion.index',compact('cicloActivo', 'mensajes'));
     }
 
+    public function index4()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('docente.calificaciones.index',compact('cicloActivo', 'ciclos', 'mensajes'));
+    }
+
+    public function index5()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('alumno.calificaciones.index',compact('cicloActivo', 'ciclos', 'mensajes'));
+    }
+
+    public function index6()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('apoderado.calificaciones.index',compact('cicloActivo', 'ciclos', 'mensajes'));
+    }
+
     public function index(Request $request)
     {
 
@@ -75,6 +102,42 @@ class NotaController extends Controller
         $ciclo_id = $request->ciclo_id;
 
         $registros = Nota::GetItemsNotasAlumnos($ciclo_id);
+        
+        return [ 
+                'registros' => $registros,
+               ];
+    }
+
+    public function indexCalificacionDoc(Request $request)
+    {
+
+        $ciclo_id = $request->ciclo_id;
+
+        $registros = Nota::GetItemsNotasAlumnosDoc($ciclo_id);
+        
+        return [ 
+                'registros' => $registros,
+               ];
+    }
+
+    public function indexCalificacionApo(Request $request)
+    {
+
+        $ciclo_id = $request->ciclo_id;
+
+        $registros = Nota::GetItemsNotasAlumnosApo($ciclo_id);
+        
+        return [ 
+                'registros' => $registros,
+               ];
+    }
+
+    public function indexCalificacionAlu(Request $request)
+    {
+
+        $ciclo_id = $request->ciclo_id;
+
+        $registros = Nota::GetItemsNotasAlumnosAlu($ciclo_id);
         
         return [ 
                 'registros' => $registros,

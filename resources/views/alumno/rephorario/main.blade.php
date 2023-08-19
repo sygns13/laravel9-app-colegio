@@ -47,6 +47,7 @@
                                     <template v-for="(nivel, index) in registros.niveles">
                                         <div role="tabpanel"
                                             v-bind="{ 'class': index == 0 ? 'tab-pane fade show active' : 'tab-pane fade', 'id': 'custom-tabs-two-' + nivel.siglas, 'aria-labelledby': 'custom-tabs-two-' + nivel.siglas + '-tab' }">
+                                            
                                             <template v-if="nivel.grados.length > 0">
                                             <div class="card-header p-0 pt-1 border-bottom-0">
                                                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
@@ -200,14 +201,14 @@
 
                                             </template>
                                             <template v-else>
-                                                <h6>Los Alumnos bajo su poder aun no tiene sección asignada o no están matriculados en el año escolar seleccionado</h6>
+                                                <h6>El Alumno no están matriculados en el año escolar seleccionado</h6>
                                             </template>
                                         </div>
                                     </template>
                                 </div>
                                 </template>
                                 <template v-else>
-                                    <h6>Los Alumnos bajo su poder aun no tiene sección asignada o no están matriculados en el año escolar seleccionado</h6>
+                                    <h6>El Alumno no están matriculados en el año escolar seleccionado</h6>
                                 </template>
                             </div>
                             <!-- /.card -->

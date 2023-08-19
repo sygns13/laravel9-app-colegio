@@ -520,7 +520,31 @@ return [
                 [
                     'text' => 'Reporte de Calificaciones',
                     'url'  => 'admin/calificaciones',
-                    'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
+                    'can'  => ['admin', 'director']
+                ],
+
+                [
+                    'text' => 'Reporte de Calificaciones',
+                    'url'  => 'admin/calificaciones-doc',
+                    'can'  => ['admin', 'director']
+                ],
+
+                [
+                    'text' => 'Reporte de Calificaciones',
+                    'url'  => 'admin/calificaciones-doc',
+                    'can'  => ['docente']
+                ],
+
+                [
+                    'text' => 'Reporte de Calificaciones',
+                    'url'  => 'admin/calificaciones-alu',
+                    'can'  => ['alumno']
+                ],
+
+                [
+                    'text' => 'Reporte de Calificaciones',
+                    'url'  => 'admin/calificaciones-apo',
+                    'can'  => ['apoderado']
                 ],
                 
 
