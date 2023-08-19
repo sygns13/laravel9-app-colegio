@@ -500,6 +500,534 @@ class Asistencia extends Model
         return $data;
     }
 
+    public static function GetDataAsistenciaApoByCicloAndFecha($ciclo_seccion_id, $fecha, $iduser){
+
+        $user = User::find($iduser);
+
+        $apoderadoUsers = ApoderadoUser::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->get();
+
+        $cicloActivo = CicloEscolar::find($ciclo_seccion_id);
+
+        $data = InstitucionEducativa::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->first();
+
+        //$date = DateTimeImmutable::createFromFormat('Y-m-d', $fecha);
+        $date1 = new DateTime($fecha);
+        $date2 = new DateTime($fecha);
+        $date3 = new DateTime($fecha);
+        $date4 = new DateTime($fecha);
+        $date5 = new DateTime($fecha);
+
+        $tipodia=date("N",$date1->getTimestamp());
+
+        $dia1 =$fecha;
+        $dia2 =$fecha;
+        $dia3 =$fecha;
+        $dia4 =$fecha;
+        $dia5 =$fecha;
+
+        switch ($tipodia) {
+            case '1':
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->add(new DateInterval('P1D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->add(new DateInterval('P2D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P3D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P4D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '2':
+                $date1->sub(new DateInterval('P1D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->add(new DateInterval('P1D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P2D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P3D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '3':
+                $date1->sub(new DateInterval('P2D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P1D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P1D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P2D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '4':
+                $date1->sub(new DateInterval('P3D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P2D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P1D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P1D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '5':
+                $date1->sub(new DateInterval('P4D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P3D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P2D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P1D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '6':
+                $date1->sub(new DateInterval('P5D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P4D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P3D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P2D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->sub(new DateInterval('P1D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '7':
+                $date1->sub(new DateInterval('P6D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P5D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P4D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P3D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->sub(new DateInterval('P2D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        $data->dia1 = $dia1;
+        $data->dia2 = $dia2;
+        $data->dia3 = $dia3;
+        $data->dia4 = $dia4;
+        $data->dia5 = $dia5;
+
+        if($cicloActivo){
+
+            $idCicloSecciones = [];
+            $alumnosM = [];
+            foreach ($apoderadoUsers as $key => $apoderado) {
+                $alumno = Alumno::find($apoderado->alumno_id);
+
+                $matricula = Matricula::where('alumno_id', $alumno->id)->where('ciclo_escolar_id', $cicloActivo->id)->first();
+                $alumno->matricula = $matricula;
+
+                $apoderado->alumno = $alumno;
+
+                if($matricula){
+                    $idCicloSecciones[] = $matricula->ciclo_seccion_id;
+                    $alumnosM[] = $alumno;
+                }
+            }
+
+            $niveles = [];
+
+            if(count($idCicloSecciones) > 0 ){
+
+                $WhereAlumnos = ' and cs.id in (';
+                foreach ($idCicloSecciones as $keyCS => $idCicloSeccion) {
+                    $WhereAlumnos .= strval($idCicloSeccion);
+                    if(count($idCicloSecciones) > ($keyCS + 1)){
+                        $WhereAlumnos .= ', ';
+                    }
+                }
+                $WhereAlumnos .= ')';
+
+                $niveles = DB::select("select cn.id, cn.nombre, cn.nivel_id, cn.turno_id from ciclo_seccion cs
+                inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                inner join ciclo_niveles cn on cg.ciclo_niveles_id=cn.id
+                where cg.ciclo_escolar_id = ?
+                ".$WhereAlumnos."
+                group by cn.nivel_id
+                order by cn.id;", [$ciclo_seccion_id]);
+
+                foreach ($niveles as $key => $value) {
+
+                    $grados = DB::select("select cg.id, cg.orden, cg.nombre, cg.ciclo_niveles_id from  ciclo_seccion cs
+                    inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                    where cg.ciclo_escolar_id = ?
+                    and cg.ciclo_niveles_id = ?
+                    ".$WhereAlumnos."
+                    group by cg.id
+                    order by cg.orden;", [$ciclo_seccion_id, $value->id]);
+
+                $nivel = Niveles::find($value->nivel_id);
+
+                $value->siglas = $nivel->siglas;
+
+                foreach ($grados as $keyG => $valueG) {
+                    $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id, cs.turno_id from  ciclo_seccion cs
+                    where cs.ciclo_escolar_id = ?
+                    and cs.ciclo_grados_id = ?
+                    ".$WhereAlumnos."
+                    group by cs.id
+                    order by cs.id;", [$ciclo_seccion_id, $valueG->id]);
+
+                    
+                        foreach ($seccions as $keyS => $valueS) {
+                            $horarios = Horario::where('borrado','0')
+                                            ->where('activo','1')
+                                            ->where('ciclo_seccion_id', $valueS->id)
+                                            ->where('ciclo_escolar_id', $cicloActivo->id)
+                                            ->orderBy('dia_semana')
+                                            ->orderBy('hora_ini')
+                                            ->get();
+
+                            foreach ($horarios as $keyH => $valueH) {
+
+                                $curso = CicloCurso::find($valueH->ciclo_curso_id);
+
+                                if(isset($curso)){
+                                    $asignacion = AsignacionCurso::where('borrado','0')
+                                        ->where('activo','1')
+                                        ->where('ciclo_seccion_id', $ciclo_seccion_id)
+                                        ->where('ciclo_cursos_id', $curso->id)
+                                        ->first();
+                    
+                                    if($asignacion){
+                                        $docente = Docente::find($asignacion->docente_id);
+                                        $asignacion->docente = $docente;
+                                    }
+                                    $curso->asignacion = $asignacion;
+                                }
+
+                                $valueH->curso = $curso;
+        
+                                $fechaBuscar = $fecha;
+                                switch ($valueH->dia_semana) {
+                                    case '1':
+                                        $fechaBuscar = $dia1;
+                                    break;
+                                    case '2':
+                                        $fechaBuscar = $dia2;
+                                    break;
+                                    case '3':
+                                        $fechaBuscar = $dia3;
+                                    break;
+                                    case '4':
+                                        $fechaBuscar = $dia4;
+                                    break;
+                                    case '5':
+                                        $fechaBuscar = $dia5;
+                                    break;
+                                
+                                }
+        
+                                $asistencia = Asistencia::where('horario_id', $valueH->id)
+                                                        ->where('fecha', $fechaBuscar)
+                                                        ->first();
+                                
+                                if($asistencia){
+                                    $alumnos = [];
+                                    foreach ($alumnosM as $keyAluM => $alumnoM) {
+                                        if($alumnoM->matricula->ciclo_seccion_id == $valueS->id){
+                                            $alumnos[] = $alumnoM;
+                                        }
+                                    }
+
+                                    foreach ($alumnos as $keyAlu => $alumno) {
+                                        $asistenciaAlumno = AsistenciaAlumno::where('asistencia_id', $asistencia->id)->where('activo','1')->where('borrado','0')->where('alumno_id', $alumno->id)->first();
+                                        $alumno->asistenciaAlumno = $asistenciaAlumno;
+                                    }
+
+                                    $asistencia->alumnos = $alumnos;
+                                }
+
+                                
+        
+                                $valueH->asistencia = $asistencia;
+                            
+                            }
+                            
+                            $valueS->horarios = $horarios;
+                        }
+                    
+                    $valueG->seccions = $seccions;
+                }
+
+                $value->grados = $grados;
+                }
+            }
+
+            $data->niveles = $niveles;
+        }
+        
+
+        return $data;
+    }
+
+
+    public static function GetDataAsistenciaAluByCicloAndFecha($ciclo_seccion_id, $fecha, $iduser){
+
+        $user = User::find($iduser);
+
+        $alumno = Alumno::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+
+        $cicloActivo = CicloEscolar::find($ciclo_seccion_id);
+
+        $data = InstitucionEducativa::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->first();
+
+        //$date = DateTimeImmutable::createFromFormat('Y-m-d', $fecha);
+        $date1 = new DateTime($fecha);
+        $date2 = new DateTime($fecha);
+        $date3 = new DateTime($fecha);
+        $date4 = new DateTime($fecha);
+        $date5 = new DateTime($fecha);
+
+        $tipodia=date("N",$date1->getTimestamp());
+
+        $dia1 =$fecha;
+        $dia2 =$fecha;
+        $dia3 =$fecha;
+        $dia4 =$fecha;
+        $dia5 =$fecha;
+
+        switch ($tipodia) {
+            case '1':
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->add(new DateInterval('P1D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->add(new DateInterval('P2D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P3D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P4D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '2':
+                $date1->sub(new DateInterval('P1D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->add(new DateInterval('P1D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P2D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P3D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '3':
+                $date1->sub(new DateInterval('P2D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P1D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->add(new DateInterval('P1D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P2D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '4':
+                $date1->sub(new DateInterval('P3D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P2D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P1D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->add(new DateInterval('P1D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '5':
+                $date1->sub(new DateInterval('P4D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P3D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P2D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P1D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '6':
+                $date1->sub(new DateInterval('P5D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P4D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P3D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P2D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->sub(new DateInterval('P1D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            case '7':
+                $date1->sub(new DateInterval('P6D'));
+                $dia1 = date_format($date1, 'Y-m-d');
+                $date2->sub(new DateInterval('P5D'));
+                $dia2 = date_format($date2, 'Y-m-d');
+                $date3->sub(new DateInterval('P4D'));
+                $dia3 = date_format($date3, 'Y-m-d');
+                $date4->sub(new DateInterval('P3D'));
+                $dia4 = date_format($date4, 'Y-m-d');
+                $date5->sub(new DateInterval('P2D'));
+                $dia5 = date_format($date5, 'Y-m-d');
+            break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        $data->dia1 = $dia1;
+        $data->dia2 = $dia2;
+        $data->dia3 = $dia3;
+        $data->dia4 = $dia4;
+        $data->dia5 = $dia5;
+
+        if($cicloActivo){
+
+            $matricula = Matricula::where('alumno_id', $alumno->id)->where('ciclo_escolar_id', $cicloActivo->id)->first();
+            $alumno->matricula = $matricula;
+            $niveles = [];
+
+            if($matricula){
+
+                $WhereAlumnos = ' and cs.id in ('.$matricula->ciclo_seccion_id.')';
+
+                $niveles = DB::select("select cn.id, cn.nombre, cn.nivel_id, cn.turno_id from ciclo_seccion cs
+                inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                inner join ciclo_niveles cn on cg.ciclo_niveles_id=cn.id
+                where cg.ciclo_escolar_id = ?
+                ".$WhereAlumnos."
+                group by cn.nivel_id
+                order by cn.id;", [$ciclo_seccion_id]);
+
+                foreach ($niveles as $key => $value) {
+
+                    $grados = DB::select("select cg.id, cg.orden, cg.nombre, cg.ciclo_niveles_id from  ciclo_seccion cs
+                    inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                    where cg.ciclo_escolar_id = ?
+                    and cg.ciclo_niveles_id = ?
+                    ".$WhereAlumnos."
+                    group by cg.id
+                    order by cg.orden;", [$ciclo_seccion_id, $value->id]);
+
+                $nivel = Niveles::find($value->nivel_id);
+
+                $value->siglas = $nivel->siglas;
+
+                foreach ($grados as $keyG => $valueG) {
+                    $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id, cs.turno_id from  ciclo_seccion cs
+                    where cs.ciclo_escolar_id = ?
+                    and cs.ciclo_grados_id = ?
+                    ".$WhereAlumnos."
+                    group by cs.id
+                    order by cs.id;", [$ciclo_seccion_id, $valueG->id]);
+
+                    
+                        foreach ($seccions as $keyS => $valueS) {
+                            $horarios = Horario::where('borrado','0')
+                                            ->where('activo','1')
+                                            ->where('ciclo_seccion_id', $valueS->id)
+                                            ->where('ciclo_escolar_id', $cicloActivo->id)
+                                            ->orderBy('dia_semana')
+                                            ->orderBy('hora_ini')
+                                            ->get();
+
+                            foreach ($horarios as $keyH => $valueH) {
+
+                                $curso = CicloCurso::find($valueH->ciclo_curso_id);
+
+                                if(isset($curso)){
+                                    $asignacion = AsignacionCurso::where('borrado','0')
+                                        ->where('activo','1')
+                                        ->where('ciclo_seccion_id', $ciclo_seccion_id)
+                                        ->where('ciclo_cursos_id', $curso->id)
+                                        ->first();
+                    
+                                    if($asignacion){
+                                        $docente = Docente::find($asignacion->docente_id);
+                                        $asignacion->docente = $docente;
+                                    }
+                                    $curso->asignacion = $asignacion;
+                                }
+
+                                $valueH->curso = $curso;
+        
+                                $fechaBuscar = $fecha;
+                                switch ($valueH->dia_semana) {
+                                    case '1':
+                                        $fechaBuscar = $dia1;
+                                    break;
+                                    case '2':
+                                        $fechaBuscar = $dia2;
+                                    break;
+                                    case '3':
+                                        $fechaBuscar = $dia3;
+                                    break;
+                                    case '4':
+                                        $fechaBuscar = $dia4;
+                                    break;
+                                    case '5':
+                                        $fechaBuscar = $dia5;
+                                    break;
+                                
+                                }
+        
+                                $asistencia = Asistencia::where('horario_id', $valueH->id)
+                                                        ->where('fecha', $fechaBuscar)
+                                                        ->first();
+                                
+                                if($asistencia){
+                                    $alumnos = [];
+                                    $alumnos[] = $alumno;
+
+                                    foreach ($alumnos as $keyAlu => $alumno) {
+                                        $asistenciaAlumno = AsistenciaAlumno::where('asistencia_id', $asistencia->id)->where('activo','1')->where('borrado','0')->where('alumno_id', $alumno->id)->first();
+                                        $alumno->asistenciaAlumno = $asistenciaAlumno;
+                                    }
+
+                                    $asistencia->alumnos = $alumnos;
+                                }
+
+                                
+        
+                                $valueH->asistencia = $asistencia;
+                            
+                            }
+                            
+                            $valueS->horarios = $horarios;
+                        }
+                    
+                    $valueG->seccions = $seccions;
+                }
+
+                $value->grados = $grados;
+                }
+            }
+
+            $data->niveles = $niveles;
+        }
+        
+
+        return $data;
+    }
+
     public static function GetAsistenciaSesionBySeccionAndFecha($ciclo_seccion_id, $fecha){
 
         $ciclo_seccion = CicloSeccion::findOrFail($ciclo_seccion_id);

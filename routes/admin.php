@@ -78,6 +78,8 @@ Route::middleware([
     Route::get('/mensajes', [MensajeController::class, 'index1'])->name('mensajes');
     Route::get('/reporte-apo-horarios', [HorarioController::class, 'index4'])->name('indexApoHorario');
     Route::get('/reporte-alu-horarios', [HorarioController::class, 'index5'])->name('indexAluHorario');
+    Route::get('/asistencia-apo-sesiones', [AsistenciaController::class, 'index4'])->name('asistencia-apo-sesiones');
+    Route::get('/asistencia-alu-sesiones', [AsistenciaController::class, 'index5'])->name('asistencia-alu-sesiones');
     
 
     Route::resource('/resecciones', SeccionesController::class);
@@ -126,7 +128,7 @@ Route::middleware([
     Route::put('/regetlista-cursos/{id}',[DocenteController::class, 'AddPlanAnual'])->name('AddPlanAnual');
     Route::put('/reasistencia-validar/{id}',[AsistenciaController::class, 'validarAsistencia'])->name('validarAsistencia');
     Route::put('/relegajo-update-director/{id}',[LegajoController::class, 'updateDirector'])->name('relegajo-update-director');
-
+    
     Route::get('/generate-pdf', [MatriculaController::class, 'generatePDF']);
     Route::get('/ver-pdf', [ReportPDFController::class, 'verPDF']);
     Route::get('/d-pdf', [ReportPDFController::class, 'descargarPDF']);
@@ -146,8 +148,10 @@ Route::middleware([
 
     Route::get('/rehorariogetapo', [HorarioController::class, 'indexApoHorario'])->name('indexApoHorario');
     Route::get('/rehorariogetalu', [HorarioController::class, 'indexAluHorario'])->name('indexAluHorario');
-
-
+    
+    Route::get('/asistenciasesiongetapo', [AsistenciaController::class, 'indexApoAsistenciaSesion'])->name('asistenciasesiongetapo');
+    Route::get('/asistenciasesiongetalu', [AsistenciaController::class, 'indexAluAsistenciaSesion'])->name('asistenciasesiongetalu');
+    
 
 
     //Reportes PDF

@@ -63,6 +63,24 @@ class AsistenciaController extends Controller
         return view('docente.asistenciasesion.index',compact('cicloActivo', 'ciclos', 'mensajes'));
     }
 
+    public function index4()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('apoderado.asistenciasesion.index',compact('cicloActivo', 'ciclos', 'mensajes'));
+    }
+
+    public function index5()
+    {
+        $cicloActivo = CicloEscolar::GetCicloActivo();
+        $ciclos = CicloEscolar::GetAllCiclos();
+        $mensajes = Mensaje::GetNotificaciones();
+
+        return view('alumno.asistenciasesion.index',compact('cicloActivo', 'ciclos', 'mensajes'));
+    }
+
 
     public function index(Request $request)
     {
@@ -111,6 +129,44 @@ class AsistenciaController extends Controller
         $fecha = $request->fecha;
 
         $registros = Asistencia::GetDataAsistenciaDocByCicloAndFecha($ciclo_id, $fecha, $iduser);
+
+        $turnos = Turno::all();
+        $horas = Hora::where('borrado','0')->where('activo','1')->get();
+        
+        return [ 
+                'registros' => $registros,
+                'turnos' => $turnos,
+                'horas' => $horas,
+               ];
+    }
+
+    public function indexApoAsistenciaSesion(Request $request)
+    {
+
+        $iduser =Auth::user()->id;
+        $ciclo_id = $request->ciclo_id;
+        $fecha = $request->fecha;
+
+        $registros = Asistencia::GetDataAsistenciaApoByCicloAndFecha($ciclo_id, $fecha, $iduser);
+
+        $turnos = Turno::all();
+        $horas = Hora::where('borrado','0')->where('activo','1')->get();
+        
+        return [ 
+                'registros' => $registros,
+                'turnos' => $turnos,
+                'horas' => $horas,
+               ];
+    }
+
+    public function indexAluAsistenciaSesion(Request $request)
+    {
+
+        $iduser =Auth::user()->id;
+        $ciclo_id = $request->ciclo_id;
+        $fecha = $request->fecha;
+
+        $registros = Asistencia::GetDataAsistenciaAluByCicloAndFecha($ciclo_id, $fecha, $iduser);
 
         $turnos = Turno::all();
         $horas = Hora::where('borrado','0')->where('activo','1')->get();
