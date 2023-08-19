@@ -370,6 +370,97 @@ class Horario extends Model
         return $data;
     }
 
+    public static function GetAlumnoDataHorarioActivo($ciclo_id, $iduser){
+
+        $user = User::find($iduser);
+
+        $alumno = Alumno::where('borrado','0')
+        ->where('user_id',$iduser)
+        ->where('activo','1')
+        ->first();
+
+        $cicloActivo = CicloEscolar::find($ciclo_id);
+
+        $data = InstitucionEducativa::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->first();
+        
+        if($cicloActivo){
+
+            $matricula = Matricula::where('alumno_id', $alumno->id)->where('ciclo_escolar_id', $cicloActivo->id)->first();
+            $alumno->matricula = $matricula;
+            $niveles = [];
+
+            if($matricula){
+
+                $WhereAlumnos = ' and cs.id in ('.$matricula->ciclo_seccion_id.')';
+
+                $niveles = DB::select("select cn.id, cn.nombre, cn.nivel_id, cn.turno_id from ciclo_seccion cs
+                inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                inner join ciclo_niveles cn on cg.ciclo_niveles_id=cn.id
+                where cg.ciclo_escolar_id = ?
+                ".$WhereAlumnos."
+                group by cn.nivel_id
+                order by cn.id;", [$ciclo_id]);
+    
+                foreach ($niveles as $key => $value) {
+                    $grados = DB::select("select cg.id, cg.orden, cg.nombre, cg.ciclo_niveles_id from  ciclo_seccion cs
+                    inner join ciclo_grados cg on cs.ciclo_grados_id=cg.id
+                    where cg.ciclo_escolar_id = ?
+                    and cg.ciclo_niveles_id = ?
+                    ".$WhereAlumnos."
+                    group by cg.id
+                    order by cg.orden;", [$ciclo_id, $value->id]);
+    
+                $nivel = Niveles::find($value->nivel_id);
+    
+                $value->siglas = $nivel->siglas;
+    
+                foreach ($grados as $keyG => $valueG) {
+                    $seccions = DB::select("select cs.id, cs.sigla, cs.nombre, cs.ciclo_grados_id, cs.turno_id from  ciclo_seccion cs
+                    where cs.ciclo_escolar_id = ?
+                    and cs.ciclo_grados_id = ?
+                    ".$WhereAlumnos."
+                    group by cs.id
+                    order by cs.id;", [$ciclo_id, $valueG->id]);
+    
+                    
+                    foreach ($seccions as $keyS => $valueS) {
+                        $horarios = Horario::where('borrado','0')
+                                        ->where('activo','1')
+                                        ->where('ciclo_seccion_id', $valueS->id)
+                                        ->where('ciclo_escolar_id', $cicloActivo->id)
+                                        ->orderBy('dia_semana')
+                                        ->orderBy('hora_ini')
+                                        ->get();
+                        
+                        $valueS->horarios = $horarios;
+                    }
+    
+                    $cursos = CicloCurso::where('borrado','0')
+                                    ->where('activo','1')
+                                    ->where('ciclo_grado_id', $valueG->id)
+                                    ->where('ciclo_escolar_id', $cicloActivo->id)
+                                    ->orderBy('orden')
+                                    ->orderBy('nombre')
+                                    ->get();
+    
+    
+                    $valueG->seccions = $seccions;
+                    $valueG->cursos = $cursos;
+                }
+    
+                $value->grados = $grados;
+                }
+            }
+
+            $data->niveles = $niveles;
+        }
+        
+
+        return $data;
+    }
+
     public static function GetHorarioBySeccion($ciclo_seccion_id){
 
         $ciclo_seccion = CicloSeccion::findOrFail($ciclo_seccion_id);
