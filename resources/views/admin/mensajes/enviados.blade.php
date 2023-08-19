@@ -96,7 +96,7 @@
       <!-- /.card-header -->
       <div class="card-body p-0">
         <div class="mailbox-read-info">
-          <h5>Titulo</h5>
+          <!-- <h5>Titulo</h5> -->
           <h6>Enviado a: 
             
             <template v-for="(registroRep, indexRep) in fillMsjeEnviado.recibidos">
