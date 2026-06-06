@@ -1,0 +1,284 @@
+[33mcommit 13a82589c35c5da872cf207dfe401b7063022456[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: unknown <cristian_7_70@hotmail.com>
+Date:   Sat Aug 19 18:52:12 2023 -0500
+
+    fixes
+
+[33mcommit 6a46b9a2ca3010c40de2d3a84a3259ecd81a04d4[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Aug 19 13:57:33 2023 -0500
+
+    ajustes finales
+
+[33mcommit a87d9e7bde7c7a41ae708349cd9e888173e93e1c[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Aug 19 13:49:30 2023 -0500
+
+    reporte calificaciones tutores y alumnos
+
+[33mcommit fdfe4c9b50e21a403f57b43e66493091d93bcfcc[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Aug 19 03:09:47 2023 -0500
+
+    reporte asistencias done
+
+[33mcommit 1368a13f14278bb3d9a24e3419e5126c21468cc6[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Aug 19 01:37:05 2023 -0500
+
+    report horario
+
+[33mcommit 86d995675718831ee2b80e71d8e22d1d5d72e483[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Aug 19 01:10:01 2023 -0500
+
+    fix horario alumnos
+
+[33mcommit 7cc3b4784cc2d4c9901aed1f63ae052341e580c5[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Thu Aug 17 03:01:33 2023 -0500
+
+    finish mensajes
+
+[33mcommit f6712c801323be4d6a3dccc0a02ae51403b312de[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Thu Aug 17 01:48:53 2023 -0500
+
+    mod cambio psw e imgs
+
+[33mcommit 27d5f1e0c70d15420ea6d755b173f4cff3e23252[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Aug 16 13:49:26 2023 -0500
+
+    mensajes finished
+
+[33mcommit d194b95c07c34a158eba889cf23c4fae2b7ca99d[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Aug 16 02:10:53 2023 -0500
+
+    implement mensajes
+
+[33mcommit 05765930b80d188ac72dad429594583a33db9876[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sun Aug 13 17:12:22 2023 -0500
+
+    apreciacion tutor in report done
+
+[33mcommit 9d7387e35f6c3f031339676b4761dfc342130a56[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sun Aug 13 17:04:39 2023 -0500
+
+    modulo registro apreciaciones done
+
+[33mcommit f91b941665b23d4af916692baa1b44f596f68495[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Aug 12 11:51:22 2023 -0500
+
+    asignacion tutor finished
+
+[33mcommit 9a709e21e5abdd5abc2f37600cea5aecb8576467[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Aug 12 01:29:13 2023 -0500
+
+    matricula masiva finished
+
+[33mcommit 87ab15f0bc324b8a55f46067dbb4a4ab25bca635[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Fri Aug 11 14:07:28 2023 -0500
+
+    add module apoderado
+
+[33mcommit 9eaf7060ec826bda4fd638d0a1f27ea98b0e84a4[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Aug 9 14:47:18 2023 -0500
+
+    usuario padre de familia ready
+
+[33mcommit 7b79ea08b9abc71cbe0086a856167618122d4128[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Aug 9 12:49:41 2023 -0500
+
+    prematricula
+
+[33mcommit d004bdd64e4b8c98ab8d7c316fb7193424e55b0a[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Aug 9 00:33:48 2023 -0500
+
+    matricula masiva
+
+[33mcommit b21ee02a3ed4d310998b6eff57ab1eda73e7337f[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sun Aug 6 23:57:45 2023 -0500
+
+    pantallas de inicio ready
+
+[33mcommit 1bb5f0863e9cee5c04c6057b9c14d098ad52f805[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Jun 21 21:01:59 2023 -0500
+
+    punto 28
+
+[33mcommit 86f6d57b42cee6f0db5fc9e586b98ae3597d2b12[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Jun 21 14:58:07 2023 -0500
+
+    fixes
+
+[33mcommit ab4d194e3abdc1a9d1e0f09122c2f146a8f3dc77[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Jun 21 00:13:48 2023 -0500
+
+    punto 27
+
+[33mcommit 97efa91790f70bff13fea5ed83e6adc60e453e92[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Tue Jun 20 22:24:57 2023 -0500
+
+    punto 26
+
+[33mcommit 3d844af30398179e4cb65c196278ef1c58f37f61[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Tue Jun 20 17:06:02 2023 -0500
+
+    modulo 22
+
+[33mcommit e182cb8a23e5da0aff6083ed95ca38e15e4cb4df[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sun Jun 18 01:18:53 2023 -0500
+
+    punto 21
+
+[33mcommit a0eaf378945ca757b9d3e514c20e4ce582b373a9[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed Jun 14 16:31:21 2023 -0500
+
+    punto 20
+
+[33mcommit 272480cfbacc5fd689f2b412ecf49e0f561b349b[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Tue Jun 13 18:54:39 2023 -0500
+
+    punto 19 added
+
+[33mcommit daaa26104f2c44bfb916207a3de884c8dda6d2ff[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Tue Jun 13 17:10:44 2023 -0500
+
+    punto 18
+
+[33mcommit 617253aa8cd7221f318a4b2b4e25f098fb20303a[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Tue Jun 13 01:31:00 2023 -0500
+
+    puntos 16 y 17
+
+[33mcommit 7fa7f37273b696c6444b896748eff0922c3a4c5d[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Mon Jun 12 16:02:45 2023 -0500
+
+    modulo 15 done
+
+[33mcommit ab02d864cc45445d5bbedf619bd9ba35a5aa1d82[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Mon Jun 12 00:13:23 2023 -0500
+
+    add lista cursos
+
+[33mcommit ba98d8a430fd53b0532bd2e0a53f0335f91bac64[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Jun 3 00:22:09 2023 -0500
+
+    modulo 14 done
+
+[33mcommit 9ae6410d1f5a057ce86f9c855d70ee8d889457c0[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Fri Jun 2 19:48:25 2023 -0500
+
+    modulo 13 done
+
+[33mcommit f0eda6dc474db13df680e1b02c8d38fed47b5497[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Mon May 29 19:34:04 2023 -0500
+
+    modulo 13 y 14 done
+
+[33mcommit ed51e1b7ce4737b0d8856c700c2bce2043677c31[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Fri May 26 19:54:18 2023 -0500
+
+    punto 9 done
+
+[33mcommit 1d8917d423aefe51641040b2ca46bdc56c75123b[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Fri May 26 19:08:38 2023 -0500
+
+    punto 8 done
+
+[33mcommit 777647cd2f229dc2d7b19c06de236deca87fbaa2[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Fri May 26 13:15:39 2023 -0500
+
+    punto 8
+
+[33mcommit c585032bcbd7d570f3c36ad3d937d36ed5d2d744[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Fri May 26 13:09:16 2023 -0500
+
+    punto 6 done
+
+[33mcommit 8a1ae3c2733a4052fe8f207d5ce653dda3919925[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Fri May 26 12:48:28 2023 -0500
+
+    punto 5
+
+[33mcommit f13ee8d6cf2206d197d6f80097d01a1c50c3f209[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Thu May 25 23:44:30 2023 -0500
+
+    punto 3 y 4 done
+
+[33mcommit 5d8349d9b68e99bdcf2aabd51f24e42d3224322c[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Thu May 25 17:45:13 2023 -0500
+
+    punto 4 done
+
+[33mcommit 0a9d055760f29c96f0c0af3e07acfae34e94bb63[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Thu May 25 17:05:35 2023 -0500
+
+    punto 3 diseño
+
+[33mcommit cf34910d6db2c1d0fc2b71e8cef4e3c7f9683eac[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Thu May 25 13:29:09 2023 -0500
+
+    punto 2
+
+[33mcommit 3383c0d9ce3afc3ae75eeda4af25ca0cd9e4dcdd[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Wed May 24 20:53:05 2023 -0500
+
+    punto 1
+
+[33mcommit cd691636a4ae43d745ee85c44a6d7d7ebb868307[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Dec 10 19:36:09 2022 -0500
+
+    cerrado flujo
+
+[33mcommit d5f971566930c775f0fdb21c4f904d2b981f7eb6[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Dec 10 16:21:23 2022 -0500
+
+    cerrar year
+
+[33mcommit 593e64765e3ecfecce50e7d1add32d1f909f3897[m
+Author: Fernando Chavez <fernando.chavez@gdpteam.com>
+Date:   Sat Dec 10 13:02:50 2022 -0500
+
+    finis reporte calificaciones
+
+[33mcommit c47ca4ab64c14411a872fb0dfa316486b6879688[m
+Author: Fernando Chavez <f

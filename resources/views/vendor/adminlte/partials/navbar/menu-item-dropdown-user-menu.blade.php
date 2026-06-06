@@ -22,7 +22,7 @@
             @if(Auth::user()->tipo_user_id == '1' || Auth::user()->tipo_user_id == '2')
                 <img src="{{ asset('web/perfil/admin/') }}/{{Auth::user()->profile_photo_path}}"
             @elseif(Auth::user()->tipo_user_id == '3')
-                <img src="{{ asset('web/perfil/docente/') }}/{{Auth::user()->profile_photo_path}}"
+                <img src="{{ asset('web/perfil/admin/') }}/{{Auth::user()->profile_photo_path}}"
             @elseif(Auth::user()->tipo_user_id == '4')
                 <img src="{{ asset('web/perfil/alumno/') }}/{{Auth::user()->profile_photo_path}}"
             @elseif(Auth::user()->tipo_user_id == '5')

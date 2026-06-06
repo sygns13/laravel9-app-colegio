@@ -19,4 +19,8 @@ class TipoDocumento extends Model
                         ];
 	protected $guarded = ['id'];
     public $timestamps = false;
+
+    public function clienteTipoDoc(){
+        return $this->hasMany(Cliente::class, 'tipo_documento_id');
+    }
 }

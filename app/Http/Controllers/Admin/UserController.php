@@ -9,7 +9,7 @@ use Auth;
 
 use App\Models\TipoUser;
 use App\Models\User;
-use App\Models\Mensaje;
+use App\Models\Personal;
 
 use stdClass;
 use DB;
@@ -36,10 +36,9 @@ class UserController extends Controller
 
         $niveles = Niveles::where('activo',1)->where('borrado',0)->orderBy('id','asc')->get();
         $grados = Grado::where('activo',1)->where('borrado',0)->orderBy('orden','asc')->get(); */
-        $tipoUsers = TipoUser::where('activo',1)->where('borrado',0)->orderBy('id','asc')->get();
-        $mensajes = Mensaje::GetNotificaciones();
+        $tipoUsers = TipoUser::where('activo', 1)->where('borrado',0)->orderBy('id','asc')->get();      
 
-        return view('admin.password.index',compact('tipoUsers', 'mensajes'));
+        return view('admin.password.index',compact('tipoUsers'));
     }
 
     public function indexGetUser(){
@@ -49,10 +48,13 @@ class UserController extends Controller
 
         $tipouser = TipoUser::find($user->tipo_user_id);
 
+        $personal = Personal::where('user_id', $iduser)->first();
+
         $user->tipouser = $tipouser;
 
         return [
-            'user'=>$user
+            'user'=>$user,
+            'personal'=>$personal
         ];
 
     }

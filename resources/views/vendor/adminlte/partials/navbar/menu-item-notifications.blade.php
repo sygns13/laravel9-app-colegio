@@ -1,4 +1,4 @@
-<li class="nav-item dropdown">
+{{-- <li class="nav-item dropdown">
     <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
       <i class="far fa-bell"></i>
       @if($mensajes && count($mensajes) > 0)
@@ -24,7 +24,7 @@
                             @elseif($mensaje->tipo_users_id == '5' && $mensaje->apoderado != null)
                                 Apoderado: {{$mensaje->apoderado->nombres}} {{$mensaje->apoderado->apellido_paterno}} {{$mensaje->apoderado->apellido_materno}}
                             @endif
-                            {{-- <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span> --}}
+                            
                         </h3>
 
                         <div style="max-height: 25px;overflow: hidden;">
@@ -43,4 +43,4 @@
 
       <a href="{{URL::to('admin/mensajes')}}" class="dropdown-item dropdown-footer"><b>Ver Todos los Mensajes</b></a>
     </div>
-  </li>
+  </li> --}}

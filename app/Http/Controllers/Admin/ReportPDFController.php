@@ -10,7 +10,7 @@ use Auth;
 
 use App\Models\CicloEscolar;
 use App\Models\Matricula;
-use App\Models\TipoDocumento;
+
 use App\Models\User;
 use App\Models\Estado;
 use App\Models\Departamento;
@@ -31,6 +31,15 @@ use App\Models\Director;
 
 use App\Models\InstitucionEducativa;
 
+
+use App\Models\TipoDocumento;
+use App\Models\Cliente;
+use App\Models\Personal;
+use App\Models\Cotizacion;
+use App\Models\DataCotizacion;
+use App\Models\Includes;
+
+
 use stdClass;
 use DB;
 use Storage;
@@ -40,6 +49,51 @@ use Illuminate\Support\Facades\Hash;
 
 class ReportPDFController extends Controller
 {
+
+    public function imprimirCotizacion($id){
+        $cotizacion = Cotizacion::findOrFail($id);
+        $dataCotizacion = DataCotizacion::where('cotizacion_id', $id)->first();
+        $includes = Includes::where('cotizacion_id', $id)->get();
+        $cliente = Cliente::findOrFail($cotizacion->cliente_id);
+        $personal = Personal::findOrFail($cotizacion->personal_id);
+
+        $data = [
+            'cotizacion' => $cotizacion,
+            'dataCotizacion' => $dataCotizacion,
+            'cliente' => $cliente,
+            'personal' => $personal,
+            'includes' => $includes,
+            'date' => date('m/d/Y')
+        ]; 
+        $pdf = PDF::loadView('reportspdf.cotizacion', $data);
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->setOption('defaultFont', 'Arial');
+
+        return $pdf->download('COTIZACION_'.$cotizacion->year.'-'.$cotizacion->numero.'.pdf');
+    }
+
+    public function verCotizacion($id){
+        $cotizacion = Cotizacion::findOrFail($id);
+        $dataCotizacion = DataCotizacion::where('cotizacion_id', $id)->first();
+        $includes = Includes::where('cotizacion_id', $id)->get();
+        $cliente = Cliente::findOrFail($cotizacion->cliente_id);
+        $personal = Personal::findOrFail($cotizacion->personal_id);
+
+       /*  $data = [
+            'cotizacion' => $cotizacion,
+            'dataCotizacion' => $dataCotizacion,
+            'cliente' => $cliente,
+            'personal' => $personal,
+            'includes' => $includes,
+            'date' => date('m/d/Y')
+        ]; 
+        $pdf = PDF::loadView('reportspdf.cotizacion', $data);
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->setOption('defaultFont', 'Arial');
+ */
+        return view('reportspdf.cotizacion',compact('cotizacion','dataCotizacion', 'includes', 'cliente', 'personal'));
+        //return $pdf->download('COTIZACION_'.$cotizacion->year.'-'.$cotizacion->numero.'.pdf');
+    }
 
     public function impFichaMatricula($alumno_id)
     {

@@ -60,7 +60,7 @@ createApp({
     },
     mounted: function() {
         console.log("mounted");
-        this.graficarChart();
+        //this.graficarChart();
     },
     computed: {
         isActived: function() {
@@ -129,6 +129,8 @@ createApp({
             this.getDatos(page);
             this.thispage = page;
         }, */
+
+        /*
         graficarChart:function () {
             
             Highcharts.setOptions({
@@ -187,7 +189,7 @@ createApp({
                 }]
             });
 
-        },
+        },*/
 
     }
 }).mount('#app')

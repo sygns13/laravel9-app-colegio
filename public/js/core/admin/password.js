@@ -24,6 +24,8 @@ createApp({
                 'tipo_user': '',
                 'name': '',
                 'email': '',
+                'empresa': '',
+                'nombres': '',
                 'password_old': '',
                 'password_new1': '',
                 'password_new2': '',
@@ -103,6 +105,8 @@ createApp({
                 this.fillobject.tipo_user = response.data.user.tipouser.nombre;
                 this.fillobject.name = response.data.user.name;
                 this.fillobject.email = response.data.user.email;
+                this.fillobject.empresa = response.data.personal.empresa;
+                this.fillobject.nombres = response.data.personal.nombres + ' ' + response.data.personal.apellidos;
                 this.fillobject.password_old = '';
                 this.fillobject.password_new1 = '';
                 this.fillobject.password_new2 = '';

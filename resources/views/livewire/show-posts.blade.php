@@ -17,7 +17,7 @@
         <x-table>
             <div class="px-6 py-4 flex items-center">
                 {{-- <input type="text" wire:model="search"> --}}
-                <x-jet-input type="text" wire:model="search" class="flex-1 mr-4" placeholder="Escriba que quiere buscar" />
+                <x-input type="text" wire:model="search" class="flex-1 mr-4" placeholder="Escriba que quiere buscar" />
                 @livewire('create-post')
             </div>
 

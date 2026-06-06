@@ -32,11 +32,15 @@ class AuthServiceProvider extends ServiceProvider
             return $user->tipo_user_id === 1;
         });
 
-        Gate::define('director', function (User $user) {
+        Gate::define('cotizador', function (User $user) {
             return $user->tipo_user_id === 2;
         });
 
-        Gate::define('docente', function (User $user) {
+        Gate::define('ventas', function (User $user) {
+            return $user->tipo_user_id === 3;
+        });
+
+       /*  Gate::define('docente', function (User $user) {
             return $user->tipo_user_id === 3;
         });
 
@@ -50,7 +54,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('tutor', function (User $user) {
             return $user->tipo_user_id === 6;
-        });
+        }); */
     }
 
 }

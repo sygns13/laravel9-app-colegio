@@ -23,6 +23,20 @@
                     </div>
 
                     <div class="form-group row">
+                      <label for="txtname" class="col-sm-2 col-form-label">Empresa</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtname" placeholder="Nombre" v-model="fillobject.empresa" maxlength="500" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="txtname" class="col-sm-2 col-form-label">Nombres y Apellidos</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtname" placeholder="Nombre" v-model="fillobject.nombres" maxlength="500" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
                       <label for="txtname" class="col-sm-2 col-form-label">Contraseña Antigua</label>
                       <div class="col-sm-10">
                         <input type="password" class="form-control" id="txtpassword" placeholder="Contraseña Antigua" v-model="fillobject.password_old" maxlength="255">

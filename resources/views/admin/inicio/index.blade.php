@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    <p>Bienvenido al Sistema de Gestión Académica IE. Ricardo Palma Carrillo</p>
+    <p>Bienvenido al Sistema de Cotizaciones YAMAHA</p>
     @include('admin.inicio.main')
 @stop
 
@@ -26,12 +26,12 @@
 
     @if($user->tipo_user_id == 1 || $user->tipo_user_id == 2)
         <script src="{{ asset('js/core/admin/inicio.js')}}"  type="text/javascript"></script>
-    @elseif($user->tipo_user_id == 3)
+    {{-- @elseif($user->tipo_user_id == 3)
         <script src="{{ asset('js/core/admin/inicioDocente.js')}}"  type="text/javascript"></script>
     @elseif($user->tipo_user_id == 4)
         <script src="{{ asset('js/core/admin/inicioAlumno.js')}}"  type="text/javascript"></script>
     @elseif($user->tipo_user_id == 5)
-        <script src="{{ asset('js/core/admin/inicioApoderado.js')}}"  type="text/javascript"></script>
+        <script src="{{ asset('js/core/admin/inicioApoderado.js')}}"  type="text/javascript"></script> --}}
     @endif
 
     <script>

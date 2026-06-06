@@ -1,134 +1,117 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
 
-            <div class="col-md-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Resoluciones de Apertura de Año</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form>
-                        <div class="card-body">
-                            <div class="table-responsive p-0">
-                                <table class="table table-bordered table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="titles-table" style="width: 10%">#</th>
-                                            <th class="titles-table" style="width: 65%">Resolución</th>
-                                            <th class="titles-table" style="width: 25%">Año</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($resolucionAperturas as $index => $resolucion)
-                                            <tr>
-                                                <td class="rows-table">{{$index+1}}</td>
-                                                <td class="rows-table">
-                                                    <a download href="{{ asset('web/resolucion/') }}/{{$resolucion->archivo}}">
-                                                        {{$resolucion->nombre}}
-                                                    </a>
-                                                </td>
-                                                <td class="rows-table">{{$resolucion->year}}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Resoluciones de Cierre de Año</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form>
-                        <div class="card-body">
-                            <div class="table-responsive p-0">
-                                <table class="table table-bordered table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="titles-table" style="width: 10%">#</th>
-                                            <th class="titles-table" style="width: 65%">Resolución</th>
-                                            <th class="titles-table" style="width: 25%">Año</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($resolucionCierres as $index => $resolucion)
-                                            <tr>
-                                                <td class="rows-table">{{$index+1}}</td>
-                                                <td class="rows-table">
-                                                    <a download href="{{ asset('web/resolucion/') }}/{{$resolucion->archivo}}">
-                                                        {{$resolucion->nombre}}
-                                                    </a>
-                                                </td>
-                                                <td class="rows-table">{{$resolucion->year}}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </form>
-                </div>
-            </div>
-
-
+        <div class="col-md-12">
+            <h3><b>Módulos del Sistema</b></h3>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-3 col-md-6 col-xs-12">
+            <!-- small box -->
+            <a href="{{ URL::to('admin/cotizaciones') }}">
+                <div class="small-box bg-primary" style="box-shadow: 0px 10px 30px 0px #8d8686;">
+                    <div class="inner">
+                        <h3 style="font-size: 30px">Cotizaciones</h3>
 
-          <div class="col-md-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Mis Documentos</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form>
-                    <div class="card-body">
-                        <div class="table-responsive p-0">
-                          <ul>
-                            <li><a href="{{URL::to('admin/asistencia-docente')}}">Reporte de Asistencia de Docentes</a></li>
-                            <li><a href="{{URL::to('admin/asistencia-sesiones')}}">Reporte de Asistencia de Alumnos</a></li>
-                            <li><a href="{{URL::to('admin/legajo-fichas')}}">Legajos</a></li>
-                          </ul>
-                        </div>
+                        <p>Elaborar Cotizaciones</p>
                     </div>
-                    <!-- /.card-body -->
-                </form>
-            </div>
-          </div>
-
-          <div class="col-md-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Alumnos Matriculados 2022</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form>
-                    <div class="card-body">
-                      <figure class="highcharts-figure">
-                        <div id="container-chart"></div>
-                      </figure>
-                        
+                    <div class="icon" style="top: 7px;">
+                        <i class="fa fa-file-alt"></i>
                     </div>
-                    <!-- /.card-body -->
-                </form>
-            </div>
-          </div>
+                    <div id="recibosH" class="small-box-footer" style="height: 37px"><i
+                            class="fa fa-arrow-circle-right" style="font-size: 30px"></i></div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xs-12">
+            <!-- small box -->
+            <a href="{{ URL::to('admin/reportes') }}">
+                <div class="small-box bg-green" style="box-shadow: 0px 10px 30px 0px #8d8686;">
+                    <div class="inner">
+                        <h3 style="font-size: 30px">Reportes</h3>
 
+                        <p>Descargar Reporte de Cotizaciones</p>
+                    </div>
+                    <div class="icon" style="top: 7px;">
+                        <i class="fa fa-print"></i>
+                    </div>
+                    <div class="small-box-footer" style="height: 37px"><i class="fa fa-arrow-circle-right"
+                                                                          style="font-size: 30px"></i></div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xs-12">
+            <!-- small box -->
+            <a href="{{ URL::to('admin/ventas') }}">
+                <div class="small-box bg-yellow" style="box-shadow: 0px 10px 30px 0px #8d8686;">
+                    <div class="inner">
+                        <h3 style="font-size: 30px">Ventas</h3>
 
+                        <p>Registrar Ventas</p>
+                    </div>
+                    <div class="icon" style="top: 7px;">
+                        <i class="fa fa-file-alt"></i>
+                    </div>
+                    <div id="recibosH" class="small-box-footer" style="height: 37px"><i
+                            class="fa fa-arrow-circle-right" style="font-size: 30px"></i></div>
+                </div>
+            </a>
         </div>
 
+        <div class="col-lg-3 col-md-6 col-xs-12">
+            <!-- small box -->
+            <a href="{{ URL::to('admin/reporteventas') }}">
+                <div class="small-box bg-info" style="box-shadow: 0px 10px 30px 0px #8d8686;">
+                    <div class="inner">
+                        <h3 style="font-size: 30px">Reporte Ventas</h3>
+
+                        <p>Descargar Reporte de Ventas</p>
+                    </div>
+                    <div class="icon" style="top: 7px;">
+                        <i class="fa fa-file-alt"></i>
+                    </div>
+                    <div id="recibosH" class="small-box-footer" style="height: 37px"><i
+                            class="fa fa-arrow-circle-right" style="font-size: 30px"></i></div>
+                </div>
+            </a>
+        </div>
+
+
+
+
+
+        <div class="col-lg-3 col-md-6 col-xs-12">
+            <a href="{{ URL::to('admin/users') }}">
+                <div class="small-box bg-maroon" style="box-shadow: 0px 10px 30px 0px #8d8686;">
+                    <div class="inner">
+                        <h3 style="font-size: 30px">Usuarios</h3>
+
+                        <p>Gestión de Usuarios</p>
+                    </div>
+                    <div class="icon" style="top: 7px;">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <div class="small-box-footer" style="height: 37px"><i class="fa fa-arrow-circle-right"
+                            style="font-size: 30px"></i></div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-xs-12">
+            <a href="{{ URL::to('admin/tipo-cambio') }}">
+                <div class="small-box bg-teal" style="box-shadow: 0px 10px 30px 0px #8d8686;">
+                    <div class="inner">
+                        <h3 style="font-size: 30px">Tipo de Cambio</h3>
+
+                        <p>Gestión de Tipo de Cambio</p>
+                    </div>
+                    <div class="icon" style="top: 7px;">
+                        <i class="fa fa-dollar-sign"></i>
+                    </div>
+                    <div class="small-box-footer" style="height: 37px"><i class="fa fa-arrow-circle-right"
+                            style="font-size: 30px"></i></div>
+                </div>
+            </a>
+        </div>
 
     </div>
 </div>

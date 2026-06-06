@@ -15,7 +15,7 @@ return [
     */
 
     'title' => '',
-    'title_prefix' => 'IE Ricardo Palma | ',
+    'title_prefix' => 'Sistema de Cotizaciones YAMAHA | ',
     'title_postfix' => '',
 
     /*
@@ -45,13 +45,13 @@ return [
     |
     */
 
-    'logo' => '<b>SGA</b> IE Ricardo Palma',
+    'logo' => '<b>YAMAHA</b>',
     #'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img' => 'images/logo.jpg',
+    'logo_img' => 'images/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'SGA IE',
+    'logo_img_alt' => 'YAMAHA',
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-info',
+    'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => false,
@@ -123,14 +123,14 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => 'bg-info',
+    'classes_brand' => 'bg-primary',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-info elevation-4',
+    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-info navbar-light',
+    'classes_topnav' => 'navbar-primary navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -256,17 +256,64 @@ return [
             'url'         => 'admin',
             'icon'        => 'fas fa-fw fa-home',
             'icon_color'  => 'white',
-            'can'         => ['admin', 'director', 'docente', 'alumno', 'apoderado']
+            'can'         => ['admin', 'cotizador','ventas']
         ],
 
-       /*  [
-            'text'        => 'Legajo',
-            'url'         => 'admin/legajo',
-            'icon'        => 'fas fa-fw fa-folder',
-            'icon_color'  => 'white',
-            'can'         => ['admin', 'director']
-        ], */
+        [
+            'text' => 'Elaborar Cotizaciones',
+            'url'  => 'admin/cotizaciones',
+            'icon' => 'fas fa-fw fa-file-alt',
+            'can'  => ['admin', 'cotizador']
+        ],
+        [
+            'text' => 'Reporte de Cotizaciones',
+            'url'  => 'admin/reportes',
+            'icon' => 'fas fa-fw fa-print',
+            'can'  => ['admin', 'cotizador']
+        ],
+        [
+            'text' => 'Registrar Ventas',
+            'url'  => 'admin/ventas',
+            'icon' => 'fas fa-fw fa-file-alt',
+            'can'  => ['admin', 'ventas']
+        ],
+        [
+            'text' => 'Reporte Ventas',
+            'url'  => 'admin/reporteventas',
+            'icon' => 'fas fa-print',
+            'can'  => ['admin', 'ventas']
+        ],
+        [
+            'text' => 'Gestión de Usuarios',
+            'url'  => 'admin/users',
+            'icon' => 'fas fa-fw fa-users',
+            'can'  => ['admin']
+        ],
 
+        [
+            'text' => 'Tipo de Cambio',
+            'url'  => 'admin/tipo-cambio',
+            'icon' => 'fas fa-fw fa-dollar-sign',
+            'can'  => ['admin']
+        ],
+
+        [
+            'text' => 'Cambiar Contraseña',
+            'url'  => 'admin/passwords',
+            'icon' => 'fas fa-fw fa-lock',
+            'can'  => ['admin', 'cotizador','ventas']
+        ],
+
+
+        /*  [
+             'text'        => 'Legajo',
+             'url'         => 'admin/legajo',
+             'icon'        => 'fas fa-fw fa-folder',
+             'icon_color'  => 'white',
+             'can'         => ['admin', 'director']
+         ], */
+
+        /*
         [
             'text'        => 'Legajo',
             'icon'        => 'fas fa-fw fa-folder',
@@ -285,8 +332,9 @@ return [
                 ],
 
             ]
-        ],
+        ],*/
 
+        /*
         [
             'text'        => 'Tablas Base',
             'icon'        => 'fas fa-fw fa-server',
@@ -321,101 +369,102 @@ return [
 
             ]
         ],
-        [
+        */
+        /* [
             'text' => 'Docentes',
             'url'  => 'admin/docentes',
             'icon' => 'fas fa-fw fa-user-secret',
             'can'  => ['admin', 'director']
-        ],
+        ], */
 
-        [
-            'text'        => 'Gestión Académica',
-            'icon'        => 'fas fa-fw fa-graduation-cap',
-            'icon_color'  => 'white',
-            'can'         => ['admin', 'director', 'docente'],
-            'submenu' => [
-                [
-                    'text' => 'Gestión del Año Escolar',
-                    'url'  => 'admin/ciclo',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Gestión de Horarios',
-                    'url'  => 'admin/horario',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Matrículas',
-                    'url'  => 'admin/matriculas',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Matrícula Masiva',
-                    'url'  => 'admin/matricula-masiva',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Consulta de Matrículas',
-                    'url'  => 'admin/consultar-matricula',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Asignación de Cursos',
-                    'url'  => 'admin/asignacion-cursos',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Asignación de Tutor',
-                    'url'  => 'admin/asignacion-tutor',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Nómina de Matrícula',
-                    'url'  => 'admin/nominas',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Nómina de Matrícula',
-                    'url'  => 'admin/docnominas',
-                    'can'  => ['docente']
-                ],
-                [
-                    'text' => 'Conclusión de Matrículas',
-                    'url'  => 'admin/conclusion-matriculas',
-                    'can'  => ['admin', 'director']
-                ],
+        /*  [
+             'text'        => 'Gestión Académica',
+             'icon'        => 'fas fa-fw fa-graduation-cap',
+             'icon_color'  => 'white',
+             'can'         => ['admin', 'director', 'docente'],
+             'submenu' => [
+                 [
+                     'text' => 'Gestión del Año Escolar',
+                     'url'  => 'admin/ciclo',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Gestión de Horarios',
+                     'url'  => 'admin/horario',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Matrículas',
+                     'url'  => 'admin/matriculas',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Matrícula Masiva',
+                     'url'  => 'admin/matricula-masiva',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Consulta de Matrículas',
+                     'url'  => 'admin/consultar-matricula',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Asignación de Cursos',
+                     'url'  => 'admin/asignacion-cursos',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Asignación de Tutor',
+                     'url'  => 'admin/asignacion-tutor',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Nómina de Matrícula',
+                     'url'  => 'admin/nominas',
+                     'can'  => ['admin', 'director']
+                 ],
+                 [
+                     'text' => 'Nómina de Matrícula',
+                     'url'  => 'admin/docnominas',
+                     'can'  => ['docente']
+                 ],
+                 [
+                     'text' => 'Conclusión de Matrículas',
+                     'url'  => 'admin/conclusion-matriculas',
+                     'can'  => ['admin', 'director']
+                 ],
 
-            ]
-        ],
+             ]
+         ], */
 
-        [
-            'text' => 'Verificar Matrícula',
-            'url'  => 'admin/verificar-matricula',
-            'icon' => 'fas fa-fw fa-check',
-            'can'  => ['apoderado']
-        ],
+        /*  [
+             'text' => 'Verificar Matrícula',
+             'url'  => 'admin/verificar-matricula',
+             'icon' => 'fas fa-fw fa-check',
+             'can'  => ['apoderado']
+         ], */
 
-        [
+        /* [
             'text' => 'Consulta de Matrículas',
             'url'  => 'admin/consultar-matricula-alu',
             'can'  => ['alumno']
-        ],
+        ], */
 
-        [
-            'text'        => 'Módulo Control',
-            'icon'        => 'fas fa-fw fa-clock',
-            'icon_color'  => 'white',
-            'can'         => ['admin', 'director'],
-            'submenu' => [
-                [
-                    'text' => 'Asistencia de Docentes',
-                    'url'  => 'admin/asistencia-docente',
-                    'can'  => ['admin', 'director']
-                ],
+        /*  [
+             'text'        => 'Módulo Control',
+             'icon'        => 'fas fa-fw fa-clock',
+             'icon_color'  => 'white',
+             'can'         => ['admin', 'director'],
+             'submenu' => [
+                 [
+                     'text' => 'Asistencia de Docentes',
+                     'url'  => 'admin/asistencia-docente',
+                     'can'  => ['admin', 'director']
+                 ],
 
-            ]
-        ],
-        [
+             ]
+         ], */
+        /* [
             'text'        => 'Gestión Docente',
             'icon'        => 'fas fa-fw fa-folder',
             'icon_color'  => 'white',
@@ -444,28 +493,28 @@ return [
 
             ]
         ],
-
-        [
+ */
+        /* [
             'text'        => 'Lista de Cursos',
             'url'         => 'admin/listado-cursos',
             'icon'        => 'fas fa-fw fa-book',
             'icon_color'  => 'white',
             'can'         => ['alumno']
-        ],
-        [
-            'text'        => 'Horario del Alumno',
-            'url'         => 'admin/horario-alumno',
-            'icon'        => 'fas fa-fw fa-calendar',
-            'icon_color'  => 'white',
-            'can'         => ['alumno']
-        ],
-        [
-            'text'        => 'Asistencia del Alumno',
-            'url'         => 'admin/asistencia-alumno',
-            'icon'        => 'fas fa-fw fa-bars',
-            'icon_color'  => 'white',
-            'can'         => ['alumno']
-        ],
+        ], */
+        /*  [
+             'text'        => 'Horario del Alumno',
+             'url'         => 'admin/horario-alumno',
+             'icon'        => 'fas fa-fw fa-calendar',
+             'icon_color'  => 'white',
+             'can'         => ['alumno']
+         ], */
+        /*   [
+              'text'        => 'Asistencia del Alumno',
+              'url'         => 'admin/asistencia-alumno',
+              'icon'        => 'fas fa-fw fa-bars',
+              'icon_color'  => 'white',
+              'can'         => ['alumno']
+          ], */
 
 
 
@@ -474,96 +523,90 @@ return [
 
 
 
-
-        [
-            'text'        => 'Reportes Generales',
-            'icon'        => 'fas fa-fw fa-print',
-            'icon_color'  => 'white',
-            'can'         => ['admin', 'director', 'docente', 'alumno', 'apoderado'],
-            'submenu' => [
+        /*
                 [
-                    'text' => 'Horarios por Sección',
-                    'url'  => 'admin/reporte-horarios',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Horarios por Sección',
-                    'url'  => 'admin/reporte-doc-horarios',
-                    'can'  => ['docente']
-                ],
-                [
-                    'text' => 'Horarios por Sección',
-                    'url'  => 'admin/reporte-alu-horarios',
-                    'can'  => ['alumno']
-                ],
-                [
-                    'text' => 'Horarios por Sección',
-                    'url'  => 'admin/reporte-apo-horarios',
-                    'can'  => ['apoderado']
-                ],
+                    'text'        => 'Reportes Generales',
+                    'icon'        => 'fas fa-fw fa-print',
+                    'icon_color'  => 'white',
+                    'can'         => ['admin', 'director', 'docente', 'alumno', 'apoderado'],
+                    'submenu' => [
+                        [
+                            'text' => 'Horarios por Sección',
+                            'url'  => 'admin/reporte-horarios',
+                            'can'  => ['admin', 'director']
+                        ],
+                        [
+                            'text' => 'Horarios por Sección',
+                            'url'  => 'admin/reporte-doc-horarios',
+                            'can'  => ['docente']
+                        ],
+                        [
+                            'text' => 'Horarios por Sección',
+                            'url'  => 'admin/reporte-alu-horarios',
+                            'can'  => ['alumno']
+                        ],
+                        [
+                            'text' => 'Horarios por Sección',
+                            'url'  => 'admin/reporte-apo-horarios',
+                            'can'  => ['apoderado']
+                        ],
 
-                [
-                    'text' => 'Asistencia por Sesiones',
-                    'url'  => 'admin/asistencia-sesiones',
-                    'can'  => ['admin', 'director']
-                ],
-                [
-                    'text' => 'Asistencia por Sesiones',
-                    'url'  => 'admin/asistencia-doc-sesiones',
-                    'can'  => ['docente']
-                ],
-                [
-                    'text' => 'Asistencia por Sesiones',
-                    'url'  => 'admin/asistencia-alu-sesiones',
-                    'can'  => ['alumno']
-                ],
-                [
-                    'text' => 'Asistencia por Sesiones',
-                    'url'  => 'admin/asistencia-apo-sesiones',
-                    'can'  => ['apoderado']
-                ],
+                        [
+                            'text' => 'Asistencia por Sesiones',
+                            'url'  => 'admin/asistencia-sesiones',
+                            'can'  => ['admin', 'director']
+                        ],
+                        [
+                            'text' => 'Asistencia por Sesiones',
+                            'url'  => 'admin/asistencia-doc-sesiones',
+                            'can'  => ['docente']
+                        ],
+                        [
+                            'text' => 'Asistencia por Sesiones',
+                            'url'  => 'admin/asistencia-alu-sesiones',
+                            'can'  => ['alumno']
+                        ],
+                        [
+                            'text' => 'Asistencia por Sesiones',
+                            'url'  => 'admin/asistencia-apo-sesiones',
+                            'can'  => ['apoderado']
+                        ],
 
-                [
-                    'text' => 'Reporte de Calificaciones',
-                    'url'  => 'admin/calificaciones',
-                    'can'  => ['admin', 'director']
+                        [
+                            'text' => 'Reporte de Calificaciones',
+                            'url'  => 'admin/calificaciones',
+                            'can'  => ['admin', 'director']
+                        ],
+
+                        [
+                            'text' => 'Reporte de Calificaciones',
+                            'url'  => 'admin/calificaciones-doc',
+                            'can'  => ['docente']
+                        ],
+
+                        [
+                            'text' => 'Reporte de Calificaciones',
+                            'url'  => 'admin/calificaciones-alu',
+                            'can'  => ['alumno']
+                        ],
+
+                        [
+                            'text' => 'Reporte de Calificaciones',
+                            'url'  => 'admin/calificaciones-apo',
+                            'can'  => ['apoderado']
+                        ],
+
+
+                    ]
                 ],
+         */
+        /*  [
+             'text' => 'Mensajes',
+             'url'  => 'admin/mensajes',
+             'icon' => 'fas fa-fw fa-envelope',
+             'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
+         ], */
 
-                [
-                    'text' => 'Reporte de Calificaciones',
-                    'url'  => 'admin/calificaciones-doc',
-                    'can'  => ['docente']
-                ],
-
-                [
-                    'text' => 'Reporte de Calificaciones',
-                    'url'  => 'admin/calificaciones-alu',
-                    'can'  => ['alumno']
-                ],
-
-                [
-                    'text' => 'Reporte de Calificaciones',
-                    'url'  => 'admin/calificaciones-apo',
-                    'can'  => ['apoderado']
-                ],
-                
-
-            ]
-        ],
-
-        [
-            'text' => 'Mensajes',
-            'url'  => 'admin/mensajes',
-            'icon' => 'fas fa-fw fa-envelope',
-            'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
-        ],
-
-        [
-            'text' => 'Cambiar Contraseña',
-            'url'  => 'admin/passwords',
-            'icon' => 'fas fa-fw fa-lock',
-            'can'  => ['admin', 'director', 'docente', 'alumno', 'apoderado']
-        ],
 
         /* [
             'text'        => 'pages',
@@ -637,6 +680,7 @@ return [
             'icon_color' => 'cyan',
             'url'        => '#',
         ], */
+
     ],
 
     /*
@@ -841,10 +885,10 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'js/ckeditor/ckeditor5-vue/dist/ckeditor.js',
-                ],                
+                ],
             ],
         ],
-        
+
     ],
 
     /*
