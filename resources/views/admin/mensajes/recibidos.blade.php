@@ -103,7 +103,7 @@
     <!-- /.card-header -->
     <div class="card-body p-0">
       <div class="mailbox-read-info">
-        <h5>Titulo</h5>
+        <!-- <h5>Titulo</h5> -->
         <h6>De: 
           <template v-if="fillMsjeRecibido.tipo_users_id == '1' && fillMsjeRecibido.director != null">
             Director: @{{fillMsjeRecibido.director.nombre}} @{{fillMsjeRecibido.director.apellidos}}
