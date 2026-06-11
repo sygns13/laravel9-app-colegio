@@ -14,8 +14,11 @@ use App\Models\TipoSale;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Cliente;
+use App\Mail\VentaRegistrada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Storage;
@@ -147,12 +150,12 @@ class VentasController extends Controller
         DB::beginTransaction();
 
         try {
-            // Guardar/obtener cliente
-            $cliente = Cliente::firstOrCreate(
+            // Guardar/actualizar cliente: si ya existe (mismo documento) se
+            // actualizan sus datos (nombres, celular, correo, etc.); si no, se crea.
+            $cliente = Cliente::updateOrCreate(
                 ['documento' => $request->documento],
                 [
                     'nombres' => $request->nombres,
-                    'apellidos' => $request->apellidos,
                     'tipo_documento_id' => $request->tipo_documento_id,
                     'celular' => $request->celular,
                     'correo' => $request->correo,
@@ -202,6 +205,22 @@ class VentasController extends Controller
             }
 
             DB::commit();
+
+            // Envío de correo solo cuando es una VENTA (tipo_sales_id == 1), no cotización.
+            // Se dispara de forma asíncrona (afterResponse) y cualquier fallo se registra
+            // en el log sin afectar el registro de la venta ni la respuesta al usuario.
+            if (intval($request->tipo_sales_id) === 1 && !empty($cliente->correo)) {
+                $correoCliente = $cliente->correo;
+                $celularAsesor = $personal->celular ?? '';
+
+                dispatch(function () use ($correoCliente, $celularAsesor) {
+                    try {
+                        Mail::to($correoCliente)->send(new VentaRegistrada($celularAsesor));
+                    } catch (\Throwable $e) {
+                        Log::error('Error al enviar correo de venta a ' . $correoCliente . ': ' . $e->getMessage());
+                    }
+                })->afterResponse();
+            }
 
             return response()->json([
                 'result' => '1',
@@ -478,12 +497,12 @@ class VentasController extends Controller
             // 1. Obtener la venta
             $venta = Sale::findOrFail($id);
 
-            // 2. Guardar u obtener cliente
-            $cliente = Cliente::firstOrCreate(
+            // 2. Guardar/actualizar cliente: si ya existe (mismo documento) se
+            //    actualizan sus datos (nombres, celular, correo, etc.); si no, se crea.
+            $cliente = Cliente::updateOrCreate(
                 ['documento' => $request->documento],
                 [
                     'nombres' => $request->nombres,
-                    'apellidos' => $request->apellidos,
                     'tipo_documento_id' => $request->tipo_documento_id,
                     'celular' => $request->celular,
                     'correo' => $request->correo,

@@ -166,6 +166,11 @@ createApp({
                         this.fillobject.apellidos = response.data.cliente.apellidos;
                         this.fillobject.celular = response.data.cliente.celular;
                         this.fillobject.correo = response.data.cliente.correo;
+                    } else if(response.data.resultFoundExterno && response.data.clienteExterno!=null){
+                        // No se encontró en la BD local: se completa con el nombre/razón social de Migo
+                        this.fillobject.cliente_id = null;
+                        this.fillobject.nombres = response.data.clienteExterno.nombres;
+                        this.fillobject.apellidos = null;
                     }
                 })
             }

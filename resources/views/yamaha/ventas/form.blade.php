@@ -41,14 +41,14 @@
                 <div class="form-group row">
                     <label for="txtnombres" class="col-sm-2 col-form-label">Nombre del Cliente</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtnombres" placeholder="Nombres" v-model="fillobject.nombres" maxlength="20" required>
+                        <input type="text" class="form-control" id="txtnombres" placeholder="Nombres" v-model="fillobject.nombres" maxlength="250" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="txtcelular" class="col-sm-2 col-form-label">Celular</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="fillobject.celular" maxlength="9" required>
+                        <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="fillobject.celular" maxlength="12" required>
                     </div>
                 </div>
 

@@ -17,6 +17,8 @@ use Storage;
 use PDF;
 use Validator;
 use Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 
 class ClienteController extends Controller
@@ -73,11 +75,81 @@ class ClienteController extends Controller
         $resultFound = false;
         if($data){
             $resultFound = true;
-            $msj='Alumno encontrado en el Sistema';
+            $msj='Cliente encontrado en el Sistema';
         }
 
-        return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector ,'cliente'=>$data, 'resultFound' => $resultFound]);
+        // Si no se encontró el cliente en la BD local y el documento es DNI o RUC,
+        // se consulta el servicio externo de Migo para obtener el nombre/razón social.
+        $clienteExterno = null;
+        $resultFoundExterno = false;
+        if(!$resultFound && in_array($tipoDocumento->sigla, ['DNI', 'RUC'])){
+            $clienteExterno = $this->consultarMigo($tipoDocumento->sigla, $num_documento);
+            if($clienteExterno){
+                $resultFoundExterno = true;
+                $msj='Cliente encontrado en RENIEC/SUNAT (Migo)';
+            }
+        }
 
+        return response()->json([
+            "result"=>$result,
+            'msj'=>$msj,
+            'selector'=>$selector,
+            'cliente'=>$data,
+            'resultFound' => $resultFound,
+            'clienteExterno' => $clienteExterno,
+            'resultFoundExterno' => $resultFoundExterno,
+        ]);
+
+    }
+
+    /**
+     * Consulta el servicio externo Migo (api.migo.pe) para obtener el nombre o
+     * razón social de un DNI o RUC. Retorna un objeto con el nombre completo en
+     * el campo "nombres" (apellidos queda en null) o null si no se encuentra.
+     */
+    private function consultarMigo($sigla, $num_documento){
+
+        $token = config('services.migo.token');
+        if(empty($token)){
+            return null;
+        }
+
+        try {
+            if($sigla == 'DNI'){
+                $response = Http::acceptJson()->timeout(15)->post(config('services.migo.url_dni'), [
+                    'token' => $token,
+                    'dni'   => $num_documento,
+                ]);
+            } else {
+                $response = Http::acceptJson()->timeout(15)->post(config('services.migo.url_ruc'), [
+                    'token' => $token,
+                    'ruc'   => $num_documento,
+                ]);
+            }
+
+            $body = $response->json();
+
+            if($response->successful() && isset($body['success']) && $body['success'] === true){
+                $nombre = $sigla == 'DNI'
+                    ? ($body['nombre'] ?? null)
+                    : ($body['nombre_o_razon_social'] ?? null);
+
+                if(!empty($nombre)){
+                    $clienteExterno = new stdClass();
+                    $clienteExterno->cliente_id = null;
+                    $clienteExterno->nombres    = $nombre;
+                    $clienteExterno->apellidos  = null;
+                    $clienteExterno->celular    = null;
+                    $clienteExterno->correo     = null;
+
+                    return $clienteExterno;
+                }
+            }
+        } catch (\Exception $e) {
+            Log::error('Error consultando Migo: '.$e->getMessage());
+        }
+
+        return null;
     }
 
 

@@ -53,7 +53,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="txtcelular">Celular <spam style="color:red;">*</spam></label>
-                  <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="fillobject.celular" minlength="9" maxlength="11" onkeypress="return soloNumeros(event);">
+                  <input type="text" class="form-control" id="txtcelular" placeholder="Celular" v-model="fillobject.celular" minlength="9" maxlength="12">
                 </div>
               </div>
 

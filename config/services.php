@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'migo' => [
+        'token' => env('MIGO_TOKEN'),
+        'url_dni' => env('MIGO_URL_DNI', 'https://api.migo.pe/api/v1/dni'),
+        'url_ruc' => env('MIGO_URL_RUC', 'https://api.migo.pe/api/v1/ruc'),
+    ],
+
 ];
