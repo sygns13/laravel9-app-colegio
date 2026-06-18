@@ -145,7 +145,7 @@
                                     </td>
                                     <td class="rows-table" style="text-align: center;vertical-align: middle;font-size: 14px;">@{{registro.observacion}}</td>
                                                                     <td class="rows-table" style="text-align: center;vertical-align: middle;font-size: 14px;">
-                                        <button v-if="registro.voucher" type="button" class="btn btn-info btn-sm" style="margin-top: 0.1rem;margin-bottom: 0.1rem;" v-on:click.prevent="openModal(registro.voucher,'/appYamahaCotization/public')">
+                                        <button v-if="registro.voucher" type="button" class="btn btn-info btn-sm" style="margin-top: 0.1rem;margin-bottom: 0.1rem;" v-on:click.prevent="openModal(registro.voucher,'{{ rtrim(asset('') , '/') }}')">
                                             <i class="fas fa-money-bill"></i> Voucher
                                         </button>
                                     </td>
@@ -483,7 +483,7 @@
                     <label>Voucher Capturado:</label>
                     <br>
                     <img
-                        :src="fillobject.voucher.startsWith('data:image') ? fillobject.voucher : '/appYamahaCotization/public/' + fillobject.voucher"
+                        :src="fillobject.voucher.startsWith('data:image') ? fillobject.voucher : '{{ asset('') }}' + fillobject.voucher"
                         alt="Voucher Capturado"
                         style="max-width: 100%; border: 1px solid #ccc; border-radius: 5px; padding: 5px; margin-bottom: 10px;">
                     <br>
