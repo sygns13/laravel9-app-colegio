@@ -242,7 +242,7 @@ class CotizacionController extends Controller
         $tipo_documento_id=$request->tipo_documento_id;
         $documento=$request->documento;
         $nombres=$request->nombres;
-        $apellidos=$request->apellidos;
+        $apellidos="";
         $celular=$request->celular;
         $correo=$request->correo;
 
