@@ -492,8 +492,10 @@
             </div>
             <div class="modal-footer d-flex justify-content-between">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button id="btnGuardar" type="button" class="btn btn-primary" @click="procesar()">
-                    <span class="fas fa-save"></span> Actualizar
+                <button id="btnGuardar" :disabled="procesando" type="button" class="btn btn-primary" @click="procesar()">
+                    <span v-if="procesando" class="fas fa-spinner fa-spin"></span>
+                    <span v-else class="fas fa-save"></span>
+                    @{{ procesando ? 'Procesando...' : 'Actualizar' }}
                 </button>
             </div>
         </div>

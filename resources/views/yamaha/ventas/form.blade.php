@@ -156,7 +156,7 @@
             </div>
 
             <div class="card-footer">
-                <button :disabled="procesando" style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-primary" @click="procesar()"><span class="fas fa-save"></span> Grabar</button>
+                <button :disabled="procesando" style="margin-right:5px;" id="btnGuardar" type="button" class="btn btn-primary" @click="procesar()"><span v-if="procesando" class="fas fa-spinner fa-spin"></span><span v-else class="fas fa-save"></span> @{{ procesando ? 'Procesando...' : 'Grabar' }}</button>
                 <button :disabled="procesando" style="margin-right:5px;" id="btnCancel" type="button" class="btn btn-warning" @click="cancelar()"><span class="fas fa-times"></span> Cancel</button>
             </div>
 

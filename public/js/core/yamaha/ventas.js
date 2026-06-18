@@ -278,11 +278,42 @@ createApp({
             const canvas = document.getElementById('canvasVoucher');
             const context = canvas.getContext('2d');
 
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            // Redimensionar a un máximo de 1600px en el lado más largo, sin agrandar
+            // imágenes ya pequeñas, manteniendo la relación de aspecto.
+            const MAX_LADO = 1600;
+            const sw = video.videoWidth;
+            const sh = video.videoHeight;
+            let tw = sw;
+            let th = sh;
+            const ladoMayor = Math.max(sw, sh);
+            if (ladoMayor > MAX_LADO) {
+                const escala = MAX_LADO / ladoMayor;
+                tw = Math.round(sw * escala);
+                th = Math.round(sh * escala);
+            }
 
-            this.fillobject.voucher = canvas.toDataURL('image/png'); // Guarda la imagen como base64
+            canvas.width = tw;
+            canvas.height = th;
+            context.drawImage(video, 0, 0, tw, th);
+
+            // Exportar como JPEG calidad 0.8 (objetivo ~200-400 KB). Si la compresión
+            // falla por cualquier motivo, se sube el original sin bloquear la venta.
+            let dataUrl;
+            try {
+                dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                if (!dataUrl || dataUrl.indexOf('data:image/jpeg') !== 0) {
+                    throw new Error('toDataURL no devolvió un JPEG válido');
+                }
+            } catch (e) {
+                console.error('Error al comprimir el voucher, se usará la imagen original', e);
+                try {
+                    dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+                } catch (e2) {
+                    dataUrl = canvas.toDataURL('image/png');
+                }
+            }
+
+            this.fillobject.voucher = dataUrl; // data URL (base64) listo para el FormData
             $('#modalVoucher').modal('hide');
             this.cerrarCamaraVoucher();
         },

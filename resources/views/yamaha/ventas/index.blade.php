@@ -35,5 +35,5 @@
         @endif
     </script>
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <script src="{{ asset('js/core/yamaha/ventas.js?v=2.9')}}"  type="text/javascript"></script>
+    <script src="{{ asset('js/core/yamaha/ventas.js?v=3.0')}}"  type="text/javascript"></script>
 @stop
