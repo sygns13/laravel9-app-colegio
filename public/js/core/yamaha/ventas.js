@@ -40,6 +40,7 @@ createApp({
             selectedCameraId: '',
             camerasQrDisponibles: [],
             selectedCameraQrId: '',
+            camarasInicializadas: false,
 
             divFormulario: false,
             divloaderNuevo: false,
@@ -67,14 +68,14 @@ createApp({
     created: function() {
     },
     mounted: function() {
-        this.obtenerYSeleccionarCamara();
-
-
+        // La cámara NO se inicia al cargar el módulo. Solo se enumeran las cámaras
+        // y se enciende el stream cuando el usuario abre el modal correspondiente.
         const modalQR = $('#modalQR');
 
         // 💡 CUANDO EL MODAL SE MUESTRE COMPLETAMENTE
-        modalQR.on('shown.bs.modal', () => {
+        modalQR.on('shown.bs.modal', async () => {
             console.log("Modal mostrado, iniciando escáner...");
+            await this.obtenerYSeleccionarCamara();
             this.iniciarEscaneo();
         });
 
@@ -85,7 +86,8 @@ createApp({
         });
 
 
-        $('#modalVoucher').on('shown.bs.modal', () => {
+        $('#modalVoucher').on('shown.bs.modal', async () => {
+            await this.obtenerYSeleccionarCamara();
             setTimeout(() => {
                 this.iniciarCamaraVoucher();
             }, 300);
@@ -102,6 +104,11 @@ createApp({
     },
     methods: {
         async obtenerYSeleccionarCamara()  {
+            // Idempotente: solo enumera y pide permiso la primera vez por carga de página.
+            // Así abrir/cerrar los modales no vuelve a disparar el prompt de permisos.
+            if (this.camarasInicializadas) {
+                return;
+            }
             try {
                 // 1. Solicita permiso para usar el video. Esto es CRUCIAL.
                 // La promesa se resolverá una vez que el usuario acepte el permiso.
@@ -138,6 +145,8 @@ createApp({
                     this.selectedCameraId = '';
                     console.warn("No se encontró ninguna cámara.");
                 }
+
+                this.camarasInicializadas = true;
 
             } catch (error) {
                 // Esto se ejecuta si el usuario niega el permiso o si ocurre otro error.
