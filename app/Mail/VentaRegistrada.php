@@ -30,7 +30,8 @@ class VentaRegistrada extends Mailable
         $this->celularAsesor = $celularAsesor;
 
         // El link de WhatsApp solo admite dígitos: se quitan espacios, "+" y otros símbolos.
-        $numero = preg_replace('/\D/', '', $celularAsesor);
+        //$numero = preg_replace('/\D/', '', $celularAsesor);
+        $numero = "+51941183459";
 
         $this->whatsappUrl = 'https://api.whatsapp.com/send/?phone=' . $numero
             . '&text=' . rawurlencode('Hola necesito repuestos')
