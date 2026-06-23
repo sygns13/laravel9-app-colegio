@@ -103,14 +103,14 @@ Route::middleware([
     Route::get('/asignacion-tutor', [MatriculaController::class, 'indexAsignacionTutor'])->name('asignacion-tutor');
     Route::get('/apreciacion-tutor', [MatriculaController::class, 'indexApreciacionTutor'])->name('apreciacion-tutor');
     Route::get('/mensajes', [MensajeController::class, 'index1'])->name('mensajes');
-    Route::get('/reporte-apo-horarios', [HorarioController::class, 'index4'])->name('indexApoHorario');
-    Route::get('/reporte-alu-horarios', [HorarioController::class, 'index5'])->name('indexAluHorario');
+    Route::get('/reporte-apo-horarios', [HorarioController::class, 'index4'])->name('indexApoHorario2');
+    Route::get('/reporte-alu-horarios', [HorarioController::class, 'index5'])->name('indexAluHorario2');
     Route::get('/asistencia-apo-sesiones', [AsistenciaController::class, 'index4'])->name('asistencia-apo-sesiones');
     Route::get('/asistencia-alu-sesiones', [AsistenciaController::class, 'index5'])->name('asistencia-alu-sesiones');
 
-    Route::get('/calificaciones-doc', [NotaController::class, 'index4'])->name('index3');
-    Route::get('/calificaciones-alu', [NotaController::class, 'index5'])->name('index3');
-    Route::get('/calificaciones-apo', [NotaController::class, 'index6'])->name('index3');
+    Route::get('/calificaciones-doc', [NotaController::class, 'index4'])->name('index4');
+    Route::get('/calificaciones-alu', [NotaController::class, 'index5'])->name('index5');
+    Route::get('/calificaciones-apo', [NotaController::class, 'index6'])->name('index6');
 
 
     Route::resource('/recotizacion',  CotizacionController::class);
@@ -165,7 +165,7 @@ Route::middleware([
     Route::get('/calificacionesget', [NotaController::class, 'indexCalificacion'])->name('calificacionesget');
     Route::get('/redocentemain', [DocenteController::class, 'indexDocenteMain'])->name('redocentemain');
     Route::get('/redocentedocumentos', [DocenteController::class, 'getDocumentos'])->name('redocentedocumentos');
-    Route::get('/rehorariogetdoc', [HorarioController::class, 'indexDocHorario'])->name('indexDocHorario');
+    Route::get('/rehorariogetdoc', [HorarioController::class, 'indexDocHorario'])->name('indexDocHorario2');
     Route::get('/asistenciasesiongetdoc', [AsistenciaController::class, 'indexDocAsistenciaSesion'])->name('asistenciasesiongetdoc');
     Route::get('/realumnomain', [AlumnoController::class, 'indexAlumnoMain'])->name('indexAlumnoMain');
     Route::get('/reapoderadomain', [AlumnoController::class, 'indexApoderadoMain'])->name('indexApoderadoMain');
@@ -234,8 +234,8 @@ Route::middleware([
     Route::post('/relegajoUpdate/FotoPerfil', [LegajoController::class, 'updatefotoperfil'])->name('relegajoUpdate');
     Route::post('/relegajoUpdate/FotoMision', [LegajoController::class, 'updatefotomision'])->name('updatefotomision');
     Route::post('/relegajoUpdate/FotoVision', [LegajoController::class, 'updatefotovision'])->name('updatefotovision');
-    Route::post('/redocentes/generateusername', [DocenteController::class, 'generateusername'])->name('generateusername');
-    Route::post('/redocenteUpdate/FotoPerfil', [DocenteController::class, 'updatefotoperfil'])->name('redocenteUpdate');
+    Route::post('/redocentes/generateusername', [DocenteController::class, 'generateusername'])->name('generateusername2');
+    Route::post('/redocenteUpdate/FotoPerfil', [DocenteController::class, 'updatefotoperfil'])->name('redocenteUpdate2');
     Route::post('/regfecha-calificacion', [NotaController::class, 'programarFecha'])->name('programarFecha');
     Route::post('/realumnoUpdate/FotoPerfil', [AlumnoController::class, 'updatefotoperfil'])->name('realumnoUpdate');
     Route::post('/reapoderadoUpdate/FotoPerfil', [AlumnoController::class, 'updatefotoperfilApoderado'])->name('reapoderadoUpdate');
