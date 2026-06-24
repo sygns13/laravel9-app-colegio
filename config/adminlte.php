@@ -284,6 +284,12 @@ return [
             'can'  => ['admin', 'ventas']
         ],
         [
+            'text' => 'Reporte Promociones',
+            'url'  => 'admin/reportepromociones',
+            'icon' => 'fas fa-bullhorn',
+            'can'  => ['admin', 'ventas']
+        ],
+        [
             'text' => 'Gestión de Usuarios',
             'url'  => 'admin/users',
             'icon' => 'fas fa-fw fa-users',

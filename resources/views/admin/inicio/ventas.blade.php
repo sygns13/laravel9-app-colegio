@@ -41,5 +41,23 @@
             </a>
         </div>
 
+        <div class="col-lg-3 col-md-6 col-xs-12">
+            <!-- small box -->
+            <a href="{{ URL::to('admin/reportepromociones') }}">
+                <div class="small-box bg-purple" style="box-shadow: 0px 10px 30px 0px #8d8686;">
+                    <div class="inner">
+                        <h3 style="font-size: 30px">Promociones</h3>
+
+                        <p>Reporte de Clientes (Promociones)</p>
+                    </div>
+                    <div class="icon" style="top: 7px;">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                    <div id="recibosH" class="small-box-footer" style="height: 37px"><i
+                            class="fa fa-arrow-circle-right" style="font-size: 30px"></i></div>
+                </div>
+            </a>
+        </div>
+
     </div>
 </div>

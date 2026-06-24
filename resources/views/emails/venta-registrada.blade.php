@@ -81,6 +81,39 @@
                         </td>
                     </tr>
 
+                    {{-- Bloque promocional: invitación a registrarse en el formulario público --}}
+                    <tr>
+                        <td style="padding:8px 32px 0 32px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                   style="background-color:#f4f7fb; border:1px solid #e2e8f0; border-radius:8px;">
+                                <tr>
+                                    <td style="padding:22px 24px;">
+                                        <p style="margin:0 0 10px 0; font-size:17px; color:#0a2c73; font-weight:bold; line-height:1.4;">
+                                            🏍️ ¡Motero, no te quedes fuera de la ruta!
+                                        </p>
+                                        <p style="margin:0 0 16px 0; font-size:15px; color:#333333; line-height:1.5;">
+                                            Entérate de nuestras novedades, lanzamientos y
+                                            <strong>PROMOCIONES EXCLUSIVAS</strong> para la comunidad.
+                                        </p>
+                                        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td align="left">
+                                                    <a href="{{ route('promociones.registro') }}" target="_blank"
+                                                       style="display:inline-block; background-color:#e4002b; color:#ffffff; text-decoration:none; font-size:15px; font-weight:bold; padding:13px 26px; border-radius:6px;">
+                                                        REGÍSTRATE AQUÍ
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin:16px 0 0 0; font-size:15px; color:#333333; line-height:1.5;">
+                                            La aventura continúa y queremos que formes parte de ella. ¡No te la pierdas!
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
                     {{-- Pie --}}
                     <tr>
                         <td align="center" style="padding:28px 32px;">

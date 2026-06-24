@@ -43,6 +43,9 @@ use App\Http\Controllers\Admin\ReportPDFController;
  use App\Http\Controllers\ventas\VentasController;
  use App\Http\Controllers\ventas\ItemController;
 
+// PROMOCIONES (reporte de clientes registrados desde el formulario público)
+ use App\Http\Controllers\ClientePromocionController;
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -65,6 +68,12 @@ Route::middleware([
     Route::get('/reporteventaxls/export', [VentasController::class, 'export']);
     Route::get('/reporteventadetallexls/export', [VentasController::class, 'exportdetalle']);
     //END VENTAS
+
+    //REPORTE PROMOCIONES (clientes registrados desde el formulario público)
+    Route::get('/reportepromociones', [ClientePromocionController::class, 'index2'])->name('reportepromociones');
+    Route::get('/reportepromociones/data', [ClientePromocionController::class, 'data'])->name('reportepromociones.data');
+    Route::get('/reportepromocionesxls/export', [ClientePromocionController::class, 'export'])->name('reportepromociones.export');
+    //END REPORTE PROMOCIONES
 
     Route::get('/', [HomeController::class, 'index'])->name('admin');
     Route::get('/legajo', [HomeController::class, 'legajo'])->name('legajo');
