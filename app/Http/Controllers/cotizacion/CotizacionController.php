@@ -298,13 +298,14 @@ class CotizacionController extends Controller
         $validator8 = Validator::make($input8, $reglas8);
         $validator9 = Validator::make($input9, $reglas9);
 
-        if ($validator1->fails())
+        if ($validator1->fails() || $cliente_id == null)
         {
-            $result='0';
-            $msj='Debe de enviar el cliente_id';
-            $selector='cliente_id';
+            $cliente_id = 0;
+            //$result='0';
+            //$msj='Debe de enviar el cliente_id';
+            //$selector='cliente_id';
 
-            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+            //return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
 
         if ($validator2->fails() || intval($tipo_documento_id) <= 0)

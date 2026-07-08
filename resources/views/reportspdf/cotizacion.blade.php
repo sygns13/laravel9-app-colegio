@@ -1,3 +1,12 @@
+@php
+    // Devuelve la URL del asset solo si el archivo existe en public/web/yamaha,
+    // para evitar que dompdf pinte el placeholder "Image not found".
+    $imgYamaha = function ($ruta) {
+        return !empty($ruta) && is_file(public_path('web/yamaha/' . $ruta))
+            ? asset('web/yamaha/' . $ruta)
+            : null;
+    };
+@endphp
 <!DOCTYPE html>
 <html>
 
@@ -105,7 +114,6 @@
 
         .moto-texto {
             width: 100%;
-            height: 250px;
         }
 
         .moto {
@@ -130,13 +138,11 @@
         .texto-en-moto {
             width: 100% !important;
             background: #0A2C83;
-            min-height: 250px;
-            height: fit-content;
-            padding: 20px 0px 0px 10px;
+            padding: 20px 0px 15px 10px;
             color: #fff;
             line-height: 1.5;
-            margin-top: 100px;
             text-align: justify;
+            page-break-inside: avoid;
         }
 
         /*.img-moto {
@@ -528,8 +534,10 @@
     <div class="" style="width: 100%;">
         <div class="modelo" style="margin-top: -160px;">
             <!-- Aquí usé el campo 'imgMotoPrincipal' de Product2 y un recurso estático -->
-            <img src="{{ asset('web/yamaha/' . $dataCotizacion->url_logo) }}"
-                style="width: 600px; padding: 0px; border: 0px solid transparent;">
+            @if ($imgYamaha($dataCotizacion->url_logo))
+                <img src="{{ $imgYamaha($dataCotizacion->url_logo) }}"
+                    style="width: 600px; padding: 0px; border: 0px solid transparent;">
+            @endif
 
             <!--<img data-assetid="13637" src="{!URLFOR($Resource.NMAX_CONNECTED, imgLogo)}" alt=""
             style="width:200px; padding: 0px; border: 0px solid transparent; height: auto;" />-->
@@ -537,10 +545,12 @@
         <div class="moto">
             <!--<img url="{!motoPrincipalURL}"></img>-->
             <!--<img class="img-moto" data-assetid="13637" src="{!URLFOR($Resource.NMAX_CONNECTED, imgMotoPrincipal)}" alt="" />-->
-            <img class="img-moto" data-assetid="13637"
-                src="{{ asset('web/yamaha/' . $dataCotizacion->url_moto_principal) }}" alt="" />
+            @if ($imgYamaha($dataCotizacion->url_moto_principal))
+                <img class="img-moto" data-assetid="13637"
+                    src="{{ $imgYamaha($dataCotizacion->url_moto_principal) }}" alt="" />
+            @endif
         </div>
-        <div class="moto-texto" style="margin-top: -100px; width: 100%;">
+        <div class="moto-texto" style="width: 100%;">
             <div class="texto-en-moto">
                 <h2 style="padding: 0 10px;">
                     <!--PODER TODO <br /> TERRENO-->
@@ -567,20 +577,26 @@
             <!-- Reemplazar {!renderEstilo1} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
             <td class="col-1">
                 <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
-                <img src="{{ asset('web/yamaha/' . $dataCotizacion->url_color1) }}"
-                    style="width:140px; height:216px;" />
+                @if ($imgYamaha($dataCotizacion->url_color1))
+                    <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                        style="width:140px; height:216px;" />
+                @endif
             </td>
             <!-- Reemplazar {!renderEstilo2} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
             <td class="col-2">
                 <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
-                <img src="{{ asset('web/yamaha/' . $dataCotizacion->url_color2) }}"
-                    style="width:140px; height:216px;" />
+                @if ($imgYamaha($dataCotizacion->url_color2))
+                    <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                        style="width:140px; height:216px;" />
+                @endif
             </td>
             <!-- Reemplazar {!renderEstilo3} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
             <td class="col-3">
                 <!-- Imagen 3 (reemplazar estilo3URL con la URL de la imagen) -->
-                <img src="{{ asset('web/yamaha/' . $dataCotizacion->url_color3) }}"
-                    style="width:140px; height:216px;" />
+                @if ($imgYamaha($dataCotizacion->url_color3))
+                    <img src="{{ $imgYamaha($dataCotizacion->url_color3) }}"
+                        style="width:140px; height:216px;" />
+                @endif
             </td>
         </tr>
     </table>
@@ -598,21 +614,31 @@
             <col span="4" width="25%" />
         </colgroup> --}}
         <tr>
-            <td align="center" style="width: 25%;"><img data-assetid="13638"
-                    src="{{ asset('web/yamaha/' . $dataCotizacion->url_beneficio1) }}" alt="" height="100%"
-                    style="margin-left: 20px; padding: 0px;  border: 0px; width:140px; height:140px;" />
+            <td align="center" style="width: 25%;">
+                @if ($imgYamaha($dataCotizacion->url_beneficio1))
+                    <img data-assetid="13638" src="{{ $imgYamaha($dataCotizacion->url_beneficio1) }}" alt=""
+                        height="100%"
+                        style="margin-left: 20px; padding: 0px;  border: 0px; width:140px; height:140px;" />
+                @endif
             </td>
-            <td align="center" style="width: 25%;"><img data-assetid="13639"
-                    src="{{ asset('web/yamaha/' . $dataCotizacion->url_beneficio2) }}" alt="" height="100%"
-                    style="margin-left: 20px; padding: 0px;  border: 0px; width:140px; height:140px;" />
+            <td align="center" style="width: 25%;">
+                @if ($imgYamaha($dataCotizacion->url_beneficio2))
+                    <img data-assetid="13639" src="{{ $imgYamaha($dataCotizacion->url_beneficio2) }}" alt=""
+                        height="100%"
+                        style="margin-left: 20px; padding: 0px;  border: 0px; width:140px; height:140px;" />
+                @endif
             </td>
-            <td align="center" style="width: 25%;"><img data-assetid="13640"
-                    src="{{ asset('web/yamaha/' . $dataCotizacion->url_beneficio3) }}" alt="" height="100%"
-                    style="padding: 0px;  border: 0px; width:140px; height:140px;" />
+            <td align="center" style="width: 25%;">
+                @if ($imgYamaha($dataCotizacion->url_beneficio3))
+                    <img data-assetid="13640" src="{{ $imgYamaha($dataCotizacion->url_beneficio3) }}" alt=""
+                        height="100%" style="padding: 0px;  border: 0px; width:140px; height:140px;" />
+                @endif
             </td>
-            <td align="center" style="width: 25%;"><img data-assetid="13640"
-                    src="{{ asset('web/yamaha/' . $dataCotizacion->url_beneficio4) }}" alt="" height="100%"
-                    style=" padding: 0px; border: 0px; width:140px; height:140px;" />
+            <td align="center" style="width: 25%;">
+                @if ($imgYamaha($dataCotizacion->url_beneficio4))
+                    <img data-assetid="13640" src="{{ $imgYamaha($dataCotizacion->url_beneficio4) }}" alt=""
+                        height="100%" style=" padding: 0px; border: 0px; width:140px; height:140px;" />
+                @endif
             </td>
         </tr>
         <tr>
@@ -813,9 +839,11 @@
                     @foreach ($includes as $index => $include)
                         @if ($index < 4)
                             <td align="center" class="img-tabla" style="width: 25%;">
-                                <img data-assetid="13638" src="{{ asset('web/yamaha/' . $include->urlimage) }}"
-                                    alt="" height="65px;"
-                                    style=" padding: 0px; text-align: center; border: 0px;" />
+                                @if ($imgYamaha($include->urlimage))
+                                    <img data-assetid="13638" src="{{ $imgYamaha($include->urlimage) }}"
+                                        alt="" height="65px;"
+                                        style=" padding: 0px; text-align: center; border: 0px;" />
+                                @endif
                                 <p class="texto-compra" style="margin-top: 10px; margin-bottom: 40px;">
                                     {{ $include->nombre }}
                                 </p>
@@ -829,9 +857,11 @@
                         @foreach ($includes as $index => $include)
                             @if ($index >= 4 && $index < 8)
                                 <td align="center" class="img-tabla" style="width: 25%;">
-                                    <img data-assetid="13638" src="{{ asset('web/yamaha/' . $include->urlimage) }}"
-                                        alt="" height="65px;"
-                                        style=" padding: 0px; text-align: center; border: 0px;" />
+                                    @if ($imgYamaha($include->urlimage))
+                                        <img data-assetid="13638" src="{{ $imgYamaha($include->urlimage) }}"
+                                            alt="" height="65px;"
+                                            style=" padding: 0px; text-align: center; border: 0px;" />
+                                    @endif
                                     <p class="texto-compra" style="margin-top: 10px; margin-bottom: 40px;">
                                         {{ $include->nombre }}
                                     </p>
@@ -846,9 +876,11 @@
                         @foreach ($includes as $index => $include)
                             @if ($index >= 8 && $index < 12)
                                 <td align="center" class="img-tabla" style="width: 25%;">
-                                    <img data-assetid="13638" src="{{ asset('web/yamaha/' . $include->urlimage) }}"
-                                        alt="" height="65px;"
-                                        style=" padding: 0px; text-align: center; border: 0px;" />
+                                    @if ($imgYamaha($include->urlimage))
+                                        <img data-assetid="13638" src="{{ $imgYamaha($include->urlimage) }}"
+                                            alt="" height="65px;"
+                                            style=" padding: 0px; text-align: center; border: 0px;" />
+                                    @endif
                                     <p class="texto-compra" style="margin-top: 10px; margin-bottom: 40px;">
                                         {{ $include->nombre }}
                                     </p>

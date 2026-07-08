@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php -l app/Http/Controllers/cotizacion/ClienteController.php)",
+      "Bash(php artisan *)",
+      "Bash(php -r \"echo extension_loaded\\('gd'\\)?'GD: ON':'GD: OFF';\")",
+      "Bash(php -r \"echo 'upload_max_filesize='.ini_get\\('upload_max_filesize'\\).' post_max_size='.ini_get\\('post_max_size'\\).' memory_limit='.ini_get\\('memory_limit'\\);\")",
+      "Bash(php -l app/Http/Controllers/ClientePromocionController.php)",
+      "Bash(php -l app/Models/ClientePromocion.php)",
+      "Bash(php -l routes/web.php)",
+      "Bash(php -l app/Exports/ReportePromocionesExport.php)",
+      "Bash(php -l routes/admin.php)",
+      "Bash(php -l config/adminlte.php)"
+    ]
+  }
+}
