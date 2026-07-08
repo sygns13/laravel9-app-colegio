@@ -239,6 +239,41 @@ createApp({
             }
         },
 
+        buscarYear: function() {
+
+            this.fillobject.year = '0';
+            this.fillobject.maestro_modelo_id = '0';
+
+            this.fillobject.include1 = 0;
+            this.fillobject.include2 = 0;
+            this.fillobject.include3 = 0;
+            this.fillobject.include4 = 0;
+            this.fillobject.precio_usd = '';
+            this.fillobject.descuento_usd = '';
+            this.fillobject.precio_final_usd = '';
+        },
+
+        buscarColor: async function() {
+
+            await this.$nextTick();
+
+            // 2. Buscamos el primer option dentro del select que NO esté disabled
+            const select = document.getElementById('cbucolor');
+            const primerOptionValido = select.querySelector('option:not([disabled])');
+
+            // 3. Asignamos el valor si existe, de lo contrario lo devolvemos a "0"
+            this.fillobject.maestro_modelo_id = primerOptionValido ? primerOptionValido.value : "0";
+            this.fillobject.include1 = 0;
+            this.fillobject.include2 = 0;
+            this.fillobject.include3 = 0;
+            this.fillobject.include4 = 0;
+            this.fillobject.precio_usd = '';
+            this.fillobject.descuento_usd = '';
+            this.fillobject.precio_final_usd = '';
+
+            this.buscarModelo();
+        },
+
         buscarModelo: function() {
             if(this.fillobject.maestro_modelo_id != null && this.fillobject.maestro_modelo_id != "0" ){
 
@@ -249,8 +284,15 @@ createApp({
 
                     if(response.data.result=='1' && response.data.resultFound && response.data.maestroModelo!=null){
                         this.fillobject.precio_usd = response.data.maestroModelo.precioIni;
-                        this.fillobject.descuento_usd = response.data.maestroModelo.precioDto;
-                        this.fillobject.precio_final_usd = response.data.maestroModelo.precioFin;
+                        //this.fillobject.descuento_usd = response.data.maestroModelo.precioDto;
+                        this.fillobject.descuento_usd = 0;
+                        //this.fillobject.precio_final_usd = response.data.maestroModelo.precioFin;
+                        this.fillobject.precio_final_usd = response.data.maestroModelo.precioIni;
+
+                        this.fillobject.include1 = response.data.maestroModelo.include1;
+                        this.fillobject.include2 = response.data.maestroModelo.include2;
+                        this.fillobject.include3 = response.data.maestroModelo.include3;
+                        this.fillobject.include4 = response.data.maestroModelo.include4;
                     }
                 })
             }

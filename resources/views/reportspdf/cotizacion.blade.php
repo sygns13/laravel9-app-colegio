@@ -507,7 +507,7 @@
             <div class="mr-20" style=" display: inline-block; float: right;">
                 <p>
                     {{-- <img src="{!URLFOR($Resource.FotosYamaha,'fotos/YAMAHA.png')}" />  --}}
-                    <img src="{{ asset('images/logoyamaha-white.png') }}" width="170px">
+                    <img src="{{ asset('images/slgn_flat_red_wh_rgb.png') }}" width="170px">
                     <!--  <img src="fotos/YAMAHA.png" /> -->
                 </p>
             </div>
@@ -904,6 +904,7 @@
             CONDICIONES:<br /> 
         </p>
         <p class="puntitos-condiciones" style="margin-top: 0px;">
+            {{-- 
             •  <b>Cotización vigente hasta:</b> {{ substr(strval($cotizacion->fecha), 8, 2) }}/{{ substr(strval($cotizacion->fecha), 5, 2) }}/{{ substr(strval($cotizacion->fecha), 0, 4) }}<br />  
             •  Precio puede variar sin previo aviso a excepción de una reserva con depósito confirmado en cuentas Yamaha.<br />
             •  Precio incluye todos los impuestos de ley vigentes aplicables según la zona. <br />
@@ -911,13 +912,17 @@
             •  Para el caso de uso de tarjeta de débito o crédito habrá un recargo de 3% adicional al monto a facturar. Consultar los números de cuenta del banco de su preferencia o condiciones con otros medios de pago con su experto Yamaha.<br />
             •  En caso de desistimiento de compra luego de efectuado el pago, se le aplicará un recargo del 3% por gastos administrativos.<br />
             •  El plazo de devolución tiene un tiempo máximo de 20 días útiles. <br />
+ --}}
             <!--• Pago con tarjeta de credito o debito
             tendra un recargo del 4% sobre el valor de
             transaccion.<br />-->
+{{-- 
             •  Las unidades se entregan en tienda en la fecha y hora pactada con el experto Yamaha y tiene un plazo aproximado de 15 días posterior a su facturación, pasada esa fecha Yamaha no se responsabiliza del estado de la unidad y podría aplicar el costo de servicio de cochera diario por un importe de $20 (veinte dólares).
+             --}}
         </p>
     </div>
 
+    {{--
     <div class="">
         <div class="titulitos-pagos" style=" float: left;">
             <h1 class=" titulos-pagos-h1 ">
@@ -954,7 +959,7 @@
                 </apex:variable>
                 <!--<img class="imagenes-financiar" src="{!URLFOR($Resource.FotosYamaha,'fotos/fonbienes.png')}" />
                 <img class="imagenes-financiar" src="{!URLFOR($Resource.FotosYamaha,'fotos/cajapiura.png')}" />-->
-            </div> --}}
+            </div> --}
         </div>
         <div class="titulitos-pagos" style="float: right;">
             <h1 class="titulos-pagos-h1 ">
@@ -981,12 +986,12 @@
                 <apex:variable var="citibank" value="{!renderCitibank}" rendered="{!renderCitibank}" >
                     <img class="imagenes-financiar" src="{!URLFOR($Resource.FotosYamaha,'fotos/Citibank.png')}" />
                 </apex:variable>
-            </div> --}}
+            </div> --}
         </div>
-    </div>
+    </div> --}}
 
     <!--ENTREGA-->
-    <div class="letra-chica" style="margin-top: 200px;">
+    <div class="letra-chica" style="margin-top: 0px;">
         <p>
             <b>Entrega:</b> Previa
             facturacion, para los casos de productos sujetos
@@ -1069,7 +1074,7 @@
         <img class="iconos    " width="20" height="20" src="{!URLFOR($Resource.FotosYamaha,'fotos/youtube.png')}" />-->
     </div>
     <div class="mt-60" style="text-align: center; margin-left: auto; margin-right: auto;">
-        <img src="{{ asset('images/logoyamaha-black.png') }}"  width="200px;"/>
+        <img src="{{ asset('images/slgn_flat_red_rgb.png') }}"  width="200px;"/>
     </div>
 
 </body>

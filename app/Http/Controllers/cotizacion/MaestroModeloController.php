@@ -10,6 +10,7 @@ use App\Models\Cotizacion;
 use App\Models\TipoDocumento;
 use App\Models\Config;
 use App\Models\MaestroModelo;
+use App\Models\MaestroBeneficio;
 
 use stdClass;
 use DB;
@@ -55,6 +56,13 @@ class MaestroModeloController extends Controller
             $maestroModelo->precioIni = number_format($maestroModelo->precio_usd, 2, '.', '');
             $maestroModelo->precioDto = number_format($maestroModelo->descuento_usd, 2, '.', '');
             $maestroModelo->precioFin = number_format($maestroModelo->precio_final_usd, 2, '.', '');
+
+            $beneficiosFijos = MaestroBeneficio::where('activo', 1)->where('borrado', 0)->where('modelo', $maestroModelo->modelo)->where('year', $maestroModelo->year)->where('color_fabrica', $maestroModelo->color_fabrica)->first();
+
+            $maestroModelo->include1 = $beneficiosFijos ? $beneficiosFijos->beneficio5_status : 0;
+            $maestroModelo->include2 = $beneficiosFijos ? $beneficiosFijos->beneficio6_status : 0;
+            $maestroModelo->include3 = $beneficiosFijos ? $beneficiosFijos->beneficio7_status : 0;
+            $maestroModelo->include4 = $beneficiosFijos ? $beneficiosFijos->beneficio8_status : 0;
         }
 
         return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector ,'maestroModelo'=>$maestroModelo, 'resultFound' => $resultFound]);

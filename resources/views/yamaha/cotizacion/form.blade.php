@@ -51,7 +51,7 @@
           <div class="form-group row">
             <label for="cbumodelo" class="col-sm-2 col-form-label">Modelo</label>
             <div class="col-sm-10">
-              <select class="form-control" style="width: 100%;" v-model="fillobject.modelo" id="cbumodelo">
+              <select class="form-control" style="width: 100%;" v-model="fillobject.modelo" id="cbumodelo" @change="buscarYear">
                 <option value="0" disabled>Seleccione ...</option>
                 @foreach ($modelos as $dato)
                   <option value="{{$dato->modelo}}">{{$dato->modelo}}</option> 
@@ -63,7 +63,7 @@
           <div class="form-group row">
             <label for="cbuyear" class="col-sm-2 col-form-label">Año</label>
             <div class="col-sm-10">
-              <select class="form-control" style="width: 100%;" v-model="fillobject.year" id="cbuyear">
+              <select class="form-control" style="width: 100%;" v-model="fillobject.year" id="cbuyear" @change="buscarColor">
                 <option value="0" disabled>Seleccione ...</option>
                 @foreach ($years as $dato)
                   <option value="{{$dato->year}}" v-if="fillobject.modelo == '{{$dato->modelo}}'">{{$dato->year}}</option> 
@@ -92,7 +92,7 @@
             </div>
           </div>
 
-          <div class="form-group row" v-if="fillobject.maestro_modelo_id > 0">
+          <div class="form-group row" v-if="false">
             <label for="txtdescuento_usd" class="col-sm-2 col-form-label">Descuento USD $</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="txtdescuento_usd" placeholder="0.00" v-model="fillobject.descuento_usd" maxlength="20" @change="calcularPrecioFinal" onkeypress="return soloNumerosConDecimalesReg(event, this);">
@@ -110,20 +110,20 @@
 
           <div class="form-group row">
             <div class="col-sm-6" style="padding-left:40px; ">
-              <input class="form-check-input" type="checkbox" v-model="fillobject.include1" value="1" id="checkboxinclude1">
+              <input class="form-check-input" type="checkbox" v-model="fillobject.include1" value="1" id="checkboxinclude1" disabled="true" :true-value="1" :false-value="0">
               <label class="form-check-label">Trámite de Placa y Tarjeta</label>
             </div>
             <div class="col-sm-6" style="padding-left:40px; ">
-              <input class="form-check-input" type="checkbox" v-model="fillobject.include2" value="1" id="checkboxinclude2">
+              <input class="form-check-input" type="checkbox" v-model="fillobject.include2" value="1" id="checkboxinclude2" disabled="true" :true-value="1" :false-value="0">
               <label class="form-check-label">Casco</label>
             </div>
 
-            <div class="col-sm-6" style="padding-left:40px; ">
-              <input class="form-check-input" type="checkbox" v-model="fillobject.include3" value="1" id="checkboxinclude3">
+            <div class="col-sm-6" style="padding-left:40px; "> 
+              <input class="form-check-input" type="checkbox" v-model="fillobject.include3" value="1" id="checkboxinclude3" disabled="true" :true-value="1" :false-value="0">
               <label class="form-check-label">SOAT</label>
             </div>
             <div class="col-sm-6" style="padding-left:40px; ">
-              <input class="form-check-input" type="checkbox" v-model="fillobject.include4" value="1" id="checkboxinclude4">
+              <input class="form-check-input" type="checkbox" v-model="fillobject.include4" value="1" id="checkboxinclude4" disabled="true" :true-value="1" :false-value="0">
               <label class="form-check-label">Otros Gift</label>
             </div>
           </div>
