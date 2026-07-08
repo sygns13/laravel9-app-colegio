@@ -67,7 +67,7 @@
         }
 
         .header {
-            height: 85px;
+            min-height: 85px;
             color: #FFFFFF;
             width: 100% !important;
             margin-top: 15px;
@@ -492,16 +492,20 @@
     <!-- HEADER -->
     <div class="header">
         <div>
-            <div style="display: inline-block; vertical-align: top; float: left;">
+            <div style="display: inline-block; vertical-align: top; float: left; max-width: 65%;">
                 <div class="ml-20" style="display: inline-block;">
                     <p>
-                        {{--  
+                        {{--
                         Sucursal <apex:outputText value=" {!sucursal}"/> <br /> --}}
                         COTIZACIÓN: {{ $cotizacion->year }}-{{ $cotizacion->numero }} <br />
                         FECHA
                         {{ substr(strval($cotizacion->fecha), 8, 2) }}/{{ substr(strval($cotizacion->fecha), 5, 2) }}/{{ substr(strval($cotizacion->fecha), 0, 4) }}
                         <br />
                         HORA: {{ $cotizacion->hora }}
+                        @if (!empty(trim($cotizacion->observaciones ?? '')))
+                            <br />
+                            <span style="font-weight: normal; font-size: 11px;">{{ $cotizacion->observaciones }}</span>
+                        @endif
                         {{-- <br />
                         <div class="headerempresa">
                             {!Quote.Account.Name}
@@ -930,7 +934,7 @@
         </p>
     </div>
 
-    <!-- CONDICIONES --> 
+    <!-- CONDICIONES -->
     <div class="mt-30 condiciones" style="page-break-before: always;">
         <p class="titulo" style="margin-bottom: 6px;">
             CONDICIONES:<br /> 

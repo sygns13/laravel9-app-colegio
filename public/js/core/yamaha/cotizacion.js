@@ -38,6 +38,7 @@ createApp({
                 'precio_final_usd': '',
                 'modelo': '0',
                 'year': 0,
+                'observaciones': '',
             },
 
             pagination1: {
@@ -422,6 +423,7 @@ createApp({
                 'precio_final_usd': '',
                 'modelo': '0',
                 'year': 0,
+                'observaciones': '',
             };
 
         },

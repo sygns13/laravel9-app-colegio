@@ -45,15 +45,16 @@ class Reporte1Export implements FromArray, WithColumnWidths, WithStyles
             'O'=>'20',     
             'P'=>'30',     
             'Q'=>'20',     
-            'R'=>'20',     
-            'S'=>'40',     
+            'R'=>'20',
+            'S'=>'40',
+            'T'=>'50',
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
         /* $sheet->getStyle('B2')->getFont()->setBold(true); */
-        $sheet->mergeCells('A1:S1');
+        $sheet->mergeCells('A1:T1');
 
         $styleArray = [
             'font' => [
@@ -129,10 +130,10 @@ class Reporte1Export implements FromArray, WithColumnWidths, WithStyles
         $filas = count($this->data);
         $cont = $this->cont;
 
-        $celdaTitles ='A'.strval($cont).':S'.strval($cont);
+        $celdaTitles ='A'.strval($cont).':T'.strval($cont);
 
 
-        $sheet->getStyle('A1:S1')->applyFromArray($styleArray);
+        $sheet->getStyle('A1:T1')->applyFromArray($styleArray);
         $sheet->getStyle($celdaTitles)->applyFromArray($styleArray2);
 
 
@@ -157,6 +158,7 @@ class Reporte1Export implements FromArray, WithColumnWidths, WithStyles
                 $celdaQ ='Q'.strval((1+intval($i)));
                 $celdaR ='R'.strval((1+intval($i)));
                 $celdaS ='S'.strval((1+intval($i)));
+                $celdaT ='T'.strval((1+intval($i)));
 
                 $sheet->getStyle($celdaA)->applyFromArray($styleArray3);
                 $sheet->getStyle($celdaB)->applyFromArray($styleArray3);
@@ -177,6 +179,7 @@ class Reporte1Export implements FromArray, WithColumnWidths, WithStyles
                 $sheet->getStyle($celdaQ)->applyFromArray($styleArray3);
                 $sheet->getStyle($celdaR)->applyFromArray($styleArray3);
                 $sheet->getStyle($celdaS)->applyFromArray($styleArray3);
+                $sheet->getStyle($celdaT)->applyFromArray($styleArray3);
             }
         }
     }

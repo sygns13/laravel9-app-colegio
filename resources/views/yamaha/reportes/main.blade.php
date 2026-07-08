@@ -120,6 +120,7 @@
                                     <th class="titles-table" style="width: 5%">Precio Final S/</th>
                                     <th class="titles-table" style="width: 8%">Cliente</th>
                                     <th class="titles-table" style="width: 6%">Documento de Cliente</th>
+                                    <th class="titles-table" style="width: 8%">Observaciones</th>
                                     <th class="titles-table" style="width: 4%">Descargar Cotización</th>
                                 </tr>
                             </thead>
@@ -148,6 +149,7 @@
 
                                     <td class="rows-table">@{{registro.cli_nombres}} @{{registro.cli_apellidos}}</td>
                                     <td class="rows-table">@{{registro.tpP_sigla}} @{{registro.cli_documento}}</td>
+                                    <td class="rows-table">@{{registro.observaciones}}</td>
                                     <td>
                                         <center>
                                         <x-adminlte-button @click="imprimirCotización(registro.id)" id="btnBorrar" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-file-pdf"

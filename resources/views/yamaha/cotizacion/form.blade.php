@@ -128,7 +128,12 @@
             </div>
           </div>
 
-
+          <div class="form-group row">
+            <label for="txtobservaciones" class="col-sm-2 col-form-label">Observaciones</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" id="txtobservaciones" placeholder="Observaciones (opcional)" v-model="fillobject.observaciones" rows="2" maxlength="500"></textarea>
+            </div>
+          </div>
 
           {{-- <div class="form-group row">
             <label for="txttipo" class="col-sm-2 col-form-label">Tipo de Cotización</label>

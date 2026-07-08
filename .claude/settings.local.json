@@ -10,7 +10,10 @@
       "Bash(php -l routes/web.php)",
       "Bash(php -l app/Exports/ReportePromocionesExport.php)",
       "Bash(php -l routes/admin.php)",
-      "Bash(php -l config/adminlte.php)"
+      "Bash(php -l config/adminlte.php)",
+      "Bash(php -l app/Models/Cotizacion.php)",
+      "Bash(php -l app/Http/Controllers/cotizacion/CotizacionController.php)",
+      "Bash(php -l app/Exports/Reporte1Export.php)"
     ]
   }
 }

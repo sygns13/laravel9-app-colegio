@@ -30,6 +30,7 @@ class Cotizacion extends Model
                             'activo',
                             'borrado',
                             'tipo_cambio',
+                            'observaciones',
                         ];
 	protected $guarded = ['id'];
 
@@ -84,6 +85,7 @@ class Cotizacion extends Model
                 'cotizacions.created_at',
                 'cotizacions.updated_at',
                 'cotizacions.tipo_cambio',
+                'cotizacions.observaciones',
 
                 'data_cotizacions.id as data_cotizacions_id',
                 'data_cotizacions.color_comercial as data_cotizacions_color_comercial',
@@ -218,6 +220,7 @@ class Cotizacion extends Model
                 'cotizacions.created_at',
                 'cotizacions.updated_at',
                 'cotizacions.tipo_cambio',
+                'cotizacions.observaciones',
 
                 'data_cotizacions.id as data_cotizacions_id',
                 'data_cotizacions.color_comercial as data_cotizacions_color_comercial',

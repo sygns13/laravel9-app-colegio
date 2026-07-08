@@ -87,7 +87,7 @@ class CotizacionController extends Controller
 
         $cont = $cont + 3;
 
-        array_push($data, array('N°','Empresa', 'Cotizador', 'Documento de Cotizador', 'Número de Cotización','Fecha de Cotización','Código de la Motocicleta','Modelo de la Motocicleta','Año de la Motocicleta','Color de la Motocicleta', 'Precio U$', 'Descuento U$', 'Precio Final U$', 'Tipo de Cambio S/', 'Precio Final S/', 'Cliente', 'Documento de Cliente', 'Celular de Cliente', 'Correo de Cliente'));
+        array_push($data, array('N°','Empresa', 'Cotizador', 'Documento de Cotizador', 'Número de Cotización','Fecha de Cotización','Código de la Motocicleta','Modelo de la Motocicleta','Año de la Motocicleta','Color de la Motocicleta', 'Precio U$', 'Descuento U$', 'Precio Final U$', 'Tipo de Cambio S/', 'Precio Final S/', 'Cliente', 'Documento de Cliente', 'Celular de Cliente', 'Correo de Cliente', 'Observaciones'));
 
         //return response()->json($response);
 
@@ -110,7 +110,8 @@ class CotizacionController extends Controller
             $dato->cli_nombres.' '. $dato->cli_apellidos,
             $dato->tpC_sigla.' '. $dato->cli_documento,
             $dato->cli_celular,
-            $dato->cli_correo                     
+            $dato->cli_correo,
+            $dato->observaciones
             ));
         }
 
@@ -255,6 +256,12 @@ class CotizacionController extends Controller
         $precio_usd=$request->precio_usd;
         $descuento_usd=$request->descuento_usd;
         $activo=$request->activo;
+        $observaciones=$request->observaciones;
+
+        if($observaciones == null){
+            $observaciones = '';
+        }
+        $observaciones = mb_substr(trim($observaciones), 0, 500);
 
         $result='1';
         $msj='';
@@ -459,6 +466,7 @@ class CotizacionController extends Controller
             $registroA->activo = 1;
             $registroA->borrado = 0;
             $registroA->tipo_cambio = $tipoCambio->tipo_cambio;
+            $registroA->observaciones = $observaciones;
 
             $registroA->save();
 
