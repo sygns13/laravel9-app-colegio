@@ -72,7 +72,7 @@
             </div>
           </div>
 
-          <div class="form-group row" v-show="false">
+          <div class="form-group row" v-show="cantidadOptionsValidos > 1">
             <label for="cbucolor" class="col-sm-2 col-form-label">Color</label>
             <div class="col-sm-10">
               <select class="form-control" style="width: 100%;" v-model="fillobject.maestro_modelo_id" id="cbucolor" @change="buscarModelo">

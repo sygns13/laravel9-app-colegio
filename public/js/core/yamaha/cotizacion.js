@@ -75,6 +75,8 @@ createApp({
             archivo : null,
             uploadReady: true,
 
+            cantidadOptionsValidos: 0,
+
         }
     },
     created: function() {
@@ -262,6 +264,9 @@ createApp({
             const select = document.getElementById('cbucolor');
             const primerOptionValido = select.querySelector('option:not([disabled])');
 
+            // Usamos querySelectorAll para obtener todos los válidos y .length para contarlos
+            this.cantidadOptionsValidos = select.querySelectorAll('option:not([disabled])').length;
+
             // 3. Asignamos el valor si existe, de lo contrario lo devolvemos a "0"
             this.fillobject.maestro_modelo_id = primerOptionValido ? primerOptionValido.value : "0";
             this.fillobject.include1 = 0;
@@ -394,6 +399,8 @@ createApp({
             this.fillobject.year = '';
             this.fillobject.archivo = '';
 
+            this.cantidadOptionsValidos = 0;
+
             this.uploadReady = false;
             this.archivo=null;
 
@@ -425,6 +432,8 @@ createApp({
                 'year': 0,
                 'observaciones': '',
             };
+
+            this.cantidadOptionsValidos = 0;
 
         },
         procesar: function() {

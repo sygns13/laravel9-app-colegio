@@ -156,7 +156,7 @@ class CotizacionController extends Controller
                    ->where('maestro_modelos.activo','1')
                    ->groupBy('maestro_modelos.modelo')
                    ->groupBy('maestro_modelos.year')
-                   //->groupBy('maestro_modelos.color_comercial')
+                   ->groupBy('maestro_modelos.color_comercial')
                    ->orderBy('maestro_modelos.modelo')
                    ->orderBy('maestro_modelos.year')
                    ->orderBy('maestro_modelos.color_comercial')
