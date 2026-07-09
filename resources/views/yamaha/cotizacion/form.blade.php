@@ -88,7 +88,7 @@
             <label for="txtprecio_usd" class="col-sm-2 col-form-label">Precio de Venta USD $</label>
             <div class="col-sm-10">
               {{-- <input type="text" class="form-control" id="txtprecio_usd" placeholder="0.00" v-model="fillobject.precio_usd" maxlength="20" @change="calcularPrecioFinal" onkeypress="return soloNumerosConDecimales(event);"> --}}
-              <input type="text" class="form-control" id="txtprecio_usd" placeholder="0.00" v-model="fillobject.precio_usd" maxlength="20" @change="calcularPrecioFinal" onkeypress="return soloNumerosConDecimalesReg(event, this);">
+              <input type="text" class="form-control" id="txtprecio_usd" placeholder="0.00" v-model="fillobject.precio_usd" maxlength="20" @change="calcularPrecioFinal" onkeypress="return soloNumerosConDecimalesReg(event, this);" readonly="true">
             </div>
           </div>
 
