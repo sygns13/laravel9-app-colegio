@@ -940,11 +940,11 @@
             CONDICIONES:<br /> 
         </p>
         <p class="puntitos-condiciones" style="margin-top: 0px;">
-            {{-- 
+            
             •  <b>Cotización vigente hasta:</b> {{ substr(strval($cotizacion->fecha), 8, 2) }}/{{ substr(strval($cotizacion->fecha), 5, 2) }}/{{ substr(strval($cotizacion->fecha), 0, 4) }}<br />  
             •  Precio puede variar sin previo aviso a excepción de una reserva con depósito confirmado en cuentas Yamaha.<br />
             •  Precio incluye todos los impuestos de ley vigentes aplicables según la zona. <br />
-            •  <b>Forma de Pago:</b> Depósito o transferencia bancaria a nombre de Yamaha Motor del Peru S.A. (para Lima y Chiclayo) o Yamaha Motor Selva del Peru S.A. (para Iquitos, Tarapoto, Pucallpa y Jaén).
+         {{--    •  <b>Forma de Pago:</b> Depósito o transferencia bancaria a nombre de Yamaha Motor del Peru S.A. (para Lima y Chiclayo) o Yamaha Motor Selva del Peru S.A. (para Iquitos, Tarapoto, Pucallpa y Jaén).
             •  Para el caso de uso de tarjeta de débito o crédito habrá un recargo de 3% adicional al monto a facturar. Consultar los números de cuenta del banco de su preferencia o condiciones con otros medios de pago con su experto Yamaha.<br />
             •  En caso de desistimiento de compra luego de efectuado el pago, se le aplicará un recargo del 3% por gastos administrativos.<br />
             •  El plazo de devolución tiene un tiempo máximo de 20 días útiles. <br />
