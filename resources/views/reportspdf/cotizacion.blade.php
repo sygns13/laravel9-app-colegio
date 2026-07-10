@@ -611,6 +611,18 @@
                             <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
                                 style="width:260px; height:216px;" />
                     </td>
+                @elseif($dataCotizacion->codigo == "XMAX300")
+                    <td class="col-1">
+                        <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
+                            <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                                style="width:290px; height:216px;" />
+                        
+                    </td>
+                    <td class="col-2">
+                        <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
+                            <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                                style="width:290px; height:216px;" />
+                    </td>
                 @else
                     <td class="col-1">
                         <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
