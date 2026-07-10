@@ -1,10 +1,10 @@
 @php
-    // Devuelve la URL del asset solo si el archivo existe en public/web/yamaha,
-    // para evitar que dompdf pinte el placeholder "Image not found".
     $imgYamaha = function ($ruta) {
-        return !empty($ruta) && is_file(public_path('web/yamaha/' . $ruta))
-            ? asset('web/yamaha/' . $ruta)
-            : null;
+        $local = public_path('web/yamaha/' . $ruta);
+        if (empty($ruta) || !is_file($local)) {
+            return null;
+        }
+        return 'data:' . mime_content_type($local) . ';base64,' . base64_encode(file_get_contents($local));
     };
 @endphp
 <!DOCTYPE html>
