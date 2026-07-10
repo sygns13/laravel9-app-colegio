@@ -104,7 +104,7 @@ class VentasController extends Controller
             ]);
         }
 
-        $query->orderBy('sales.id');
+        $query->orderBy('sales.id','desc');
 
         $registros = $query->paginate(30);
 
@@ -328,7 +328,7 @@ class VentasController extends Controller
             ]);
         }
 
-        $query->orderBy('sales.id');
+        $query->orderBy('sales.id', 'desc');
         
         $response = $query->get();
 

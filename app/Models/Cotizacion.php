@@ -63,7 +63,7 @@ class Cotizacion extends Model
             $query->orWhere('users.name','like','%'.$buscar.'%');
             $query->orWhere('users.email','like','%'.$buscar.'%');
             })  */
-            ->orderBy('cotizacions.id')
+            ->orderBy('cotizacions.id', 'desc')
         ->select(
                 'cotizacions.id',
                 'cotizacions.numero',
@@ -198,7 +198,7 @@ class Cotizacion extends Model
             $query->orWhere('users.name','like','%'.$buscar.'%');
             $query->orWhere('users.email','like','%'.$buscar.'%');
             })  */
-            ->orderBy('cotizacions.id')
+            ->orderBy('cotizacions.id', 'desc')
         ->select(
                 'cotizacions.id',
                 'cotizacions.numero',
