@@ -194,7 +194,7 @@ createApp({
         },
         changePage: function(page) {
             this.pagination.current_page = page;
-            this.getDatos(page);
+            this.buscarDatos(page);
             this.thispage = page;
         },
 

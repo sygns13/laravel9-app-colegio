@@ -258,10 +258,11 @@ class CotizacionController extends Controller
         $activo=$request->activo;
         $observaciones=$request->observaciones;
 
+        /*
         if($observaciones == null){
             $observaciones = '';
         }
-        $observaciones = mb_substr(trim($observaciones), 0, 500);
+        */
 
         $result='1';
         $msj='';
@@ -295,6 +296,9 @@ class CotizacionController extends Controller
         $input9  = array('descuento_usd' => $descuento_usd);
         $reglas9 = array('descuento_usd' => 'required');
 
+        $input10  = array('observaciones' => $observaciones);
+        $reglas10 = array('observaciones' => 'required');
+
         $validator1 = Validator::make($input1, $reglas1);
         $validator2 = Validator::make($input2, $reglas2);
         $validator3 = Validator::make($input3, $reglas3);
@@ -304,6 +308,7 @@ class CotizacionController extends Controller
         $validator7 = Validator::make($input7, $reglas7);
         $validator8 = Validator::make($input8, $reglas8);
         $validator9 = Validator::make($input9, $reglas9);
+        $validator10 = Validator::make($input10, $reglas10);
 
         if ($validator1->fails() || $cliente_id == null)
         {
@@ -388,6 +393,14 @@ class CotizacionController extends Controller
         {
             $descuento_usd = 0;
         }
+        if ($validator10->fails())
+        {
+            $result='0';
+            $msj='Debe de Ingresar las Observaciones de la Cotización';
+            $selector='txtobservaciones';
+
+            return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
+        }
 
         $maestroModelo = MaestroModelo::find($maestro_modelo_id);
         $tipoCambio = Config::first();
@@ -400,6 +413,8 @@ class CotizacionController extends Controller
 
             return response()->json(["result"=>$result,'msj'=>$msj,'selector'=>$selector]);
         }
+
+        $observaciones = mb_substr(trim($observaciones), 0, 500);
 
         $yearActual = date('Y');
         $fecha = date('Y-m-d');

@@ -34,5 +34,5 @@
         var tipoCambio = 3.7;
     @endif
     </script>
-<script src="{{ asset('js/core/yamaha/reportes.js')}}"  type="text/javascript"></script>
+<script src="{{ asset('js/core/yamaha/reportes.js?v=1.2')}}"  type="text/javascript"></script>
 @stop

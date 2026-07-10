@@ -569,38 +569,81 @@
 
     <!-- ESTILO -->
     <div class="titulos-subcategoria mt-30" style="page-break-before: always;">
-        ESCOGE TU ESTILO
+        ESCOGE TU ESTILO {{$dataCotizacion->codigo}}
     </div>
     <table cellpadding="0" cellspacing="0" style="margin-top: 30px !important; margin-left: auto; width: 90%;">
         <colgroup>
-            <col span="1" style="width: 33%;">
-            <col span="1" style="width: 33%;">
-            <col span="1" style="width: 33%;">
+            @if ($imgYamaha($dataCotizacion->url_color1) && !$imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+                <col span="1" style="width: 100%;">
+            @endif
+            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+                <col span="1" style="width: 50%;">
+                <col span="1" style="width: 50%;">
+            @endif
+            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) &&$imgYamaha($dataCotizacion->url_color3))
+                <col span="1" style="width: 33%;">
+                <col span="1" style="width: 33%;">
+                <col span="1" style="width: 33%;">
+            @endif
         </colgroup>
         <tr>
             <!-- Reemplazar {!renderEstilo1} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
-            <td class="col-1">
-                <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
-                @if ($imgYamaha($dataCotizacion->url_color1))
-                    <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
-                        style="width:140px; height:216px;" />
-                @endif
-            </td>
+            @if ($imgYamaha($dataCotizacion->url_color1) && !$imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+                <td class="col-1">
+                    <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
+                        <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                            style="width:140px; height:216px;" />
+                    
+                </td>
+            @endif
             <!-- Reemplazar {!renderEstilo2} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
-            <td class="col-2">
-                <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
-                @if ($imgYamaha($dataCotizacion->url_color2))
-                    <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
-                        style="width:140px; height:216px;" />
+            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+
+                @if ($dataCotizacion->codigo == "BCW800010A06")
+                    <td class="col-1">
+                        <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
+                            <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                                style="width:260px; height:216px;" />
+                        
+                    </td>
+                    <td class="col-2">
+                        <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
+                            <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                                style="width:260px; height:216px;" />
+                    </td>
+                @else
+                    <td class="col-1">
+                        <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
+                            <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                                style="width:140px; height:216px;" />
+                        
+                    </td>
+                    <td class="col-2">
+                        <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
+                            <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                                style="width:140px; height:216px;" />
+                    </td>
                 @endif
-            </td>
+            @endif
             <!-- Reemplazar {!renderEstilo3} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
-            <td class="col-3">
-                <!-- Imagen 3 (reemplazar estilo3URL con la URL de la imagen) -->
-                @if ($imgYamaha($dataCotizacion->url_color3))
+            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) &&$imgYamaha($dataCotizacion->url_color3))
+                <td class="col-1">
+                    <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
+                        <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                            style="width:140px; height:216px;" />
+                    
+                </td>
+                <td class="col-2">
+                    <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
+                        <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                            style="width:140px; height:216px;" />
+                </td>
+                <td class="col-3">
+                    <!-- Imagen 3 (reemplazar estilo3URL con la URL de la imagen) -->
                     <img src="{{ $imgYamaha($dataCotizacion->url_color3) }}"
                         style="width:140px; height:216px;" />
-                @endif
+                </td>
+            @endif
             </td>
         </tr>
     </table>
