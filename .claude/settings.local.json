@@ -13,7 +13,10 @@
       "Bash(php -l config/adminlte.php)",
       "Bash(php -l app/Models/Cotizacion.php)",
       "Bash(php -l app/Http/Controllers/cotizacion/CotizacionController.php)",
-      "Bash(php -l app/Exports/Reporte1Export.php)"
+      "Bash(php -l app/Exports/Reporte1Export.php)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -l app\\\\Http\\\\Controllers\\\\ventas\\\\VentasController.php; C:\\\\xampp\\\\php\\\\php.exe -l app\\\\Exports\\\\Reporte1ExportDetalleMasivoVentas.php; C:\\\\xampp\\\\php\\\\php.exe -l routes\\\\admin.php)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe artisan route:list --path=reporteventadetallemasivoxls)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -l app\\\\Http\\\\Controllers\\\\ventas\\\\VentasController.php)"
     ]
   }
 }

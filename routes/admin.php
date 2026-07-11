@@ -67,6 +67,7 @@ Route::middleware([
     Route::get('/reporteventas', [VentasController::class, 'index2'])->name('reporteventas');
     Route::get('/reporteventaxls/export', [VentasController::class, 'export']);
     Route::get('/reporteventadetallexls/export', [VentasController::class, 'exportdetalle']);
+    Route::get('/reporteventadetallemasivoxls/export', [VentasController::class, 'exportdetallemasivo']);
     //END VENTAS
 
     //REPORTE PROMOCIONES (clientes registrados desde el formulario público)

@@ -58,6 +58,7 @@
                             <div class="form-group">
                                 <x-adminlte-button @click="buscarDatos()" id="btnNuevo" class="bg-gradient btn-sm" type="button" label="Realizar Búsqueda" theme="primary" icon="fas fa-search" style="margin: 5px;"/>
                                 <x-adminlte-button @click="exportarExcel()" id="btnNuevo" class="bg-gradient btn-sm" type="button" label="Exportar Datos" theme="success" icon="fa fa-file-excel" style="margin: 5px;"/>
+                                <x-adminlte-button @click="exportarExcelDetalleMasivo()" id="btnExportarDetalles" class="bg-gradient btn-sm" type="button" label="Exportar Detalles" theme="success" icon="fa fa-file-excel" style="margin: 5px;"/>
                             </div>
                         </div>
 

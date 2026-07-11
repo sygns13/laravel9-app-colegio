@@ -524,6 +524,18 @@ createApp({
             //window.open(url, '_blank').focus();
             window.location.href = url;
         },
+        exportarExcelDetalleMasivo: function() {
+            var fechaIni = this.fillobjectEdit.fechaIni;
+            var fechaFin = this.fillobjectEdit.fechaFin;
+            var tipo_sales = this.fillobjectEdit.tipo_sales_id;
+            var tipo_documento_id = this.fillobjectEdit.tipo_documento_id;
+            var documento = this.fillobjectEdit.documento;
+
+            url = 'reporteventadetallemasivoxls/export?fechaIni=' + fechaIni + '&fechaFin=' + fechaFin + '&tipoSales=' + tipo_sales + '&tipo_documento_id=' + tipo_documento_id + '&documento=' + documento;
+            //console.log(url);
+            //window.open(url, '_blank').focus();
+            window.location.href = url;
+        },
 
         iniciarCamaraVoucher() {
             const constraints = {

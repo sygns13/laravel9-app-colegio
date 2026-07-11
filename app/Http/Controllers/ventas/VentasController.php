@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ventas;
 
 use App\Exports\Reporte1Export;
 use App\Exports\Reporte1ExportDetalleVentas;
+use App\Exports\Reporte1ExportDetalleMasivoVentas;
 use App\Exports\Reporte1ExportVentas;
 use App\Http\Controllers\Controller;
 use App\Models\Config;
@@ -356,7 +357,7 @@ class VentasController extends Controller
         array_push($data, array('Filtros de Búsqueda:','', ''));
 
         if(isset($fechaIni) && !empty($fechaIni) && isset($fechaFin) && !empty($fechaFin)){
-            array_push($data, array('','Fecha de Inicial: ', $this->pasFechaVista($fechaIni), 'Fecha Final: ', $this->pasFechaVista($fechaIni)));
+            array_push($data, array('','Fecha de Inicial: ', $this->pasFechaVista($fechaIni), 'Fecha Final: ', $this->pasFechaVista($fechaFin)));
             $cont++;
         }
 
@@ -450,6 +451,116 @@ class VentasController extends Controller
         $export = new Reporte1ExportDetalleVentas($data, $cont);
 
         return Excel::download($export, 'Reporte_Ventas_Detalle.xlsx');
+    }
+    public function exportdetallemasivo(Request $request)
+    {
+        $fechaIni=$request->fechaIni;
+        $fechaFin=$request->fechaFin;
+        $tipoSales=$request->tipoSales;
+        $tipo_documento_id=$request->tipo_documento_id;
+        $documento=$request->documento;
+
+        // Se filtran primero las cabeceras de venta con los mismos filtros del reporte
+        $query = Sale::with('tipoSales', 'clientes.tipoDocumento', 'personals')
+            ->where('sales.activo', '=', 1)
+            ->where('sales.borrado', '=', 0);
+
+        if (!empty($tipo_documento_id) || (!empty($documento) && $documento != '0')) {
+            $query->whereHas('clientes', function ($q) use ($tipo_documento_id, $documento) {
+                if (!empty($tipo_documento_id)) {
+                    $q->where('tipo_documento_id', $tipo_documento_id);
+                }
+                if (!empty($documento) && $documento != '0') {
+                    $q->where('documento', $documento);
+                }
+            });
+        }
+
+        if (!empty($tipoSales) && $tipoSales != '0') {
+            $query->where('sales.tipo_sales_id', '=', $tipoSales);
+        }
+
+        if (!empty($fechaIni) && !empty($fechaFin)) {
+            $query->whereBetween('sales.fecha', [
+                Carbon::createFromFormat('Y-m-d', $fechaIni)->startOfDay(),
+                Carbon::createFromFormat('Y-m-d', $fechaFin)->endOfDay(),
+            ]);
+        }
+
+        $query->orderBy('sales.id', 'desc');
+
+        $ventas = $query->get();
+
+        // A partir de las cabeceras filtradas se obtienen todos sus detalles
+        $detalles = SaleDetail::with('item')
+            ->whereIn('sale_details.sale_id', $ventas->pluck('id'))
+            ->where('sale_details.activo', '=', 1)
+            ->where('sale_details.borrado', '=', 0)
+            ->orderBy('sale_details.id')
+            ->get()
+            ->groupBy('sale_id');
+
+        $data=[];
+
+        $titulo='REPORTE DE VENTAS - DETALLES';
+
+        array_push($data, array($titulo));
+        array_push($data, array(''));
+
+        $cont = 1;
+
+        array_push($data, array('Filtros de Búsqueda:','', ''));
+
+        if(isset($fechaIni) && !empty($fechaIni) && isset($fechaFin) && !empty($fechaFin)){
+            array_push($data, array('','Fecha de Inicial: ', $this->pasFechaVista($fechaIni), 'Fecha Final: ', $this->pasFechaVista($fechaFin)));
+            $cont++;
+        }
+
+        $tipoDocumento = "Todos";
+        if(isset($tipo_documento_id) && !empty($tipo_documento_id) && intval($tipo_documento_id) > 0){
+            $tipoDocumentoBD = TipoDocumento::find($tipo_documento_id);
+            $tipoDocumento = $tipoDocumentoBD->sigla;
+        }
+        array_push($data, array('','Tipo de Documento Cliente: ', $tipoDocumento, 'Número de Documento Cliente: ', $documento));
+        $cont++;
+
+        $cont = $cont + 3;
+
+        array_push($data, array('N°','N° VENTA', 'TIPO VENTA', 'CLIENTE', 'TIPO DOCUMENTO', 'DOCUMENTO', 'FECHA DE VENTA', 'RESPONSABLE DE REGISTRO', 'CÓDIGO', 'DESCRIPCIÓN', 'PRECIO UNIT.', 'CANTIDAD', 'TOTAL'));
+
+        $fila = 1;
+        foreach ($ventas as $venta) {
+            $detallesVenta = $detalles->get($venta->id);
+
+            if (empty($detallesVenta)) {
+                continue;
+            }
+
+            $fechaVenta = $venta->fecha ? Carbon::parse($venta->fecha)->format('d-m-Y') : '';
+
+            foreach ($detallesVenta as $detalle) {
+                array_push($data, array(
+                    $fila,
+                    $venta->id,
+                    $venta->tipoSales->descripcion ?? '',
+                    $venta->clientes->nombres ?? '',
+                    $venta->clientes->tipoDocumento->nombre ?? '',
+                    $venta->clientes->documento ?? '',
+                    $fechaVenta,
+                    ($venta->personals->nombres ?? '') . ' ' . ($venta->personals->apellidos ?? ''),
+                    $detalle->item->codigo ?? '',
+                    $detalle->item->descripcion ?? '',
+                    $detalle->item->precio ?? '',
+                    $detalle->cantidad ?? '',
+                    $detalle->total ?? ''
+                ));
+                $fila++;
+            }
+        }
+
+        $export = new Reporte1ExportDetalleMasivoVentas($data, $cont);
+
+        return Excel::download($export, 'Reporte_Ventas_Detalles.xlsx');
     }
     /**
      * Update the specified resource in storage.
