@@ -29,25 +29,26 @@ class Reporte1ExportVentas implements FromArray, WithColumnWidths, WithStyles
     {
         return [
             'A'=>'7',
-            'B'=>'25',
-            'C'=>'30',
+            'B'=>'12',
+            'C'=>'25',
             'D'=>'30',
-            'E'=>'20',
+            'E'=>'30',
             'F'=>'20',
             'G'=>'20',
             'H'=>'20',
-            'I'=>'30',
-            'J'=>'20',
+            'I'=>'20',
+            'J'=>'30',
             'K'=>'20',
-            'L'=>'30',
-            'M'=>'40',
+            'L'=>'20',
+            'M'=>'30',
+            'N'=>'40',
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
         /* $sheet->getStyle('B2')->getFont()->setBold(true); */
-        $sheet->mergeCells('A1:M1');
+        $sheet->mergeCells('A1:N1');
 
         $styleArray = [
             'font' => [
@@ -123,42 +124,19 @@ class Reporte1ExportVentas implements FromArray, WithColumnWidths, WithStyles
         $filas = count($this->data);
         $cont = $this->cont;
 
-        $celdaTitles ='A'.strval($cont).':M'.strval($cont);
+        $celdaTitles ='A'.strval($cont).':N'.strval($cont);
 
 
-        $sheet->getStyle('A1:M1')->applyFromArray($styleArray);
+        $sheet->getStyle('A1:N1')->applyFromArray($styleArray);
         $sheet->getStyle($celdaTitles)->applyFromArray($styleArray2);
 
 
         if($filas > $cont) {
             for ($i=$cont; $i < $filas; $i++) {
-                $celdaA ='A'.strval((1+intval($i)));
-                $celdaB ='B'.strval((1+intval($i)));
-                $celdaC ='C'.strval((1+intval($i)));
-                $celdaD ='D'.strval((1+intval($i)));
-                $celdaE ='E'.strval((1+intval($i)));
-                $celdaF ='F'.strval((1+intval($i)));
-                $celdaG ='G'.strval((1+intval($i)));
-                $celdaH ='H'.strval((1+intval($i)));
-                $celdaI ='I'.strval((1+intval($i)));
-                $celdaJ ='J'.strval((1+intval($i)));
-                $celdaK ='K'.strval((1+intval($i)));
-                $celdaL ='L'.strval((1+intval($i)));
-                $celdaM ='M'.strval((1+intval($i)));
-
-                $sheet->getStyle($celdaA)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaB)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaC)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaD)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaE)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaF)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaG)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaH)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaI)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaJ)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaK)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaL)->applyFromArray($styleArray3);
-                $sheet->getStyle($celdaM)->applyFromArray($styleArray3);
+                foreach (range('A', 'N') as $columna) {
+                    $celda = $columna.strval((1+intval($i)));
+                    $sheet->getStyle($celda)->applyFromArray($styleArray3);
+                }
             }
         }
     }

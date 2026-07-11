@@ -371,13 +371,14 @@ class VentasController extends Controller
 
         $cont = $cont + 3;
 
-        array_push($data, array('N°','TIPO VENTA', 'CLIENTE', 'TIPO DOCUMENTO', 'DOCUMENTO','TELEFONO','CORREO','FECHA DE VENTA', 'RESPONSABLE DE REGISTRO', 'ENTREGADO', 'REGISTRADO', 'RESPONSABLE DE FACTURACIÓN', 'OBSERVACIONES'));
+        array_push($data, array('N°','ID DE VENTA','TIPO VENTA', 'CLIENTE', 'TIPO DOCUMENTO', 'DOCUMENTO','TELEFONO','CORREO','FECHA DE VENTA', 'RESPONSABLE DE REGISTRO', 'ENTREGADO', 'REGISTRADO', 'RESPONSABLE DE FACTURACIÓN', 'OBSERVACIONES'));
 
         //return response()->json($response);
 
         foreach ($response as $key => $dato) {
             array_push($data, array(
                 $key + 1,
+                $dato->id,
                 $dato->tipoSales->descripcion ?? '',
                 $dato->clientes->nombres ?? '',
                 $dato->clientes->tipoDocumento->nombre ?? '',
@@ -526,7 +527,7 @@ class VentasController extends Controller
 
         $cont = $cont + 3;
 
-        array_push($data, array('N°','N° VENTA', 'TIPO VENTA', 'CLIENTE', 'TIPO DOCUMENTO', 'DOCUMENTO', 'FECHA DE VENTA', 'RESPONSABLE DE REGISTRO', 'CÓDIGO', 'DESCRIPCIÓN', 'PRECIO UNIT.', 'CANTIDAD', 'TOTAL'));
+        array_push($data, array('N°','ID DE VENTA', 'TIPO VENTA', 'CLIENTE', 'TIPO DOCUMENTO', 'DOCUMENTO', 'FECHA DE VENTA', 'RESPONSABLE DE REGISTRO', 'CÓDIGO', 'DESCRIPCIÓN', 'PRECIO UNIT.', 'CANTIDAD', 'TOTAL'));
 
         $fila = 1;
         foreach ($ventas as $venta) {

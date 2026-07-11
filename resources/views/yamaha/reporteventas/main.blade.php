@@ -85,6 +85,7 @@
                                 <thead>
                                 <tr>
                                     <th class="titles-table" style="width: 1%">#</th>
+                                    <th class="titles-table" style="width: 3%">ID de Venta</th>
                                     <th class="titles-table" style="width: 5%">Tipo Venta</th>
                                     <th class="titles-table" style="width: 10%">Cliente</th>
                                     <th class="titles-table" style="width: 7%">Documento de Cliente</th>
@@ -103,6 +104,7 @@
                                 <tbody>
                                 <tr v-for="(registro, indexS) in registros">
                                     <td class="rows-table" style="text-align: center;vertical-align: middle;font-size: 14px;">@{{indexS+pagination.from}}</td>
+                                    <td class="rows-table" style="text-align: center;vertical-align: middle;font-size: 14px;">@{{registro.id}}</td>
                                     <td class="rows-table" style="text-align: center;vertical-align: middle;font-size: 14px;">@{{registro.tipo_sales.descripcion}}</td>
                                     <td class="rows-table" style="text-align: left;vertical-align: middle;font-size: 14px;">@{{registro.clientes.nombres}} @{{registro.clientes.apellidos}}</td>
                                     <td class="rows-table" style="text-align: center;vertical-align: middle;font-size: 14px;">@{{registro.clientes.tipo_documento.sigla}} @{{registro.clientes.documento}}</td>
