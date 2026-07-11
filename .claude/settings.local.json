@@ -16,7 +16,15 @@
       "Bash(php -l app/Exports/Reporte1Export.php)",
       "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -l app\\\\Http\\\\Controllers\\\\ventas\\\\VentasController.php; C:\\\\xampp\\\\php\\\\php.exe -l app\\\\Exports\\\\Reporte1ExportDetalleMasivoVentas.php; C:\\\\xampp\\\\php\\\\php.exe -l routes\\\\admin.php)",
       "PowerShell(C:\\\\xampp\\\\php\\\\php.exe artisan route:list --path=reporteventadetallemasivoxls)",
-      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -l app\\\\Http\\\\Controllers\\\\ventas\\\\VentasController.php)"
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -l app\\\\Http\\\\Controllers\\\\ventas\\\\VentasController.php)",
+      "PowerShell(Get-ChildItem \"C:\\\\xampp\\\\htdocs\\\\appcotizacionyamaha\\\\public\\\\web\\\\yamaha\" -Recurse -File | Sort-Object Length -Descending | Select-Object -First 25 @{n='KB';e={[math]::Round\\($_.Length/1KB\\)}}, FullName)",
+      "PowerShell(Get-ChildItem \"C:\\\\xampp\\\\htdocs\\\\appcotizacionyamaha\\\\public\\\\images\\\\slgn_flat_red_wh_rgb.png\",\"C:\\\\xampp\\\\htdocs\\\\appcotizacionyamaha\\\\public\\\\images\\\\slgn_flat_red_rgb.png\",\"C:\\\\xampp\\\\htdocs\\\\appcotizacionyamaha\\\\public\\\\fonts\\\\estricta-regular.ttf\" -ErrorAction SilentlyContinue | Select-Object @{n='KB';e={[math]::Round\\($_.Length/1KB\\)}}, Name; Get-ChildItem \"C:\\\\xampp\\\\htdocs\\\\appcotizacionyamaha\\\\public\\\\web\\\\yamaha\\\\otros\" -Recurse -File | Measure-Object Length -Sum | Select-Object Count, @{n='TotalKB';e={[math]::Round\\($_.Sum/1KB\\)}})",
+      "PowerShell($files = @\\('images/slgn_flat_red_wh_rgb.png','images/slgn_flat_red_rgb.png','web/yamaha/otros/celular.png','web/yamaha/otros/whatsap.png','web/yamaha/otros/email.png','web/yamaha/otros/kando/Kando_Blanco.png','web/yamaha/otros/fb.png','web/yamaha/otros/ig.png','web/yamaha/otros/ln.png','web/yamaha/otros/yt.png'\\); foreach \\($f in $files\\) { $p = \"C:\\\\xampp\\\\htdocs\\\\appcotizacionyamaha\\\\public\\\\$f\"; if \\(Test-Path $p\\) { \"{0,8:N0} KB  {1}\" -f \\(\\(Get-Item $p\\).Length/1KB\\), $f } else { \"FALTA: $f\" } })",
+      "PowerShell(php \"C:\\\\Users\\\\Usuario\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--xampp-htdocs-appcotizacionyamaha\\\\7f996b57-1672-4445-be7e-2404485b14d1\\\\scratchpad\\\\render_test.php\")",
+      "PowerShell(git *)",
+      "PowerShell(php \"C:\\\\Users\\\\Usuario\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--xampp-htdocs-appcotizacionyamaha\\\\7f996b57-1672-4445-be7e-2404485b14d1\\\\scratchpad\\\\profile_test.php\")",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(php artisan view:clear; php \"C:\\\\Users\\\\Usuario\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--xampp-htdocs-appcotizacionyamaha\\\\7f996b57-1672-4445-be7e-2404485b14d1\\\\scratchpad\\\\render_test.php\"; php \"C:\\\\Users\\\\Usuario\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--xampp-htdocs-appcotizacionyamaha\\\\7f996b57-1672-4445-be7e-2404485b14d1\\\\scratchpad\\\\render_test.php\")"
     ]
   }
 }
