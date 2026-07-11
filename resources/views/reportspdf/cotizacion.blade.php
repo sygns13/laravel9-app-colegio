@@ -1,11 +1,77 @@
 @php
-    $imgYamaha = function ($ruta) {
-        $local = public_path('web/yamaha/' . $ruta);
-        if (empty($ruta) || !is_file($local)) {
+    // Cache en memoria: cada imagen se lee y codifica una sola vez por render,
+    // aunque el blade la consulte varias veces (condicionales + src).
+    $imgCacheB64 = [];
+    // $maxAncho: si la imagen original es más ancha, se genera (y cachea en
+    // storage/app/pdf-img-cache) una copia reducida a ese ancho — el doble del
+    // ancho con que se muestra en el PDF, para conservar calidad de impresión.
+    // Sin GD o si algo falla, se usa la imagen original tal cual.
+    $imgData = function ($rutaPublica, $maxAncho = null) use (&$imgCacheB64) {
+        if (empty($rutaPublica)) {
             return null;
         }
-        return 'data:' . mime_content_type($local) . ';base64,' . base64_encode(file_get_contents($local));
+        $clave = $rutaPublica . '|' . ($maxAncho ?? 0);
+        if (array_key_exists($clave, $imgCacheB64)) {
+            return $imgCacheB64[$clave];
+        }
+        $local = public_path($rutaPublica);
+        if (!is_file($local)) {
+            return $imgCacheB64[$clave] = null;
+        }
+        $archivo = $local;
+        $mime = mime_content_type($local);
+        if ($maxAncho && function_exists('imagecreatefromstring')) {
+            $info = @getimagesize($local);
+            if ($info && $info[0] > $maxAncho * 1.2) {
+                $esJpeg = ($info['mime'] ?? '') === 'image/jpeg';
+                $ext = $esJpeg ? '.jpg' : '.png';
+                $cacheDir = storage_path('app/pdf-img-cache');
+                if (!is_dir($cacheDir)) {
+                    @mkdir($cacheDir, 0775, true);
+                }
+                $cacheFile = $cacheDir . '/' . md5($rutaPublica . '|' . $maxAncho . '|' . filemtime($local)) . $ext;
+                if (!is_file($cacheFile)) {
+                    $src = @imagecreatefromstring(file_get_contents($local));
+                    if ($src !== false) {
+                        $w = imagesx($src);
+                        $h = imagesy($src);
+                        $nh = (int) round($h * $maxAncho / $w);
+                        $dst = imagecreatetruecolor($maxAncho, $nh);
+                        if ($esJpeg) {
+                            imagecopyresampled($dst, $src, 0, 0, 0, 0, $maxAncho, $nh, $w, $h);
+                            imagejpeg($dst, $cacheFile, 88);
+                        } else {
+                            imagealphablending($dst, false);
+                            imagesavealpha($dst, true);
+                            imagefill($dst, 0, 0, imagecolorallocatealpha($dst, 0, 0, 0, 127));
+                            imagecopyresampled($dst, $src, 0, 0, 0, 0, $maxAncho, $nh, $w, $h);
+                            imagepng($dst, $cacheFile, 9);
+                        }
+                        imagedestroy($src);
+                        imagedestroy($dst);
+                    }
+                }
+                if (is_file($cacheFile)) {
+                    $archivo = $cacheFile;
+                    $mime = $esJpeg ? 'image/jpeg' : 'image/png';
+                }
+            }
+        }
+        return $imgCacheB64[$clave] = 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($archivo));
     };
+    $imgYamaha = function ($ruta, $maxAncho = null) use ($imgData) {
+        return empty($ruta) ? null : $imgData('web/yamaha/' . $ruta, $maxAncho);
+    };
+    // Precalculadas una sola vez (las condicionales del blade las consultan varias veces).
+    $imgLogo = $imgYamaha($dataCotizacion->url_logo, 1200);
+    $imgMotoPrincipal = $imgYamaha($dataCotizacion->url_moto_principal, 1020);
+    $imgColor1 = $imgYamaha($dataCotizacion->url_color1, 580);
+    $imgColor2 = $imgYamaha($dataCotizacion->url_color2, 580);
+    $imgColor3 = $imgYamaha($dataCotizacion->url_color3, 580);
+    $imgBeneficio1 = $imgYamaha($dataCotizacion->url_beneficio1, 300);
+    $imgBeneficio2 = $imgYamaha($dataCotizacion->url_beneficio2, 300);
+    $imgBeneficio3 = $imgYamaha($dataCotizacion->url_beneficio3, 300);
+    $imgBeneficio4 = $imgYamaha($dataCotizacion->url_beneficio4, 300);
 @endphp
 <!DOCTYPE html>
 <html>
@@ -37,11 +103,6 @@
             margin-top: 0cm;
             margin-left: 0.5cm;
             margin-right: 0.7cm;
-        }
-
-        @font-face {
-            font-family: "Estricta";
-            src: url('{{ asset('fonts\estricta-regular.ttf') }}') format('truetype');
         }
 
         /*@page:first {
@@ -517,7 +578,7 @@
             <div class="mr-20" style=" display: inline-block; float: right;">
                 <p>
                     {{-- <img src="{!URLFOR($Resource.FotosYamaha,'fotos/YAMAHA.png')}" />  --}}
-                    <img src="{{ asset('images/slgn_flat_red_wh_rgb.png') }}" width="170px">
+                    <img src="{{ $imgData('images/slgn_flat_red_wh_rgb.png') }}" width="170px">
                     <!--  <img src="fotos/YAMAHA.png" /> -->
                 </p>
             </div>
@@ -538,8 +599,8 @@
     <div class="" style="width: 100%;">
         <div class="modelo" style="margin-top: -160px;">
             <!-- Aquí usé el campo 'imgMotoPrincipal' de Product2 y un recurso estático -->
-            @if ($imgYamaha($dataCotizacion->url_logo))
-                <img src="{{ $imgYamaha($dataCotizacion->url_logo) }}"
+            @if ($imgLogo)
+                <img src="{{ $imgLogo }}"
                     style="width: 600px; padding: 0px; border: 0px solid transparent;">
             @endif
 
@@ -549,9 +610,9 @@
         <div class="moto">
             <!--<img url="{!motoPrincipalURL}"></img>-->
             <!--<img class="img-moto" data-assetid="13637" src="{!URLFOR($Resource.NMAX_CONNECTED, imgMotoPrincipal)}" alt="" />-->
-            @if ($imgYamaha($dataCotizacion->url_moto_principal))
+            @if ($imgMotoPrincipal)
                 <img class="img-moto" data-assetid="13637"
-                    src="{{ $imgYamaha($dataCotizacion->url_moto_principal) }}" alt="" />
+                    src="{{ $imgMotoPrincipal }}" alt="" />
             @endif
         </div>
         <div class="moto-texto" style="width: 100%;">
@@ -573,14 +634,14 @@
     </div>
     <table cellpadding="0" cellspacing="0" style="margin-top: 30px !important; margin-left: auto; width: 90%;">
         <colgroup>
-            @if ($imgYamaha($dataCotizacion->url_color1) && !$imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+            @if ($imgColor1 && !$imgColor2 && !$imgColor3)
                 <col span="1" style="width: 100%;">
             @endif
-            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+            @if ($imgColor1 && $imgColor2 && !$imgColor3)
                 <col span="1" style="width: 50%;">
                 <col span="1" style="width: 50%;">
             @endif
-            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) &&$imgYamaha($dataCotizacion->url_color3))
+            @if ($imgColor1 && $imgColor2 &&$imgColor3)
                 <col span="1" style="width: 33%;">
                 <col span="1" style="width: 33%;">
                 <col span="1" style="width: 33%;">
@@ -588,71 +649,71 @@
         </colgroup>
         <tr>
             <!-- Reemplazar {!renderEstilo1} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
-            @if ($imgYamaha($dataCotizacion->url_color1) && !$imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+            @if ($imgColor1 && !$imgColor2 && !$imgColor3)
                 <td class="col-1">
                     <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
-                        <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                        <img src="{{ $imgColor1 }}"
                             style="width:140px; height:216px;" />
                     
                 </td>
             @endif
             <!-- Reemplazar {!renderEstilo2} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
-            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) && !$imgYamaha($dataCotizacion->url_color3))
+            @if ($imgColor1 && $imgColor2 && !$imgColor3)
 
                 @if ($dataCotizacion->codigo == "BCW800010A06")
                     <td class="col-1">
                         <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
-                            <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                            <img src="{{ $imgColor1 }}"
                                 style="width:260px; height:216px;" />
                         
                     </td>
                     <td class="col-2">
                         <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
-                            <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                            <img src="{{ $imgColor2 }}"
                                 style="width:260px; height:216px;" />
                     </td>
                 @elseif($dataCotizacion->codigo == "XMAX300")
                     <td class="col-1">
                         <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
-                            <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                            <img src="{{ $imgColor1 }}"
                                 style="width:290px; height:216px;" />
                         
                     </td>
                     <td class="col-2">
                         <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
-                            <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                            <img src="{{ $imgColor2 }}"
                                 style="width:290px; height:216px;" />
                     </td>
                 @else
                     <td class="col-1">
                         <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
-                            <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                            <img src="{{ $imgColor1 }}"
                                 style="width:140px; height:216px;" />
                         
                     </td>
                     <td class="col-2">
                         <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
-                            <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                            <img src="{{ $imgColor2 }}"
                                 style="width:140px; height:216px;" />
                     </td>
                 @endif
             @endif
             <!-- Reemplazar {!renderEstilo3} con la condición de renderizado apropiada o eliminar si siempre se muestra -->
-            @if ($imgYamaha($dataCotizacion->url_color1) && $imgYamaha($dataCotizacion->url_color2) &&$imgYamaha($dataCotizacion->url_color3))
+            @if ($imgColor1 && $imgColor2 &&$imgColor3)
                 <td class="col-1">
                     <!-- Imagen 1 (reemplazar estilo1URL con la URL de la imagen) -->
-                        <img src="{{ $imgYamaha($dataCotizacion->url_color1) }}"
+                        <img src="{{ $imgColor1 }}"
                             style="width:140px; height:216px;" />
                     
                 </td>
                 <td class="col-2">
                     <!-- Imagen 2 (reemplazar estilo2URL con la URL de la imagen) -->
-                        <img src="{{ $imgYamaha($dataCotizacion->url_color2) }}"
+                        <img src="{{ $imgColor2 }}"
                             style="width:140px; height:216px;" />
                 </td>
                 <td class="col-3">
                     <!-- Imagen 3 (reemplazar estilo3URL con la URL de la imagen) -->
-                    <img src="{{ $imgYamaha($dataCotizacion->url_color3) }}"
+                    <img src="{{ $imgColor3 }}"
                         style="width:140px; height:216px;" />
                 </td>
             @endif
@@ -674,28 +735,28 @@
         </colgroup> --}}
         <tr>
             <td align="center" style="width: 25%;">
-                @if ($imgYamaha($dataCotizacion->url_beneficio1))
-                    <img data-assetid="13638" src="{{ $imgYamaha($dataCotizacion->url_beneficio1) }}" alt=""
+                @if ($imgBeneficio1)
+                    <img data-assetid="13638" src="{{ $imgBeneficio1 }}" alt=""
                         height="100%"
                         style="margin-left: 20px; padding: 0px;  border: 0px; width:140px; height:140px;" />
                 @endif
             </td>
             <td align="center" style="width: 25%;">
-                @if ($imgYamaha($dataCotizacion->url_beneficio2))
-                    <img data-assetid="13639" src="{{ $imgYamaha($dataCotizacion->url_beneficio2) }}" alt=""
+                @if ($imgBeneficio2)
+                    <img data-assetid="13639" src="{{ $imgBeneficio2 }}" alt=""
                         height="100%"
                         style="margin-left: 20px; padding: 0px;  border: 0px; width:140px; height:140px;" />
                 @endif
             </td>
             <td align="center" style="width: 25%;">
-                @if ($imgYamaha($dataCotizacion->url_beneficio3))
-                    <img data-assetid="13640" src="{{ $imgYamaha($dataCotizacion->url_beneficio3) }}" alt=""
+                @if ($imgBeneficio3)
+                    <img data-assetid="13640" src="{{ $imgBeneficio3 }}" alt=""
                         height="100%" style="padding: 0px;  border: 0px; width:140px; height:140px;" />
                 @endif
             </td>
             <td align="center" style="width: 25%;">
-                @if ($imgYamaha($dataCotizacion->url_beneficio4))
-                    <img data-assetid="13640" src="{{ $imgYamaha($dataCotizacion->url_beneficio4) }}" alt=""
+                @if ($imgBeneficio4)
+                    <img data-assetid="13640" src="{{ $imgBeneficio4 }}" alt=""
                         height="100%" style=" padding: 0px; border: 0px; width:140px; height:140px;" />
                 @endif
             </td>
@@ -1118,15 +1179,15 @@
                             {{ $personal->nombres }} {{ $personal->apellidos }}
                         </h2>
                         <div class="experto-telefono" style="margin-top: 4px !important;">
-                            <img class="iconos" width="10" height="10" src="{{ asset('web/yamaha/otros/celular.png') }}" />
-                            <img class="iconos" width="10" height="10" src="{{ asset('web/yamaha/otros/whatsap.png') }}" />
+                            <img class="iconos" width="10" height="10" src="{{ $imgData('web/yamaha/otros/celular.png') }}" />
+                            <img class="iconos" width="10" height="10" src="{{ $imgData('web/yamaha/otros/whatsap.png') }}" />
                             <p  class="texto-iconos">
                                 {{ $personal->celular }}
                             </p>
                             
                         </div>
                         <div class="experto-email">
-                            <img class="iconos" width="10" height="10" src="{{ asset('web/yamaha/otros/email.png') }}" />
+                            <img class="iconos" width="10" height="10" src="{{ $imgData('web/yamaha/otros/email.png') }}" />
                             <p class="texto-iconos">
                                 {{ $personal->correo }}
                             </p>
@@ -1135,7 +1196,7 @@
                     </div>
                 </td>
                 <td align="right">
-                    <img class="imagenes-financiar" src="{{ asset('web/yamaha/otros/kando/Kando_Blanco.png') }}"/>
+                    <img class="imagenes-financiar" src="{{ $imgData('web/yamaha/otros/kando/Kando_Blanco.png') }}"/>
                 </td>
             </tr>
         </table> 
@@ -1148,16 +1209,16 @@
             Av. República de Panamá 4344 - 4352 Surquillo
         </p>
         <a href="https://www.facebook.com/yamahamotorperu">
-            <img width="20" height="20" src="{{ asset('web/yamaha/otros/fb.png') }}" alt="icon"/>
+            <img width="20" height="20" src="{{ $imgData('web/yamaha/otros/fb.png') }}" alt="icon"/>
         </a>
         <a href="https://www.instagram.com/yamahamotorperu/">
-            <img width="20" height="20" src="{{ asset('web/yamaha/otros/ig.png') }}" alt="icon"/>
+            <img width="20" height="20" src="{{ $imgData('web/yamaha/otros/ig.png') }}" alt="icon"/>
         </a>
         <a href="https://www.linkedin.com/company/yamahamotorperu/">
-            <img width="20" height="20" src="{{ asset('web/yamaha/otros/ln.png') }}" alt="icon"/>
+            <img width="20" height="20" src="{{ $imgData('web/yamaha/otros/ln.png') }}" alt="icon"/>
         </a>
         <a href="https://www.youtube.com/channel/UCumUSJUT0RWyRgOGyt-5VmA">
-            <img width="20" height="20" src="{{ asset('web/yamaha/otros/yt.png') }}" alt="icon"/>
+            <img width="20" height="20" src="{{ $imgData('web/yamaha/otros/yt.png') }}" alt="icon"/>
         </a>
         <!--<img class="iconos" width="20" height="20" src="{!URLFOR($Resource.FotosYamaha,'fotos/facebook.png')}" />
         <img class="iconos" width="20" height="20" src="{!URLFOR($Resource.FotosYamaha,'fotos/instagram.png')}" />
@@ -1165,7 +1226,7 @@
         <img class="iconos    " width="20" height="20" src="{!URLFOR($Resource.FotosYamaha,'fotos/youtube.png')}" />-->
     </div>
     <div class="mt-60" style="text-align: center; margin-left: auto; margin-right: auto;">
-        <img src="{{ asset('images/slgn_flat_red_rgb.png') }}"  width="200px;"/>
+        <img src="{{ $imgData('images/slgn_flat_red_rgb.png') }}"  width="200px;"/>
     </div>
 
 </body>
